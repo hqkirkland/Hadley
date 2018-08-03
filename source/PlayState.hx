@@ -3,14 +3,16 @@ package;
 import flixel.FlxState;
 import flixel.FlxG;
 import flixel.input.keyboard.FlxKeyList;
+import flixel.FlxCamera.FlxCameraFollowStyle;
 import game.Avatar;
 import game.Room;
 
 class PlayState extends FlxState
 {
+	private var currentRoom:Room;
+	
 	private static var keyDownList:FlxKeyList;
 	public static var playerAvatar:Avatar;
-	private var currentRoom:Room;
 	
 	override public function create():Void
 	{
@@ -19,11 +21,11 @@ class PlayState extends FlxState
 		playerAvatar = new Avatar("Monk");
 		currentRoom = new Room("cloudInfoRoom");
 		
-		// FlxG.camera.follow(playerAvatar);
+		// FlxG.camera.follow(playerAvatar, FlxCameraFollowStyle.NO_DEAD_ZONE);
 		
-		currentRoom.addAvatar(playerAvatar, 10, 20);
+		currentRoom.addAvatar(playerAvatar, 100, 250);
 		currentRoom.addItem("item_door1", 100, 200);
-		currentRoom.addItem("item_door1", 200, 150);
+		currentRoom.addItem("item_door1", 200, 125);
 		currentRoom.addItem("item_door1", 250, 175);
 		
 		add(currentRoom);

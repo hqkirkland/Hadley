@@ -1,11 +1,9 @@
 package game;
 
-import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxTileFrames;
 import flixel.math.FlxPoint;
-import flixel.math.FlxVelocity;
 import openfl.display.BitmapData;
 import openfl.geom.Point;
 import openfl.geom.Rectangle;
@@ -26,12 +24,10 @@ class Avatar extends FlxSprite
 	public var previousKeysTriggered:Object = {North: false, South: false, East: false, West: false};
 	public var currentAction:String = "Stand";
 	public var isHolding:Bool = false;
-
+	
 	private var velocityX:Float = 0;
 	private var velocityY:Float = 0;
-	private var multiplierX:Float = 1;
-	private var multiplierY:Float = 1;
-
+	
 	private var avatarSheet:GraphicsSheet = new GraphicsSheet(1772, 68);
 	
 	public static var actionSet:Object = {Stand: "Stand", Walk: "Walk", Sit: "Sit", Hold: "Hold"};
@@ -80,7 +76,7 @@ class Avatar extends FlxSprite
     }
 	
 	private function doAnimation():Void
-	{		
+	{
 		var animationString:String = buildAnimationString();
 		animation.play(animationString);
 		
@@ -88,7 +84,7 @@ class Avatar extends FlxSprite
 		{
 			this.velocity = FlxPoint.get(this.velocityX * 1.66, this.velocityY * 1.66);
 		}
-		
+	
 		else
 		{
 			this.velocity = FlxPoint.get(this.velocityX, this.velocityY);
@@ -98,7 +94,7 @@ class Avatar extends FlxSprite
 	}
 	
 	private function buildAnimationString():String
-	{		
+	{
 		if (keysTriggered.North && keysTriggered.East) 
 		{
 			currentAction = actionSet.Walk;

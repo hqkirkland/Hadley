@@ -35,7 +35,7 @@ import haxe.macro.Expr;
 			windows: [
 				
 				{
-					allowHighDPI: true,
+					allowHighDPI: false,
 					alwaysOnTop: false,
 					antialiasing: 0,
 					background: 0,

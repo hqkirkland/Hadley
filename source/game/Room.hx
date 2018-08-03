@@ -16,6 +16,7 @@ class Room extends FlxSprite
 	private var roomName:String;
 
 	private var itemMap:Dictionary<String, FlxPoint>;
+	private var walkMap:FlxSprite;
 	public var roomEntities:FlxTypedSpriteGroup<FlxSprite> = new FlxTypedSpriteGroup<FlxSprite>();
 	
 	public function new(_roomName:String, ?X:Float=0, ?Y:Float=0) 
@@ -23,10 +24,16 @@ class Room extends FlxSprite
 		super(X, Y);
 		roomName = _roomName;
 		
+		walkMap = new FlxSprite();
+		walkMap.loadGraphic("assets/images/rooms/" + roomName + "/" + roomName + "_map.png");
+		walkMap.x = 20;
+		walkMap.y = 175;
+		walkMap.visible = false;
+		
 		this.loadGraphic("assets/images/rooms/" + roomName + "/" + roomName + ".png");
 	}
 	
-	public function addAvatar(newAvatar:Avatar, x:Int=0, y:Int=0)
+	public function addAvatar(newAvatar:Avatar, x:Int=0, y:Int=0):Void
 	{
 		newAvatar.x = x;
 		newAvatar.y = y;
@@ -34,7 +41,7 @@ class Room extends FlxSprite
 		roomEntities.add(newAvatar);
 	}
 	
-	public function addItem(graphicName:String, x:Int=0, y:Int=0)
+	public function addItem(graphicName:String, x:Int=0, y:Int=0):Void
 	{
 		var itemSprite:FlxSprite = new FlxSprite(x, y);		
 		itemSprite.loadGraphic("assets/images/rooms/" + roomName + "/" + graphicName + ".png");
@@ -46,7 +53,7 @@ class Room extends FlxSprite
 		roomEntities.add(itemSprite);
 	}
 	
-	public function addMain(graphicName:String)
+	public function addMain(graphicName:String):Void
 	{
 		var itemSprite:FlxSprite = new FlxSprite();		
 		itemSprite.loadGraphic("assets/images/rooms/" + roomName + "/" + graphicName + ".png");
@@ -54,7 +61,12 @@ class Room extends FlxSprite
 		roomEntities.add(itemSprite);
 	}
 	
-	public function sortGraphics()
+	public function testWalkmap(nx:Float, ny:Float):Int
+	{
+		return this.walkMap.pixels.getPixel(Std.int(nx - walkMap.x), Std.int(ny - walkMap.y));
+	}
+	
+	public function sortGraphics():Void
 	{
 		roomEntities.sort(byDepth, FlxSort.ASCENDING);
 	}

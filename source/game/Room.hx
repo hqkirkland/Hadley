@@ -16,7 +16,7 @@ class Room extends FlxSprite
 	private var roomName:String;
 
 	private var itemMap:Dictionary<String, FlxPoint>;
-	private var walkMap:FlxSprite;
+	public var walkMap:FlxSprite;
 	public var roomEntities:FlxTypedSpriteGroup<FlxSprite> = new FlxTypedSpriteGroup<FlxSprite>();
 	
 	public function new(_roomName:String, ?X:Float=0, ?Y:Float=0) 
@@ -28,7 +28,6 @@ class Room extends FlxSprite
 		walkMap.loadGraphic("assets/images/rooms/" + roomName + "/" + roomName + "_map.png");
 		walkMap.x = 20;
 		walkMap.y = 175;
-		walkMap.visible = false;
 		
 		this.loadGraphic("assets/images/rooms/" + roomName + "/" + roomName + ".png");
 	}
@@ -55,7 +54,7 @@ class Room extends FlxSprite
 	
 	public function addMain(graphicName:String):Void
 	{
-		var itemSprite:FlxSprite = new FlxSprite();		
+		var itemSprite:FlxSprite = new FlxSprite();	
 		itemSprite.loadGraphic("assets/images/rooms/" + roomName + "/" + graphicName + ".png");
 		
 		roomEntities.add(itemSprite);

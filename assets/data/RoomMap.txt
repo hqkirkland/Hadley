@@ -1,0 +1,4 @@
+{
+	cloudInfoRoom_map: 20, 175,
+	item_door1: 
+	item_door2: 

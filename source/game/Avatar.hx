@@ -4,6 +4,7 @@ import flixel.FlxSprite;
 import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxTileFrames;
 import flixel.math.FlxPoint;
+import flixel.math.FlxRect;
 import openfl.display.BitmapData;
 import openfl.geom.Point;
 import openfl.geom.Rectangle;
@@ -22,11 +23,14 @@ class Avatar extends FlxSprite
 	
 	public var keysTriggered:Object = {North: false, South: false, East: false, West: false, Run: false};
 	public var previousKeysTriggered:Object = {North: false, South: false, East: false, West: false};
+	public var canWalk:Bool = true;
 	public var currentAction:String = "Stand";
 	public var isHolding:Bool = false;
 	
-	private var velocityX:Float = 0;
-	private var velocityY:Float = 0;
+	public var velocityX:Float = 0;
+	public var velocityY:Float = 0;
+	
+	public var walkSprite:FlxSprite;
 	
 	private var avatarSheet:GraphicsSheet = new GraphicsSheet(1772, 68);
 	
@@ -38,7 +42,6 @@ class Avatar extends FlxSprite
 	private static var sheetRect:Rectangle = new Rectangle(0, 0, 1722, 68);
 	
 	// It saves CPU to pre-determine velocities rather than calculate them every frame.
-	
 	private static var orthogVelocity:FlxPoint = new FlxPoint(96, 48);
 	private static var diagVelocity:FlxPoint = new FlxPoint(72, 24);
 	
@@ -57,7 +60,12 @@ class Avatar extends FlxSprite
 		itemArray[6] = "Glasses";
 		itemArray[7] = "Hat";
 		
-		this.pixels = new BitmapData(41, 68, true, 0x00000000);
+		generateAvatar();
+		generateAnimation();
+	}
+	
+	public function generateAvatar():Void
+	{
 		var itemSprite:FlxSprite = new FlxSprite(0, 0);
 		
 		for (itemName in itemArray)
@@ -66,7 +74,7 @@ class Avatar extends FlxSprite
 			avatarSheet.drawItem(itemSprite.pixels);
 		}
 		
-		generateAnimation();
+		this.pixels = new BitmapData(41, 68, true, 0x00000000);
 	}
 	
 	override public function update(elapsed:Float):Void
@@ -95,130 +103,156 @@ class Avatar extends FlxSprite
 	
 	private function buildAnimationString():String
 	{
+		currentAction = actionSet.Stand;
+		
 		if (keysTriggered.North && keysTriggered.East) 
-		{
-			currentAction = actionSet.Walk;
-			
+		{			
 			previousKeysTriggered.North = true;
 			previousKeysTriggered.South = false;
 			
 			previousKeysTriggered.East = true;
 			previousKeysTriggered.West = false;
 			
-			this.velocityX = diagVelocity.x;
-			this.velocityY = diagVelocity.y * -1;
+			if (canWalk)
+			{
+				currentAction = actionSet.Walk;
+				
+				this.velocityX = diagVelocity.x;
+				this.velocityY = diagVelocity.y * -1;
+			}
 			
 			return currentAction + "UpRight";
 		}
 		
 		else if (keysTriggered.North && keysTriggered.West)
 		{
-			currentAction = actionSet.Walk;
-			
 			previousKeysTriggered.North = true;
 			previousKeysTriggered.South = false;
 			
 			previousKeysTriggered.East = false;
 			previousKeysTriggered.West = true;
-			
-			this.velocityX = diagVelocity.x * -1;
-			this.velocityY = diagVelocity.y * -1;
+				
+			if (canWalk)
+			{
+				currentAction = actionSet.Walk;
+				
+				this.velocityX = diagVelocity.x * -1;
+				this.velocityY = diagVelocity.y * -1;
+			}
 			
 			return currentAction + "UpLeft";
 		}
 		
 		else if (keysTriggered.South && keysTriggered.East)
-		{
-			currentAction = actionSet.Walk;
-			
+		{			
 			previousKeysTriggered.North = false;
 			previousKeysTriggered.South = true;
 			
 			previousKeysTriggered.East = true;
 			previousKeysTriggered.West = false;
 			
-			this.velocityX = diagVelocity.x;
-			this.velocityY = diagVelocity.y;
+			if (canWalk)
+			{
+				currentAction = actionSet.Walk;
+				
+				this.velocityX = diagVelocity.x;
+				this.velocityY = diagVelocity.y;
+			}
 			
 			return currentAction + "DownRight";
 		}
 		
 		else if (keysTriggered.South && keysTriggered.West)
 		{
-			currentAction = actionSet.Walk;
-			
 			previousKeysTriggered.North = false;
 			previousKeysTriggered.South = true;
 			
 			previousKeysTriggered.East = false;
 			previousKeysTriggered.West = true;
 			
-			this.velocityX = diagVelocity.x * -1;
-			this.velocityY = diagVelocity.y;
+			if (canWalk)
+			{
+				currentAction = actionSet.Walk;
+				
+				this.velocityX = diagVelocity.x * -1;
+				this.velocityY = diagVelocity.y;
+			}
 			
 			return currentAction + "DownLeft";
 		}
 		
 		else if (keysTriggered.East)
-		{
-			currentAction = actionSet.Walk;
-			
+		{			
 			previousKeysTriggered.North = false;
 			previousKeysTriggered.South = false;
 			
 			previousKeysTriggered.East = true;
 			previousKeysTriggered.West = false;
-			
-			this.velocityX = orthogVelocity.x;
-			this.velocityY = 0;
+
+			if (canWalk)
+			{
+				currentAction = actionSet.Walk;
+				
+				this.velocityX = orthogVelocity.x;
+				this.velocityY = 0;
+			}
 			
 			return currentAction + "Right";
 		}
 		
 		else if (keysTriggered.West)
 		{
-			currentAction = actionSet.Walk;
-			
 			previousKeysTriggered.North = false;
 			previousKeysTriggered.South = false;
 			
 			previousKeysTriggered.East = false;
 			previousKeysTriggered.West = true;
 			
-			this.velocityX = orthogVelocity.x * -1;
-			this.velocityY = 0;
+			if (canWalk)
+			{
+				currentAction = actionSet.Walk;
+				
+				this.velocityX = orthogVelocity.x * -1;
+				this.velocityY = 0;
+			}
 			
 			return currentAction + "Left"; 
 		}
 		
 		else if (keysTriggered.South)
-		{
-			currentAction = actionSet.Walk;
-			
+		{			
 			previousKeysTriggered.North = false;
 			previousKeysTriggered.South = true;
 			
 			previousKeysTriggered.East = false;
 			previousKeysTriggered.West = false;
 			
-			this.velocityX = 0;
-			this.velocityY = orthogVelocity.y;
+			if (canWalk)
+			{
+				currentAction = actionSet.Walk;
+				
+				this.velocityX = 0;
+				this.velocityY = orthogVelocity.y;
+			}
 			
 			return currentAction + "Down"; 
 		}
 		
 		else if (keysTriggered.North)
-		{
-			currentAction = actionSet.Walk;
-			
+		{			
 			previousKeysTriggered.North = true;
 			previousKeysTriggered.South = false;
 			
 			previousKeysTriggered.East = false;
 			previousKeysTriggered.West = false;
 			
-			this.velocityX = 0;
-			this.velocityY = orthogVelocity.y * -1;
+			if (canWalk)
+			{
+				currentAction = actionSet.Walk;
+				
+				this.velocityX = 0;
+				this.velocityY = orthogVelocity.y * -1;
+			}
 			
 			return currentAction + "Up";
 		}

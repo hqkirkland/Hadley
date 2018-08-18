@@ -15,9 +15,10 @@ class Room extends FlxSprite
 {
 	private var roomName:String;
 
-	private var itemMap:Dictionary<String, FlxPoint>;
-	public var walkMap:FlxSprite;
 	public var roomEntities:FlxTypedSpriteGroup<FlxSprite> = new FlxTypedSpriteGroup<FlxSprite>();
+	public var walkMap:FlxSprite;
+	
+	public var gridMap:Array<Array<Int>>;
 	
 	public function new(_roomName:String, ?X:Float=0, ?Y:Float=0) 
 	{

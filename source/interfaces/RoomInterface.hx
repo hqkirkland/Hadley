@@ -6,7 +6,6 @@ package interfaces;
  */
 class RoomInterface 
 {
-	
 	public function new() 
 	{
 		

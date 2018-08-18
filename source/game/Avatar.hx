@@ -86,13 +86,15 @@ class Avatar extends FlxSprite
 	private function doAnimation():Void
 	{
 		var animationString:String = buildAnimationString();
+		//animationString = StringTools.replace(animationString, "Walk", "Stand");
+		
 		animation.play(animationString);
 		
 		if (keysTriggered.Run)
 		{
 			this.velocity = FlxPoint.get(this.velocityX * 1.66, this.velocityY * 1.66);
 		}
-	
+		
 		else
 		{
 			this.velocity = FlxPoint.get(this.velocityX, this.velocityY);

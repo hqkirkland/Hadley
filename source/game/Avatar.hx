@@ -4,7 +4,6 @@ import flixel.FlxSprite;
 import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxTileFrames;
 import flixel.math.FlxPoint;
-import flixel.math.FlxRect;
 import openfl.display.BitmapData;
 import openfl.geom.Point;
 import openfl.geom.Rectangle;
@@ -30,8 +29,6 @@ class Avatar extends FlxSprite
 	public var velocityX:Float = 0;
 	public var velocityY:Float = 0;
 	
-	public var walkSprite:FlxSprite;
-	
 	private var avatarSheet:GraphicsSheet = new GraphicsSheet(1772, 68);
 	
 	public static var actionSet:Object = {Stand: "Stand", Walk: "Walk", Sit: "Sit", Hold: "Hold"};
@@ -55,26 +52,14 @@ class Avatar extends FlxSprite
 		itemArray[1] = "Shoes";
 		itemArray[2] = "Jeans";
 		itemArray[3] = "Overcoat";
-		itemArray[4] = "Face";
-		itemArray[5] = "Hair";
-		itemArray[6] = "Glasses";
-		itemArray[7] = "Hat";
+		itemArray[4] = "Hat2";
+		itemArray[5] = "Face";
+		itemArray[6] = "Hair";
+		itemArray[7] = "Glasses";
+		itemArray[8] = "Hat";
 		
 		generateAvatar();
 		generateAnimation();
-	}
-	
-	public function generateAvatar():Void
-	{
-		var itemSprite:FlxSprite = new FlxSprite(0, 0);
-		
-		for (itemName in itemArray)
-		{
-			itemSprite.loadGraphic("assets/images/" + itemName + ".png");
-			avatarSheet.drawItem(itemSprite.pixels);
-		}
-		
-		this.pixels = new BitmapData(41, 68, true, 0x00000000);
 	}
 	
 	override public function update(elapsed:Float):Void
@@ -86,7 +71,6 @@ class Avatar extends FlxSprite
 	private function doAnimation():Void
 	{
 		var animationString:String = buildAnimationString();
-		//animationString = StringTools.replace(animationString, "Walk", "Stand");
 		
 		animation.play(animationString);
 		
@@ -101,6 +85,62 @@ class Avatar extends FlxSprite
 		}
 		
 		this.velocity.put();
+	}
+	
+	public function generateAvatar():Void
+	{
+		var itemSprite:FlxSprite = new FlxSprite(0, 0);
+		
+		for (itemName in itemArray)
+		{
+			itemSprite.loadGraphic("assets/images/" + itemName + ".png");
+			
+			itemSprite.pixels = avatarSheet.colorItem(itemSprite.pixels, 0);			
+			avatarSheet.drawItem(itemSprite.pixels);
+		}
+		
+		this.pixels = new BitmapData(41, 68, true, 0x00000000);
+	}
+	
+	private function generateAnimation():Void
+	{
+		this.frames = FlxTileFrames.fromGraphic(FlxGraphic.fromBitmapData(avatarSheet.bitmapData), frameSizePoint);
+		
+		animation.add("StandUp", [0], 9, false, false);
+		animation.add("StandUpRight", [1], 9, false, false);
+		animation.add("StandRight", [2], 9, false, false);
+		animation.add("StandDownRight", [3], 9, false, false);
+		animation.add("StandDown", [4], 9, false, false);
+		
+		animation.add("StandUpLeft", [1], 9, false, true);
+		animation.add("StandLeft", [2], 9, false, true);
+		animation.add("StandDownLeft", [3], 9, false, true);
+		
+		animation.add("HoldUp", [37], 9, false, false);
+		animation.add("HoldUpRight", [38], 9, false, false);
+		animation.add("HoldRight", [39], 9, false, false);
+		animation.add("HoldDownRight", [40], 9, false, false);
+		animation.add("HoldDown", [41], 9, false, false);
+		
+		animation.add("HoldUpLeft", [38], 9, false, true);
+		animation.add("HoldLeft", [39], 9, false, true);
+		animation.add("HoldDownLeft", [40], 9, false, true);
+		
+		animation.add("WalkUp", [5, 6, 7, 8, 9, 10], 9, true, false);
+		animation.add("WalkDown", [29, 30, 31, 32, 33, 34], 9, true, false);
+		
+		animation.add("WalkUpRight", [11, 12, 13, 14, 15, 16], 9, true, false);
+		animation.add("WalkRight", [17, 18, 19, 20, 21, 22], 9, true, false);
+		animation.add("WalkDownRight", [23, 24, 25, 26, 27, 28], 9, true, false);
+		
+		animation.add("WalkUpLeft", [11, 12, 13, 14, 15, 16], 9, true, true);
+		animation.add("WalkLeft", [17, 18, 19, 20, 21, 22], 9, true, true);
+		animation.add("WalkDownLeft", [23, 24, 25, 26, 27, 28], 9, true, true);
+		
+		animation.add("SitDownLeft", [35], 9, false, true);
+		animation.add("SitUpLeft", [36], 9, false, true);
+		animation.add("SitDownRight", [35], 9, false, false);
+		animation.add("SitUpRight", [36], 9, false, false);
 	}
 	
 	private function buildAnimationString():String
@@ -300,46 +340,5 @@ class Avatar extends FlxSprite
 		}
 		
 		return currentAction + "Down";
-	}
-	
-	private function generateAnimation():Void
-	{
-		this.frames = FlxTileFrames.fromGraphic(FlxGraphic.fromBitmapData(avatarSheet.bitmapData), frameSizePoint);
-		
-		animation.add("StandUp", [0], 9, false, false);
-		animation.add("StandUpRight", [1], 9, false, false);
-		animation.add("StandRight", [2], 9, false, false);
-		animation.add("StandDownRight", [3], 9, false, false);
-		animation.add("StandDown", [4], 9, false, false);
-		
-		animation.add("StandUpLeft", [1], 9, false, true);
-		animation.add("StandLeft", [2], 9, false, true);
-		animation.add("StandDownLeft", [3], 9, false, true);
-		
-		animation.add("HoldUp", [37], 9, false, false);
-		animation.add("HoldUpRight", [38], 9, false, false);
-		animation.add("HoldRight", [39], 9, false, false);
-		animation.add("HoldDownRight", [40], 9, false, false);
-		animation.add("HoldDown", [41], 9, false, false);
-		
-		animation.add("HoldUpLeft", [38], 9, false, true);
-		animation.add("HoldLeft", [39], 9, false, true);
-		animation.add("HoldDownLeft", [40], 9, false, true);
-		
-		animation.add("WalkUp", [5, 6, 7, 8, 9, 10], 9, true, false);
-		animation.add("WalkDown", [29, 30, 31, 32, 33, 34], 9, true, false);
-		
-		animation.add("WalkUpRight", [11, 12, 13, 14, 15, 16], 9, true, false);
-		animation.add("WalkRight", [17, 18, 19, 20, 21, 22], 9, true, false);
-		animation.add("WalkDownRight", [23, 24, 25, 26, 27, 28], 9, true, false);
-		
-		animation.add("WalkUpLeft", [11, 12, 13, 14, 15, 16], 9, true, true);
-		animation.add("WalkLeft", [17, 18, 19, 20, 21, 22], 9, true, true);
-		animation.add("WalkDownLeft", [23, 24, 25, 26, 27, 28], 9, true, true);
-		
-		animation.add("SitDownLeft", [35], 9, false, true);
-		animation.add("SitUpLeft", [36], 9, false, true);
-		animation.add("SitDownRight", [35], 9, false, false);
-		animation.add("SitUpRight", [36], 9, false, false);
 	}
 }

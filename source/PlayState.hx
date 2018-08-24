@@ -3,7 +3,6 @@ package;
 import flixel.FlxState;
 import flixel.FlxG;
 import flixel.input.keyboard.FlxKeyList;
-import flixel.FlxCamera.FlxCameraFollowStyle;
 import flixel.math.FlxPoint;
 import game.Avatar;
 import game.Room;
@@ -29,21 +28,21 @@ class PlayState extends FlxState
 		currentRoom = new Room("cloudInfoRoom");
 		
 		// FlxG.camera.follow(playerAvatar, FlxCameraFollowStyle.NO_DEAD_ZONE);
-		FlxG.debugger.visible = true;
+		// FlxG.debugger.visible = true;
 		
 		currentRoom.addAvatar(playerAvatar, 150, 250);
 		currentRoom.addItem("item_door1", 125, 210);
-		currentRoom.addItem("item_statue", 260, 200);
+		//currentRoom.addItem("item_statue", 260, 200);
 		
 		add(currentRoom);
-		add(currentRoom.walkMap);
+		//add(currentRoom.walkMap);
 		add(currentRoom.roomEntities);
-
+		
 		FlxG.log.redirectTraces = true;
 	}
 	
 	private function testNextPoints():FlxPoint
-	{		
+	{
 		var rx:Float = 0;
 		var ry:Float = 0;
 		
@@ -51,7 +50,7 @@ class PlayState extends FlxState
 		var ly:Float = 0;
 		
 		if (playerAvatar.keysTriggered.North)
-		{		
+		{
 			if (Northeast)
 			{
 				// Represents right foot.
@@ -128,13 +127,16 @@ class PlayState extends FlxState
 		{
 			if (!Southwest && !Northwest)
 			{
-				lx = playerAvatar.x + 13;
-				ly = playerAvatar.y + 58;
+				rx = playerAvatar.x + 10;
+				ry = playerAvatar.y + 58;
 				
-				rx = playerAvatar.x + 13;
-				ry = playerAvatar.y + 63;
+				lx = playerAvatar.x + 10;
+				ly = playerAvatar.y + 65;
 			}
 		}
+		
+		var a:Int = currentRoom.testWalkmap(rx, ry);
+		var b:Int = currentRoom.testWalkmap(lx, ly);
 		
 		var ptR:Float = (currentRoom.testWalkmap(rx, ry) / 65793) % 255;
 		var ptL:Float = (currentRoom.testWalkmap(lx, ly) / 65793) % 255;

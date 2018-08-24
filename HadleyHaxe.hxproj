@@ -18,6 +18,9 @@
     <class path="C:\HaxeToolkit\haxe\lib\flixel\4,4,0" />
     <class path="C:\HaxeToolkit\haxe\lib\openfl\8,0,1\src" />
     <class path="C:\HaxeToolkit\haxe\lib\lime\6,3,0" />
+    <class path="C:\HaxeToolkit\haxe\lib\thx,color\0,19,1\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\thx,core\0,43,0\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\hxColorToolkit\1,6,1" />
     <class path="source" />
     <class path="C:\HaxeToolkit\haxe\lib\openfl\8,0,1\src\externs\core\flash" />
     <class path="C:\HaxeToolkit\haxe\lib\openfl\8,0,1\src\externs\core\openfl" />
@@ -26,7 +29,7 @@
   </classpaths>
   <!-- Build options -->
   <build>
-    <option directives="flixel=4.4.0&#xA;openfl=8.0.1&#xA;lime=6.3.0&#xA;FLX_RECORD&#xA;tools=6.3.0&#xA;no-compilation&#xA;openfl-flash&#xA;fdb&#xA;web&#xA;display" />
+    <option directives="flixel=4.4.0&#xA;openfl=8.0.1&#xA;lime=6.3.0&#xA;thx.color=0.19.1&#xA;thx_core&#xA;thx.core=0.43.0&#xA;hxColorToolkit=1.6.1&#xA;FLX_RECORD&#xA;tools=6.3.0&#xA;no-compilation&#xA;openfl-flash&#xA;fdb&#xA;web&#xA;display" />
     <option flashStrict="False" />
     <option noInlineOnDebug="False" />
     <option mainClass="ApplicationMain" />

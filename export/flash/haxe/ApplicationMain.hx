@@ -24,7 +24,7 @@ import haxe.macro.Expr;
 		
 		var config = {
 			
-			build: "5",
+			build: "6",
 			company: "Nodebay.com",
 			file: "HadleyHaxe",
 			fps: 24,

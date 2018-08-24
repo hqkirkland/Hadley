@@ -1,0 +1,21 @@
+Colors were replaced individually by some kind of dictionary lookup.
+
+Proof:
+	Open AzureHat.png, Hat54.bmp
+	Hat54.bmp uses blue masking
+	
+	Notice that each color in the blue mask palette comes out to be a different hue:
+		#003366 = HSL(210, 100, 40)
+		#0066CC = HSL(210, 100, 80)
+		#0099FF = HSL(204, 100, 100)
+		#33CCFF = HSL(195, 80, 100)
+		
+	Whereas, the azure colored hat on Monk uses a single-hue palette:
+		#0C4944 = HSL(175, 83, 28)
+		#24B5AA = HSL(175, 80, 70)
+		#5CEBE0 = HSL(175, 60, 92)
+		#A9F6F0 = HSL(175, 31, 96)
+
+This means that, while Hue could be a critical part of the designers'
+formulation of their palette, colors were not calculated by the client 
+based on the original hues of the mask palette.

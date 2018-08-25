@@ -18,24 +18,27 @@ class Avatar extends FlxSprite
 	public var username:String;
 	public var country:String;
 	
-	public var itemArray:Array<String>;
+	// TODO: Convert to some kind of object w/ attribute for each body piece.
+	// Also attribute for each piece color.
+	public var itemArray:Array<Object>;
+	
+	public var canWalk:Bool = true;
+	public var isHolding:Bool = false;
+	public var currentAction:String = "Stand";
 	
 	public var keysTriggered:Object = {North: false, South: false, East: false, West: false, Run: false};
 	public var previousKeysTriggered:Object = {North: false, South: false, East: false, West: false};
-	public var canWalk:Bool = true;
-	public var currentAction:String = "Stand";
-	public var isHolding:Bool = false;
 	
 	public var velocityX:Float = 0;
 	public var velocityY:Float = 0;
 	
-	private var avatarSheet:GraphicsSheet = new GraphicsSheet(1772, 68);
-	
 	public static var actionSet:Object = {Stand: "Stand", Walk: "Walk", Sit: "Sit", Hold: "Hold"};
+	
+	private var avatarSheet:GraphicsSheet = new GraphicsSheet(1772, 68);
+	private static var sheetCanvas:BitmapData = new BitmapData(1722, 68);
 	
 	private static var zeroPoint:Point = new Point(0, 0);
 	private static var frameSizePoint:FlxPoint = new FlxPoint(41, 68);
-	private static var sheetCanvas:BitmapData = new BitmapData(1722, 68);
 	private static var sheetRect:Rectangle = new Rectangle(0, 0, 1722, 68);
 	
 	// It saves CPU to pre-determine velocities rather than calculate them every frame.
@@ -47,16 +50,16 @@ class Avatar extends FlxSprite
 		super();
 		username = _username;
 		
-		itemArray = new Array<String>();
-		itemArray[0] = "Body";
-		itemArray[1] = "Shoes";
-		itemArray[2] = "Jeans";
-		itemArray[3] = "Overcoat";
-		itemArray[4] = "Hat2";
-		itemArray[5] = "Face";
-		itemArray[6] = "Hair";
-		itemArray[7] = "Glasses";
-		itemArray[8] = "Hat";
+		itemArray = new Array<Object>();
+		itemArray[0] = { Asset: "Body", Color: 0, TypeNum: 0 };
+		itemArray[1] = { Asset: "Shoes", Color: 1, TypeNum: 2 };
+		itemArray[2] = { Asset: "Jeans", Color: 1, TypeNum: 2 };
+		itemArray[3] = { Asset: "Overcoat", Color: 1, TypeNum: 2 };
+		itemArray[4] = { Asset: "Douli2", Color: 0, TypeNum: 2 };
+		itemArray[5] = { Asset: "Face", Color: 0, TypeNum: 0 };
+		itemArray[6] = { Asset: "Hair", Color: 1, TypeNum: 1 };
+		itemArray[7] = { Asset: "Glasses", Color: 0, TypeNum: 2 };
+		itemArray[8] = { Asset: "Douli", Color: 0, TypeNum: 2 };
 		
 		generateAvatar();
 		generateAnimation();
@@ -91,11 +94,11 @@ class Avatar extends FlxSprite
 	{
 		var itemSprite:FlxSprite = new FlxSprite(0, 0);
 		
-		for (itemName in itemArray)
+		for (item in itemArray)
 		{
-			itemSprite.loadGraphic("assets/images/" + itemName + ".png");
+			itemSprite.loadGraphic("assets/images/" + item.Asset + ".png");
 			
-			itemSprite.pixels = avatarSheet.colorItem(itemSprite.pixels, 0);			
+			itemSprite.pixels = avatarSheet.colorItem(itemSprite.pixels, item.Color, item.TypeNum);			
 			avatarSheet.drawItem(itemSprite.pixels);
 		}
 		

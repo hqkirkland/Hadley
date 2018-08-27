@@ -26,8 +26,8 @@ class Avatar extends FlxSprite
 	public var isHolding:Bool = false;
 	public var currentAction:String = "Stand";
 	
-	public var keysTriggered:Object = {North: false, South: false, East: false, West: false, Run: false};
-	public var previousKeysTriggered:Object = {North: false, South: false, East: false, West: false};
+	public var keysTriggered:Object = { North: false, South: false, East: false, West: false, Run: false };
+	public var previousKeysTriggered:Object = { North: false, South: false, East: false, West: false };
 	
 	public var velocityX:Float = 0;
 	public var velocityY:Float = 0;

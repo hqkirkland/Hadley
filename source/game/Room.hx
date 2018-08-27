@@ -3,9 +3,7 @@ package game;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.group.FlxSpriteGroup;
-import flixel.math.FlxPoint;
 import flixel.util.FlxSort;
-import openfl.utils.Dictionary;
 
 /**
  * ...
@@ -24,13 +22,12 @@ class Room extends FlxSprite
 	{
 		super(X, Y);
 		roomName = _roomName;
-		
-		walkMap = new FlxSprite();
-		walkMap.loadGraphic("assets/images/rooms/" + roomName + "/" + roomName + "_map.png");
-		walkMap.x = 20;
-		walkMap.y = 175;
+		walkMap = new FlxSprite();		
 		
 		this.loadGraphic("assets/images/rooms/" + roomName + "/" + roomName + ".png");
+		walkMap.loadGraphic("assets/images/rooms/" + roomName + "/" + roomName + "_map.png");
+		walkMap.x = this.x + 20;
+		walkMap.y = this.y + 175;
 	}
 	
 	public function addAvatar(newAvatar:Avatar, x:Int=0, y:Int=0):Void
@@ -43,7 +40,7 @@ class Room extends FlxSprite
 	
 	public function addItem(graphicName:String, x:Int=0, y:Int=0):Void
 	{
-		var itemSprite:FlxSprite = new FlxSprite(x, y);		
+		var itemSprite:FlxSprite = new FlxSprite(this.x + x, this.y + y);		
 		itemSprite.loadGraphic("assets/images/rooms/" + roomName + "/" + graphicName + ".png");
 		
 		var itemGraphics:GraphicsSheet = new GraphicsSheet(Std.int(itemSprite.width), Std.int(itemSprite.height));

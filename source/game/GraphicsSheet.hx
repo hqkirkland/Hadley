@@ -2,7 +2,6 @@ package game;
 import openfl.display.BitmapData;
 import openfl.geom.Point;
 import openfl.display.Bitmap;
-import openfl.utils.Dictionary;
 
 /**
  * ...
@@ -43,7 +42,7 @@ class GraphicsSheet extends Bitmap
 		super();
 		this.bitmapData = new BitmapData(width, height, true, 0x00000000);
 	}
-		
+	
 	public function drawItem(itemBitmap:BitmapData, dx:Int=0, dy:Int=0):Void
 	{
 		staticPoint.x = dx;
@@ -87,7 +86,7 @@ class GraphicsSheet extends Bitmap
 		
 		// Item.
 		else if (typeNumber == 2)
-		{		
+		{
 			for (n in 0...greenPalette.length)
 			{
 				var replacementColor:Int = itemColors[colorNumber][n];

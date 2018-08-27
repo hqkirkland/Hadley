@@ -20,11 +20,25 @@ import haxe.macro.Expr;
 	
 	public static function main () {
 		
+		#if (lime >= "7.0.0")
+		
+		lime.system.System.__registerEntryPoint ("HadleyHaxe", create);
+		
+		#if (js && html5)
+		#if (munit || utest)
+		lime.system.System.embed ("HadleyHaxe", null, 800, 600);
+		#end
+		#else
+		create (null);
+		#end
+		
+		#else
+		
 		var projectName = "HadleyHaxe";
 		
 		var config = {
 			
-			build: "7",
+			build: "8",
 			company: "Nodebay.com",
 			file: "HadleyHaxe",
 			fps: 24,
@@ -40,8 +54,8 @@ import haxe.macro.Expr;
 					antialiasing: 0,
 					background: 0,
 					borderless: false,
-					colorDepth: 16,
-					depthBuffer: false,
+					colorDepth: 32,
+					depthBuffer: true,
 					display: 0,
 					fullscreen: false,
 					hardware: true,
@@ -84,12 +98,122 @@ import haxe.macro.Expr;
 		create (config);
 		#end
 		
+		#end
+		
 	}
 	
 	
-	public static function create (config:lime.app.Config):Void {
+	public static function create (config):Void {
 		
 		var app = new openfl.display.Application ();
+		
+		#if (lime >= "7.0.0")
+		ManifestResources.init (config);
+		
+		app.meta["build"] = "8";
+		app.meta["company"] = "Nodebay.com";
+		app.meta["file"] = "HadleyHaxe";
+		app.meta["name"] = "HadleyHaxe";
+		app.meta["packageName"] = "com.example.myapp";
+		
+		#if !flash
+		
+		var attributes:lime.ui.WindowAttributes = {
+			
+			allowHighDPI: true,
+			alwaysOnTop: false,
+			borderless: false,
+			// display: 0,
+			element: null,
+			frameRate: 24,
+			#if !web fullscreen: false, #end
+			height: 600,
+			hidden: #if munit true #else false #end,
+			maximized: false,
+			minimized: false,
+			parameters: {},
+			resizable: false,
+			title: "HadleyHaxe",
+			width: 800,
+			x: null,
+			y: null,
+			
+		};
+		
+		attributes.context = {
+			
+			antialiasing: 0,
+			background: 0,
+			colorDepth: 32,
+			depth: true,
+			hardware: true,
+			stencil: true,
+			type: null,
+			vsync: true
+			
+		};
+		
+		if (app.window == null) {
+			
+			if (config != null) {
+				
+				for (field in Reflect.fields (config)) {
+					
+					if (Reflect.hasField (attributes, field)) {
+						
+						Reflect.setField (attributes, field, Reflect.field (config, field));
+						
+					} else if (Reflect.hasField (attributes.context, field)) {
+						
+						Reflect.setField (attributes.context, field, Reflect.field (config, field));
+						
+					}
+					
+				}
+				
+			}
+			
+			#if sys
+			lime.system.System.__parseArguments (attributes);
+			#end
+			
+		}
+		
+		app.createWindow (attributes);
+		
+		#elseif !air
+		
+		app.window.context.attributes.background = 0;
+		app.window.frameRate = 24;
+		
+		#end
+		
+		var preloader = getPreloader ();
+		app.preloader.onProgress.add (function (loaded, total) {
+			@:privateAccess preloader.update (loaded, total);
+		});
+		app.preloader.onComplete.add (function () {
+			@:privateAccess preloader.start ();
+		});
+		
+		preloader.onComplete.add (start.bind (cast (app.window, openfl.display.Window).stage));
+		
+		for (library in ManifestResources.preloadLibraries) {
+			
+			app.preloader.addLibrary (library);
+			
+		}
+		
+		for (name in ManifestResources.preloadLibraryNames) {
+			
+			app.preloader.addLibraryName (name);
+			
+		}
+		
+		app.preloader.load ();
+		
+		#else
+		
 		app.create (config);
 		
 		ManifestResources.init (config);
@@ -97,7 +221,8 @@ import haxe.macro.Expr;
 		var preloader = getPreloader ();
 		app.setPreloader (preloader);
 		preloader.create (config);
-		preloader.onComplete.add (start.bind (app.window.stage));
+		
+		preloader.onComplete.add (start.bind (cast (app.window, openfl.display.Window).stage));
 		
 		for (library in ManifestResources.preloadLibraries) {
 			
@@ -112,6 +237,8 @@ import haxe.macro.Expr;
 		}
 		
 		preloader.load ();
+		
+		#end
 		
 		var result = app.exec ();
 		

@@ -1,7 +1,6 @@
 package;
 
 
-import lime.app.Config;
 import lime.utils.AssetLibrary;
 import lime.utils.AssetManifest;
 import lime.utils.Assets;
@@ -20,7 +19,7 @@ import sys.FileSystem;
 	public static var preloadLibraryNames:Array<String>;
 	
 	
-	public static function init (config:Config):Void {
+	public static function init (config:Dynamic):Void {
 		
 		preloadLibraries = new Array ();
 		preloadLibraryNames = new Array ();
@@ -55,7 +54,18 @@ import sys.FileSystem;
 		
 		var data, manifest, library;
 		
-		data = '{"name":null,"assets":"aoy4:sizezy4:typey4:TEXTy9:classNamey35:__ASSET__assets_data_colortable_txty2:idy30:assets%2Fdata%2FColorTable.txtgoR0i64R1R2R3y32:__ASSET__assets_data_roommap_txtR5y27:assets%2Fdata%2FRoomMap.txtgoR0i11583R1y5:IMAGER3y31:__ASSET__assets_images_body_pngR5y26:assets%2Fimages%2FBody.pnggoR0i8503R1R9R3y32:__ASSET__assets_images_douli_pngR5y27:assets%2Fimages%2FDouli.pnggoR0i2925R1R9R3y33:__ASSET__assets_images_douli2_pngR5y28:assets%2Fimages%2FDouli2.pnggoR0i6591R1R9R3y31:__ASSET__assets_images_face_pngR5y26:assets%2Fimages%2FFace.pnggoR0i1580R1R9R3y34:__ASSET__assets_images_glasses_pngR5y29:assets%2Fimages%2FGlasses.pnggoR0i6221R1R9R3y31:__ASSET__assets_images_hair_pngR5y26:assets%2Fimages%2FHair.pnggoR0i9136R1R9R3y30:__ASSET__assets_images_hat_pngR5y25:assets%2Fimages%2FHat.pnggoR0i2839R1R9R3y31:__ASSET__assets_images_hat2_pngR5y26:assets%2Fimages%2FHat2.pnggoR0i7292R1R9R3y33:__ASSET__assets_images_jacket_pngR5y28:assets%2Fimages%2FJacket.pnggoR0i4981R1R9R3y32:__ASSET__assets_images_jeans_pngR5y27:assets%2Fimages%2FJeans.pnggoR0i9547R1R9R3y35:__ASSET__assets_images_overcoat_pngR5y30:assets%2Fimages%2FOvercoat.pnggoR0i7078R1R9R3y32:__ASSET__assets_images_pants_pngR5y27:assets%2Fimages%2FPants.pnggoR0i58589R1R9R3y60:__ASSET__assets_images_rooms_cloudinforoom_cloudinforoom_pngR5y59:assets%2Fimages%2Frooms%2FcloudInfoRoom%2FcloudInfoRoom.pnggoR0i2424R1R9R3y64:__ASSET__assets_images_rooms_cloudinforoom_cloudinforoom_map_pngR5y63:assets%2Fimages%2Frooms%2FcloudInfoRoom%2FcloudInfoRoom_map.pnggoR0i4162R1R9R3y71:__ASSET__assets_images_rooms_cloudinforoom_cloudinforoom_map_matrix_pngR5y70:assets%2Fimages%2Frooms%2FcloudInfoRoom%2FcloudInfoRoom_map_MATRIX.pnggoR0i1520R1R9R3y57:__ASSET__assets_images_rooms_cloudinforoom_item_door1_pngR5y56:assets%2Fimages%2Frooms%2FcloudInfoRoom%2Fitem_door1.pnggoR0i917R1R9R3y57:__ASSET__assets_images_rooms_cloudinforoom_item_door2_pngR5y56:assets%2Fimages%2Frooms%2FcloudInfoRoom%2Fitem_door2.pnggoR0i2105R1R9R3y58:__ASSET__assets_images_rooms_cloudinforoom_item_statue_pngR5y57:assets%2Fimages%2Frooms%2FcloudInfoRoom%2Fitem_statue.pnggoR0i4350R1R9R3y32:__ASSET__assets_images_shoes_pngR5y27:assets%2Fimages%2FShoes.pnggoR0i22600R1R9R3y35:__ASSET__assets_images_template_pngR5y30:assets%2Fimages%2FTemplate.pnggoR0i890895R1y6:BINARYR3y25:__ASSET__assets_intro_swfR5y18:assets%2Fintro.swfgoR0i392540R1R50R3y30:__ASSET__assets_membership_swfR5y23:assets%2FMembership.swfgoR0zR1R2R3y41:__ASSET__assets_music_music_goes_here_txtR5y36:assets%2Fmusic%2Fmusic-goes-here.txtgoR0i340427R1R50R3y24:__ASSET__assets_pets_swfR5y17:assets%2Fpets.swfgoR0zR1R2R3y41:__ASSET__assets_sounds_sounds_go_here_txtR5y36:assets%2Fsounds%2Fsounds-go-here.txtgoR0i177558R1R50R3y25:__ASSET__assets_video_swfR5y18:assets%2Fvideo.swfgoR0i2114R1y5:MUSICR3y31:__ASSET__flixel_sounds_beep_mp3R5y26:flixel%2Fsounds%2Fbeep.mp3goR0i39706R1R63R3y33:__ASSET__flixel_sounds_flixel_mp3R5y28:flixel%2Fsounds%2Fflixel.mp3goR0i15744R1y4:FONTR3y35:__ASSET__flixel_fonts_nokiafc22_ttfR5y30:flixel%2Ffonts%2Fnokiafc22.ttfgoR0i29724R1R68R3y36:__ASSET__flixel_fonts_monsterrat_ttfR5y31:flixel%2Ffonts%2Fmonsterrat.ttfgoR0i519R1R9R3y36:__ASSET__flixel_images_ui_button_pngR5y33:flixel%2Fimages%2Fui%2Fbutton.pnggoR0i3280R1R9R3y39:__ASSET__flixel_images_logo_default_pngR5y36:flixel%2Fimages%2Flogo%2Fdefault.pnggh","version":2,"libraryArgs":[],"libraryType":null}';
+		#if kha
+		
+		null
+		library = AssetLibrary.fromManifest (manifest);
+		Assets.registerLibrary ("null", library);
+		
+		if (library != null) preloadLibraries.push (library);
+		else preloadLibraryNames.push ("null");
+		
+		#else
+		
+		data = '{"name":null,"assets":"aoy4:sizei75y4:typey4:TEXTy9:classNamey39:__ASSET__assets_data_cloudinforoom_jsony2:idy34:assets%2Fdata%2FcloudInfoRoom.jsongoR0zR1R2R3y36:__ASSET__assets_data_colortable_jsonR5y31:assets%2Fdata%2FColorTable.jsongoR0i11583R1y5:IMAGER3y31:__ASSET__assets_images_body_pngR5y26:assets%2Fimages%2FBody.pnggoR0i8503R1R9R3y32:__ASSET__assets_images_douli_pngR5y27:assets%2Fimages%2FDouli.pnggoR0i2925R1R9R3y33:__ASSET__assets_images_douli2_pngR5y28:assets%2Fimages%2FDouli2.pnggoR0i6591R1R9R3y31:__ASSET__assets_images_face_pngR5y26:assets%2Fimages%2FFace.pnggoR0i1580R1R9R3y34:__ASSET__assets_images_glasses_pngR5y29:assets%2Fimages%2FGlasses.pnggoR0i6221R1R9R3y31:__ASSET__assets_images_hair_pngR5y26:assets%2Fimages%2FHair.pnggoR0i9136R1R9R3y30:__ASSET__assets_images_hat_pngR5y25:assets%2Fimages%2FHat.pnggoR0i2839R1R9R3y31:__ASSET__assets_images_hat2_pngR5y26:assets%2Fimages%2FHat2.pnggoR0i7292R1R9R3y33:__ASSET__assets_images_jacket_pngR5y28:assets%2Fimages%2FJacket.pnggoR0i4981R1R9R3y32:__ASSET__assets_images_jeans_pngR5y27:assets%2Fimages%2FJeans.pnggoR0i9547R1R9R3y35:__ASSET__assets_images_overcoat_pngR5y30:assets%2Fimages%2FOvercoat.pnggoR0i7078R1R9R3y32:__ASSET__assets_images_pants_pngR5y27:assets%2Fimages%2FPants.pnggoR0i58589R1R9R3y60:__ASSET__assets_images_rooms_cloudinforoom_cloudinforoom_pngR5y59:assets%2Fimages%2Frooms%2FcloudInfoRoom%2FcloudInfoRoom.pnggoR0i2424R1R9R3y64:__ASSET__assets_images_rooms_cloudinforoom_cloudinforoom_map_pngR5y63:assets%2Fimages%2Frooms%2FcloudInfoRoom%2FcloudInfoRoom_map.pnggoR0i1520R1R9R3y57:__ASSET__assets_images_rooms_cloudinforoom_item_door1_pngR5y56:assets%2Fimages%2Frooms%2FcloudInfoRoom%2Fitem_door1.pnggoR0i917R1R9R3y57:__ASSET__assets_images_rooms_cloudinforoom_item_door2_pngR5y56:assets%2Fimages%2Frooms%2FcloudInfoRoom%2Fitem_door2.pnggoR0i2105R1R9R3y58:__ASSET__assets_images_rooms_cloudinforoom_item_statue_pngR5y57:assets%2Fimages%2Frooms%2FcloudInfoRoom%2Fitem_statue.pnggoR0i4350R1R9R3y32:__ASSET__assets_images_shoes_pngR5y27:assets%2Fimages%2FShoes.pnggoR0i22600R1R9R3y35:__ASSET__assets_images_template_pngR5y30:assets%2Fimages%2FTemplate.pnggoR0zR1R2R3y41:__ASSET__assets_music_music_goes_here_txtR5y36:assets%2Fmusic%2Fmusic-goes-here.txtgoR0zR1R2R3y41:__ASSET__assets_sounds_sounds_go_here_txtR5y36:assets%2Fsounds%2Fsounds-go-here.txtgoR0i2114R1y5:MUSICR3y31:__ASSET__flixel_sounds_beep_mp3R5y26:flixel%2Fsounds%2Fbeep.mp3goR0i39706R1R52R3y33:__ASSET__flixel_sounds_flixel_mp3R5y28:flixel%2Fsounds%2Fflixel.mp3goR0i15744R1y4:FONTR3y35:__ASSET__flixel_fonts_nokiafc22_ttfR5y30:flixel%2Ffonts%2Fnokiafc22.ttfgoR0i29724R1R57R3y36:__ASSET__flixel_fonts_monsterrat_ttfR5y31:flixel%2Ffonts%2Fmonsterrat.ttfgoR0i519R1R9R3y36:__ASSET__flixel_images_ui_button_pngR5y33:flixel%2Fimages%2Fui%2Fbutton.pnggoR0i3280R1R9R3y39:__ASSET__flixel_images_logo_default_pngR5y36:flixel%2Fimages%2Flogo%2Fdefault.pnggh","rootPath":null,"version":2,"libraryArgs":[],"libraryType":null}';
 		manifest = AssetManifest.parse (data, rootPath);
 		library = AssetLibrary.fromManifest (manifest);
 		Assets.registerLibrary ("default", library);
@@ -66,17 +76,25 @@ import sys.FileSystem;
 		else preloadLibraryNames.push ("default");
 		
 		
+		#end
+		
 	}
 	
 	
 }
 
 
+#if kha
+
+null
+
+#else
+
 #if !display
 #if flash
 
-@:keep @:bind #if display private #end class __ASSET__assets_data_colortable_txt extends flash.utils.ByteArray { }
-@:keep @:bind #if display private #end class __ASSET__assets_data_roommap_txt extends flash.utils.ByteArray { }
+@:keep @:bind #if display private #end class __ASSET__assets_data_cloudinforoom_json extends flash.utils.ByteArray { }
+@:keep @:bind #if display private #end class __ASSET__assets_data_colortable_json extends flash.utils.ByteArray { }
 @:keep @:bind #if display private #end class __ASSET__assets_images_body_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_douli_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_douli2_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
@@ -91,18 +109,13 @@ import sys.FileSystem;
 @:keep @:bind #if display private #end class __ASSET__assets_images_pants_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_rooms_cloudinforoom_cloudinforoom_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_rooms_cloudinforoom_cloudinforoom_map_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
-@:keep @:bind #if display private #end class __ASSET__assets_images_rooms_cloudinforoom_cloudinforoom_map_matrix_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_rooms_cloudinforoom_item_door1_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_rooms_cloudinforoom_item_door2_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_rooms_cloudinforoom_item_statue_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_shoes_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_template_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
-@:keep @:bind #if display private #end class __ASSET__assets_intro_swf extends flash.utils.ByteArray { }
-@:keep @:bind #if display private #end class __ASSET__assets_membership_swf extends flash.utils.ByteArray { }
 @:keep @:bind #if display private #end class __ASSET__assets_music_music_goes_here_txt extends flash.utils.ByteArray { }
-@:keep @:bind #if display private #end class __ASSET__assets_pets_swf extends flash.utils.ByteArray { }
 @:keep @:bind #if display private #end class __ASSET__assets_sounds_sounds_go_here_txt extends flash.utils.ByteArray { }
-@:keep @:bind #if display private #end class __ASSET__assets_video_swf extends flash.utils.ByteArray { }
 @:keep @:bind #if display private #end class __ASSET__flixel_sounds_beep_mp3 extends flash.media.Sound { }
 @:keep @:bind #if display private #end class __ASSET__flixel_sounds_flixel_mp3 extends flash.media.Sound { }
 @:keep @:bind #if display private #end class __ASSET__flixel_fonts_nokiafc22_ttf extends flash.text.Font { }
@@ -114,8 +127,8 @@ import sys.FileSystem;
 
 #elseif (desktop || cpp)
 
-@:keep @:file("assets/data/ColorTable.txt") #if display private #end class __ASSET__assets_data_colortable_txt extends haxe.io.Bytes {}
-@:keep @:file("assets/data/RoomMap.txt") #if display private #end class __ASSET__assets_data_roommap_txt extends haxe.io.Bytes {}
+@:keep @:file("assets/data/cloudInfoRoom.json") #if display private #end class __ASSET__assets_data_cloudinforoom_json extends haxe.io.Bytes {}
+@:keep @:file("assets/data/ColorTable.json") #if display private #end class __ASSET__assets_data_colortable_json extends haxe.io.Bytes {}
 @:keep @:image("assets/images/Body.png") #if display private #end class __ASSET__assets_images_body_png extends lime.graphics.Image {}
 @:keep @:image("assets/images/Douli.png") #if display private #end class __ASSET__assets_images_douli_png extends lime.graphics.Image {}
 @:keep @:image("assets/images/Douli2.png") #if display private #end class __ASSET__assets_images_douli2_png extends lime.graphics.Image {}
@@ -130,24 +143,19 @@ import sys.FileSystem;
 @:keep @:image("assets/images/Pants.png") #if display private #end class __ASSET__assets_images_pants_png extends lime.graphics.Image {}
 @:keep @:image("assets/images/rooms/cloudInfoRoom/cloudInfoRoom.png") #if display private #end class __ASSET__assets_images_rooms_cloudinforoom_cloudinforoom_png extends lime.graphics.Image {}
 @:keep @:image("assets/images/rooms/cloudInfoRoom/cloudInfoRoom_map.png") #if display private #end class __ASSET__assets_images_rooms_cloudinforoom_cloudinforoom_map_png extends lime.graphics.Image {}
-@:keep @:image("assets/images/rooms/cloudInfoRoom/cloudInfoRoom_map_MATRIX.png") #if display private #end class __ASSET__assets_images_rooms_cloudinforoom_cloudinforoom_map_matrix_png extends lime.graphics.Image {}
 @:keep @:image("assets/images/rooms/cloudInfoRoom/item_door1.png") #if display private #end class __ASSET__assets_images_rooms_cloudinforoom_item_door1_png extends lime.graphics.Image {}
 @:keep @:image("assets/images/rooms/cloudInfoRoom/item_door2.png") #if display private #end class __ASSET__assets_images_rooms_cloudinforoom_item_door2_png extends lime.graphics.Image {}
 @:keep @:image("assets/images/rooms/cloudInfoRoom/item_statue.png") #if display private #end class __ASSET__assets_images_rooms_cloudinforoom_item_statue_png extends lime.graphics.Image {}
 @:keep @:image("assets/images/Shoes.png") #if display private #end class __ASSET__assets_images_shoes_png extends lime.graphics.Image {}
 @:keep @:image("assets/images/Template.png") #if display private #end class __ASSET__assets_images_template_png extends lime.graphics.Image {}
-@:keep @:file("assets/intro.swf") #if display private #end class __ASSET__assets_intro_swf extends haxe.io.Bytes {}
-@:keep @:file("assets/Membership.swf") #if display private #end class __ASSET__assets_membership_swf extends haxe.io.Bytes {}
 @:keep @:file("assets/music/music-goes-here.txt") #if display private #end class __ASSET__assets_music_music_goes_here_txt extends haxe.io.Bytes {}
-@:keep @:file("assets/pets.swf") #if display private #end class __ASSET__assets_pets_swf extends haxe.io.Bytes {}
 @:keep @:file("assets/sounds/sounds-go-here.txt") #if display private #end class __ASSET__assets_sounds_sounds_go_here_txt extends haxe.io.Bytes {}
-@:keep @:file("assets/video.swf") #if display private #end class __ASSET__assets_video_swf extends haxe.io.Bytes {}
-@:keep @:file("C:/HaxeToolkit/haxe/lib/flixel/4,4,0/assets/sounds/beep.mp3") #if display private #end class __ASSET__flixel_sounds_beep_mp3 extends haxe.io.Bytes {}
-@:keep @:file("C:/HaxeToolkit/haxe/lib/flixel/4,4,0/assets/sounds/flixel.mp3") #if display private #end class __ASSET__flixel_sounds_flixel_mp3 extends haxe.io.Bytes {}
-@:keep @:font("C:/HaxeToolkit/haxe/lib/flixel/4,4,0/assets/fonts/nokiafc22.ttf") #if display private #end class __ASSET__flixel_fonts_nokiafc22_ttf extends lime.text.Font {}
-@:keep @:font("C:/HaxeToolkit/haxe/lib/flixel/4,4,0/assets/fonts/monsterrat.ttf") #if display private #end class __ASSET__flixel_fonts_monsterrat_ttf extends lime.text.Font {}
-@:keep @:image("C:/HaxeToolkit/haxe/lib/flixel/4,4,0/assets/images/ui/button.png") #if display private #end class __ASSET__flixel_images_ui_button_png extends lime.graphics.Image {}
-@:keep @:image("C:/HaxeToolkit/haxe/lib/flixel/4,4,0/assets/images/logo/default.png") #if display private #end class __ASSET__flixel_images_logo_default_png extends lime.graphics.Image {}
+@:keep @:file("C:/HaxeToolkit/haxe/lib/flixel/4,5,0/assets/sounds/beep.mp3") #if display private #end class __ASSET__flixel_sounds_beep_mp3 extends haxe.io.Bytes {}
+@:keep @:file("C:/HaxeToolkit/haxe/lib/flixel/4,5,0/assets/sounds/flixel.mp3") #if display private #end class __ASSET__flixel_sounds_flixel_mp3 extends haxe.io.Bytes {}
+@:keep @:font("C:/HaxeToolkit/haxe/lib/flixel/4,5,0/assets/fonts/nokiafc22.ttf") #if display private #end class __ASSET__flixel_fonts_nokiafc22_ttf extends lime.text.Font {}
+@:keep @:font("C:/HaxeToolkit/haxe/lib/flixel/4,5,0/assets/fonts/monsterrat.ttf") #if display private #end class __ASSET__flixel_fonts_monsterrat_ttf extends lime.text.Font {}
+@:keep @:image("C:/HaxeToolkit/haxe/lib/flixel/4,5,0/assets/images/ui/button.png") #if display private #end class __ASSET__flixel_images_ui_button_png extends lime.graphics.Image {}
+@:keep @:image("C:/HaxeToolkit/haxe/lib/flixel/4,5,0/assets/images/logo/default.png") #if display private #end class __ASSET__flixel_images_logo_default_png extends lime.graphics.Image {}
 @:keep @:file("") #if display private #end class __ASSET__manifest_default_json extends haxe.io.Bytes {}
 
 
@@ -162,9 +170,17 @@ import sys.FileSystem;
 
 #if (openfl && !flash)
 
+#if html5
 @:keep @:expose('__ASSET__OPENFL__flixel_fonts_nokiafc22_ttf') #if display private #end class __ASSET__OPENFL__flixel_fonts_nokiafc22_ttf extends openfl.text.Font { public function new () { __fromLimeFont (new __ASSET__flixel_fonts_nokiafc22_ttf ()); super (); }}
 @:keep @:expose('__ASSET__OPENFL__flixel_fonts_monsterrat_ttf') #if display private #end class __ASSET__OPENFL__flixel_fonts_monsterrat_ttf extends openfl.text.Font { public function new () { __fromLimeFont (new __ASSET__flixel_fonts_monsterrat_ttf ()); super (); }}
 
+#else
+@:keep @:expose('__ASSET__OPENFL__flixel_fonts_nokiafc22_ttf') #if display private #end class __ASSET__OPENFL__flixel_fonts_nokiafc22_ttf extends openfl.text.Font { public function new () { __fromLimeFont (new __ASSET__flixel_fonts_nokiafc22_ttf ()); super (); }}
+@:keep @:expose('__ASSET__OPENFL__flixel_fonts_monsterrat_ttf') #if display private #end class __ASSET__OPENFL__flixel_fonts_monsterrat_ttf extends openfl.text.Font { public function new () { __fromLimeFont (new __ASSET__flixel_fonts_monsterrat_ttf ()); super (); }}
 
 #end
+
+#end
+#end
+
 #end

@@ -7,12 +7,10 @@ import flixel.math.FlxPoint;
 import game.Avatar;
 import game.Room;
 
-class PlayState extends FlxState
+class RoomState extends FlxState
 {
-	private var currentRoom:Room;
-	
-	private static var keyDownList:FlxKeyList;
 	public static var playerAvatar:Avatar;
+	public static var currentRoom:Room;
 	public static var playerNextMovement:FlxPoint;
 	
 	private var Northeast:Bool;
@@ -20,25 +18,32 @@ class PlayState extends FlxState
 	private var Southwest:Bool;
 	private var Northwest:Bool;
 	
+	private static var keyDownList:FlxKeyList;
+	
 	override public function create():Void
 	{
 		super.create();
-		
+		// FlxG.camera.follow(playerAvatar, FlxCameraFollowStyle.NO_DEAD_ZONE)
 		playerAvatar = new Avatar("Monk");
-		currentRoom = new Room("cloudInfoRoom");
-		
-		// FlxG.camera.follow(playerAvatar, FlxCameraFollowStyle.NO_DEAD_ZONE);
-		// FlxG.debugger.visible = true;
-		
-		currentRoom.addAvatar(playerAvatar, 150, 250);
-		currentRoom.addItem("item_door1", 125, 210);
-		//currentRoom.addItem("item_statue", 260, 200);
+		setupRoom("cloudInfoRoom");
+	}
+	
+	private function setupRoom(roomName:String):Void
+	{
+		currentRoom = new Room(roomName);
 		
 		add(currentRoom);
-		//add(currentRoom.walkMap);
 		add(currentRoom.roomEntities);
 		
-		FlxG.log.redirectTraces = true;
+		currentRoom.addAvatar(playerAvatar, 150, 250);
+		currentRoom.addItem("item_door1", 95, 220);
+		currentRoom.addItem("item_door2", 95, 220);
+	}
+	
+	private function destroyRoom():Void
+	{
+		remove(currentRoom.roomEntities);
+		remove(currentRoom);
 	}
 	
 	private function testNextPoints():FlxPoint
@@ -135,14 +140,8 @@ class PlayState extends FlxState
 			}
 		}
 		
-		var a:Int = currentRoom.testWalkmap(rx, ry);
-		var b:Int = currentRoom.testWalkmap(lx, ly);
-		
 		var ptR:Float = (currentRoom.testWalkmap(rx, ry) / 65793) % 255;
 		var ptL:Float = (currentRoom.testWalkmap(lx, ly) / 65793) % 255;
-		
-		//trace("Point A (R): " + ptR);
-		//trace("Point B (L): " + ptL);
 		
 		return FlxPoint.get(ptR, ptL);
 	}
@@ -238,7 +237,7 @@ class PlayState extends FlxState
 			if (playerNextMovement.x == 1)
 			{
 				playerAvatar.velocityX = 0;
-				//playerAvatar.velocity.set(0, playerAvatar.velocityY);
+				playerAvatar.velocity.set(0, playerAvatar.velocityY);
 				trace("Right foot hit!");
 				trace("Velocity X: " + playerAvatar.velocityX);
 				trace("Velocity Y: " + playerAvatar.velocityY);
@@ -248,7 +247,7 @@ class PlayState extends FlxState
 			else if (playerNextMovement.y == 1)
 			{
 				playerAvatar.velocityX = 0;
-				//playerAvatar.velocity.set(0, playerAvatar.velocityY);
+				playerAvatar.velocity.set(0, playerAvatar.velocityY);
 				trace("Left foot hit!");
 				trace("Velocity X: " + playerAvatar.velocityX);				
 				trace("Velocity Y: " + playerAvatar.velocityY);
@@ -301,6 +300,7 @@ class PlayState extends FlxState
 	
 	override public function update(elapsed:Float):Void
 	{
+		// TODO: If in room..
 		playerAvatar.keysTriggered.North = FlxG.keys.pressed.UP && !FlxG.keys.pressed.DOWN;
 		playerAvatar.keysTriggered.South = FlxG.keys.pressed.DOWN && !FlxG.keys.pressed.UP;
 		playerAvatar.keysTriggered.East = FlxG.keys.pressed.RIGHT && !FlxG.keys.pressed.LEFT;
@@ -316,6 +316,7 @@ class PlayState extends FlxState
 		smoothMovement();
 		
 		currentRoom.sortGraphics();
+		
 		super.update(elapsed);
 	}
 }

@@ -6,6 +6,7 @@ import flixel.input.keyboard.FlxKeyList;
 import flixel.math.FlxPoint;
 import game.Avatar;
 import game.Room;
+import openfl.utils.Object;
 
 class RoomState extends FlxState
 {
@@ -19,6 +20,8 @@ class RoomState extends FlxState
 	private var Northwest:Bool;
 	
 	private static var keyDownList:FlxKeyList;
+	
+	private static var currentSurface:Object = { Stone: 0, Grass: 1, Dirt: 2, Wood: 3, Marsh: 4 }
 	
 	override public function create():Void
 	{
@@ -140,10 +143,17 @@ class RoomState extends FlxState
 			}
 		}
 		
-		var ptR:Float = (currentRoom.testWalkmap(rx, ry) / 65793) % 255;
-		var ptL:Float = (currentRoom.testWalkmap(lx, ly) / 65793) % 255;
+		// 0 is FALSE.
+		// 1 is TRUE.
+		var ptR:Float = if (currentRoom.testWalkmap(rx, ry)) 1 else 0;
+		var ptL:Float = if (currentRoom.testWalkmap(lx, ly)) 1 else 0;
 		
 		return FlxPoint.get(ptR, ptL);
+	}
+	
+	private function setCurrentSurface():Void
+	{
+		
 	}
 	
 	private function smoothMovement():Void
@@ -169,9 +179,6 @@ class RoomState extends FlxState
 			{
 				playerAvatar.velocityX = 0;
 				playerAvatar.velocity.set(0, playerAvatar.velocityY);
-				trace("Right foot hit!");
-				trace("Velocity X: " + playerAvatar.velocityX);
-				trace("Velocity Y: " + playerAvatar.velocityY);
 				playerAvatar.x -= 3;
 			}
 			
@@ -179,9 +186,6 @@ class RoomState extends FlxState
 			{
 				playerAvatar.velocityX = 0;
 				playerAvatar.velocity.set(0, playerAvatar.velocityY);
-				trace("Left foot hit!");
-				trace("Velocity X: " + playerAvatar.velocityX);
-				trace("Velocity Y: " + playerAvatar.velocityY);
 				playerAvatar.x += 3;
 			}
 		}
@@ -192,9 +196,6 @@ class RoomState extends FlxState
 			{
 				playerAvatar.velocityX = 0;
 				playerAvatar.velocity.set(0, playerAvatar.velocityY);
-				trace("Right foot hit!");
-				trace("Velocity X: " + playerAvatar.velocityX);
-				trace("Velocity Y: " + playerAvatar.velocityY);
 				playerAvatar.x += 2;
 			}
 			
@@ -202,9 +203,6 @@ class RoomState extends FlxState
 			{
 				playerAvatar.velocityX = 0;
 				playerAvatar.velocity.set(0, playerAvatar.velocityY);
-				trace("Left foot hit!");
-				trace("Velocity X: " + playerAvatar.velocityX);
-				trace("Velocity Y: " + playerAvatar.velocityY);
 				playerAvatar.x -= 3;
 			}
 		}
@@ -215,9 +213,6 @@ class RoomState extends FlxState
 			{
 				playerAvatar.velocityX = 0;
 				playerAvatar.velocity.set(0, playerAvatar.velocityY);
-				trace("Right foot hit!");
-				trace("Velocity X: " + playerAvatar.velocityX);
-				trace("Velocity Y: " + playerAvatar.velocityY);
 				playerAvatar.x += 2;
 			}
 			
@@ -225,9 +220,6 @@ class RoomState extends FlxState
 			{
 				playerAvatar.velocityX = 0;
 				playerAvatar.velocity.set(0, playerAvatar.velocityY);
-				trace("Left foot hit!");
-				trace("Velocity X: " + playerAvatar.velocityX);				
-				trace("Velocity Y: " + playerAvatar.velocityY);
 				playerAvatar.x -= 3;
 			}
 		}
@@ -238,9 +230,6 @@ class RoomState extends FlxState
 			{
 				playerAvatar.velocityX = 0;
 				playerAvatar.velocity.set(0, playerAvatar.velocityY);
-				trace("Right foot hit!");
-				trace("Velocity X: " + playerAvatar.velocityX);
-				trace("Velocity Y: " + playerAvatar.velocityY);
 				playerAvatar.x -= 1;
 			}
 			
@@ -248,9 +237,6 @@ class RoomState extends FlxState
 			{
 				playerAvatar.velocityX = 0;
 				playerAvatar.velocity.set(0, playerAvatar.velocityY);
-				trace("Left foot hit!");
-				trace("Velocity X: " + playerAvatar.velocityX);				
-				trace("Velocity Y: " + playerAvatar.velocityY);
 				playerAvatar.x += 3;
 			}
 		}
@@ -260,18 +246,15 @@ class RoomState extends FlxState
 			if (playerNextMovement.x == 1)
 			{
 				playerAvatar.velocityY = 0;
-				trace("Left foot hit!");
-				trace("Velocity X: " + playerAvatar.velocityX);				
-				trace("Velocity Y: " + playerAvatar.velocityY);
+				// Test this line.
+				// playerAvatar.velocity.set(0, playerAvatar.velocityY);
 				playerAvatar.y -= 1;
 			}
 			
 			if (playerNextMovement.y == 1)
 			{
 				playerAvatar.velocityY = 0;
-				trace("Left foot hit!");
-				trace("Velocity X: " + playerAvatar.velocityX);				
-				trace("Velocity Y: " + playerAvatar.velocityY);
+				// playerAvatar.velocity.set(0, playerAvatar.velocityY);
 				playerAvatar.y += 1;
 			}
 		}
@@ -281,18 +264,14 @@ class RoomState extends FlxState
 			if (playerNextMovement.x == 1)
 			{
 				playerAvatar.velocityY = 0;
-				trace("Left foot hit!");
-				trace("Velocity X: " + playerAvatar.velocityX);				
-				trace("Velocity Y: " + playerAvatar.velocityY);
+				// playerAvatar.velocity.set(0, playerAvatar.velocityY);
 				playerAvatar.y += 1;
 			}
 			
 			if (playerNextMovement.y == 1)
 			{
 				playerAvatar.velocityY = 0;
-				trace("Left foot hit!");
-				trace("Velocity X: " + playerAvatar.velocityX);				
-				trace("Velocity Y: " + playerAvatar.velocityY);
+				// playerAvatar.velocity.set(0, playerAvatar.velocityY);
 				playerAvatar.y -= 1;
 			}
 		}
@@ -300,7 +279,7 @@ class RoomState extends FlxState
 	
 	override public function update(elapsed:Float):Void
 	{
-		// TODO: If in room..
+		// TODO: If in room//if in context..
 		playerAvatar.keysTriggered.North = FlxG.keys.pressed.UP && !FlxG.keys.pressed.DOWN;
 		playerAvatar.keysTriggered.South = FlxG.keys.pressed.DOWN && !FlxG.keys.pressed.UP;
 		playerAvatar.keysTriggered.East = FlxG.keys.pressed.RIGHT && !FlxG.keys.pressed.LEFT;

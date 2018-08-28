@@ -12,7 +12,7 @@ import flixel.util.FlxSort;
 class Room extends FlxSprite
 {
 	private var roomName:String;
-
+	
 	public var roomEntities:FlxTypedSpriteGroup<FlxSprite> = new FlxTypedSpriteGroup<FlxSprite>();
 	public var walkMap:FlxSprite;
 	
@@ -22,18 +22,19 @@ class Room extends FlxSprite
 	{
 		super(X, Y);
 		roomName = _roomName;
-		walkMap = new FlxSprite();		
+		walkMap = new FlxSprite();
 		
 		this.loadGraphic("assets/images/rooms/" + roomName + "/" + roomName + ".png");
 		walkMap.loadGraphic("assets/images/rooms/" + roomName + "/" + roomName + "_map.png");
+		
 		walkMap.x = this.x + 20;
 		walkMap.y = this.y + 175;
 	}
 	
 	public function addAvatar(newAvatar:Avatar, x:Int=0, y:Int=0):Void
 	{
-		newAvatar.x = x;
-		newAvatar.y = y;
+		newAvatar.x = this.x + x;
+		newAvatar.y = this.y + y;
 		
 		roomEntities.add(newAvatar);
 	}
@@ -58,9 +59,21 @@ class Room extends FlxSprite
 		roomEntities.add(itemSprite);
 	}
 	
-	public function testWalkmap(nx:Float, ny:Float):Int
+	public function testWalkmap(nx:Float, ny:Float):Bool
 	{
-		return this.walkMap.pixels.getPixel(Std.int(nx - walkMap.x), Std.int(ny - walkMap.y));
+		var pixel:Int = this.walkMap.pixels.getPixel32(Std.int(nx - walkMap.x), Std.int(ny - walkMap.y));
+		
+		if (pixel == 0xFF010101)
+		{
+			// Collision; can't walk.
+			return true;
+		}
+		
+		else
+		{
+			// No collision; can walk.
+			return false;
+		}
 	}
 	
 	public function sortGraphics():Void

@@ -59,21 +59,9 @@ class Room extends FlxSprite
 		roomEntities.add(itemSprite);
 	}
 	
-	public function testWalkmap(nx:Float, ny:Float):Bool
+	public function testWalkmap(nx:Float, ny:Float):Int
 	{
-		var pixel:Int = this.walkMap.pixels.getPixel32(Std.int(nx - walkMap.x), Std.int(ny - walkMap.y));
-		
-		if (pixel == 0xFF010101)
-		{
-			// Collision; can't walk.
-			return true;
-		}
-		
-		else
-		{
-			// No collision; can walk.
-			return false;
-		}
+		return this.walkMap.pixels.getPixel32(Std.int(nx - walkMap.x), Std.int(ny - walkMap.y));
 	}
 	
 	public function sortGraphics():Void

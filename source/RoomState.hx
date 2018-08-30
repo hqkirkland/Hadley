@@ -6,7 +6,7 @@ import flixel.input.keyboard.FlxKeyList;
 import flixel.math.FlxPoint;
 import game.Avatar;
 import game.Room;
-import openfl.utils.Object;
+import sound.SoundManager;
 
 class RoomState extends FlxState
 {
@@ -20,21 +20,22 @@ class RoomState extends FlxState
 	private var Northwest:Bool;
 	
 	private static var keyDownList:FlxKeyList;
-	
-	private static var currentSurface:Object = { Stone: 0, Grass: 1, Dirt: 2, Wood: 3, Marsh: 4 }
+	private static var audioManager:SoundManager;
 	
 	override public function create():Void
 	{
 		super.create();
-		// FlxG.camera.follow(playerAvatar, FlxCameraFollowStyle.NO_DEAD_ZONE)
+		// FlxG.cawmera.follow(playerAvatar, FlxCameraFollowStyle.NO_DEAD_ZONE)
 		playerAvatar = new Avatar("Monk");
+		audioManager = new SoundManager();
+		
 		setupRoom("cloudInfoRoom");
 	}
 	
 	private function setupRoom(roomName:String):Void
 	{
 		currentRoom = new Room(roomName);
-		
+
 		add(currentRoom);
 		add(currentRoom.roomEntities);
 		
@@ -142,18 +143,16 @@ class RoomState extends FlxState
 				ly = playerAvatar.y + 65;
 			}
 		}
-		
-		// 0 is FALSE.
-		// 1 is TRUE.
-		var ptR:Float = if (currentRoom.testWalkmap(rx, ry)) 1 else 0;
-		var ptL:Float = if (currentRoom.testWalkmap(lx, ly)) 1 else 0;
+
+		audioManager.currentSurface = currentRoom.testWalkmap(rx, ry);
+		// trace(rx + ", " + ly);
+		// 1 is TRUE: Collision.
+		// 0 is FALSE: No Collision.
+		// Probably still have a problem with 0-pixels.
+		var ptR:Float = if (currentRoom.testWalkmap(rx, ry) == 0xFF010101) 1 else 0;
+		var ptL:Float = if (currentRoom.testWalkmap(lx, ly) == 0xFF010101) 1 else 0;
 		
 		return FlxPoint.get(ptR, ptL);
-	}
-	
-	private function setCurrentSurface():Void
-	{
-		
 	}
 	
 	private function smoothMovement():Void
@@ -248,14 +247,14 @@ class RoomState extends FlxState
 				playerAvatar.velocityY = 0;
 				// Test this line.
 				// playerAvatar.velocity.set(0, playerAvatar.velocityY);
-				playerAvatar.y -= 1;
+				// playerAvatar.y -= 1;
 			}
 			
 			if (playerNextMovement.y == 1)
 			{
 				playerAvatar.velocityY = 0;
 				// playerAvatar.velocity.set(0, playerAvatar.velocityY);
-				playerAvatar.y += 1;
+				// playerAvatar.y += 1;
 			}
 		}
 		
@@ -265,14 +264,14 @@ class RoomState extends FlxState
 			{
 				playerAvatar.velocityY = 0;
 				// playerAvatar.velocity.set(0, playerAvatar.velocityY);
-				playerAvatar.y += 1;
+				// playerAvatar.y += 1;
 			}
 			
 			if (playerNextMovement.y == 1)
 			{
 				playerAvatar.velocityY = 0;
 				// playerAvatar.velocity.set(0, playerAvatar.velocityY);
-				playerAvatar.y -= 1;
+				// playerAvatar.y -= 1;
 			}
 		}
 	}
@@ -293,6 +292,7 @@ class RoomState extends FlxState
 		
 		playerNextMovement = testNextPoints();
 		smoothMovement();
+		audioManager.playWalkSound(playerAvatar.keysTriggered.Run);
 		
 		currentRoom.sortGraphics();
 		

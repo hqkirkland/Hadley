@@ -43,7 +43,7 @@ class Avatar extends FlxSprite
 	
 	// It saves CPU to pre-determine velocities rather than calculate them every frame.
 	private static var orthogVelocity:FlxPoint = new FlxPoint(96, 48);
-	private static var diagVelocity:FlxPoint = new FlxPoint(72, 24);
+	private static var diagVelocity:FlxPoint = new FlxPoint(80, 26);
 	
 	public function new(_username:String) 
 	{

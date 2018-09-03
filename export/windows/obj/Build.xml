@@ -44,6 +44,17 @@
    <depend name="include/haxe/io/Path.h"/>
    <depend name="include/sys/FileSystem.h"/>
   </file>
+  <file name="src/sound/SoundManager.cpp" >
+   <depend name="include/flixel/FlxBasic.h"/>
+   <depend name="include/flixel/FlxCamera.h"/>
+   <depend name="include/flixel/FlxG.h"/>
+   <depend name="include/flixel/FlxObject.h"/>
+   <depend name="include/flixel/system/FlxSound.h"/>
+   <depend name="include/flixel/system/FlxSoundGroup.h"/>
+   <depend name="include/flixel/system/frontEnds/SoundFrontEnd.h"/>
+   <depend name="include/flixel/util/IFlxDestroyable.h"/>
+   <depend name="include/sound/SoundManager.h"/>
+  </file>
   <file name="src/haxe/lang/Iterable.cpp" >
    <depend name="include/haxe/lang/Iterable.h"/>
    <depend name="include/haxe/lang/Iterator.h"/>
@@ -62,33 +73,6 @@
    <depend name="include/Type.h"/>
    <depend name="include/lime/system/Endian.h"/>
    <depend name="include/openfl/utils/_Endian/Endian_Impl_.h"/>
-  </file>
-  <file name="src/openfl/utils/_Dictionary/UtilsObjectMap.cpp" tags="haxe,release">
-   <depend name="include/haxe/IMap.h"/>
-   <depend name="include/haxe/ds/ObjectMap.h"/>
-   <depend name="include/openfl/utils/_Dictionary/UtilsObjectMap.h"/>
-  </file>
-  <file name="src/openfl/utils/_Dictionary/FloatMap.cpp" tags="haxe,release">
-   <depend name="include/haxe/IMap.h"/>
-   <depend name="include/openfl/utils/_Dictionary/FloatMap.h"/>
-  </file>
-  <file name="src/openfl/utils/_Dictionary/ClassMap.cpp" tags="haxe,release">
-   <depend name="include/Type.h"/>
-   <depend name="include/haxe/IMap.h"/>
-   <depend name="include/haxe/ds/StringMap.h"/>
-   <depend name="include/openfl/utils/_Dictionary/ClassMap.h"/>
-  </file>
-  <file name="src/openfl/utils/_Dictionary/Dictionary_Impl_.cpp" >
-   <depend name="include/haxe/IMap.h"/>
-   <depend name="include/haxe/ds/BalancedTree.h"/>
-   <depend name="include/haxe/ds/EnumValueMap.h"/>
-   <depend name="include/haxe/ds/IntMap.h"/>
-   <depend name="include/haxe/ds/ObjectMap.h"/>
-   <depend name="include/haxe/ds/StringMap.h"/>
-   <depend name="include/openfl/utils/_Dictionary/ClassMap.h"/>
-   <depend name="include/openfl/utils/_Dictionary/Dictionary_Impl_.h"/>
-   <depend name="include/openfl/utils/_Dictionary/FloatMap.h"/>
-   <depend name="include/openfl/utils/_Dictionary/UtilsObjectMap.h"/>
   </file>
   <file name="src/openfl/utils/_CompressionAlgorithm/CompressionAlgorithm_Impl_.cpp" >
    <depend name="include/openfl/utils/_CompressionAlgorithm/CompressionAlgorithm_Impl_.h"/>
@@ -177,8 +161,11 @@
    <depend name="include/openfl/ui/_MouseCursor/MouseCursor_Impl_.h"/>
   </file>
   <file name="src/openfl/ui/Mouse.cpp" tags="haxe,release">
-   <depend name="include/lime/ui/Mouse.h"/>
+   <depend name="include/lime/app/Application.h"/>
+   <depend name="include/lime/app/IModule.h"/>
+   <depend name="include/lime/app/Module.h"/>
    <depend name="include/lime/ui/MouseCursor.h"/>
+   <depend name="include/lime/ui/Window.h"/>
    <depend name="include/openfl/ui/Mouse.h"/>
   </file>
   <file name="src/openfl/ui/Keyboard.cpp" tags="haxe,release">
@@ -258,10 +245,10 @@
    <depend name="include/Type.h"/>
    <depend name="include/openfl/system/ApplicationDomain.h"/>
   </file>
-  <file name="src/openfl/net/URLVariables.cpp" tags="haxe,release">
+  <file name="src/openfl/net/_URLVariables/URLVariables_Impl_.cpp" >
    <depend name="include/Reflect.h"/>
    <depend name="include/StringTools.h"/>
-   <depend name="include/openfl/net/URLVariables.h"/>
+   <depend name="include/openfl/net/_URLVariables/URLVariables_Impl_.h"/>
   </file>
   <file name="src/openfl/net/URLRequestHeader.cpp" tags="haxe,release">
    <depend name="include/openfl/net/URLRequestHeader.h"/>
@@ -280,6 +267,8 @@
   <file name="src/openfl/net/URLLoader.cpp" tags="haxe,release">
    <depend name="include/Reflect.h"/>
    <depend name="include/Std.h"/>
+   <depend name="include/Type.h"/>
+   <depend name="include/ValueType.h"/>
    <depend name="include/haxe/IMap.h"/>
    <depend name="include/haxe/ds/StringMap.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
@@ -302,7 +291,6 @@
    <depend name="include/openfl/net/URLLoader.h"/>
    <depend name="include/openfl/net/URLRequest.h"/>
    <depend name="include/openfl/net/URLRequestHeader.h"/>
-   <depend name="include/openfl/net/URLVariables.h"/>
    <depend name="include/openfl/utils/ByteArrayData.h"/>
    <depend name="include/openfl/utils/IDataInput.h"/>
    <depend name="include/openfl/utils/IDataOutput.h"/>
@@ -436,8 +424,8 @@
    <depend name="include/openfl/geom/Vector3D.h"/>
   </file>
   <file name="src/openfl/filters/GlowFilter.cpp" tags="haxe,release">
+   <depend name="include/lime/_internal/graphics/ImageDataUtil.h"/>
    <depend name="include/lime/graphics/Image.h"/>
-   <depend name="include/lime/graphics/utils/ImageDataUtil.h"/>
    <depend name="include/lime/math/Rectangle.h"/>
    <depend name="include/lime/math/Vector2.h"/>
    <depend name="include/openfl/display/BitmapData.h"/>
@@ -467,8 +455,8 @@
   </file>
   <file name="src/openfl/filters/DropShadowFilter.cpp" tags="haxe,release">
    <depend name="include/Std.h"/>
+   <depend name="include/lime/_internal/graphics/ImageDataUtil.h"/>
    <depend name="include/lime/graphics/Image.h"/>
-   <depend name="include/lime/graphics/utils/ImageDataUtil.h"/>
    <depend name="include/lime/math/Rectangle.h"/>
    <depend name="include/lime/math/Vector2.h"/>
    <depend name="include/openfl/display/BitmapData.h"/>
@@ -484,7 +472,7 @@
    <depend name="include/haxe/io/Bytes.h"/>
    <depend name="include/lime/graphics/Image.h"/>
    <depend name="include/lime/graphics/ImageBuffer.h"/>
-   <depend name="include/lime/math/color/_RGBA/RGBA_Impl_.h"/>
+   <depend name="include/lime/math/_RGBA/RGBA_Impl_.h"/>
    <depend name="include/lime/utils/ArrayBufferView.h"/>
    <depend name="include/openfl/display/BitmapData.h"/>
    <depend name="include/openfl/display/DisplayObjectRenderer.h"/>
@@ -510,8 +498,8 @@
    <depend name="include/openfl/utils/IDataOutput.h"/>
   </file>
   <file name="src/openfl/filters/BlurFilter.cpp" tags="haxe,release">
+   <depend name="include/lime/_internal/graphics/ImageDataUtil.h"/>
    <depend name="include/lime/graphics/Image.h"/>
-   <depend name="include/lime/graphics/utils/ImageDataUtil.h"/>
    <depend name="include/lime/math/Rectangle.h"/>
    <depend name="include/lime/math/Vector2.h"/>
    <depend name="include/openfl/display/BitmapData.h"/>
@@ -782,8 +770,8 @@
    <depend name="include/openfl/utils/IDataOutput.h"/>
   </file>
   <file name="src/openfl/display3D/textures/TextureBase.cpp" tags="haxe,release">
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
    <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
    <depend name="include/lime/graphics/opengl/GLObject.h"/>
    <depend name="include/openfl/_internal/stage3D/SamplerState.h"/>
    <depend name="include/openfl/_internal/stage3D/opengl/GLTextureBase.h"/>
@@ -823,7 +811,8 @@
   </file>
   <file name="src/openfl/display3D/Uniform.cpp" tags="haxe,release">
    <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
    <depend name="include/lime/utils/ArrayBufferView.h"/>
    <depend name="include/lime/utils/BytePointerData.h"/>
    <depend name="include/openfl/_internal/stage3D/opengl/GLProgram3D.h"/>
@@ -978,9 +967,8 @@
   </file>
   <file name="src/openfl/display/Stage3D.cpp" tags="haxe,release">
    <depend name="include/haxe/Timer.h"/>
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
    <depend name="include/lime/app/IModule.h"/>
-   <depend name="include/lime/graphics/RendererType.h"/>
    <depend name="include/openfl/_Vector/IVector.h"/>
    <depend name="include/openfl/_Vector/ObjectVector.h"/>
    <depend name="include/openfl/_internal/stage3D/GLUtils.h"/>
@@ -1007,18 +995,17 @@
   <file name="src/openfl/display/Stage.cpp" tags="haxe,release">
    <depend name="include/Std.h"/>
    <depend name="include/StringTools.h"/>
-   <depend name="include/Type.h"/>
    <depend name="include/haxe/IMap.h"/>
    <depend name="include/haxe/ds/IntMap.h"/>
    <depend name="include/haxe/ds/StringMap.h"/>
-   <depend name="include/lime/_backend/native/NativeApplication.h"/>
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeWindow.h"/>
    <depend name="include/lime/app/Application.h"/>
    <depend name="include/lime/app/IModule.h"/>
    <depend name="include/lime/app/Module.h"/>
-   <depend name="include/lime/app/Preloader.h"/>
    <depend name="include/lime/app/_Event_Float_Float_Int_Void.h"/>
    <depend name="include/lime/app/_Event_Float_Float_Void.h"/>
+   <depend name="include/lime/app/_Event_Float_Float_lime_ui_MouseButton_Void.h"/>
+   <depend name="include/lime/app/_Event_Float_Float_lime_ui_MouseWheelMode_Void.h"/>
    <depend name="include/lime/app/_Event_Int_Int_Void.h"/>
    <depend name="include/lime/app/_Event_Int_Void.h"/>
    <depend name="include/lime/app/_Event_String_Int_Int_Void.h"/>
@@ -1030,19 +1017,15 @@
    <depend name="include/lime/app/_Event_lime_ui_Gamepad_Void.h"/>
    <depend name="include/lime/app/_Event_lime_ui_KeyCode_lime_ui_KeyModifier_Void.h"/>
    <depend name="include/lime/app/_Event_lime_ui_Touch_Void.h"/>
-   <depend name="include/lime/graphics/CanvasRenderContext.h"/>
-   <depend name="include/lime/graphics/ConsoleRenderContext.h"/>
-   <depend name="include/lime/graphics/DOMRenderContext.h"/>
+   <depend name="include/lime/app/_Event_lime_ui_Window_Void.h"/>
    <depend name="include/lime/graphics/RenderContext.h"/>
-   <depend name="include/lime/graphics/Renderer.h"/>
-   <depend name="include/lime/graphics/RendererType.h"/>
    <depend name="include/lime/graphics/cairo/Cairo.h"/>
    <depend name="include/lime/system/Display.h"/>
    <depend name="include/lime/system/DisplayMode.h"/>
    <depend name="include/lime/ui/Gamepad.h"/>
    <depend name="include/lime/ui/Joystick.h"/>
-   <depend name="include/lime/ui/Mouse.h"/>
    <depend name="include/lime/ui/MouseCursor.h"/>
+   <depend name="include/lime/ui/MouseWheelMode.h"/>
    <depend name="include/lime/ui/Touch.h"/>
    <depend name="include/lime/ui/Window.h"/>
    <depend name="include/lime/ui/_KeyModifier/KeyModifier_Impl_.h"/>
@@ -1136,7 +1119,9 @@
    <depend name="include/Std.h"/>
    <depend name="include/StringTools.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
+   <depend name="include/lime/graphics/_WebGLRenderContext/WebGLRenderContext_Impl_.h"/>
    <depend name="include/lime/utils/ArrayBufferView.h"/>
    <depend name="include/lime/utils/_DataPointer/DataPointer_Impl_.h"/>
    <depend name="include/openfl/display/ShaderParameter_Int.h"/>
@@ -1145,7 +1130,9 @@
    <depend name="include/Std.h"/>
    <depend name="include/StringTools.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
+   <depend name="include/lime/graphics/_WebGLRenderContext/WebGLRenderContext_Impl_.h"/>
    <depend name="include/lime/utils/ArrayBufferView.h"/>
    <depend name="include/lime/utils/_DataPointer/DataPointer_Impl_.h"/>
    <depend name="include/openfl/display/ShaderParameter_Float.h"/>
@@ -1154,7 +1141,9 @@
    <depend name="include/Std.h"/>
    <depend name="include/StringTools.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
+   <depend name="include/lime/graphics/_WebGLRenderContext/WebGLRenderContext_Impl_.h"/>
    <depend name="include/lime/utils/ArrayBufferView.h"/>
    <depend name="include/lime/utils/_DataPointer/DataPointer_Impl_.h"/>
    <depend name="include/openfl/display/ShaderParameter_Bool.h"/>
@@ -1166,28 +1155,32 @@
    <depend name="include/Std.h"/>
    <depend name="include/StringTools.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
+   <depend name="include/lime/graphics/_WebGLRenderContext/WebGLRenderContext_Impl_.h"/>
    <depend name="include/lime/utils/ArrayBufferView.h"/>
    <depend name="include/lime/utils/_DataPointer/DataPointer_Impl_.h"/>
    <depend name="include/openfl/display/ShaderParameter.h"/>
   </file>
   <file name="src/openfl/display/ShaderInput_openfl_display_BitmapData.cpp" >
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
    <depend name="include/lime/graphics/opengl/GLObject.h"/>
    <depend name="include/openfl/display/BitmapData.h"/>
    <depend name="include/openfl/display/IBitmapDrawable.h"/>
    <depend name="include/openfl/display/ShaderInput_openfl_display_BitmapData.h"/>
   </file>
   <file name="src/openfl/display/ShaderInput.cpp" tags="haxe,release">
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
    <depend name="include/lime/graphics/opengl/GLObject.h"/>
    <depend name="include/openfl/display/BitmapData.h"/>
    <depend name="include/openfl/display/IBitmapDrawable.h"/>
    <depend name="include/openfl/display/ShaderInput.h"/>
   </file>
-  <file name="src/openfl/display/ShaderData.cpp" tags="haxe,release">
+  <file name="src/openfl/display/_ShaderData/ShaderData_Impl_.cpp" >
    <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/openfl/display/ShaderData.h"/>
+   <depend name="include/openfl/display/_ShaderData/ShaderData_Impl_.h"/>
    <depend name="include/openfl/utils/ByteArrayData.h"/>
    <depend name="include/openfl/utils/IDataInput.h"/>
    <depend name="include/openfl/utils/IDataOutput.h"/>
@@ -1196,6 +1189,7 @@
    <depend name="include/Reflect.h"/>
    <depend name="include/Std.h"/>
    <depend name="include/lime/app/IModule.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
    <depend name="include/lime/ui/Window.h"/>
    <depend name="include/openfl/Lib.h"/>
    <depend name="include/openfl/display/DefaultPreloader.h"/>
@@ -1215,7 +1209,7 @@
   </file>
   <file name="src/openfl/display/Preloader.cpp" tags="haxe,release">
    <depend name="include/lime/app/IModule.h"/>
-   <depend name="include/lime/app/Preloader.h"/>
+   <depend name="include/lime/app/_Event_Void_Void.h"/>
    <depend name="include/openfl/Lib.h"/>
    <depend name="include/openfl/display/DisplayObject.h"/>
    <depend name="include/openfl/display/DisplayObjectContainer.h"/>
@@ -1239,9 +1233,9 @@
   </file>
   <file name="src/openfl/display/OpenGLRenderer.cpp" tags="haxe,release">
    <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
    <depend name="include/lime/app/IModule.h"/>
-   <depend name="include/lime/graphics/RendererType.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
    <depend name="include/lime/graphics/cairo/Cairo.h"/>
    <depend name="include/lime/graphics/opengl/GLObject.h"/>
    <depend name="include/lime/math/_Matrix4/Matrix4_Impl_.h"/>
@@ -1494,7 +1488,7 @@
    <depend name="include/Std.h"/>
    <depend name="include/Type.h"/>
    <depend name="include/_List/ListNode.h"/>
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
    <depend name="include/lime/graphics/cairo/Cairo.h"/>
    <depend name="include/lime/graphics/opengl/GLObject.h"/>
    <depend name="include/lime/utils/ArrayBufferView.h"/>
@@ -1559,9 +1553,6 @@
   </file>
   <file name="src/openfl/display/DOMRenderer.cpp" tags="haxe,release">
    <depend name="include/lime/app/IModule.h"/>
-   <depend name="include/lime/graphics/CanvasRenderContext.h"/>
-   <depend name="include/lime/graphics/DOMRenderContext.h"/>
-   <depend name="include/lime/graphics/RendererType.h"/>
    <depend name="include/lime/utils/ObjectPool_openfl_geom_Matrix.h"/>
    <depend name="include/lime/utils/ObjectPool_openfl_geom_Rectangle.h"/>
    <depend name="include/openfl/_Vector/IVector.h"/>
@@ -1586,8 +1577,6 @@
   <file name="src/openfl/display/CanvasRenderer.cpp" tags="haxe,release">
    <depend name="include/Std.h"/>
    <depend name="include/lime/app/IModule.h"/>
-   <depend name="include/lime/graphics/CanvasRenderContext.h"/>
-   <depend name="include/lime/graphics/RendererType.h"/>
    <depend name="include/lime/ui/Window.h"/>
    <depend name="include/openfl/_Vector/IVector.h"/>
    <depend name="include/openfl/_Vector/ObjectVector.h"/>
@@ -1606,7 +1595,6 @@
   </file>
   <file name="src/openfl/display/CairoRenderer.cpp" tags="haxe,release">
    <depend name="include/lime/app/IModule.h"/>
-   <depend name="include/lime/graphics/RendererType.h"/>
    <depend name="include/lime/graphics/cairo/Cairo.h"/>
    <depend name="include/lime/math/Matrix3.h"/>
    <depend name="include/openfl/_Vector/IVector.h"/>
@@ -1626,7 +1614,7 @@
   </file>
   <file name="src/openfl/display/DisplayObjectRenderer.cpp" tags="haxe,release">
    <depend name="include/lime/app/IModule.h"/>
-   <depend name="include/lime/graphics/RendererType.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
    <depend name="include/openfl/display/DisplayObject.h"/>
    <depend name="include/openfl/display/DisplayObjectContainer.h"/>
    <depend name="include/openfl/display/DisplayObjectRenderer.h"/>
@@ -1643,12 +1631,24 @@
    <depend name="include/openfl/display/_BlendMode/BlendMode_Impl_.h"/>
   </file>
   <file name="src/openfl/display/Application.cpp" tags="haxe,release">
-   <depend name="include/Reflect.h"/>
-   <depend name="include/lime/_backend/native/NativeApplication.h"/>
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/ds/IntMap.h"/>
    <depend name="include/lime/app/Application.h"/>
    <depend name="include/lime/app/IModule.h"/>
    <depend name="include/lime/app/Module.h"/>
-   <depend name="include/lime/app/Preloader.h"/>
+   <depend name="include/lime/app/_Event_Float_Float_Int_Void.h"/>
+   <depend name="include/lime/app/_Event_Float_Float_Void.h"/>
+   <depend name="include/lime/app/_Event_Float_Float_lime_ui_MouseButton_Void.h"/>
+   <depend name="include/lime/app/_Event_Float_Float_lime_ui_MouseWheelMode_Void.h"/>
+   <depend name="include/lime/app/_Event_Int_Int_Void.h"/>
+   <depend name="include/lime/app/_Event_String_Int_Int_Void.h"/>
+   <depend name="include/lime/app/_Event_String_Void.h"/>
+   <depend name="include/lime/app/_Event_Void_Void.h"/>
+   <depend name="include/lime/app/_Event_lime_graphics_RenderContext_Void.h"/>
+   <depend name="include/lime/app/_Event_lime_ui_KeyCode_lime_ui_KeyModifier_Void.h"/>
+   <depend name="include/lime/app/_Event_lime_ui_Window_Void.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
+   <depend name="include/lime/ui/MouseWheelMode.h"/>
    <depend name="include/lime/ui/Window.h"/>
    <depend name="include/openfl/_internal/Lib.h"/>
    <depend name="include/openfl/display/Application.h"/>
@@ -1686,9 +1686,30 @@
   </file>
   <file name="src/openfl/_internal/text/TextLayoutGroup.cpp" tags="haxe,release">
    <depend name="include/lime/math/Vector2.h"/>
-   <depend name="include/lime/text/GlyphPosition.h"/>
+   <depend name="include/openfl/_internal/text/GlyphPosition.h"/>
    <depend name="include/openfl/_internal/text/TextLayoutGroup.h"/>
    <depend name="include/openfl/text/TextFormat.h"/>
+  </file>
+  <file name="src/openfl/_internal/text/_TextLayout/TextScript_Impl_.cpp" >
+   <depend name="include/openfl/_internal/text/_TextLayout/TextScript_Impl_.h"/>
+  </file>
+  <file name="src/openfl/_internal/text/_TextLayout/TextDirection_Impl_.cpp" >
+   <depend name="include/openfl/_internal/text/_TextLayout/TextDirection_Impl_.h"/>
+  </file>
+  <file name="src/openfl/_internal/text/TextLayout.cpp" tags="haxe,release">
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/math/Vector2.h"/>
+   <depend name="include/lime/text/Font.h"/>
+   <depend name="include/lime/text/harfbuzz/HB.h"/>
+   <depend name="include/lime/text/harfbuzz/HBFeature.h"/>
+   <depend name="include/lime/text/harfbuzz/HBGlyphInfo.h"/>
+   <depend name="include/lime/text/harfbuzz/HBGlyphPosition.h"/>
+   <depend name="include/lime/text/harfbuzz/_HBBuffer/HBBuffer_Impl_.h"/>
+   <depend name="include/lime/text/harfbuzz/_HBFTFont/HBFTFont_Impl_.h"/>
+   <depend name="include/lime/text/harfbuzz/_HBLanguage/HBLanguage_Impl_.h"/>
+   <depend name="include/openfl/_internal/text/GlyphPosition.h"/>
+   <depend name="include/openfl/_internal/text/TextLayout.h"/>
   </file>
   <file name="src/openfl/_internal/text/TextFormatRange.cpp" tags="haxe,release">
    <depend name="include/openfl/_internal/text/TextFormatRange.h"/>
@@ -1705,15 +1726,15 @@
    <depend name="include/lime/math/Vector2.h"/>
    <depend name="include/lime/system/System.h"/>
    <depend name="include/lime/text/Font.h"/>
-   <depend name="include/lime/text/GlyphPosition.h"/>
-   <depend name="include/lime/text/TextLayout.h"/>
    <depend name="include/lime/text/_UTF8String/UTF8String_Impl_.h"/>
    <depend name="include/openfl/_Vector/FloatVector.h"/>
    <depend name="include/openfl/_Vector/IVector.h"/>
    <depend name="include/openfl/_Vector/IntVector.h"/>
    <depend name="include/openfl/_Vector/ObjectVector.h"/>
+   <depend name="include/openfl/_internal/text/GlyphPosition.h"/>
    <depend name="include/openfl/_internal/text/TextEngine.h"/>
    <depend name="include/openfl/_internal/text/TextFormatRange.h"/>
+   <depend name="include/openfl/_internal/text/TextLayout.h"/>
    <depend name="include/openfl/_internal/text/TextLayoutGroup.h"/>
    <depend name="include/openfl/display/DisplayObject.h"/>
    <depend name="include/openfl/display/IBitmapDrawable.h"/>
@@ -1735,6 +1756,10 @@
    <depend name="include/openfl/_internal/text/TextFormatRange.h"/>
    <depend name="include/openfl/text/TextFormat.h"/>
    <depend name="include/openfl/text/_TextFormatAlign/TextFormatAlign_Impl_.h"/>
+  </file>
+  <file name="src/openfl/_internal/text/GlyphPosition.cpp" tags="haxe,release">
+   <depend name="include/lime/math/Vector2.h"/>
+   <depend name="include/openfl/_internal/text/GlyphPosition.h"/>
   </file>
   <file name="src/openfl/_internal/symbols/StaticTextRecord.cpp" >
    <depend name="include/openfl/_internal/symbols/StaticTextRecord.h"/>
@@ -1938,7 +1963,8 @@
    <depend name="include/openfl/_internal/swf/FilterType.h"/>
   </file>
   <file name="src/openfl/_internal/stage3D/opengl/GLVideoTexture.cpp" tags="haxe,release">
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
    <depend name="include/lime/graphics/opengl/GLObject.h"/>
    <depend name="include/openfl/_internal/stage3D/opengl/GLVideoTexture.h"/>
    <depend name="include/openfl/display/DisplayObjectRenderer.h"/>
@@ -1951,11 +1977,12 @@
   <file name="src/openfl/_internal/stage3D/opengl/GLVertexBuffer3D.cpp" tags="haxe,release">
    <depend name="include/Std.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
+   <depend name="include/lime/graphics/_WebGLRenderContext/WebGLRenderContext_Impl_.h"/>
    <depend name="include/lime/graphics/opengl/GLObject.h"/>
    <depend name="include/lime/utils/ArrayBufferView.h"/>
    <depend name="include/lime/utils/TAError.h"/>
-   <depend name="include/lime/utils/_DataPointer/DataPointer_Impl_.h"/>
    <depend name="include/openfl/_Vector/FloatVector.h"/>
    <depend name="include/openfl/_Vector/IVector.h"/>
    <depend name="include/openfl/_internal/stage3D/GLUtils.h"/>
@@ -1971,9 +1998,9 @@
    <depend name="include/openfl/utils/_ByteArray/ByteArray_Impl_.h"/>
   </file>
   <file name="src/openfl/_internal/stage3D/opengl/GLTextureBase.cpp" tags="haxe,release">
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
    <depend name="include/lime/graphics/Image.h"/>
-   <depend name="include/lime/graphics/opengl/GLContextType.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
    <depend name="include/lime/graphics/opengl/GLObject.h"/>
    <depend name="include/openfl/_internal/stage3D/GLCompressedTextureFormats.h"/>
    <depend name="include/openfl/_internal/stage3D/GLUtils.h"/>
@@ -1990,14 +2017,16 @@
   <file name="src/openfl/_internal/stage3D/opengl/GLTexture.cpp" tags="haxe,release">
    <depend name="include/Std.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
    <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
+   <depend name="include/lime/graphics/_WebGL2RenderContext/WebGL2RenderContext_Impl_.h"/>
    <depend name="include/lime/graphics/opengl/GLObject.h"/>
    <depend name="include/lime/utils/ArrayBufferView.h"/>
    <depend name="include/lime/utils/BytePointerData.h"/>
    <depend name="include/lime/utils/TAError.h"/>
+   <depend name="include/lime/utils/_BytePointer/BytePointer_Impl_.h"/>
    <depend name="include/lime/utils/_DataPointer/DataPointer_Impl_.h"/>
-   <depend name="include/openfl/_internal/stage3D/GLCompressedTextureFormats.h"/>
    <depend name="include/openfl/_internal/stage3D/GLUtils.h"/>
    <depend name="include/openfl/_internal/stage3D/SamplerState.h"/>
    <depend name="include/openfl/_internal/stage3D/atf/ATFReader.h"/>
@@ -2021,7 +2050,7 @@
    <depend name="include/openfl/utils/_ByteArray/ByteArray_Impl_.h"/>
   </file>
   <file name="src/openfl/_internal/stage3D/opengl/GLStage3D.cpp" tags="haxe,release">
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
    <depend name="include/openfl/_internal/stage3D/GLUtils.h"/>
    <depend name="include/openfl/_internal/stage3D/opengl/GLStage3D.h"/>
    <depend name="include/openfl/display/DisplayObjectRenderer.h"/>
@@ -2036,11 +2065,15 @@
   <file name="src/openfl/_internal/stage3D/opengl/GLRectangleTexture.cpp" tags="haxe,release">
    <depend name="include/Std.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
    <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
+   <depend name="include/lime/graphics/_WebGL2RenderContext/WebGL2RenderContext_Impl_.h"/>
    <depend name="include/lime/graphics/opengl/GLObject.h"/>
    <depend name="include/lime/utils/ArrayBufferView.h"/>
+   <depend name="include/lime/utils/BytePointerData.h"/>
    <depend name="include/lime/utils/TAError.h"/>
+   <depend name="include/lime/utils/_BytePointer/BytePointer_Impl_.h"/>
    <depend name="include/lime/utils/_DataPointer/DataPointer_Impl_.h"/>
    <depend name="include/openfl/_internal/stage3D/GLUtils.h"/>
    <depend name="include/openfl/_internal/stage3D/SamplerState.h"/>
@@ -2068,7 +2101,8 @@
    <depend name="include/_List/ListNode.h"/>
    <depend name="include/haxe/Log.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
    <depend name="include/lime/graphics/opengl/GLObject.h"/>
    <depend name="include/lime/utils/ArrayBufferView.h"/>
    <depend name="include/lime/utils/BytePointerData.h"/>
@@ -2098,12 +2132,13 @@
   <file name="src/openfl/_internal/stage3D/opengl/GLIndexBuffer3D.cpp" tags="haxe,release">
    <depend name="include/Std.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
+   <depend name="include/lime/graphics/_WebGLRenderContext/WebGLRenderContext_Impl_.h"/>
    <depend name="include/lime/graphics/opengl/GLObject.h"/>
    <depend name="include/lime/utils/ArrayBufferIO.h"/>
    <depend name="include/lime/utils/ArrayBufferView.h"/>
    <depend name="include/lime/utils/TAError.h"/>
-   <depend name="include/lime/utils/_DataPointer/DataPointer_Impl_.h"/>
    <depend name="include/openfl/_Vector/IVector.h"/>
    <depend name="include/openfl/_Vector/IntVector.h"/>
    <depend name="include/openfl/_internal/stage3D/GLUtils.h"/>
@@ -2121,14 +2156,16 @@
   <file name="src/openfl/_internal/stage3D/opengl/GLCubeTexture.cpp" tags="haxe,release">
    <depend name="include/Std.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
    <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
+   <depend name="include/lime/graphics/_WebGL2RenderContext/WebGL2RenderContext_Impl_.h"/>
    <depend name="include/lime/graphics/opengl/GLObject.h"/>
    <depend name="include/lime/utils/ArrayBufferView.h"/>
    <depend name="include/lime/utils/BytePointerData.h"/>
    <depend name="include/lime/utils/TAError.h"/>
+   <depend name="include/lime/utils/_BytePointer/BytePointer_Impl_.h"/>
    <depend name="include/lime/utils/_DataPointer/DataPointer_Impl_.h"/>
-   <depend name="include/openfl/_internal/stage3D/GLCompressedTextureFormats.h"/>
    <depend name="include/openfl/_internal/stage3D/GLUtils.h"/>
    <depend name="include/openfl/_internal/stage3D/SamplerState.h"/>
    <depend name="include/openfl/_internal/stage3D/atf/ATFReader.h"/>
@@ -2154,11 +2191,10 @@
    <depend name="include/Std.h"/>
    <depend name="include/haxe/Log.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
    <depend name="include/lime/app/IModule.h"/>
    <depend name="include/lime/graphics/Image.h"/>
-   <depend name="include/lime/graphics/Renderer.h"/>
-   <depend name="include/lime/graphics/opengl/GLContextType.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
    <depend name="include/lime/graphics/opengl/GLObject.h"/>
    <depend name="include/lime/math/Rectangle.h"/>
    <depend name="include/lime/math/Vector2.h"/>
@@ -2204,6 +2240,7 @@
   </file>
   <file name="src/openfl/_internal/stage3D/atf/ATFReader.cpp" tags="haxe,release">
    <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/utils/Log.h"/>
    <depend name="include/openfl/_internal/stage3D/atf/ATFReader.h"/>
    <depend name="include/openfl/errors/Error.h"/>
    <depend name="include/openfl/errors/IllegalOperationError.h"/>
@@ -2217,7 +2254,7 @@
   </file>
   <file name="src/openfl/_internal/stage3D/GLUtils.cpp" tags="haxe,release">
    <depend name="include/Std.h"/>
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
    <depend name="include/lime/graphics/opengl/GL.h"/>
    <depend name="include/openfl/_internal/stage3D/GLUtils.h"/>
    <depend name="include/openfl/errors/Error.h"/>
@@ -2226,7 +2263,8 @@
   <file name="src/openfl/_internal/stage3D/GLCompressedTextureFormats.cpp" tags="haxe,release">
    <depend name="include/haxe/IMap.h"/>
    <depend name="include/haxe/ds/IntMap.h"/>
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
    <depend name="include/openfl/_internal/stage3D/GLCompressedTextureFormats.h"/>
   </file>
   <file name="src/openfl/_internal/stage3D/Context3DStateCache.cpp" tags="haxe,release">
@@ -2283,7 +2321,7 @@
    <depend name="include/Std.h"/>
    <depend name="include/StringBuf.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
    <depend name="include/lime/graphics/opengl/GL.h"/>
    <depend name="include/openfl/_internal/stage3D/AGALConverter.h"/>
    <depend name="include/openfl/_internal/stage3D/RegisterMap.h"/>
@@ -2315,7 +2353,8 @@
    <depend name="include/openfl/text/TextField.h"/>
   </file>
   <file name="src/openfl/_internal/renderer/opengl/GLShape.cpp" tags="haxe,release">
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
    <depend name="include/lime/graphics/opengl/GLObject.h"/>
    <depend name="include/lime/utils/_DataPointer/DataPointer_Impl_.h"/>
    <depend name="include/openfl/_internal/renderer/opengl/GLGraphics.h"/>
@@ -2351,9 +2390,10 @@
    <depend name="include/Std.h"/>
    <depend name="include/Type.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
+   <depend name="include/lime/graphics/_WebGLRenderContext/WebGLRenderContext_Impl_.h"/>
    <depend name="include/lime/graphics/opengl/GLObject.h"/>
-   <depend name="include/lime/graphics/opengl/_WebGLContext/WebGLContext_Impl_.h"/>
    <depend name="include/lime/utils/ArrayBufferView.h"/>
    <depend name="include/lime/utils/ObjectPool_openfl_geom_Matrix.h"/>
    <depend name="include/lime/utils/ObjectPool_openfl_geom_Rectangle.h"/>
@@ -2367,6 +2407,7 @@
    <depend name="include/openfl/_internal/renderer/ShaderBuffer.h"/>
    <depend name="include/openfl/_internal/renderer/cairo/CairoGraphics.h"/>
    <depend name="include/openfl/_internal/renderer/opengl/GLGraphics.h"/>
+   <depend name="include/openfl/_internal/renderer/opengl/GLMaskShader.h"/>
    <depend name="include/openfl/display/BitmapData.h"/>
    <depend name="include/openfl/display/CairoRenderer.h"/>
    <depend name="include/openfl/display/DisplayObject.h"/>
@@ -2385,7 +2426,8 @@
    <depend name="include/openfl/geom/Rectangle.h"/>
   </file>
   <file name="src/openfl/_internal/renderer/opengl/GLDisplayObject.cpp" tags="haxe,release">
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
    <depend name="include/lime/utils/ObjectPool_openfl_geom_Rectangle.h"/>
    <depend name="include/openfl/_internal/renderer/opengl/GLDisplayObject.h"/>
    <depend name="include/openfl/_internal/renderer/opengl/GLShape.h"/>
@@ -2400,7 +2442,8 @@
    <depend name="include/openfl/geom/Rectangle.h"/>
   </file>
   <file name="src/openfl/_internal/renderer/opengl/GLBitmap.cpp"  tags="haxe,release" >
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
    <depend name="include/lime/graphics/opengl/GLObject.h"/>
    <depend name="include/lime/utils/_DataPointer/DataPointer_Impl_.h"/>
    <depend name="include/openfl/_internal/renderer/opengl/GLBitmap.h"/>
@@ -2523,12 +2566,12 @@
    <depend name="include/lime/graphics/cairo/_CairoImageSurface/CairoImageSurface_Impl_.h"/>
    <depend name="include/lime/math/Vector2.h"/>
    <depend name="include/lime/text/Font.h"/>
-   <depend name="include/lime/text/GlyphPosition.h"/>
    <depend name="include/lime/text/_UTF8String/UTF8String_Impl_.h"/>
    <depend name="include/openfl/_Vector/FloatVector.h"/>
    <depend name="include/openfl/_Vector/IVector.h"/>
    <depend name="include/openfl/_Vector/ObjectVector.h"/>
    <depend name="include/openfl/_internal/renderer/cairo/CairoTextField.h"/>
+   <depend name="include/openfl/_internal/text/GlyphPosition.h"/>
    <depend name="include/openfl/_internal/text/TextEngine.h"/>
    <depend name="include/openfl/_internal/text/TextLayoutGroup.h"/>
    <depend name="include/openfl/display/BitmapData.h"/>
@@ -2540,8 +2583,6 @@
    <depend name="include/openfl/display/InteractiveObject.h"/>
    <depend name="include/openfl/events/EventDispatcher.h"/>
    <depend name="include/openfl/events/IEventDispatcher.h"/>
-   <depend name="include/openfl/filters/BitmapFilter.h"/>
-   <depend name="include/openfl/filters/GlowFilter.h"/>
    <depend name="include/openfl/geom/Matrix.h"/>
    <depend name="include/openfl/geom/Rectangle.h"/>
    <depend name="include/openfl/text/Font.h"/>
@@ -2832,6 +2873,7 @@
    <depend name="include/Std.h"/>
    <depend name="include/StringTools.h"/>
    <depend name="include/Type.h"/>
+   <depend name="include/ValueType.h"/>
    <depend name="include/haxe/IMap.h"/>
    <depend name="include/haxe/Log.h"/>
    <depend name="include/haxe/Timer.h"/>
@@ -2855,22 +2897,6 @@
    <depend name="include/openfl/events/IEventDispatcher.h"/>
    <depend name="include/openfl/net/URLLoader.h"/>
    <depend name="include/openfl/net/URLRequest.h"/>
-   <depend name="include/openfl/net/URLVariables.h"/>
-  </file>
-  <file name="src/lime/utils/compress/Zlib.cpp" tags="haxe,release">
-   <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
-   <depend name="include/lime/utils/compress/Zlib.h"/>
-  </file>
-  <file name="src/lime/utils/compress/LZMA.cpp" tags="haxe,release">
-   <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
-   <depend name="include/lime/utils/compress/LZMA.h"/>
-  </file>
-  <file name="src/lime/utils/compress/Deflate.cpp" tags="haxe,release">
-   <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
-   <depend name="include/lime/utils/compress/Deflate.h"/>
   </file>
   <file name="src/lime/utils/_UInt8ClampedArray/UInt8ClampedArray_Impl_.cpp" >
    <depend name="include/Std.h"/>
@@ -2900,6 +2926,35 @@
    <depend name="include/lime/utils/TAError.h"/>
    <depend name="include/lime/utils/_UInt16Array/UInt16Array_Impl_.h"/>
   </file>
+  <file name="src/lime/utils/Preloader.cpp" tags="haxe,release">
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/ds/ObjectMap.h"/>
+   <depend name="include/haxe/ds/StringMap.h"/>
+   <depend name="include/lime/app/Future.h"/>
+   <depend name="include/lime/app/_Event_Int_Int_Void.h"/>
+   <depend name="include/lime/app/_Event_Void_Void.h"/>
+   <depend name="include/lime/utils/AssetLibrary.h"/>
+   <depend name="include/lime/utils/Assets.h"/>
+   <depend name="include/lime/utils/Log.h"/>
+   <depend name="include/lime/utils/Preloader.h"/>
+  </file>
+  <file name="src/lime/utils/PackedAssetLibrary.cpp" tags="haxe,release">
+   <depend name="include/Reflect.h"/>
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/ds/StringMap.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/app/Future.h"/>
+   <depend name="include/lime/app/Promise_lime_utils_AssetLibrary.h"/>
+   <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/lime/media/AudioBuffer.h"/>
+   <depend name="include/lime/text/Font.h"/>
+   <depend name="include/lime/utils/AssetLibrary.h"/>
+   <depend name="include/lime/utils/AssetManifest.h"/>
+   <depend name="include/lime/utils/CompressionAlgorithm.h"/>
+   <depend name="include/lime/utils/Log.h"/>
+   <depend name="include/lime/utils/PackedAssetLibrary.h"/>
+   <depend name="include/lime/utils/_Bytes/Bytes_Impl_.h"/>
+  </file>
   <file name="src/lime/utils/ObjectPool_openfl__internal_renderer_ShaderBuffer.cpp" >
    <depend name="include/List.h"/>
    <depend name="include/_List/ListNode.h"/>
@@ -2926,10 +2981,11 @@
    <depend name="include/lime/utils/Log.h"/>
    <depend name="include/lime/utils/ObjectPool.h"/>
   </file>
-  <file name="src/lime/utils/_Log/LogLevel_Impl_.cpp" >
-   <depend name="include/lime/utils/_Log/LogLevel_Impl_.h"/>
+  <file name="src/lime/utils/_LogLevel/LogLevel_Impl_.cpp" >
+   <depend name="include/lime/utils/_LogLevel/LogLevel_Impl_.h"/>
   </file>
   <file name="src/lime/utils/Log.cpp" tags="haxe,release">
+   <depend name="include/Std.h"/>
    <depend name="include/Sys.h"/>
    <depend name="include/lime/utils/Log.h"/>
   </file>
@@ -2971,21 +3027,30 @@
   <file name="src/lime/utils/_DataPointer/DataPointer_Impl_.cpp" >
    <depend name="include/Std.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
    <depend name="include/lime/system/_CFFIPointer/CFFIPointer_Impl_.h"/>
    <depend name="include/lime/utils/ArrayBufferView.h"/>
    <depend name="include/lime/utils/BytePointerData.h"/>
    <depend name="include/lime/utils/_Bytes/Bytes_Impl_.h"/>
    <depend name="include/lime/utils/_DataPointer/DataPointer_Impl_.h"/>
   </file>
+  <file name="src/lime/utils/CompressionAlgorithm.cpp" >
+   <depend name="include/lime/utils/CompressionAlgorithm.h"/>
+  </file>
   <file name="src/lime/utils/_Bytes/Bytes_Impl_.cpp" >
+   <depend name="include/Type.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/_internal/format/Deflate.h"/>
+   <depend name="include/lime/_internal/format/GZip.h"/>
+   <depend name="include/lime/_internal/format/LZMA.h"/>
+   <depend name="include/lime/_internal/format/Zlib.h"/>
    <depend name="include/lime/app/Future.h"/>
    <depend name="include/lime/net/_HTTPRequest/AbstractHTTPRequest.h"/>
    <depend name="include/lime/net/_HTTPRequest_Bytes.h"/>
    <depend name="include/lime/net/_HTTPRequest_lime_utils_Bytes.h"/>
    <depend name="include/lime/net/_IHTTPRequest.h"/>
+   <depend name="include/lime/utils/CompressionAlgorithm.h"/>
    <depend name="include/lime/utils/_Bytes/Bytes_Impl_.h"/>
   </file>
   <file name="src/lime/utils/_BytePointer/BytePointer_Impl_.cpp" >
@@ -3011,7 +3076,6 @@
    <depend name="include/lime/app/Future.h"/>
    <depend name="include/lime/app/IModule.h"/>
    <depend name="include/lime/app/Module.h"/>
-   <depend name="include/lime/app/Preloader.h"/>
    <depend name="include/lime/app/Promise_lime_utils_AssetLibrary.h"/>
    <depend name="include/lime/app/_Event_Void_Void.h"/>
    <depend name="include/lime/graphics/Image.h"/>
@@ -3023,8 +3087,10 @@
    <depend name="include/lime/utils/AssetManifest.h"/>
    <depend name="include/lime/utils/Assets.h"/>
    <depend name="include/lime/utils/Log.h"/>
+   <depend name="include/lime/utils/Preloader.h"/>
   </file>
   <file name="src/lime/utils/AssetManifest.cpp" tags="haxe,release">
+   <depend name="include/Reflect.h"/>
    <depend name="include/StringTools.h"/>
    <depend name="include/haxe/Serializer.h"/>
    <depend name="include/haxe/Unserializer.h"/>
@@ -3075,23 +3141,27 @@
    <depend name="include/lime/utils/_ArrayBuffer/ArrayBuffer_Impl_.h"/>
   </file>
   <file name="src/lime/ui/Window.cpp" tags="haxe,release">
-   <depend name="include/Reflect.h"/>
-   <depend name="include/lime/_backend/native/NativeWindow.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeWindow.h"/>
    <depend name="include/lime/app/Application.h"/>
    <depend name="include/lime/app/IModule.h"/>
    <depend name="include/lime/app/Module.h"/>
    <depend name="include/lime/app/_Event_Float_Float_Int_Void.h"/>
    <depend name="include/lime/app/_Event_Float_Float_Void.h"/>
+   <depend name="include/lime/app/_Event_Float_Float_lime_ui_MouseButton_Void.h"/>
+   <depend name="include/lime/app/_Event_Float_Float_lime_ui_MouseWheelMode_Void.h"/>
    <depend name="include/lime/app/_Event_Int_Int_Void.h"/>
    <depend name="include/lime/app/_Event_String_Int_Int_Void.h"/>
    <depend name="include/lime/app/_Event_String_Void.h"/>
    <depend name="include/lime/app/_Event_Void_Void.h"/>
+   <depend name="include/lime/app/_Event_lime_graphics_RenderContext_Void.h"/>
    <depend name="include/lime/app/_Event_lime_ui_KeyCode_lime_ui_KeyModifier_Void.h"/>
    <depend name="include/lime/graphics/Image.h"/>
-   <depend name="include/lime/graphics/Renderer.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
+   <depend name="include/lime/math/Rectangle.h"/>
    <depend name="include/lime/system/Display.h"/>
    <depend name="include/lime/system/DisplayMode.h"/>
    <depend name="include/lime/ui/Gamepad.h"/>
+   <depend name="include/lime/ui/MouseCursor.h"/>
    <depend name="include/lime/ui/Window.h"/>
    <depend name="include/openfl/display/DisplayObject.h"/>
    <depend name="include/openfl/display/DisplayObjectContainer.h"/>
@@ -3109,21 +3179,18 @@
    <depend name="include/lime/ui/_KeyCode/KeyCode_Impl_.h"/>
    <depend name="include/lime/ui/_ScanCode/ScanCode_Impl_.h"/>
   </file>
+  <file name="src/lime/ui/MouseWheelMode.cpp" >
+   <depend name="include/lime/ui/MouseWheelMode.h"/>
+  </file>
   <file name="src/lime/ui/MouseCursor.cpp" >
    <depend name="include/lime/ui/MouseCursor.h"/>
-  </file>
-  <file name="src/lime/ui/Mouse.cpp" tags="haxe,release">
-   <depend name="include/lime/_backend/native/NativeMouse.h"/>
-   <depend name="include/lime/ui/Mouse.h"/>
-   <depend name="include/lime/ui/MouseCursor.h"/>
-   <depend name="include/lime/ui/Window.h"/>
   </file>
   <file name="src/lime/ui/_KeyModifier/KeyModifier_Impl_.cpp" >
    <depend name="include/lime/ui/_KeyModifier/KeyModifier_Impl_.h"/>
   </file>
   <file name="src/lime/ui/_KeyCode/KeyCode_Impl_.cpp" >
    <depend name="include/Std.h"/>
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
    <depend name="include/lime/ui/_KeyCode/KeyCode_Impl_.h"/>
   </file>
   <file name="src/lime/ui/_JoystickHatPosition/JoystickHatPosition_Impl_.cpp" >
@@ -3132,7 +3199,7 @@
   <file name="src/lime/ui/Joystick.cpp" tags="haxe,release">
    <depend name="include/haxe/IMap.h"/>
    <depend name="include/haxe/ds/IntMap.h"/>
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
    <depend name="include/lime/app/_Event_Int_Float_Float_Void.h"/>
    <depend name="include/lime/app/_Event_Int_Float_Void.h"/>
    <depend name="include/lime/app/_Event_Int_Void.h"/>
@@ -3150,78 +3217,62 @@
   <file name="src/lime/ui/Gamepad.cpp" tags="haxe,release">
    <depend name="include/haxe/IMap.h"/>
    <depend name="include/haxe/ds/IntMap.h"/>
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
    <depend name="include/lime/app/_Event_Void_Void.h"/>
    <depend name="include/lime/app/_Event_lime_ui_GamepadAxis_Float_Void.h"/>
    <depend name="include/lime/app/_Event_lime_ui_GamepadButton_Void.h"/>
    <depend name="include/lime/app/_Event_lime_ui_Gamepad_Void.h"/>
    <depend name="include/lime/ui/Gamepad.h"/>
   </file>
-  <file name="src/lime/text/unifill/_Utf8/StringU8_Impl_.cpp" >
+  <file name="src/lime/text/harfbuzz/HBSegmentProperties.cpp" >
+   <depend name="include/lime/text/harfbuzz/HBSegmentProperties.h"/>
+  </file>
+  <file name="src/lime/text/harfbuzz/_HBLanguage/HBLanguage_Impl_.cpp" >
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/text/harfbuzz/_HBLanguage/HBLanguage_Impl_.h"/>
+  </file>
+  <file name="src/lime/text/harfbuzz/HBGlyphPosition.cpp" >
+   <depend name="include/lime/text/harfbuzz/HBGlyphPosition.h"/>
+  </file>
+  <file name="src/lime/text/harfbuzz/HBGlyphInfo.cpp" >
+   <depend name="include/lime/text/harfbuzz/HBGlyphInfo.h"/>
+  </file>
+  <file name="src/lime/text/harfbuzz/_HBFont/HBFont_Impl_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/math/Vector2.h"/>
+   <depend name="include/lime/text/harfbuzz/_HBFont/HBFont_Impl_.h"/>
+  </file>
+  <file name="src/lime/text/harfbuzz/HBFeature.cpp" >
+   <depend name="include/lime/text/harfbuzz/HBFeature.h"/>
+  </file>
+  <file name="src/lime/text/harfbuzz/_HBFace/HBFace_Impl_.cpp" >
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/text/harfbuzz/_HBFace/HBFace_Impl_.h"/>
+  </file>
+  <file name="src/lime/text/harfbuzz/_HBFTFont/HBFTFont_Impl_.cpp" >
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/text/Font.h"/>
+   <depend name="include/lime/text/harfbuzz/_HBFTFont/HBFTFont_Impl_.h"/>
+  </file>
+  <file name="src/lime/text/harfbuzz/_HBBuffer/HBBuffer_Impl_.cpp" >
    <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/text/unifill/_Utf8/StringU8_Impl_.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/text/harfbuzz/HBGlyphInfo.h"/>
+   <depend name="include/lime/text/harfbuzz/HBGlyphPosition.h"/>
+   <depend name="include/lime/text/harfbuzz/HBSegmentProperties.h"/>
+   <depend name="include/lime/text/harfbuzz/_HBBuffer/HBBuffer_Impl_.h"/>
+   <depend name="include/lime/utils/_Bytes/Bytes_Impl_.h"/>
   </file>
-  <file name="src/lime/text/unifill/_Utf8/Utf8Impl.cpp" >
-   <depend name="include/lime/text/unifill/Exception.h"/>
-   <depend name="include/lime/text/unifill/InvalidCodePoint.h"/>
-   <depend name="include/lime/text/unifill/InvalidCodeUnitSequence.h"/>
-   <depend name="include/lime/text/unifill/_Utf8/Utf8Impl.h"/>
+  <file name="src/lime/text/harfbuzz/_HBBlob/HBBlob_Impl_.cpp" >
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/text/harfbuzz/_HBBlob/HBBlob_Impl_.h"/>
+   <depend name="include/lime/utils/_DataPointer/DataPointer_Impl_.h"/>
   </file>
-  <file name="src/lime/text/unifill/_Utf8/Utf8_Impl_.cpp" >
-   <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/haxe/io/BytesBuffer.h"/>
-   <depend name="include/lime/text/unifill/Exception.h"/>
-   <depend name="include/lime/text/unifill/InvalidCodePoint.h"/>
-   <depend name="include/lime/text/unifill/_Utf8/Utf8Impl.h"/>
-   <depend name="include/lime/text/unifill/_Utf8/Utf8_Impl_.h"/>
-  </file>
-  <file name="src/lime/text/unifill/Unifill.cpp" tags="haxe,release">
-   <depend name="include/StringBuf.h"/>
-   <depend name="include/haxe/Utf8.h"/>
-   <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/haxe/io/BytesBuffer.h"/>
-   <depend name="include/lime/text/unifill/CodePointIter.h"/>
-   <depend name="include/lime/text/unifill/Exception.h"/>
-   <depend name="include/lime/text/unifill/InvalidCodePoint.h"/>
-   <depend name="include/lime/text/unifill/Unifill.h"/>
-   <depend name="include/lime/text/unifill/_Utf8/Utf8_Impl_.h"/>
-  </file>
-  <file name="src/lime/text/unifill/Unicode.cpp" tags="haxe,release">
-   <depend name="include/lime/text/unifill/Unicode.h"/>
-  </file>
-  <file name="src/lime/text/unifill/InternalEncodingIter.cpp" tags="haxe,release">
-   <depend name="include/lime/text/unifill/InternalEncodingIter.h"/>
-  </file>
-  <file name="src/lime/text/unifill/InternalEncoding.cpp" tags="haxe,release">
-   <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/haxe/io/BytesBuffer.h"/>
-   <depend name="include/lime/text/unifill/Exception.h"/>
-   <depend name="include/lime/text/unifill/InternalEncoding.h"/>
-   <depend name="include/lime/text/unifill/InvalidCodePoint.h"/>
-   <depend name="include/lime/text/unifill/InvalidCodeUnitSequence.h"/>
-   <depend name="include/lime/text/unifill/_Utf8/Utf8_Impl_.h"/>
-  </file>
-  <file name="src/lime/text/unifill/InvalidCodeUnitSequence.cpp" tags="haxe,release">
-   <depend name="include/lime/text/unifill/Exception.h"/>
-   <depend name="include/lime/text/unifill/InvalidCodeUnitSequence.h"/>
-  </file>
-  <file name="src/lime/text/unifill/InvalidCodePoint.cpp" tags="haxe,release">
-   <depend name="include/lime/text/unifill/Exception.h"/>
-   <depend name="include/lime/text/unifill/InvalidCodePoint.h"/>
-  </file>
-  <file name="src/lime/text/unifill/Exception.cpp" tags="haxe,release">
-   <depend name="include/lime/text/unifill/Exception.h"/>
-  </file>
-  <file name="src/lime/text/unifill/CodePointIter.cpp" tags="haxe,release">
-   <depend name="include/lime/text/unifill/CodePointIter.h"/>
-   <depend name="include/lime/text/unifill/_Utf8/Utf8_Impl_.h"/>
-  </file>
-  <file name="src/lime/text/unifill/_CodePoint/CodePoint_Impl_.cpp" >
-   <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/haxe/io/BytesBuffer.h"/>
-   <depend name="include/lime/text/unifill/Exception.h"/>
-   <depend name="include/lime/text/unifill/InvalidCodePoint.h"/>
-   <depend name="include/lime/text/unifill/_CodePoint/CodePoint_Impl_.h"/>
+  <file name="src/lime/text/harfbuzz/HB.cpp" >
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/text/harfbuzz/HB.h"/>
+   <depend name="include/lime/text/harfbuzz/HBFeature.h"/>
   </file>
   <file name="src/lime/text/_UTF8String/Utf8Ext.cpp" >
    <depend name="include/haxe/IMap.h"/>
@@ -3236,31 +3287,12 @@
    <depend name="include/haxe/ds/IntMap.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
    <depend name="include/haxe/io/BytesBuffer.h"/>
+   <depend name="include/lime/_internal/unifill/Exception.h"/>
+   <depend name="include/lime/_internal/unifill/InvalidCodePoint.h"/>
+   <depend name="include/lime/_internal/unifill/Unifill.h"/>
+   <depend name="include/lime/_internal/unifill/_Utf8/Utf8_Impl_.h"/>
    <depend name="include/lime/text/_UTF8String/UTF8String_Impl_.h"/>
    <depend name="include/lime/text/_UTF8String/Utf8Ext.h"/>
-   <depend name="include/lime/text/unifill/Exception.h"/>
-   <depend name="include/lime/text/unifill/InvalidCodePoint.h"/>
-   <depend name="include/lime/text/unifill/Unifill.h"/>
-   <depend name="include/lime/text/unifill/_Utf8/Utf8_Impl_.h"/>
-  </file>
-  <file name="src/lime/text/_TextScript/TextScript_Impl_.cpp" >
-   <depend name="include/lime/text/_TextScript/TextScript_Impl_.h"/>
-  </file>
-  <file name="src/lime/text/TextLayout.cpp" tags="haxe,release">
-   <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/haxe/io/Error.h"/>
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
-   <depend name="include/lime/math/Vector2.h"/>
-   <depend name="include/lime/text/Font.h"/>
-   <depend name="include/lime/text/GlyphPosition.h"/>
-   <depend name="include/lime/text/TextLayout.h"/>
-  </file>
-  <file name="src/lime/text/_TextDirection/TextDirection_Impl_.cpp" >
-   <depend name="include/lime/text/_TextDirection/TextDirection_Impl_.h"/>
-  </file>
-  <file name="src/lime/text/GlyphPosition.cpp" tags="haxe,release">
-   <depend name="include/lime/math/Vector2.h"/>
-   <depend name="include/lime/text/GlyphPosition.h"/>
   </file>
   <file name="src/lime/text/GlyphMetrics.cpp" tags="haxe,release">
    <depend name="include/lime/math/Vector2.h"/>
@@ -3288,6 +3320,7 @@
    <depend name="include/lime/system/ThreadPool.h"/>
    <depend name="include/lime/system/_ThreadPool/ThreadPoolMessage.h"/>
    <depend name="include/lime/system/_ThreadPool/ThreadPoolMessageType.h"/>
+   <depend name="include/lime/ui/Window.h"/>
   </file>
   <file name="src/lime/system/System.cpp" tags="haxe,release">
    <depend name="include/EReg.h"/>
@@ -3300,7 +3333,7 @@
    <depend name="include/haxe/ds/StringMap.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
    <depend name="include/haxe/io/Input.h"/>
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
    <depend name="include/lime/app/Application.h"/>
    <depend name="include/lime/app/IModule.h"/>
    <depend name="include/lime/app/Module.h"/>
@@ -3356,12 +3389,12 @@
    <depend name="include/lime/system/DisplayMode.h"/>
   </file>
   <file name="src/lime/system/Clipboard.cpp" tags="haxe,release">
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
    <depend name="include/lime/app/_Event_Void_Void.h"/>
    <depend name="include/lime/system/Clipboard.h"/>
   </file>
   <file name="src/lime/system/_CFFIPointer/CFFIPointer_Impl_.cpp" >
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
    <depend name="include/lime/system/_CFFIPointer/CFFIPointer_Impl_.h"/>
   </file>
   <file name="src/lime/system/CFFI.cpp" tags="haxe,release">
@@ -3375,9 +3408,19 @@
    <depend name="include/lime/system/CFFI.h"/>
    <depend name="include/sys/io/Process.h"/>
   </file>
+  <file name="src/lime/net/curl/CURLMultiMessage.cpp" >
+   <depend name="include/lime/net/curl/CURL.h"/>
+   <depend name="include/lime/net/curl/CURLMultiMessage.h"/>
+  </file>
+  <file name="src/lime/net/curl/CURLMulti.cpp" tags="haxe,release">
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/net/curl/CURL.h"/>
+   <depend name="include/lime/net/curl/CURLMulti.h"/>
+   <depend name="include/lime/net/curl/CURLMultiMessage.h"/>
+  </file>
   <file name="src/lime/net/curl/CURL.cpp" tags="haxe,release">
    <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
    <depend name="include/lime/net/curl/CURL.h"/>
   </file>
   <file name="src/lime/net/_HTTPRequest_openfl_utils_ByteArray.cpp" tags="haxe,release">
@@ -3427,7 +3470,7 @@
    <depend name="include/lime/net/HTTPRequestHeader.h"/>
   </file>
   <file name="src/lime/net/_HTTPRequest_String.cpp" tags="haxe,release">
-   <depend name="include/lime/_backend/native/NativeHTTPRequest.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeHTTPRequest.h"/>
    <depend name="include/lime/app/Future.h"/>
    <depend name="include/lime/app/Promise.h"/>
    <depend name="include/lime/net/_HTTPRequest/AbstractHTTPRequest.h"/>
@@ -3436,7 +3479,7 @@
   </file>
   <file name="src/lime/net/_HTTPRequest_Bytes.cpp" tags="haxe,release">
    <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeHTTPRequest.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeHTTPRequest.h"/>
    <depend name="include/lime/app/Future.h"/>
    <depend name="include/lime/app/Promise.h"/>
    <depend name="include/lime/net/_HTTPRequest/AbstractHTTPRequest.h"/>
@@ -3452,7 +3495,7 @@
    <depend name="include/haxe/IMap.h"/>
    <depend name="include/haxe/ds/StringMap.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeHTTPRequest.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeHTTPRequest.h"/>
    <depend name="include/lime/app/Future.h"/>
    <depend name="include/lime/net/HTTPRequestHeader.h"/>
    <depend name="include/lime/net/_HTTPRequest/AbstractHTTPRequest.h"/>
@@ -3464,6 +3507,19 @@
    <depend name="include/haxe/io/Bytes.h"/>
    <depend name="include/lime/net/HTTPRequestHeader.h"/>
    <depend name="include/lime/net/_IHTTPRequest.h"/>
+  </file>
+  <file name="src/lime/media/vorbis/VorbisInfo.cpp" >
+   <depend name="include/lime/media/vorbis/VorbisInfo.h"/>
+  </file>
+  <file name="src/lime/media/vorbis/VorbisFile.cpp" >
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/media/vorbis/VorbisComment.h"/>
+   <depend name="include/lime/media/vorbis/VorbisFile.h"/>
+   <depend name="include/lime/media/vorbis/VorbisInfo.h"/>
+  </file>
+  <file name="src/lime/media/vorbis/VorbisComment.cpp" >
+   <depend name="include/lime/media/vorbis/VorbisComment.h"/>
   </file>
   <file name="src/lime/media/openal/_ALSource/ALSource_Impl_.cpp" >
    <depend name="include/lime/media/openal/_ALSource/ALSource_Impl_.h"/>
@@ -3481,7 +3537,7 @@
    <depend name="include/lime/media/openal/_ALContext/ALContext_Impl_.h"/>
   </file>
   <file name="src/lime/media/openal/ALC.cpp" tags="haxe,release">
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
    <depend name="include/lime/media/openal/ALC.h"/>
   </file>
   <file name="src/lime/media/openal/_ALBuffer/ALBuffer_Impl_.cpp" >
@@ -3491,25 +3547,18 @@
    <depend name="include/lime/media/openal/_ALAuxiliaryEffectSlot/ALAuxiliaryEffectSlot_Impl_.h"/>
   </file>
   <file name="src/lime/media/openal/AL.cpp" tags="haxe,release">
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
    <depend name="include/lime/media/openal/AL.h"/>
    <depend name="include/lime/utils/ArrayBufferView.h"/>
   </file>
-  <file name="src/lime/media/codecs/vorbis/VorbisInfo.cpp" >
-   <depend name="include/lime/media/codecs/vorbis/VorbisInfo.h"/>
-  </file>
-  <file name="src/lime/media/codecs/vorbis/VorbisFile.cpp" >
-   <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
-   <depend name="include/lime/media/codecs/vorbis/VorbisComment.h"/>
-   <depend name="include/lime/media/codecs/vorbis/VorbisFile.h"/>
-   <depend name="include/lime/media/codecs/vorbis/VorbisInfo.h"/>
-  </file>
-  <file name="src/lime/media/codecs/vorbis/VorbisComment.cpp" >
-   <depend name="include/lime/media/codecs/vorbis/VorbisComment.h"/>
-  </file>
   <file name="src/lime/media/WebAudioContext.cpp" >
    <depend name="include/lime/media/WebAudioContext.h"/>
+  </file>
+  <file name="src/lime/media/OpenALAudioContext.cpp" tags="haxe,release">
+   <depend name="include/lime/media/OpenALAudioContext.h"/>
+   <depend name="include/lime/media/openal/AL.h"/>
+   <depend name="include/lime/media/openal/ALC.h"/>
+   <depend name="include/lime/utils/ArrayBufferView.h"/>
   </file>
   <file name="src/lime/media/HTML5AudioContext.cpp" >
    <depend name="include/lime/media/AudioBuffer.h"/>
@@ -3520,38 +3569,34 @@
    <depend name="include/lime/media/FlashAudioContext.h"/>
   </file>
   <file name="src/lime/media/AudioSource.cpp" tags="haxe,release">
-   <depend name="include/lime/_backend/native/NativeAudioSource.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeAudioSource.h"/>
    <depend name="include/lime/app/_Event_Void_Void.h"/>
    <depend name="include/lime/math/Vector4.h"/>
    <depend name="include/lime/media/AudioBuffer.h"/>
    <depend name="include/lime/media/AudioSource.h"/>
   </file>
   <file name="src/lime/media/AudioManager.cpp" tags="haxe,release">
-   <depend name="include/Type.h"/>
-   <depend name="include/lime/media/ALAudioContext.h"/>
-   <depend name="include/lime/media/ALCAudioContext.h"/>
    <depend name="include/lime/media/AudioContext.h"/>
    <depend name="include/lime/media/AudioManager.h"/>
-   <depend name="include/lime/media/openal/ALC.h"/>
+   <depend name="include/lime/media/OpenALAudioContext.h"/>
   </file>
   <file name="src/lime/media/AudioContext.cpp" >
-   <depend name="include/lime/media/ALAudioContext.h"/>
-   <depend name="include/lime/media/ALCAudioContext.h"/>
    <depend name="include/lime/media/AudioContext.h"/>
    <depend name="include/lime/media/FlashAudioContext.h"/>
    <depend name="include/lime/media/HTML5AudioContext.h"/>
+   <depend name="include/lime/media/OpenALAudioContext.h"/>
    <depend name="include/lime/media/WebAudioContext.h"/>
   </file>
   <file name="src/lime/media/AudioBuffer.cpp" tags="haxe,release">
    <depend name="include/Std.h"/>
    <depend name="include/haxe/crypto/Base64.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
    <depend name="include/lime/app/Future.h"/>
    <depend name="include/lime/app/Promise_lime_media_AudioBuffer.h"/>
    <depend name="include/lime/media/AudioBuffer.h"/>
-   <depend name="include/lime/media/codecs/vorbis/VorbisFile.h"/>
-   <depend name="include/lime/media/codecs/vorbis/VorbisInfo.h"/>
+   <depend name="include/lime/media/vorbis/VorbisFile.h"/>
+   <depend name="include/lime/media/vorbis/VorbisInfo.h"/>
    <depend name="include/lime/net/_HTTPRequest/AbstractHTTPRequest.h"/>
    <depend name="include/lime/net/_HTTPRequest_Bytes.h"/>
    <depend name="include/lime/net/_HTTPRequest_lime_media_AudioBuffer.h"/>
@@ -3560,37 +3605,17 @@
    <depend name="include/lime/utils/Log.h"/>
    <depend name="include/lime/utils/TAError.h"/>
   </file>
-  <file name="src/lime/media/ALCAudioContext.cpp" tags="haxe,release">
-   <depend name="include/lime/media/ALCAudioContext.h"/>
-   <depend name="include/lime/media/openal/ALC.h"/>
-  </file>
-  <file name="src/lime/media/ALAudioContext.cpp" tags="haxe,release">
-   <depend name="include/lime/media/ALAudioContext.h"/>
-   <depend name="include/lime/media/openal/AL.h"/>
-   <depend name="include/lime/utils/ArrayBufferView.h"/>
-  </file>
-  <file name="src/lime/math/color/_RGBA/RGBA_Impl_.cpp" >
-   <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/math/color/_RGBA/RGBA_Impl_.h"/>
-   <depend name="include/lime/utils/ArrayBufferView.h"/>
-  </file>
-  <file name="src/lime/math/color/_BGRA/BGRA_Impl_.cpp" >
-   <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/math/color/_BGRA/BGRA_Impl_.h"/>
-   <depend name="include/lime/math/color/_RGBA/RGBA_Impl_.h"/>
-   <depend name="include/lime/utils/ArrayBufferView.h"/>
-  </file>
-  <file name="src/lime/math/color/_ARGB/ARGB_Impl_.cpp" >
-   <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/math/color/_ARGB/ARGB_Impl_.h"/>
-   <depend name="include/lime/math/color/_RGBA/RGBA_Impl_.h"/>
-   <depend name="include/lime/utils/ArrayBufferView.h"/>
-  </file>
   <file name="src/lime/math/Vector4.cpp" tags="haxe,release">
    <depend name="include/lime/math/Vector4.h"/>
   </file>
+  <file name="src/lime/math/_RGBA/RGBA_Impl_.cpp" >
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/math/_RGBA/RGBA_Impl_.h"/>
+   <depend name="include/lime/utils/ArrayBufferView.h"/>
+  </file>
   <file name="src/lime/math/_Matrix4/Matrix4_Impl_.cpp" >
    <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/math/Matrix3.h"/>
    <depend name="include/lime/math/Vector4.h"/>
    <depend name="include/lime/math/_Matrix4/Matrix4_Impl_.h"/>
    <depend name="include/lime/utils/ArrayBufferView.h"/>
@@ -3602,30 +3627,17 @@
    <depend name="include/lime/math/_ColorMatrix/ColorMatrix_Impl_.h"/>
    <depend name="include/lime/utils/ArrayBufferView.h"/>
   </file>
-  <file name="src/lime/graphics/utils/_ImageDataUtil/ImageDataView.cpp" >
-   <depend name="include/lime/graphics/Image.h"/>
-   <depend name="include/lime/graphics/ImageBuffer.h"/>
-   <depend name="include/lime/graphics/utils/_ImageDataUtil/ImageDataView.h"/>
-   <depend name="include/lime/math/Rectangle.h"/>
-  </file>
-  <file name="src/lime/graphics/utils/ImageDataUtil.cpp" tags="haxe,release">
-   <depend name="include/Std.h"/>
-   <depend name="include/Type.h"/>
+  <file name="src/lime/math/_BGRA/BGRA_Impl_.cpp" >
    <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
-   <depend name="include/lime/graphics/Image.h"/>
-   <depend name="include/lime/graphics/ImageBuffer.h"/>
-   <depend name="include/lime/graphics/ImageChannel.h"/>
-   <depend name="include/lime/graphics/utils/ImageDataUtil.h"/>
-   <depend name="include/lime/graphics/utils/_ImageDataUtil/ImageDataView.h"/>
-   <depend name="include/lime/math/Rectangle.h"/>
-   <depend name="include/lime/math/Vector2.h"/>
-   <depend name="include/lime/math/_ColorMatrix/ColorMatrix_Impl_.h"/>
-   <depend name="include/lime/math/color/_RGBA/RGBA_Impl_.h"/>
-   <depend name="include/lime/system/CFFI.h"/>
-   <depend name="include/lime/system/Endian.h"/>
+   <depend name="include/lime/math/_BGRA/BGRA_Impl_.h"/>
+   <depend name="include/lime/math/_RGBA/RGBA_Impl_.h"/>
    <depend name="include/lime/utils/ArrayBufferView.h"/>
-   <depend name="include/lime/utils/BytePointerData.h"/>
+  </file>
+  <file name="src/lime/math/_ARGB/ARGB_Impl_.cpp" >
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/math/_ARGB/ARGB_Impl_.h"/>
+   <depend name="include/lime/math/_RGBA/RGBA_Impl_.h"/>
+   <depend name="include/lime/utils/ArrayBufferView.h"/>
   </file>
   <file name="src/lime/graphics/opengl/ext/VIV_shader_binary.cpp" >
    <depend name="include/lime/graphics/opengl/ext/VIV_shader_binary.h"/>
@@ -3942,34 +3954,6 @@
   <file name="src/lime/graphics/opengl/ext/AMD_compressed_3DC_texture.cpp" >
    <depend name="include/lime/graphics/opengl/ext/AMD_compressed_3DC_texture.h"/>
   </file>
-  <file name="src/lime/graphics/opengl/_WebGLContext/WebGLContext_Impl_.cpp" >
-   <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
-   <depend name="include/lime/graphics/opengl/GL.h"/>
-   <depend name="include/lime/graphics/opengl/_WebGL2Context/WebGL2Context_Impl_.h"/>
-   <depend name="include/lime/graphics/opengl/_WebGLContext/WebGLContext_Impl_.h"/>
-   <depend name="include/lime/utils/ArrayBufferView.h"/>
-   <depend name="include/lime/utils/BytePointerData.h"/>
-   <depend name="include/lime/utils/_BytePointer/BytePointer_Impl_.h"/>
-   <depend name="include/lime/utils/_DataPointer/DataPointer_Impl_.h"/>
-  </file>
-  <file name="src/lime/graphics/opengl/_WebGL2Context/WebGL2Context_Impl_.cpp" >
-   <depend name="include/Std.h"/>
-   <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
-   <depend name="include/lime/graphics/opengl/GL.h"/>
-   <depend name="include/lime/graphics/opengl/GLContextType.h"/>
-   <depend name="include/lime/graphics/opengl/GLObject.h"/>
-   <depend name="include/lime/graphics/opengl/_WebGL2Context/WebGL2Context_Impl_.h"/>
-   <depend name="include/lime/utils/ArrayBufferView.h"/>
-   <depend name="include/lime/utils/BytePointerData.h"/>
-   <depend name="include/lime/utils/_BytePointer/BytePointer_Impl_.h"/>
-   <depend name="include/lime/utils/_DataPointer/DataPointer_Impl_.h"/>
-  </file>
-  <file name="src/lime/utils/BytePointerData.cpp" >
-   <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/utils/BytePointerData.h"/>
-  </file>
   <file name="src/lime/graphics/opengl/_GLVertexArrayObject/GLVertexArrayObject_Impl_.cpp" >
    <depend name="include/lime/graphics/opengl/GLObject.h"/>
    <depend name="include/lime/graphics/opengl/_GLVertexArrayObject/GLVertexArrayObject_Impl_.h"/>
@@ -3983,8 +3967,10 @@
    <depend name="include/lime/graphics/opengl/_GLTexture/GLTexture_Impl_.h"/>
   </file>
   <file name="src/lime/graphics/opengl/_GLShader/GLShader_Impl_.cpp" >
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
    <depend name="include/lime/graphics/opengl/GLObject.h"/>
    <depend name="include/lime/graphics/opengl/_GLShader/GLShader_Impl_.h"/>
+   <depend name="include/lime/utils/Log.h"/>
   </file>
   <file name="src/lime/graphics/opengl/_GLSampler/GLSampler_Impl_.cpp" >
    <depend name="include/lime/graphics/opengl/GLObject.h"/>
@@ -3999,108 +3985,46 @@
    <depend name="include/lime/graphics/opengl/_GLQuery/GLQuery_Impl_.h"/>
   </file>
   <file name="src/lime/graphics/opengl/_GLProgram/GLProgram_Impl_.cpp" >
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
+   <depend name="include/lime/graphics/opengl/GL.h"/>
    <depend name="include/lime/graphics/opengl/GLObject.h"/>
    <depend name="include/lime/graphics/opengl/_GLProgram/GLProgram_Impl_.h"/>
+   <depend name="include/lime/graphics/opengl/_GLShader/GLShader_Impl_.h"/>
+   <depend name="include/lime/utils/Log.h"/>
   </file>
   <file name="src/lime/graphics/opengl/_GLFramebuffer/GLFramebuffer_Impl_.cpp" >
    <depend name="include/lime/graphics/opengl/GLObject.h"/>
    <depend name="include/lime/graphics/opengl/_GLFramebuffer/GLFramebuffer_Impl_.h"/>
-  </file>
-  <file name="src/lime/graphics/opengl/_GLES3Context/GLES3Context_Impl_.cpp" >
-   <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
-   <depend name="include/lime/graphics/opengl/GL.h"/>
-   <depend name="include/lime/graphics/opengl/GLContextType.h"/>
-   <depend name="include/lime/graphics/opengl/GLObject.h"/>
-   <depend name="include/lime/graphics/opengl/_GLES3Context/GLES3Context_Impl_.h"/>
-  </file>
-  <file name="src/lime/graphics/opengl/_GLES2Context/GLES2Context_Impl_.cpp" >
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
-   <depend name="include/lime/graphics/opengl/GL.h"/>
-   <depend name="include/lime/graphics/opengl/_GLES2Context/GLES2Context_Impl_.h"/>
-  </file>
-  <file name="src/lime/graphics/opengl/GLContextType.cpp" >
-   <depend name="include/lime/graphics/opengl/GLContextType.h"/>
   </file>
   <file name="src/lime/graphics/opengl/_GLBuffer/GLBuffer_Impl_.cpp" >
    <depend name="include/lime/graphics/opengl/GLObject.h"/>
    <depend name="include/lime/graphics/opengl/_GLBuffer/GLBuffer_Impl_.h"/>
   </file>
   <file name="src/lime/graphics/opengl/GLObject.cpp" >
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
    <depend name="include/lime/graphics/opengl/GLObject.h"/>
   </file>
-  <file name="src/lime/graphics/opengl/GL.cpp" tags="haxe,release">
+  <file name="src/lime/graphics/opengl/GL.cpp" >
    <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
    <depend name="include/lime/graphics/opengl/GL.h"/>
-   <depend name="include/lime/graphics/opengl/GLContextType.h"/>
    <depend name="include/lime/graphics/opengl/GLObject.h"/>
    <depend name="include/lime/utils/ArrayBufferView.h"/>
    <depend name="include/lime/utils/BytePointerData.h"/>
    <depend name="include/lime/utils/_DataPointer/DataPointer_Impl_.h"/>
   </file>
-  <file name="src/lime/graphics/format/PNG.cpp" tags="haxe,release">
-   <depend name="include/Std.h"/>
-   <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
-   <depend name="include/lime/graphics/Image.h"/>
-   <depend name="include/lime/graphics/ImageBuffer.h"/>
-   <depend name="include/lime/graphics/format/PNG.h"/>
-   <depend name="include/lime/system/CFFI.h"/>
-   <depend name="include/lime/utils/ArrayBufferView.h"/>
-   <depend name="include/lime/utils/TAError.h"/>
-  </file>
-  <file name="src/lime/graphics/format/JPEG.cpp" tags="haxe,release">
-   <depend name="include/Std.h"/>
-   <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
-   <depend name="include/lime/graphics/Image.h"/>
-   <depend name="include/lime/graphics/ImageBuffer.h"/>
-   <depend name="include/lime/graphics/format/JPEG.h"/>
-   <depend name="include/lime/system/CFFI.h"/>
-   <depend name="include/lime/utils/ArrayBufferView.h"/>
-   <depend name="include/lime/utils/TAError.h"/>
-  </file>
-  <file name="src/lime/graphics/format/BMPType.cpp" >
-   <depend name="include/lime/graphics/format/BMPType.h"/>
-  </file>
-  <file name="src/lime/graphics/format/BMP.cpp" tags="haxe,release">
-   <depend name="include/Type.h"/>
-   <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/graphics/Image.h"/>
-   <depend name="include/lime/graphics/format/BMP.h"/>
-   <depend name="include/lime/graphics/format/BMPType.h"/>
-   <depend name="include/lime/math/Rectangle.h"/>
-  </file>
-  <file name="src/lime/graphics/console/VertexOutput.cpp" >
-   <depend name="include/lime/graphics/console/VertexOutput.h"/>
-  </file>
-  <file name="src/lime/graphics/console/VertexBuffer.cpp" >
-   <depend name="include/lime/graphics/console/VertexBuffer.h"/>
-   <depend name="include/lime/graphics/console/VertexOutput.h"/>
-  </file>
-  <file name="src/lime/graphics/console/Shader.cpp" >
-   <depend name="include/lime/graphics/console/Shader.h"/>
-  </file>
-  <file name="src/lime/graphics/console/Primitive.cpp" >
-   <depend name="include/lime/graphics/console/Primitive.h"/>
-  </file>
-  <file name="src/lime/graphics/console/IndexBuffer.cpp" >
-   <depend name="include/lime/graphics/console/IndexBuffer.h"/>
-  </file>
   <file name="src/lime/graphics/cairo/_CairoSurface/CairoSurface_Impl_.cpp" >
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
    <depend name="include/lime/graphics/cairo/_CairoSurface/CairoSurface_Impl_.h"/>
   </file>
   <file name="src/lime/graphics/cairo/_CairoPattern/CairoPattern_Impl_.cpp" >
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
    <depend name="include/lime/graphics/cairo/_CairoPattern/CairoPattern_Impl_.h"/>
    <depend name="include/lime/math/Matrix3.h"/>
   </file>
   <file name="src/lime/graphics/cairo/_CairoImageSurface/CairoImageSurface_Impl_.cpp" >
    <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
    <depend name="include/lime/graphics/Image.h"/>
    <depend name="include/lime/graphics/ImageBuffer.h"/>
    <depend name="include/lime/graphics/cairo/_CairoImageSurface/CairoImageSurface_Impl_.h"/>
@@ -4111,69 +4035,110 @@
    <depend name="include/lime/graphics/cairo/CairoGlyph.h"/>
   </file>
   <file name="src/lime/graphics/cairo/_CairoFontOptions/CairoFontOptions_Impl_.cpp" >
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
    <depend name="include/lime/graphics/cairo/_CairoFontOptions/CairoFontOptions_Impl_.h"/>
   </file>
   <file name="src/lime/graphics/cairo/_CairoFontFace/CairoFontFace_Impl_.cpp" >
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
    <depend name="include/lime/graphics/cairo/_CairoFontFace/CairoFontFace_Impl_.h"/>
   </file>
   <file name="src/lime/graphics/cairo/_CairoFTFontFace/CairoFTFontFace_Impl_.cpp" >
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
    <depend name="include/lime/graphics/cairo/_CairoFTFontFace/CairoFTFontFace_Impl_.h"/>
    <depend name="include/lime/text/Font.h"/>
   </file>
   <file name="src/lime/graphics/cairo/Cairo.cpp" tags="haxe,release">
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
    <depend name="include/lime/graphics/cairo/Cairo.h"/>
    <depend name="include/lime/graphics/cairo/CairoGlyph.h"/>
    <depend name="include/lime/math/Matrix3.h"/>
    <depend name="include/lime/math/Vector2.h"/>
   </file>
-  <file name="src/lime/graphics/RendererType.cpp" >
-   <depend name="include/lime/graphics/RendererType.h"/>
-  </file>
-  <file name="src/lime/graphics/Renderer.cpp" tags="haxe,release">
-   <depend name="include/lime/_backend/native/NativeRenderer.h"/>
-   <depend name="include/lime/app/_Event_Void_Void.h"/>
-   <depend name="include/lime/app/_Event_lime_graphics_RenderContext_Void.h"/>
-   <depend name="include/lime/graphics/Image.h"/>
+  <file name="src/lime/graphics/_WebGLRenderContext/WebGLRenderContext_Impl_.cpp" >
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
    <depend name="include/lime/graphics/RenderContext.h"/>
-   <depend name="include/lime/graphics/Renderer.h"/>
-   <depend name="include/lime/graphics/RendererType.h"/>
-   <depend name="include/lime/math/Rectangle.h"/>
-   <depend name="include/lime/ui/Window.h"/>
+   <depend name="include/lime/graphics/_WebGL2RenderContext/WebGL2RenderContext_Impl_.h"/>
+   <depend name="include/lime/graphics/_WebGLRenderContext/WebGLRenderContext_Impl_.h"/>
+   <depend name="include/lime/graphics/opengl/GL.h"/>
+   <depend name="include/lime/utils/ArrayBufferView.h"/>
+   <depend name="include/lime/utils/BytePointerData.h"/>
+   <depend name="include/lime/utils/_BytePointer/BytePointer_Impl_.h"/>
+   <depend name="include/lime/utils/_DataPointer/DataPointer_Impl_.h"/>
+  </file>
+  <file name="src/lime/graphics/_WebGL2RenderContext/WebGL2RenderContext_Impl_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
+   <depend name="include/lime/graphics/_WebGL2RenderContext/WebGL2RenderContext_Impl_.h"/>
+   <depend name="include/lime/graphics/opengl/GL.h"/>
+   <depend name="include/lime/graphics/opengl/GLObject.h"/>
+   <depend name="include/lime/utils/ArrayBufferView.h"/>
+   <depend name="include/lime/utils/BytePointerData.h"/>
+   <depend name="include/lime/utils/_BytePointer/BytePointer_Impl_.h"/>
+   <depend name="include/lime/utils/_DataPointer/DataPointer_Impl_.h"/>
+  </file>
+  <file name="src/lime/utils/BytePointerData.cpp" >
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/utils/BytePointerData.h"/>
   </file>
   <file name="src/lime/graphics/RenderContext.cpp" >
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
-   <depend name="include/lime/graphics/CanvasRenderContext.h"/>
-   <depend name="include/lime/graphics/ConsoleRenderContext.h"/>
-   <depend name="include/lime/graphics/DOMRenderContext.h"/>
-   <depend name="include/lime/graphics/FlashRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
    <depend name="include/lime/graphics/RenderContext.h"/>
    <depend name="include/lime/graphics/cairo/Cairo.h"/>
+   <depend name="include/lime/ui/Window.h"/>
+  </file>
+  <file name="src/lime/graphics/_OpenGLRenderContext/OpenGLRenderContext_Impl_.cpp" >
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
+   <depend name="include/lime/graphics/_OpenGLRenderContext/OpenGLRenderContext_Impl_.h"/>
+  </file>
+  <file name="src/lime/graphics/_OpenGLES3RenderContext/OpenGLES3RenderContext_Impl_.cpp" >
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
+   <depend name="include/lime/graphics/_OpenGLES3RenderContext/OpenGLES3RenderContext_Impl_.h"/>
+   <depend name="include/lime/graphics/opengl/GL.h"/>
+   <depend name="include/lime/graphics/opengl/GLObject.h"/>
+  </file>
+  <file name="src/lime/graphics/_OpenGLES2RenderContext/OpenGLES2RenderContext_Impl_.cpp" >
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
+   <depend name="include/lime/graphics/_OpenGLES2RenderContext/OpenGLES2RenderContext_Impl_.h"/>
+   <depend name="include/lime/graphics/opengl/GL.h"/>
+  </file>
+  <file name="src/lime/graphics/ImageFileFormat.cpp" >
+   <depend name="include/lime/graphics/ImageFileFormat.h"/>
   </file>
   <file name="src/lime/graphics/ImageChannel.cpp" >
    <depend name="include/lime/graphics/ImageChannel.h"/>
   </file>
-  <file name="src/lime/graphics/FlashRenderContext.cpp" >
-   <depend name="include/lime/graphics/FlashRenderContext.h"/>
+  <file name="src/lime/graphics/_FlashRenderContext/FlashRenderContext_Impl_.cpp" >
+   <depend name="include/lime/graphics/RenderContext.h"/>
+   <depend name="include/lime/graphics/_FlashRenderContext/FlashRenderContext_Impl_.h"/>
   </file>
-  <file name="src/lime/graphics/DOMRenderContext.cpp" >
-   <depend name="include/lime/graphics/DOMRenderContext.h"/>
+  <file name="src/lime/graphics/_DOMRenderContext/DOMRenderContext_Impl_.cpp" >
+   <depend name="include/lime/graphics/RenderContext.h"/>
+   <depend name="include/lime/graphics/_DOMRenderContext/DOMRenderContext_Impl_.h"/>
   </file>
-  <file name="src/lime/graphics/ConsoleRenderContext.cpp" >
-   <depend name="include/lime/graphics/ConsoleRenderContext.h"/>
-   <depend name="include/lime/graphics/console/IndexBuffer.h"/>
-   <depend name="include/lime/graphics/console/Shader.h"/>
-   <depend name="include/lime/graphics/console/VertexBuffer.h"/>
+  <file name="src/lime/graphics/_Canvas2DRenderContext/Canvas2DRenderContext_Impl_.cpp" >
+   <depend name="include/lime/graphics/RenderContext.h"/>
+   <depend name="include/lime/graphics/_Canvas2DRenderContext/Canvas2DRenderContext_Impl_.h"/>
   </file>
-  <file name="src/lime/graphics/CanvasRenderContext.cpp" >
-   <depend name="include/lime/graphics/CanvasRenderContext.h"/>
+  <file name="src/lime/graphics/_CairoRenderContext/CairoRenderContext_Impl_.cpp" >
+   <depend name="include/lime/graphics/RenderContext.h"/>
+   <depend name="include/lime/graphics/_CairoRenderContext/CairoRenderContext_Impl_.h"/>
+   <depend name="include/lime/graphics/cairo/Cairo.h"/>
   </file>
   <file name="src/lime/app/_Event_ofEvents_T_Void.cpp" tags="haxe,release">
    <depend name="include/Reflect.h"/>
    <depend name="include/lime/app/_Event_ofEvents_T_Void.h"/>
+  </file>
+  <file name="src/lime/app/_Event_lime_ui_Window_Void.cpp" tags="haxe,release">
+   <depend name="include/Reflect.h"/>
+   <depend name="include/lime/app/_Event_lime_ui_Window_Void.h"/>
+   <depend name="include/lime/ui/Window.h"/>
   </file>
   <file name="src/lime/app/_Event_lime_ui_Touch_Void.cpp" tags="haxe,release">
    <depend name="include/Reflect.h"/>
@@ -4242,6 +4207,15 @@
   <file name="src/lime/app/_Event_Int_Float_Float_Void.cpp" tags="haxe,release">
    <depend name="include/Reflect.h"/>
    <depend name="include/lime/app/_Event_Int_Float_Float_Void.h"/>
+  </file>
+  <file name="src/lime/app/_Event_Float_Float_lime_ui_MouseWheelMode_Void.cpp" tags="haxe,release">
+   <depend name="include/Reflect.h"/>
+   <depend name="include/lime/app/_Event_Float_Float_lime_ui_MouseWheelMode_Void.h"/>
+   <depend name="include/lime/ui/MouseWheelMode.h"/>
+  </file>
+  <file name="src/lime/app/_Event_Float_Float_lime_ui_MouseButton_Void.cpp" tags="haxe,release">
+   <depend name="include/Reflect.h"/>
+   <depend name="include/lime/app/_Event_Float_Float_lime_ui_MouseButton_Void.h"/>
   </file>
   <file name="src/lime/app/_Event_Float_Float_Void.cpp" tags="haxe,release">
    <depend name="include/Reflect.h"/>
@@ -4342,18 +4316,6 @@
    <depend name="include/lime/app/Future.h"/>
    <depend name="include/lime/app/Promise.h"/>
   </file>
-  <file name="src/lime/app/Preloader.cpp" tags="haxe,release">
-   <depend name="include/haxe/IMap.h"/>
-   <depend name="include/haxe/ds/ObjectMap.h"/>
-   <depend name="include/haxe/ds/StringMap.h"/>
-   <depend name="include/lime/app/Future.h"/>
-   <depend name="include/lime/app/Preloader.h"/>
-   <depend name="include/lime/app/_Event_Int_Int_Void.h"/>
-   <depend name="include/lime/app/_Event_Void_Void.h"/>
-   <depend name="include/lime/utils/AssetLibrary.h"/>
-   <depend name="include/lime/utils/Assets.h"/>
-   <depend name="include/lime/utils/Log.h"/>
-  </file>
   <file name="src/lime/app/_Future/FutureWork.cpp" tags="haxe,release">
    <depend name="include/lime/app/_Event_haxe_Function_Void.h"/>
    <depend name="include/lime/app/_Future/FutureWork.h"/>
@@ -4373,86 +4335,199 @@
    <depend name="include/Reflect.h"/>
    <depend name="include/lime/app/Event.h"/>
   </file>
-  <file name="src/lime/_macros/AssetsMacro.cpp" >
-   <depend name="include/lime/_macros/AssetsMacro.h"/>
+  <file name="src/lime/_internal/unifill/_Utf8/StringU8_Impl_.cpp" >
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/_internal/unifill/_Utf8/StringU8_Impl_.h"/>
   </file>
-  <file name="src/lime/_backend/native/NativeWindow.cpp" tags="haxe,release">
+  <file name="src/lime/_internal/unifill/_Utf8/Utf8Impl.cpp" >
+   <depend name="include/lime/_internal/unifill/Exception.h"/>
+   <depend name="include/lime/_internal/unifill/InvalidCodePoint.h"/>
+   <depend name="include/lime/_internal/unifill/InvalidCodeUnitSequence.h"/>
+   <depend name="include/lime/_internal/unifill/_Utf8/Utf8Impl.h"/>
+  </file>
+  <file name="src/lime/_internal/unifill/_Utf8/Utf8_Impl_.cpp" >
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/haxe/io/BytesBuffer.h"/>
+   <depend name="include/lime/_internal/unifill/Exception.h"/>
+   <depend name="include/lime/_internal/unifill/InvalidCodePoint.h"/>
+   <depend name="include/lime/_internal/unifill/_Utf8/Utf8Impl.h"/>
+   <depend name="include/lime/_internal/unifill/_Utf8/Utf8_Impl_.h"/>
+  </file>
+  <file name="src/lime/_internal/unifill/Unifill.cpp" tags="haxe,release">
+   <depend name="include/StringBuf.h"/>
+   <depend name="include/haxe/Utf8.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/haxe/io/BytesBuffer.h"/>
+   <depend name="include/lime/_internal/unifill/CodePointIter.h"/>
+   <depend name="include/lime/_internal/unifill/Exception.h"/>
+   <depend name="include/lime/_internal/unifill/InvalidCodePoint.h"/>
+   <depend name="include/lime/_internal/unifill/Unifill.h"/>
+   <depend name="include/lime/_internal/unifill/_Utf8/Utf8_Impl_.h"/>
+  </file>
+  <file name="src/lime/_internal/unifill/Unicode.cpp" tags="haxe,release">
+   <depend name="include/lime/_internal/unifill/Unicode.h"/>
+  </file>
+  <file name="src/lime/_internal/unifill/InternalEncodingIter.cpp" tags="haxe,release">
+   <depend name="include/lime/_internal/unifill/InternalEncodingIter.h"/>
+  </file>
+  <file name="src/lime/_internal/unifill/InternalEncoding.cpp" tags="haxe,release">
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/haxe/io/BytesBuffer.h"/>
+   <depend name="include/lime/_internal/unifill/Exception.h"/>
+   <depend name="include/lime/_internal/unifill/InternalEncoding.h"/>
+   <depend name="include/lime/_internal/unifill/InvalidCodePoint.h"/>
+   <depend name="include/lime/_internal/unifill/InvalidCodeUnitSequence.h"/>
+   <depend name="include/lime/_internal/unifill/_Utf8/Utf8_Impl_.h"/>
+  </file>
+  <file name="src/lime/_internal/unifill/InvalidCodeUnitSequence.cpp" tags="haxe,release">
+   <depend name="include/lime/_internal/unifill/Exception.h"/>
+   <depend name="include/lime/_internal/unifill/InvalidCodeUnitSequence.h"/>
+  </file>
+  <file name="src/lime/_internal/unifill/InvalidCodePoint.cpp" tags="haxe,release">
+   <depend name="include/lime/_internal/unifill/Exception.h"/>
+   <depend name="include/lime/_internal/unifill/InvalidCodePoint.h"/>
+  </file>
+  <file name="src/lime/_internal/unifill/Exception.cpp" tags="haxe,release">
+   <depend name="include/lime/_internal/unifill/Exception.h"/>
+  </file>
+  <file name="src/lime/_internal/unifill/CodePointIter.cpp" tags="haxe,release">
+   <depend name="include/lime/_internal/unifill/CodePointIter.h"/>
+   <depend name="include/lime/_internal/unifill/_Utf8/Utf8_Impl_.h"/>
+  </file>
+  <file name="src/lime/_internal/unifill/_CodePoint/CodePoint_Impl_.cpp" >
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/haxe/io/BytesBuffer.h"/>
+   <depend name="include/lime/_internal/unifill/Exception.h"/>
+   <depend name="include/lime/_internal/unifill/InvalidCodePoint.h"/>
+   <depend name="include/lime/_internal/unifill/_CodePoint/CodePoint_Impl_.h"/>
+  </file>
+  <file name="src/lime/_internal/macros/AssetsMacro.cpp" >
+   <depend name="include/lime/_internal/macros/AssetsMacro.h"/>
+  </file>
+  <file name="src/lime/_internal/graphics/_ImageDataUtil/ImageDataView.cpp" >
+   <depend name="include/lime/_internal/graphics/_ImageDataUtil/ImageDataView.h"/>
+   <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/lime/graphics/ImageBuffer.h"/>
+   <depend name="include/lime/math/Rectangle.h"/>
+  </file>
+  <file name="src/lime/_internal/graphics/ImageDataUtil.cpp" tags="haxe,release">
+   <depend name="include/Std.h"/>
+   <depend name="include/Type.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/_internal/graphics/ImageDataUtil.h"/>
+   <depend name="include/lime/_internal/graphics/_ImageDataUtil/ImageDataView.h"/>
+   <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/lime/graphics/ImageBuffer.h"/>
+   <depend name="include/lime/graphics/ImageChannel.h"/>
+   <depend name="include/lime/math/Rectangle.h"/>
+   <depend name="include/lime/math/Vector2.h"/>
+   <depend name="include/lime/math/_ColorMatrix/ColorMatrix_Impl_.h"/>
+   <depend name="include/lime/math/_RGBA/RGBA_Impl_.h"/>
+   <depend name="include/lime/system/CFFI.h"/>
+   <depend name="include/lime/system/Endian.h"/>
+   <depend name="include/lime/utils/ArrayBufferView.h"/>
+   <depend name="include/lime/utils/BytePointerData.h"/>
+  </file>
+  <file name="src/lime/_internal/format/Zlib.cpp" tags="haxe,release">
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/_internal/format/Zlib.h"/>
+  </file>
+  <file name="src/lime/_internal/format/PNG.cpp" tags="haxe,release">
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/_internal/format/PNG.h"/>
+   <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/lime/graphics/ImageBuffer.h"/>
+   <depend name="include/lime/graphics/ImageType.h"/>
+   <depend name="include/lime/system/CFFI.h"/>
+   <depend name="include/lime/utils/ArrayBufferView.h"/>
+   <depend name="include/lime/utils/TAError.h"/>
+  </file>
+  <file name="src/lime/_internal/format/LZMA.cpp" tags="haxe,release">
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/_internal/format/LZMA.h"/>
+  </file>
+  <file name="src/lime/_internal/format/JPEG.cpp" tags="haxe,release">
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/_internal/format/JPEG.h"/>
+   <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/lime/graphics/ImageBuffer.h"/>
+   <depend name="include/lime/graphics/ImageType.h"/>
+   <depend name="include/lime/system/CFFI.h"/>
+   <depend name="include/lime/utils/ArrayBufferView.h"/>
+   <depend name="include/lime/utils/TAError.h"/>
+  </file>
+  <file name="src/lime/_internal/format/GZip.cpp" tags="haxe,release">
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/_internal/format/GZip.h"/>
+  </file>
+  <file name="src/lime/_internal/format/Deflate.cpp" tags="haxe,release">
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/_internal/format/Deflate.h"/>
+  </file>
+  <file name="src/lime/_internal/format/BMPType.cpp" >
+   <depend name="include/lime/_internal/format/BMPType.h"/>
+  </file>
+  <file name="src/lime/_internal/format/BMP.cpp" tags="haxe,release">
+   <depend name="include/Type.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/_internal/format/BMP.h"/>
+   <depend name="include/lime/_internal/format/BMPType.h"/>
+   <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/lime/math/Rectangle.h"/>
+  </file>
+  <file name="src/lime/_internal/backend/native/NativeWindow.cpp" tags="haxe,release">
    <depend name="include/Reflect.h"/>
-   <depend name="include/lime/_backend/native/NativeApplication.h"/>
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
-   <depend name="include/lime/_backend/native/NativeWindow.h"/>
+   <depend name="include/Std.h"/>
+   <depend name="include/Type.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeApplication.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeWindow.h"/>
    <depend name="include/lime/app/Application.h"/>
    <depend name="include/lime/app/IModule.h"/>
    <depend name="include/lime/app/Module.h"/>
    <depend name="include/lime/app/_Event_Void_Void.h"/>
    <depend name="include/lime/graphics/Image.h"/>
    <depend name="include/lime/graphics/ImageBuffer.h"/>
-   <depend name="include/lime/system/Display.h"/>
-   <depend name="include/lime/system/DisplayMode.h"/>
-   <depend name="include/lime/system/System.h"/>
-   <depend name="include/lime/ui/Window.h"/>
-  </file>
-  <file name="src/lime/_backend/native/NativeRenderer.cpp" tags="haxe,release">
-   <depend name="include/Std.h"/>
-   <depend name="include/Type.h"/>
-   <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
-   <depend name="include/lime/_backend/native/NativeRenderer.h"/>
-   <depend name="include/lime/_backend/native/NativeWindow.h"/>
-   <depend name="include/lime/graphics/Image.h"/>
-   <depend name="include/lime/graphics/ImageBuffer.h"/>
    <depend name="include/lime/graphics/ImageType.h"/>
    <depend name="include/lime/graphics/RenderContext.h"/>
-   <depend name="include/lime/graphics/Renderer.h"/>
-   <depend name="include/lime/graphics/RendererType.h"/>
+   <depend name="include/lime/graphics/_WebGL2RenderContext/WebGL2RenderContext_Impl_.h"/>
+   <depend name="include/lime/graphics/_WebGLRenderContext/WebGLRenderContext_Impl_.h"/>
    <depend name="include/lime/graphics/cairo/Cairo.h"/>
    <depend name="include/lime/graphics/cairo/_CairoImageSurface/CairoImageSurface_Impl_.h"/>
    <depend name="include/lime/graphics/cairo/_CairoSurface/CairoSurface_Impl_.h"/>
    <depend name="include/lime/graphics/opengl/GL.h"/>
    <depend name="include/lime/math/Rectangle.h"/>
-   <depend name="include/lime/ui/Window.h"/>
-   <depend name="include/lime/utils/ArrayBufferView.h"/>
-   <depend name="include/lime/utils/TAError.h"/>
-   <depend name="include/lime/utils/_DataPointer/DataPointer_Impl_.h"/>
-  </file>
-  <file name="src/lime/_backend/native/NativeMouse.cpp" tags="haxe,release">
-   <depend name="include/Type.h"/>
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
-   <depend name="include/lime/_backend/native/NativeMouse.h"/>
-   <depend name="include/lime/_backend/native/NativeWindow.h"/>
+   <depend name="include/lime/system/Display.h"/>
+   <depend name="include/lime/system/DisplayMode.h"/>
+   <depend name="include/lime/system/System.h"/>
    <depend name="include/lime/ui/MouseCursor.h"/>
    <depend name="include/lime/ui/Window.h"/>
+   <depend name="include/lime/utils/ArrayBufferView.h"/>
+   <depend name="include/lime/utils/BytePointerData.h"/>
+   <depend name="include/lime/utils/TAError.h"/>
+   <depend name="include/lime/utils/_BytePointer/BytePointer_Impl_.h"/>
+   <depend name="include/lime/utils/_DataPointer/DataPointer_Impl_.h"/>
   </file>
-  <file name="src/lime/_backend/native/NativeHTTPRequest.cpp" tags="haxe,release">
-   <depend name="include/Std.h"/>
-   <depend name="include/StringTools.h"/>
-   <depend name="include/haxe/IMap.h"/>
-   <depend name="include/haxe/Timer.h"/>
-   <depend name="include/haxe/ds/StringMap.h"/>
-   <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeHTTPRequest.h"/>
-   <depend name="include/lime/app/Future.h"/>
-   <depend name="include/lime/app/Promise_String.h"/>
-   <depend name="include/lime/app/Promise_haxe_io_Bytes.h"/>
-   <depend name="include/lime/app/_Event_haxe_Function_Void.h"/>
-   <depend name="include/lime/net/HTTPRequestHeader.h"/>
-   <depend name="include/lime/net/_IHTTPRequest.h"/>
-   <depend name="include/lime/net/curl/CURL.h"/>
-   <depend name="include/lime/system/ThreadPool.h"/>
-   <depend name="include/lime/utils/_Bytes/Bytes_Impl_.h"/>
-   <depend name="include/sys/FileSystem.h"/>
-  </file>
-  <file name="src/lime/_backend/native/NativeGLRenderContext.cpp" tags="haxe,release">
+  <file name="src/lime/_internal/backend/native/NativeOpenGLRenderContext.cpp" tags="haxe,release">
    <depend name="include/EReg.h"/>
    <depend name="include/Std.h"/>
    <depend name="include/StringTools.h"/>
    <depend name="include/haxe/IMap.h"/>
    <depend name="include/haxe/ds/StringMap.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
-   <depend name="include/lime/graphics/opengl/GLContextType.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
    <depend name="include/lime/graphics/opengl/GLObject.h"/>
    <depend name="include/lime/graphics/opengl/_GLBuffer/GLBuffer_Impl_.h"/>
    <depend name="include/lime/graphics/opengl/_GLFramebuffer/GLFramebuffer_Impl_.h"/>
@@ -4568,55 +4643,76 @@
    <depend name="include/lime/utils/ArrayBufferView.h"/>
    <depend name="include/lime/utils/_DataPointer/DataPointer_Impl_.h"/>
   </file>
-  <file name="src/lime/_backend/native/NativeAudioSource.cpp" tags="haxe,release">
+  <file name="src/lime/_internal/backend/native/NativeHTTPRequest.cpp" tags="haxe,release">
+   <depend name="include/Std.h"/>
+   <depend name="include/StringTools.h"/>
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/Timer.h"/>
+   <depend name="include/haxe/ds/ObjectMap.h"/>
+   <depend name="include/haxe/ds/StringMap.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeHTTPRequest.h"/>
+   <depend name="include/lime/app/Future.h"/>
+   <depend name="include/lime/app/Promise_String.h"/>
+   <depend name="include/lime/app/Promise_haxe_io_Bytes.h"/>
+   <depend name="include/lime/app/_Event_haxe_Function_Void.h"/>
+   <depend name="include/lime/net/HTTPRequestHeader.h"/>
+   <depend name="include/lime/net/_IHTTPRequest.h"/>
+   <depend name="include/lime/net/curl/CURL.h"/>
+   <depend name="include/lime/net/curl/CURLMulti.h"/>
+   <depend name="include/lime/net/curl/CURLMultiMessage.h"/>
+   <depend name="include/lime/system/ThreadPool.h"/>
+   <depend name="include/lime/utils/_Bytes/Bytes_Impl_.h"/>
+   <depend name="include/sys/FileSystem.h"/>
+  </file>
+  <file name="src/lime/_internal/backend/native/NativeAudioSource.cpp" tags="haxe,release">
    <depend name="include/Std.h"/>
    <depend name="include/haxe/Timer.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeAudioSource.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeAudioSource.h"/>
    <depend name="include/lime/app/_Event_Void_Void.h"/>
    <depend name="include/lime/math/Vector4.h"/>
    <depend name="include/lime/media/AudioBuffer.h"/>
    <depend name="include/lime/media/AudioSource.h"/>
-   <depend name="include/lime/media/codecs/vorbis/VorbisFile.h"/>
    <depend name="include/lime/media/openal/AL.h"/>
+   <depend name="include/lime/media/vorbis/VorbisFile.h"/>
    <depend name="include/lime/utils/ArrayBufferView.h"/>
   </file>
-  <file name="src/lime/_backend/native/_NativeApplication/WindowEventInfo.cpp" >
-   <depend name="include/lime/_backend/native/_NativeApplication/WindowEventInfo.h"/>
+  <file name="src/lime/_internal/backend/native/WindowEventInfo.cpp" >
+   <depend name="include/lime/_internal/backend/native/WindowEventInfo.h"/>
   </file>
-  <file name="src/lime/_backend/native/_NativeApplication/TouchEventInfo.cpp" >
-   <depend name="include/lime/_backend/native/_NativeApplication/TouchEventInfo.h"/>
+  <file name="src/lime/_internal/backend/native/TouchEventInfo.cpp" >
+   <depend name="include/lime/_internal/backend/native/TouchEventInfo.h"/>
   </file>
-  <file name="src/lime/_backend/native/_NativeApplication/TextEventInfo.cpp" >
-   <depend name="include/lime/_backend/native/_NativeApplication/TextEventInfo.h"/>
+  <file name="src/lime/_internal/backend/native/TextEventInfo.cpp" >
+   <depend name="include/lime/_internal/backend/native/TextEventInfo.h"/>
   </file>
-  <file name="src/lime/_backend/native/_NativeApplication/SensorEventInfo.cpp" >
-   <depend name="include/lime/_backend/native/_NativeApplication/SensorEventInfo.h"/>
+  <file name="src/lime/_internal/backend/native/SensorEventInfo.cpp" >
+   <depend name="include/lime/_internal/backend/native/SensorEventInfo.h"/>
   </file>
-  <file name="src/lime/_backend/native/_NativeApplication/RenderEventInfo.cpp" >
-   <depend name="include/lime/_backend/native/_NativeApplication/RenderEventInfo.h"/>
-   <depend name="include/lime/graphics/RenderContext.h"/>
+  <file name="src/lime/_internal/backend/native/RenderEventInfo.cpp" >
+   <depend name="include/lime/_internal/backend/native/RenderEventInfo.h"/>
   </file>
-  <file name="src/lime/_backend/native/_NativeApplication/MouseEventInfo.cpp" >
-   <depend name="include/lime/_backend/native/_NativeApplication/MouseEventInfo.h"/>
+  <file name="src/lime/_internal/backend/native/MouseEventInfo.cpp" >
+   <depend name="include/lime/_internal/backend/native/MouseEventInfo.h"/>
   </file>
-  <file name="src/lime/_backend/native/_NativeApplication/KeyEventInfo.cpp" >
-   <depend name="include/lime/_backend/native/_NativeApplication/KeyEventInfo.h"/>
+  <file name="src/lime/_internal/backend/native/KeyEventInfo.cpp" >
+   <depend name="include/lime/_internal/backend/native/KeyEventInfo.h"/>
   </file>
-  <file name="src/lime/_backend/native/_NativeApplication/JoystickEventInfo.cpp" >
-   <depend name="include/lime/_backend/native/_NativeApplication/JoystickEventInfo.h"/>
+  <file name="src/lime/_internal/backend/native/JoystickEventInfo.cpp" >
+   <depend name="include/lime/_internal/backend/native/JoystickEventInfo.h"/>
   </file>
-  <file name="src/lime/_backend/native/_NativeApplication/GamepadEventInfo.cpp" >
-   <depend name="include/lime/_backend/native/_NativeApplication/GamepadEventInfo.h"/>
+  <file name="src/lime/_internal/backend/native/GamepadEventInfo.cpp" >
+   <depend name="include/lime/_internal/backend/native/GamepadEventInfo.h"/>
   </file>
-  <file name="src/lime/_backend/native/_NativeApplication/DropEventInfo.cpp" >
-   <depend name="include/lime/_backend/native/_NativeApplication/DropEventInfo.h"/>
+  <file name="src/lime/_internal/backend/native/DropEventInfo.cpp" >
+   <depend name="include/lime/_internal/backend/native/DropEventInfo.h"/>
   </file>
-  <file name="src/lime/_backend/native/_NativeApplication/ClipboardEventInfo.cpp" >
-   <depend name="include/lime/_backend/native/_NativeApplication/ClipboardEventInfo.h"/>
+  <file name="src/lime/_internal/backend/native/ClipboardEventInfo.cpp" >
+   <depend name="include/lime/_internal/backend/native/ClipboardEventInfo.h"/>
   </file>
-  <file name="src/lime/_backend/native/_NativeApplication/ApplicationEventInfo.cpp" >
-   <depend name="include/lime/_backend/native/_NativeApplication/ApplicationEventInfo.h"/>
+  <file name="src/lime/_internal/backend/native/ApplicationEventInfo.cpp" >
+   <depend name="include/lime/_internal/backend/native/ApplicationEventInfo.h"/>
   </file>
   <file name="src/haxe/xml/Parser.cpp" >
    <depend name="include/Std.h"/>
@@ -4820,8 +4916,6 @@
    <depend name="include/game/Avatar.h"/>
    <depend name="include/game/GraphicsSheet.h"/>
    <depend name="include/game/Room.h"/>
-   <depend name="include/haxe/IMap.h"/>
-   <depend name="include/haxe/ds/StringMap.h"/>
    <depend name="include/openfl/display/Bitmap.h"/>
    <depend name="include/openfl/display/BitmapData.h"/>
    <depend name="include/openfl/display/DisplayObject.h"/>
@@ -4841,16 +4935,17 @@
    <depend name="include/openfl/geom/Rectangle.h"/>
   </file>
   <file name="src/openfl/display/Bitmap.cpp" tags="haxe,release">
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
    <depend name="include/lime/app/IModule.h"/>
-   <depend name="include/lime/graphics/CanvasRenderContext.h"/>
    <depend name="include/lime/graphics/Image.h"/>
-   <depend name="include/lime/graphics/RendererType.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
    <depend name="include/lime/graphics/cairo/Cairo.h"/>
    <depend name="include/lime/graphics/cairo/_CairoPattern/CairoPattern_Impl_.h"/>
    <depend name="include/lime/utils/ObjectPool_openfl_geom_Rectangle.h"/>
-   <depend name="include/openfl/_internal/renderer/DrawCommandBuffer.h"/>
+   <depend name="include/openfl/_internal/renderer/cairo/CairoDisplayObject.h"/>
    <depend name="include/openfl/_internal/renderer/dom/DOMBitmap.h"/>
    <depend name="include/openfl/_internal/renderer/opengl/GLBitmap.h"/>
+   <depend name="include/openfl/_internal/renderer/opengl/GLShape.h"/>
    <depend name="include/openfl/display/Bitmap.h"/>
    <depend name="include/openfl/display/BitmapData.h"/>
    <depend name="include/openfl/display/CairoRenderer.h"/>
@@ -4867,11 +4962,11 @@
    <depend name="include/openfl/events/EventDispatcher.h"/>
    <depend name="include/openfl/events/IEventDispatcher.h"/>
    <depend name="include/openfl/filters/BitmapFilter.h"/>
-   <depend name="include/openfl/geom/ColorTransform.h"/>
    <depend name="include/openfl/geom/Matrix.h"/>
    <depend name="include/openfl/geom/Rectangle.h"/>
   </file>
   <file name="src/game/Avatar.cpp" >
+   <depend name="include/Std.h"/>
    <depend name="include/flixel/FlxBasic.h"/>
    <depend name="include/flixel/FlxObject.h"/>
    <depend name="include/flixel/FlxSprite.h"/>
@@ -4897,19 +4992,18 @@
    <depend name="include/openfl/geom/Rectangle.h"/>
   </file>
   <file name="src/lime/math/Rectangle.cpp" tags="haxe,release">
-   <depend name="include/lime/math/Matrix3.h"/>
    <depend name="include/lime/math/Rectangle.h"/>
    <depend name="include/lime/math/Vector2.h"/>
   </file>
-  <file name="src/lime/graphics/utils/ImageCanvasUtil.cpp" >
+  <file name="src/lime/_internal/graphics/ImageCanvasUtil.cpp" >
    <depend name="include/Std.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/_internal/graphics/ImageCanvasUtil.h"/>
+   <depend name="include/lime/_internal/graphics/ImageDataUtil.h"/>
    <depend name="include/lime/graphics/Image.h"/>
    <depend name="include/lime/graphics/ImageBuffer.h"/>
    <depend name="include/lime/graphics/ImageChannel.h"/>
    <depend name="include/lime/graphics/ImageType.h"/>
-   <depend name="include/lime/graphics/utils/ImageCanvasUtil.h"/>
-   <depend name="include/lime/graphics/utils/ImageDataUtil.h"/>
    <depend name="include/lime/math/Rectangle.h"/>
    <depend name="include/lime/math/Vector2.h"/>
    <depend name="include/lime/system/Endian.h"/>
@@ -5293,6 +5387,7 @@
    <depend name="include/Std.h"/>
    <depend name="include/flixel/system/debug/Window.h"/>
    <depend name="include/flixel/system/debug/watch/WatchEntry.h"/>
+   <depend name="include/flixel/system/replay/FrameRecord.h"/>
    <depend name="include/flixel/tweens/FlxTween.h"/>
    <depend name="include/flixel/util/FlxArrayUtil.h"/>
    <depend name="include/flixel/util/FlxTimer.h"/>
@@ -5913,6 +6008,28 @@
   <file name="src/flixel/system/replay/MouseRecord.cpp" >
    <depend name="include/flixel/system/replay/MouseRecord.h"/>
   </file>
+  <file name="src/flixel/system/replay/FrameRecord.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/flixel/system/replay/CodeValuePair.h"/>
+   <depend name="include/flixel/system/replay/FrameRecord.h"/>
+   <depend name="include/flixel/system/replay/MouseRecord.h"/>
+  </file>
+  <file name="src/flixel/system/replay/FlxReplay.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/flixel/FlxG.h"/>
+   <depend name="include/flixel/input/FlxKeyManager.h"/>
+   <depend name="include/flixel/input/FlxPointer.h"/>
+   <depend name="include/flixel/input/IFlxInputManager.h"/>
+   <depend name="include/flixel/input/keyboard/FlxKeyboard.h"/>
+   <depend name="include/flixel/input/mouse/FlxMouse.h"/>
+   <depend name="include/flixel/system/frontEnds/InputFrontEnd.h"/>
+   <depend name="include/flixel/system/replay/CodeValuePair.h"/>
+   <depend name="include/flixel/system/replay/FlxReplay.h"/>
+   <depend name="include/flixel/system/replay/FrameRecord.h"/>
+   <depend name="include/flixel/system/replay/MouseRecord.h"/>
+   <depend name="include/flixel/util/FlxArrayUtil.h"/>
+   <depend name="include/flixel/util/IFlxDestroyable.h"/>
+  </file>
   <file name="src/flixel/system/replay/CodeValuePair.cpp" >
    <depend name="include/flixel/system/replay/CodeValuePair.h"/>
   </file>
@@ -5920,15 +6037,30 @@
    <depend name="include/flixel/system/macros/FlxMacroUtil.h"/>
   </file>
   <file name="src/flixel/system/frontEnds/VCRFrontEnd.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/Type.h"/>
+   <depend name="include/flixel/FlxBasic.h"/>
    <depend name="include/flixel/FlxG.h"/>
    <depend name="include/flixel/FlxGame.h"/>
+   <depend name="include/flixel/FlxState.h"/>
+   <depend name="include/flixel/group/FlxTypedGroup.h"/>
+   <depend name="include/flixel/input/FlxKeyManager.h"/>
    <depend name="include/flixel/input/FlxPointer.h"/>
    <depend name="include/flixel/input/IFlxInputManager.h"/>
+   <depend name="include/flixel/input/keyboard/FlxKeyboard.h"/>
    <depend name="include/flixel/input/mouse/FlxMouse.h"/>
+   <depend name="include/flixel/math/FlxRandom.h"/>
    <depend name="include/flixel/system/debug/FlxDebugger.h"/>
    <depend name="include/flixel/system/debug/VCR.h"/>
+   <depend name="include/flixel/system/debug/_VCR/GraphicRecordOff.h"/>
+   <depend name="include/flixel/system/debug/_VCR/GraphicRecordOn.h"/>
+   <depend name="include/flixel/system/debug/_VCR/GraphicStop.h"/>
+   <depend name="include/flixel/system/frontEnds/InputFrontEnd.h"/>
    <depend name="include/flixel/system/frontEnds/VCRFrontEnd.h"/>
+   <depend name="include/flixel/system/replay/FlxReplay.h"/>
+   <depend name="include/flixel/system/ui/FlxSystemButton.h"/>
    <depend name="include/flixel/util/IFlxDestroyable.h"/>
+   <depend name="include/openfl/display/BitmapData.h"/>
    <depend name="include/openfl/display/DisplayObject.h"/>
    <depend name="include/openfl/display/DisplayObjectContainer.h"/>
    <depend name="include/openfl/display/IBitmapDrawable.h"/>
@@ -6127,18 +6259,17 @@
    <depend name="include/haxe/Timer.h"/>
    <depend name="include/haxe/ds/IntMap.h"/>
    <depend name="include/haxe/ds/StringMap.h"/>
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
-   <depend name="include/lime/_backend/native/NativeWindow.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeWindow.h"/>
    <depend name="include/lime/app/IModule.h"/>
    <depend name="include/lime/app/_Event_String_Void.h"/>
    <depend name="include/lime/app/_Event_lime_ui_KeyCode_lime_ui_KeyModifier_Void.h"/>
-   <depend name="include/lime/graphics/RendererType.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
    <depend name="include/lime/graphics/cairo/Cairo.h"/>
    <depend name="include/lime/graphics/cairo/_CairoPattern/CairoPattern_Impl_.h"/>
    <depend name="include/lime/math/Vector2.h"/>
    <depend name="include/lime/system/Clipboard.h"/>
    <depend name="include/lime/text/Font.h"/>
-   <depend name="include/lime/text/GlyphPosition.h"/>
    <depend name="include/lime/text/_UTF8String/UTF8String_Impl_.h"/>
    <depend name="include/lime/ui/MouseCursor.h"/>
    <depend name="include/lime/ui/Window.h"/>
@@ -6159,6 +6290,7 @@
    <depend name="include/openfl/_internal/symbols/DynamicTextSymbol.h"/>
    <depend name="include/openfl/_internal/symbols/FontSymbol.h"/>
    <depend name="include/openfl/_internal/symbols/SWFSymbol.h"/>
+   <depend name="include/openfl/_internal/text/GlyphPosition.h"/>
    <depend name="include/openfl/_internal/text/HTMLParser.h"/>
    <depend name="include/openfl/_internal/text/TextEngine.h"/>
    <depend name="include/openfl/_internal/text/TextFormatRange.h"/>
@@ -6184,8 +6316,6 @@
    <depend name="include/openfl/events/MouseEvent.h"/>
    <depend name="include/openfl/events/TextEvent.h"/>
    <depend name="include/openfl/filters/BitmapFilter.h"/>
-   <depend name="include/openfl/filters/GlowFilter.h"/>
-   <depend name="include/openfl/geom/ColorTransform.h"/>
    <depend name="include/openfl/geom/Matrix.h"/>
    <depend name="include/openfl/geom/Rectangle.h"/>
    <depend name="include/openfl/net/URLRequest.h"/>
@@ -6333,6 +6463,121 @@
    <depend name="include/openfl/geom/Rectangle.h"/>
    <depend name="include/openfl/text/TextField.h"/>
   </file>
+  <file name="src/flixel/system/debug/interaction/tools/Transform.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/flixel/FlxBasic.h"/>
+   <depend name="include/flixel/FlxCamera.h"/>
+   <depend name="include/flixel/FlxG.h"/>
+   <depend name="include/flixel/FlxObject.h"/>
+   <depend name="include/flixel/FlxSprite.h"/>
+   <depend name="include/flixel/group/FlxTypedGroup.h"/>
+   <depend name="include/flixel/group/FlxTypedGroupIterator.h"/>
+   <depend name="include/flixel/math/FlxAngle.h"/>
+   <depend name="include/flixel/math/FlxMath.h"/>
+   <depend name="include/flixel/math/FlxPoint.h"/>
+   <depend name="include/flixel/math/FlxRect.h"/>
+   <depend name="include/flixel/system/debug/Tooltip.h"/>
+   <depend name="include/flixel/system/debug/TooltipOverlay.h"/>
+   <depend name="include/flixel/system/debug/Window.h"/>
+   <depend name="include/flixel/system/debug/interaction/Interaction.h"/>
+   <depend name="include/flixel/system/debug/interaction/tools/GraphicTransformCursorDefault.h"/>
+   <depend name="include/flixel/system/debug/interaction/tools/GraphicTransformCursorRotate.h"/>
+   <depend name="include/flixel/system/debug/interaction/tools/GraphicTransformCursorScaleX.h"/>
+   <depend name="include/flixel/system/debug/interaction/tools/GraphicTransformCursorScaleXY.h"/>
+   <depend name="include/flixel/system/debug/interaction/tools/GraphicTransformCursorScaleY.h"/>
+   <depend name="include/flixel/system/debug/interaction/tools/GraphicTransformTool.h"/>
+   <depend name="include/flixel/system/debug/interaction/tools/Tool.h"/>
+   <depend name="include/flixel/system/debug/interaction/tools/Transform.h"/>
+   <depend name="include/flixel/system/frontEnds/DebuggerFrontEnd.h"/>
+   <depend name="include/flixel/util/FlxSpriteUtil.h"/>
+   <depend name="include/flixel/util/IFlxDestroyable.h"/>
+   <depend name="include/flixel/util/IFlxPooled.h"/>
+   <depend name="include/openfl/display/BitmapData.h"/>
+   <depend name="include/openfl/display/DisplayObject.h"/>
+   <depend name="include/openfl/display/DisplayObjectContainer.h"/>
+   <depend name="include/openfl/display/Graphics.h"/>
+   <depend name="include/openfl/display/IBitmapDrawable.h"/>
+   <depend name="include/openfl/display/InteractiveObject.h"/>
+   <depend name="include/openfl/display/Sprite.h"/>
+   <depend name="include/openfl/events/EventDispatcher.h"/>
+   <depend name="include/openfl/events/IEventDispatcher.h"/>
+   <depend name="include/openfl/geom/ColorTransform.h"/>
+   <depend name="include/openfl/geom/Matrix.h"/>
+   <depend name="include/openfl/geom/Rectangle.h"/>
+   <depend name="include/openfl/text/TextField.h"/>
+  </file>
+  <file name="src/flixel/system/debug/interaction/tools/GraphicTransformCursorRotate.cpp" >
+   <depend name="include/flixel/system/debug/interaction/tools/GraphicTransformCursorRotate.h"/>
+   <depend name="include/haxe/Resource.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/openfl/display/BitmapData.h"/>
+   <depend name="include/openfl/display/IBitmapDrawable.h"/>
+   <depend name="include/openfl/utils/ByteArrayData.h"/>
+   <depend name="include/openfl/utils/IDataInput.h"/>
+   <depend name="include/openfl/utils/IDataOutput.h"/>
+   <depend name="include/openfl/utils/_ByteArray/ByteArray_Impl_.h"/>
+  </file>
+  <file name="src/flixel/system/debug/interaction/tools/GraphicTransformCursorScaleXY.cpp" >
+   <depend name="include/flixel/system/debug/interaction/tools/GraphicTransformCursorScaleXY.h"/>
+   <depend name="include/haxe/Resource.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/openfl/display/BitmapData.h"/>
+   <depend name="include/openfl/display/IBitmapDrawable.h"/>
+   <depend name="include/openfl/utils/ByteArrayData.h"/>
+   <depend name="include/openfl/utils/IDataInput.h"/>
+   <depend name="include/openfl/utils/IDataOutput.h"/>
+   <depend name="include/openfl/utils/_ByteArray/ByteArray_Impl_.h"/>
+  </file>
+  <file name="src/flixel/system/debug/interaction/tools/GraphicTransformCursorScaleX.cpp" >
+   <depend name="include/flixel/system/debug/interaction/tools/GraphicTransformCursorScaleX.h"/>
+   <depend name="include/haxe/Resource.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/openfl/display/BitmapData.h"/>
+   <depend name="include/openfl/display/IBitmapDrawable.h"/>
+   <depend name="include/openfl/utils/ByteArrayData.h"/>
+   <depend name="include/openfl/utils/IDataInput.h"/>
+   <depend name="include/openfl/utils/IDataOutput.h"/>
+   <depend name="include/openfl/utils/_ByteArray/ByteArray_Impl_.h"/>
+  </file>
+  <file name="src/flixel/system/debug/interaction/tools/GraphicTransformCursorScaleY.cpp" >
+   <depend name="include/flixel/system/debug/interaction/tools/GraphicTransformCursorScaleY.h"/>
+   <depend name="include/haxe/Resource.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/openfl/display/BitmapData.h"/>
+   <depend name="include/openfl/display/IBitmapDrawable.h"/>
+   <depend name="include/openfl/utils/ByteArrayData.h"/>
+   <depend name="include/openfl/utils/IDataInput.h"/>
+   <depend name="include/openfl/utils/IDataOutput.h"/>
+   <depend name="include/openfl/utils/_ByteArray/ByteArray_Impl_.h"/>
+  </file>
+  <file name="src/flixel/system/debug/interaction/tools/GraphicTransformCursorDefault.cpp" >
+   <depend name="include/flixel/system/debug/interaction/tools/GraphicTransformCursorDefault.h"/>
+   <depend name="include/haxe/Resource.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/openfl/display/BitmapData.h"/>
+   <depend name="include/openfl/display/IBitmapDrawable.h"/>
+   <depend name="include/openfl/utils/ByteArrayData.h"/>
+   <depend name="include/openfl/utils/IDataInput.h"/>
+   <depend name="include/openfl/utils/IDataOutput.h"/>
+   <depend name="include/openfl/utils/_ByteArray/ByteArray_Impl_.h"/>
+  </file>
+  <file name="src/flixel/system/debug/interaction/tools/GraphicTransformTool.cpp" >
+   <depend name="include/flixel/system/debug/interaction/tools/GraphicTransformTool.h"/>
+   <depend name="include/haxe/Resource.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/openfl/display/BitmapData.h"/>
+   <depend name="include/openfl/display/IBitmapDrawable.h"/>
+   <depend name="include/openfl/utils/ByteArrayData.h"/>
+   <depend name="include/openfl/utils/IDataInput.h"/>
+   <depend name="include/openfl/utils/IDataOutput.h"/>
+   <depend name="include/openfl/utils/_ByteArray/ByteArray_Impl_.h"/>
+  </file>
   <file name="src/flixel/system/debug/interaction/tools/Pointer.cpp" >
    <depend name="include/flixel/FlxBasic.h"/>
    <depend name="include/flixel/FlxCamera.h"/>
@@ -6440,6 +6685,7 @@
   <file name="src/flixel/system/debug/interaction/tools/Tool.cpp" >
    <depend name="include/Type.h"/>
    <depend name="include/flixel/system/debug/Tooltip.h"/>
+   <depend name="include/flixel/system/debug/TooltipOverlay.h"/>
    <depend name="include/flixel/system/debug/Window.h"/>
    <depend name="include/flixel/system/debug/interaction/Interaction.h"/>
    <depend name="include/flixel/system/debug/interaction/tools/Tool.h"/>
@@ -6490,6 +6736,7 @@
    <depend name="include/flixel/system/debug/interaction/tools/Mover.h"/>
    <depend name="include/flixel/system/debug/interaction/tools/Pointer.h"/>
    <depend name="include/flixel/system/debug/interaction/tools/Tool.h"/>
+   <depend name="include/flixel/system/debug/interaction/tools/Transform.h"/>
    <depend name="include/flixel/system/frontEnds/DebuggerFrontEnd.h"/>
    <depend name="include/flixel/system/frontEnds/SignalFrontEnd.h"/>
    <depend name="include/flixel/system/scaleModes/BaseScaleMode.h"/>
@@ -6752,16 +6999,23 @@
    <depend name="include/openfl/utils/_ByteArray/ByteArray_Impl_.h"/>
   </file>
   <file name="src/flixel/system/debug/VCR.cpp" >
+   <depend name="include/Std.h"/>
    <depend name="include/flixel/FlxG.h"/>
+   <depend name="include/flixel/system/debug/DebuggerUtil.h"/>
    <depend name="include/flixel/system/debug/FlxDebugger.h"/>
    <depend name="include/flixel/system/debug/GraphicArrowRight.h"/>
    <depend name="include/flixel/system/debug/VCR.h"/>
+   <depend name="include/flixel/system/debug/_VCR/GraphicOpen.h"/>
    <depend name="include/flixel/system/debug/_VCR/GraphicPause.h"/>
+   <depend name="include/flixel/system/debug/_VCR/GraphicRecordOff.h"/>
+   <depend name="include/flixel/system/debug/_VCR/GraphicRecordOn.h"/>
    <depend name="include/flixel/system/debug/_VCR/GraphicRestart.h"/>
    <depend name="include/flixel/system/debug/_VCR/GraphicStep.h"/>
+   <depend name="include/flixel/system/debug/_VCR/GraphicStop.h"/>
    <depend name="include/flixel/system/frontEnds/VCRFrontEnd.h"/>
    <depend name="include/flixel/system/ui/FlxSystemButton.h"/>
    <depend name="include/flixel/util/FlxHorizontalAlign.h"/>
+   <depend name="include/flixel/util/FlxStringUtil.h"/>
    <depend name="include/flixel/util/IFlxDestroyable.h"/>
    <depend name="include/openfl/display/BitmapData.h"/>
    <depend name="include/openfl/display/DisplayObject.h"/>
@@ -7341,12 +7595,12 @@
    <depend name="include/haxe/format/JsonParser.h"/>
    <depend name="include/haxe/format/JsonPrinter.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/haxe/io/Error.h"/>
    <depend name="include/haxe/io/FPHelper.h"/>
    <depend name="include/lime/system/Endian.h"/>
    <depend name="include/lime/system/System.h"/>
-   <depend name="include/lime/utils/compress/Deflate.h"/>
-   <depend name="include/lime/utils/compress/LZMA.h"/>
-   <depend name="include/lime/utils/compress/Zlib.h"/>
+   <depend name="include/lime/utils/CompressionAlgorithm.h"/>
+   <depend name="include/lime/utils/_Bytes/Bytes_Impl_.h"/>
    <depend name="include/openfl/errors/EOFError.h"/>
    <depend name="include/openfl/errors/Error.h"/>
    <depend name="include/openfl/errors/IOError.h"/>
@@ -7477,14 +7731,18 @@
    <depend name="include/flixel/input/FlxSwipe.h"/>
    <depend name="include/flixel/input/IFlxInput.h"/>
    <depend name="include/flixel/input/IFlxInputManager.h"/>
+   <depend name="include/flixel/input/keyboard/_FlxKey/FlxKey_Impl_.h"/>
    <depend name="include/flixel/input/mouse/FlxMouse.h"/>
    <depend name="include/flixel/input/mouse/FlxMouseButton.h"/>
    <depend name="include/flixel/math/FlxPoint.h"/>
+   <depend name="include/flixel/system/frontEnds/VCRFrontEnd.h"/>
    <depend name="include/flixel/util/FlxDestroyUtil.h"/>
    <depend name="include/flixel/util/FlxPool_flixel_math_FlxPoint.h"/>
    <depend name="include/flixel/util/IFlxDestroyable.h"/>
    <depend name="include/flixel/util/IFlxPool.h"/>
    <depend name="include/flixel/util/IFlxPooled.h"/>
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/ds/IntMap.h"/>
    <depend name="include/openfl/display/DisplayObject.h"/>
    <depend name="include/openfl/display/DisplayObjectContainer.h"/>
    <depend name="include/openfl/display/IBitmapDrawable.h"/>
@@ -7551,27 +7809,34 @@
    <depend name="include/Std.h"/>
    <depend name="include/haxe/Log.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
+   <depend name="include/lime/app/Application.h"/>
    <depend name="include/lime/app/Future.h"/>
-   <depend name="include/lime/graphics/CanvasRenderContext.h"/>
+   <depend name="include/lime/app/IModule.h"/>
+   <depend name="include/lime/app/Module.h"/>
    <depend name="include/lime/graphics/Image.h"/>
    <depend name="include/lime/graphics/ImageBuffer.h"/>
    <depend name="include/lime/graphics/ImageChannel.h"/>
+   <depend name="include/lime/graphics/ImageFileFormat.h"/>
    <depend name="include/lime/graphics/ImageType.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
+   <depend name="include/lime/graphics/_WebGL2RenderContext/WebGL2RenderContext_Impl_.h"/>
+   <depend name="include/lime/graphics/_WebGLRenderContext/WebGLRenderContext_Impl_.h"/>
    <depend name="include/lime/graphics/cairo/Cairo.h"/>
    <depend name="include/lime/graphics/cairo/_CairoImageSurface/CairoImageSurface_Impl_.h"/>
    <depend name="include/lime/graphics/cairo/_CairoPattern/CairoPattern_Impl_.h"/>
    <depend name="include/lime/graphics/cairo/_CairoSurface/CairoSurface_Impl_.h"/>
    <depend name="include/lime/graphics/opengl/GL.h"/>
-   <depend name="include/lime/graphics/opengl/GLContextType.h"/>
    <depend name="include/lime/graphics/opengl/GLObject.h"/>
    <depend name="include/lime/math/Rectangle.h"/>
    <depend name="include/lime/math/Vector2.h"/>
    <depend name="include/lime/system/Endian.h"/>
+   <depend name="include/lime/ui/Window.h"/>
    <depend name="include/lime/utils/ArrayBufferView.h"/>
    <depend name="include/lime/utils/BytePointerData.h"/>
    <depend name="include/lime/utils/ObjectPool_openfl_geom_Matrix.h"/>
    <depend name="include/lime/utils/ObjectPool_openfl_geom_Rectangle.h"/>
+   <depend name="include/lime/utils/_BytePointer/BytePointer_Impl_.h"/>
    <depend name="include/lime/utils/_DataPointer/DataPointer_Impl_.h"/>
    <depend name="include/openfl/_Vector/IVector.h"/>
    <depend name="include/openfl/_Vector/IntVector.h"/>
@@ -7585,7 +7850,6 @@
    <depend name="include/openfl/display/DisplayObject.h"/>
    <depend name="include/openfl/display/DisplayObjectRenderer.h"/>
    <depend name="include/openfl/display/DisplayObjectShader.h"/>
-   <depend name="include/openfl/display/Graphics.h"/>
    <depend name="include/openfl/display/IBitmapDrawable.h"/>
    <depend name="include/openfl/display/JPEGEncoderOptions.h"/>
    <depend name="include/openfl/display/OpenGLRenderer.h"/>
@@ -7623,6 +7887,7 @@
    <depend name="include/flixel/input/keyboard/_FlxKey/FlxKey_Impl_.h"/>
    <depend name="include/flixel/system/debug/FlxDebugger.h"/>
    <depend name="include/flixel/system/frontEnds/DebuggerFrontEnd.h"/>
+   <depend name="include/flixel/system/frontEnds/VCRFrontEnd.h"/>
    <depend name="include/flixel/system/replay/CodeValuePair.h"/>
    <depend name="include/flixel/util/IFlxDestroyable.h"/>
    <depend name="include/haxe/IMap.h"/>
@@ -7823,7 +8088,7 @@
    <depend name="include/haxe/IMap.h"/>
    <depend name="include/haxe/ds/IntMap.h"/>
    <depend name="include/haxe/ds/ObjectMap.h"/>
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
    <depend name="include/lime/ui/Gamepad.h"/>
    <depend name="include/openfl/events/Event.h"/>
    <depend name="include/openfl/events/EventDispatcher.h"/>
@@ -8041,21 +8306,21 @@
    <depend name="include/haxe/IMap.h"/>
    <depend name="include/haxe/ds/StringMap.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
-   <depend name="include/lime/graphics/opengl/GLContextType.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
+   <depend name="include/lime/graphics/_WebGLRenderContext/WebGLRenderContext_Impl_.h"/>
    <depend name="include/lime/graphics/opengl/GLObject.h"/>
-   <depend name="include/lime/graphics/opengl/_WebGLContext/WebGLContext_Impl_.h"/>
    <depend name="include/lime/utils/ArrayBufferView.h"/>
    <depend name="include/lime/utils/Log.h"/>
    <depend name="include/openfl/_internal/renderer/ShaderBuffer.h"/>
    <depend name="include/openfl/display/BitmapData.h"/>
    <depend name="include/openfl/display/IBitmapDrawable.h"/>
    <depend name="include/openfl/display/Shader.h"/>
-   <depend name="include/openfl/display/ShaderData.h"/>
    <depend name="include/openfl/display/ShaderInput_openfl_display_BitmapData.h"/>
    <depend name="include/openfl/display/ShaderParameter_Bool.h"/>
    <depend name="include/openfl/display/ShaderParameter_Float.h"/>
    <depend name="include/openfl/display/ShaderParameter_Int.h"/>
+   <depend name="include/openfl/display/_ShaderData/ShaderData_Impl_.h"/>
    <depend name="include/openfl/utils/ByteArrayData.h"/>
    <depend name="include/openfl/utils/IDataInput.h"/>
    <depend name="include/openfl/utils/IDataOutput.h"/>
@@ -8627,11 +8892,20 @@
    <depend name="include/flixel/FlxSubState.h"/>
    <depend name="include/flixel/graphics/tile/FlxDrawBaseItem.h"/>
    <depend name="include/flixel/group/FlxTypedGroup.h"/>
+   <depend name="include/flixel/input/FlxKeyManager.h"/>
+   <depend name="include/flixel/input/FlxPointer.h"/>
    <depend name="include/flixel/input/FlxSwipe.h"/>
    <depend name="include/flixel/input/IFlxInputManager.h"/>
+   <depend name="include/flixel/input/keyboard/FlxKeyboard.h"/>
+   <depend name="include/flixel/input/mouse/FlxMouse.h"/>
+   <depend name="include/flixel/math/FlxRandom.h"/>
    <depend name="include/flixel/system/FlxSplash.h"/>
    <depend name="include/flixel/system/debug/FlxDebugger.h"/>
+   <depend name="include/flixel/system/debug/VCR.h"/>
    <depend name="include/flixel/system/debug/Window.h"/>
+   <depend name="include/flixel/system/debug/_VCR/GraphicRecordOff.h"/>
+   <depend name="include/flixel/system/debug/_VCR/GraphicRecordOn.h"/>
+   <depend name="include/flixel/system/debug/_VCR/GraphicStop.h"/>
    <depend name="include/flixel/system/debug/console/Console.h"/>
    <depend name="include/flixel/system/debug/interaction/Interaction.h"/>
    <depend name="include/flixel/system/debug/log/LogStyle.h"/>
@@ -8645,9 +8919,11 @@
    <depend name="include/flixel/system/frontEnds/SignalFrontEnd.h"/>
    <depend name="include/flixel/system/frontEnds/SoundFrontEnd.h"/>
    <depend name="include/flixel/system/frontEnds/VCRFrontEnd.h"/>
+   <depend name="include/flixel/system/replay/FlxReplay.h"/>
    <depend name="include/flixel/system/scaleModes/BaseScaleMode.h"/>
    <depend name="include/flixel/system/ui/FlxFocusLostScreen.h"/>
    <depend name="include/flixel/system/ui/FlxSoundTray.h"/>
+   <depend name="include/flixel/system/ui/FlxSystemButton.h"/>
    <depend name="include/flixel/util/FlxArrayUtil.h"/>
    <depend name="include/flixel/util/IFlxDestroyable.h"/>
    <depend name="include/flixel/util/IFlxSignal.h"/>
@@ -8725,8 +9001,7 @@
    <depend name="include/lime/app/Application.h"/>
    <depend name="include/lime/app/IModule.h"/>
    <depend name="include/lime/app/Module.h"/>
-   <depend name="include/lime/graphics/Renderer.h"/>
-   <depend name="include/lime/graphics/RendererType.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
    <depend name="include/lime/ui/Window.h"/>
    <depend name="include/openfl/Lib.h"/>
    <depend name="include/openfl/display/Application.h"/>
@@ -8810,6 +9085,7 @@
   </file>
   <file name="src/flixel/math/FlxRandom.cpp" >
    <depend name="include/Std.h"/>
+   <depend name="include/flixel/FlxG.h"/>
    <depend name="include/flixel/math/FlxRandom.h"/>
    <depend name="include/flixel/util/_FlxColor/FlxColor_Impl_.h"/>
   </file>
@@ -8966,7 +9242,7 @@
    <depend name="include/flixel/util/IFlxPooled.h"/>
    <depend name="include/haxe/IMap.h"/>
    <depend name="include/haxe/ds/StringMap.h"/>
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
    <depend name="include/lime/graphics/opengl/GL.h"/>
    <depend name="include/openfl/display/BitmapData.h"/>
    <depend name="include/openfl/display/IBitmapDrawable.h"/>
@@ -9059,6 +9335,7 @@
   <file name="src/lime/math/Matrix3.cpp" tags="haxe,release">
    <depend name="include/Std.h"/>
    <depend name="include/lime/math/Matrix3.h"/>
+   <depend name="include/lime/math/Rectangle.h"/>
    <depend name="include/lime/math/Vector2.h"/>
    <depend name="include/lime/math/Vector4.h"/>
   </file>
@@ -9162,11 +9439,8 @@
   <file name="src/Std.cpp" >
    <depend name="include/Std.h"/>
   </file>
-  <file name="src/Reflect.cpp" >
-   <depend name="include/Reflect.h"/>
-  </file>
-  <file name="src/PlayState.cpp" >
-   <depend name="include/PlayState.h"/>
+  <file name="src/RoomState.cpp" >
+   <depend name="include/RoomState.h"/>
    <depend name="include/flixel/FlxBasic.h"/>
    <depend name="include/flixel/FlxG.h"/>
    <depend name="include/flixel/FlxObject.h"/>
@@ -9180,10 +9454,18 @@
    <depend name="include/flixel/input/keyboard/FlxKeyList.h"/>
    <depend name="include/flixel/input/keyboard/FlxKeyboard.h"/>
    <depend name="include/flixel/math/FlxPoint.h"/>
+   <depend name="include/flixel/util/FlxPool_flixel_math_FlxPoint.h"/>
    <depend name="include/flixel/util/IFlxDestroyable.h"/>
+   <depend name="include/flixel/util/IFlxPool.h"/>
    <depend name="include/flixel/util/IFlxPooled.h"/>
    <depend name="include/game/Avatar.h"/>
    <depend name="include/game/Room.h"/>
+   <depend name="include/haxe/Log.h"/>
+   <depend name="include/lime/app/Future.h"/>
+   <depend name="include/lime/utils/AssetLibrary.h"/>
+   <depend name="include/openfl/utils/AssetLibrary.h"/>
+   <depend name="include/openfl/utils/Assets.h"/>
+   <depend name="include/sound/SoundManager.h"/>
   </file>
   <file name="src/flixel/FlxState.cpp" >
    <depend name="include/flixel/FlxBasic.h"/>
@@ -9228,6 +9510,9 @@
   <file name="src/flixel/util/IFlxDestroyable.cpp" >
    <depend name="include/flixel/util/IFlxDestroyable.h"/>
   </file>
+  <file name="src/Reflect.cpp" >
+   <depend name="include/Reflect.h"/>
+  </file>
   <file name="src/__ASSET__OPENFL__flixel_fonts_monsterrat_ttf.cpp" >
    <depend name="include/__ASSET__OPENFL__flixel_fonts_monsterrat_ttf.h"/>
    <depend name="include/__ASSET__flixel_fonts_monsterrat_ttf.h"/>
@@ -9254,6 +9539,16 @@
    <depend name="include/openfl/utils/IDataOutput.h"/>
    <depend name="include/openfl/utils/_ByteArray/ByteArray_Impl_.h"/>
   </file>
+  <file name="src/__ASSET__manifest_default_json.cpp" >
+   <depend name="include/__ASSET__manifest_default_json.h"/>
+   <depend name="include/haxe/Resource.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+  </file>
+  <file name="src/__ASSET__manifest_cloudinforoom_json.cpp" >
+   <depend name="include/__ASSET__manifest_cloudinforoom_json.h"/>
+   <depend name="include/haxe/Resource.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+  </file>
   <file name="src/__ASSET__flixel_images_logo_default_png.cpp" >
    <depend name="include/__ASSET__flixel_images_logo_default_png.h"/>
    <depend name="include/haxe/Resource.h"/>
@@ -9269,36 +9564,6 @@
    <depend name="include/lime/graphics/Image.h"/>
    <depend name="include/lime/graphics/ImageBuffer.h"/>
    <depend name="include/lime/graphics/ImageType.h"/>
-  </file>
-  <file name="src/lime/graphics/Image.cpp" tags="haxe,release">
-   <depend name="include/Std.h"/>
-   <depend name="include/Type.h"/>
-   <depend name="include/haxe/crypto/BaseCode.h"/>
-   <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
-   <depend name="include/lime/app/Future.h"/>
-   <depend name="include/lime/graphics/Image.h"/>
-   <depend name="include/lime/graphics/ImageBuffer.h"/>
-   <depend name="include/lime/graphics/ImageChannel.h"/>
-   <depend name="include/lime/graphics/ImageType.h"/>
-   <depend name="include/lime/graphics/format/BMP.h"/>
-   <depend name="include/lime/graphics/format/BMPType.h"/>
-   <depend name="include/lime/graphics/format/JPEG.h"/>
-   <depend name="include/lime/graphics/format/PNG.h"/>
-   <depend name="include/lime/graphics/utils/ImageCanvasUtil.h"/>
-   <depend name="include/lime/graphics/utils/ImageDataUtil.h"/>
-   <depend name="include/lime/math/Rectangle.h"/>
-   <depend name="include/lime/math/Vector2.h"/>
-   <depend name="include/lime/math/_ColorMatrix/ColorMatrix_Impl_.h"/>
-   <depend name="include/lime/net/_HTTPRequest/AbstractHTTPRequest.h"/>
-   <depend name="include/lime/net/_HTTPRequest_Bytes.h"/>
-   <depend name="include/lime/net/_HTTPRequest_lime_graphics_Image.h"/>
-   <depend name="include/lime/net/_IHTTPRequest.h"/>
-   <depend name="include/lime/system/CFFI.h"/>
-   <depend name="include/lime/system/Endian.h"/>
-   <depend name="include/lime/utils/ArrayBufferView.h"/>
-   <depend name="include/lime/utils/BytePointerData.h"/>
-   <depend name="include/lime/utils/TAError.h"/>
   </file>
   <file name="src/__ASSET__flixel_fonts_monsterrat_ttf.cpp" >
    <depend name="include/__ASSET__flixel_fonts_monsterrat_ttf.h"/>
@@ -9318,7 +9583,7 @@
    <depend name="include/haxe/ds/IntMap.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
    <depend name="include/haxe/io/Path.h"/>
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
    <depend name="include/lime/app/Future.h"/>
    <depend name="include/lime/app/Promise_lime_text_Font.h"/>
    <depend name="include/lime/graphics/Image.h"/>
@@ -9345,10 +9610,203 @@
    <depend name="include/haxe/Resource.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
   </file>
+  <file name="src/__ASSET__assets_sounds_step1_wav.cpp" >
+   <depend name="include/__ASSET__assets_sounds_step1_wav.h"/>
+   <depend name="include/haxe/Resource.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+  </file>
+  <file name="src/__ASSET__assets_images_template_png.cpp" >
+   <depend name="include/__ASSET__assets_images_template_png.h"/>
+   <depend name="include/haxe/Resource.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/lime/graphics/ImageBuffer.h"/>
+   <depend name="include/lime/graphics/ImageType.h"/>
+  </file>
+  <file name="src/__ASSET__assets_images_shoes_png.cpp" >
+   <depend name="include/__ASSET__assets_images_shoes_png.h"/>
+   <depend name="include/haxe/Resource.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/lime/graphics/ImageBuffer.h"/>
+   <depend name="include/lime/graphics/ImageType.h"/>
+  </file>
+  <file name="src/__ASSET__assets_images_rooms_cloudinforoom_roomparts_json.cpp" >
+   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_roomparts_json.h"/>
+   <depend name="include/haxe/Resource.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+  </file>
   <file name="src/haxe/io/Bytes.cpp" tags="haxe,release">
    <depend name="include/StringBuf.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
    <depend name="include/haxe/io/Error.h"/>
+  </file>
+  <file name="src/__ASSET__assets_images_rooms_cloudinforoom_item_statue_png.cpp" >
+   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_item_statue_png.h"/>
+   <depend name="include/haxe/Resource.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/lime/graphics/ImageBuffer.h"/>
+   <depend name="include/lime/graphics/ImageType.h"/>
+  </file>
+  <file name="src/__ASSET__assets_images_rooms_cloudinforoom_item_door2_png.cpp" >
+   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_item_door2_png.h"/>
+   <depend name="include/haxe/Resource.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/lime/graphics/ImageBuffer.h"/>
+   <depend name="include/lime/graphics/ImageType.h"/>
+  </file>
+  <file name="src/__ASSET__assets_images_rooms_cloudinforoom_item_door1_png.cpp" >
+   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_item_door1_png.h"/>
+   <depend name="include/haxe/Resource.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/lime/graphics/ImageBuffer.h"/>
+   <depend name="include/lime/graphics/ImageType.h"/>
+  </file>
+  <file name="src/__ASSET__assets_images_rooms_cloudinforoom_cloudinforoom_map_png.cpp" >
+   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_cloudinforoom_map_png.h"/>
+   <depend name="include/haxe/Resource.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/lime/graphics/ImageBuffer.h"/>
+   <depend name="include/lime/graphics/ImageType.h"/>
+  </file>
+  <file name="src/__ASSET__assets_images_rooms_cloudinforoom_cloudinforoom_png.cpp" >
+   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_cloudinforoom_png.h"/>
+   <depend name="include/haxe/Resource.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/lime/graphics/ImageBuffer.h"/>
+   <depend name="include/lime/graphics/ImageType.h"/>
+  </file>
+  <file name="src/__ASSET__assets_images_pants_png.cpp" >
+   <depend name="include/__ASSET__assets_images_pants_png.h"/>
+   <depend name="include/haxe/Resource.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/lime/graphics/ImageBuffer.h"/>
+   <depend name="include/lime/graphics/ImageType.h"/>
+  </file>
+  <file name="src/__ASSET__assets_images_overcoat_png.cpp" >
+   <depend name="include/__ASSET__assets_images_overcoat_png.h"/>
+   <depend name="include/haxe/Resource.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/lime/graphics/ImageBuffer.h"/>
+   <depend name="include/lime/graphics/ImageType.h"/>
+  </file>
+  <file name="src/__ASSET__assets_images_jeans_png.cpp" >
+   <depend name="include/__ASSET__assets_images_jeans_png.h"/>
+   <depend name="include/haxe/Resource.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/lime/graphics/ImageBuffer.h"/>
+   <depend name="include/lime/graphics/ImageType.h"/>
+  </file>
+  <file name="src/__ASSET__assets_images_jacket_png.cpp" >
+   <depend name="include/__ASSET__assets_images_jacket_png.h"/>
+   <depend name="include/haxe/Resource.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/lime/graphics/ImageBuffer.h"/>
+   <depend name="include/lime/graphics/ImageType.h"/>
+  </file>
+  <file name="src/__ASSET__assets_images_hat2_png.cpp" >
+   <depend name="include/__ASSET__assets_images_hat2_png.h"/>
+   <depend name="include/haxe/Resource.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/lime/graphics/ImageBuffer.h"/>
+   <depend name="include/lime/graphics/ImageType.h"/>
+  </file>
+  <file name="src/__ASSET__assets_images_hat_png.cpp" >
+   <depend name="include/__ASSET__assets_images_hat_png.h"/>
+   <depend name="include/haxe/Resource.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/lime/graphics/ImageBuffer.h"/>
+   <depend name="include/lime/graphics/ImageType.h"/>
+  </file>
+  <file name="src/__ASSET__assets_images_hair_png.cpp" >
+   <depend name="include/__ASSET__assets_images_hair_png.h"/>
+   <depend name="include/haxe/Resource.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/lime/graphics/ImageBuffer.h"/>
+   <depend name="include/lime/graphics/ImageType.h"/>
+  </file>
+  <file name="src/__ASSET__assets_images_glasses_png.cpp" >
+   <depend name="include/__ASSET__assets_images_glasses_png.h"/>
+   <depend name="include/haxe/Resource.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/lime/graphics/ImageBuffer.h"/>
+   <depend name="include/lime/graphics/ImageType.h"/>
+  </file>
+  <file name="src/__ASSET__assets_images_face_png.cpp" >
+   <depend name="include/__ASSET__assets_images_face_png.h"/>
+   <depend name="include/haxe/Resource.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/lime/graphics/ImageBuffer.h"/>
+   <depend name="include/lime/graphics/ImageType.h"/>
+  </file>
+  <file name="src/__ASSET__assets_images_douli2_png.cpp" >
+   <depend name="include/__ASSET__assets_images_douli2_png.h"/>
+   <depend name="include/haxe/Resource.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/lime/graphics/ImageBuffer.h"/>
+   <depend name="include/lime/graphics/ImageType.h"/>
+  </file>
+  <file name="src/__ASSET__assets_images_douli_png.cpp" >
+   <depend name="include/__ASSET__assets_images_douli_png.h"/>
+   <depend name="include/haxe/Resource.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/lime/graphics/ImageBuffer.h"/>
+   <depend name="include/lime/graphics/ImageType.h"/>
+  </file>
+  <file name="src/__ASSET__assets_images_body_png.cpp" >
+   <depend name="include/__ASSET__assets_images_body_png.h"/>
+   <depend name="include/haxe/Resource.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/lime/graphics/ImageBuffer.h"/>
+   <depend name="include/lime/graphics/ImageType.h"/>
+  </file>
+  <file name="src/lime/graphics/Image.cpp" tags="haxe,release">
+   <depend name="include/Std.h"/>
+   <depend name="include/Type.h"/>
+   <depend name="include/haxe/crypto/BaseCode.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/_internal/format/BMP.h"/>
+   <depend name="include/lime/_internal/format/BMPType.h"/>
+   <depend name="include/lime/_internal/format/JPEG.h"/>
+   <depend name="include/lime/_internal/format/PNG.h"/>
+   <depend name="include/lime/_internal/graphics/ImageCanvasUtil.h"/>
+   <depend name="include/lime/_internal/graphics/ImageDataUtil.h"/>
+   <depend name="include/lime/app/Future.h"/>
+   <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/lime/graphics/ImageBuffer.h"/>
+   <depend name="include/lime/graphics/ImageChannel.h"/>
+   <depend name="include/lime/graphics/ImageFileFormat.h"/>
+   <depend name="include/lime/graphics/ImageType.h"/>
+   <depend name="include/lime/math/Rectangle.h"/>
+   <depend name="include/lime/math/Vector2.h"/>
+   <depend name="include/lime/math/_ColorMatrix/ColorMatrix_Impl_.h"/>
+   <depend name="include/lime/net/_HTTPRequest/AbstractHTTPRequest.h"/>
+   <depend name="include/lime/net/_HTTPRequest_Bytes.h"/>
+   <depend name="include/lime/net/_HTTPRequest_lime_graphics_Image.h"/>
+   <depend name="include/lime/net/_IHTTPRequest.h"/>
+   <depend name="include/lime/system/CFFI.h"/>
+   <depend name="include/lime/system/Endian.h"/>
+   <depend name="include/lime/utils/ArrayBufferView.h"/>
+   <depend name="include/lime/utils/BytePointerData.h"/>
+   <depend name="include/lime/utils/TAError.h"/>
   </file>
   <file name="src/ManifestResources.cpp" >
    <depend name="include/ManifestResources.h"/>
@@ -9356,11 +9814,10 @@
    <depend name="include/Sys.h"/>
    <depend name="include/__ASSET__OPENFL__flixel_fonts_monsterrat_ttf.h"/>
    <depend name="include/__ASSET__OPENFL__flixel_fonts_nokiafc22_ttf.h"/>
-   <depend name="include/haxe/IMap.h"/>
-   <depend name="include/haxe/ds/StringMap.h"/>
    <depend name="include/haxe/io/Path.h"/>
    <depend name="include/lime/text/Font.h"/>
    <depend name="include/lime/utils/AssetLibrary.h"/>
+   <depend name="include/lime/utils/AssetManifest.h"/>
    <depend name="include/lime/utils/Assets.h"/>
    <depend name="include/openfl/text/Font.h"/>
    <depend name="include/sys/FileSystem.h"/>
@@ -9384,6 +9841,9 @@
    <depend name="include/Date.h"/>
    <depend name="include/Std.h"/>
   </file>
+  <file name="src/AssetPaths.cpp" >
+   <depend name="include/AssetPaths.h"/>
+  </file>
   <file name="src/DocumentClass.cpp" >
    <depend name="include/DocumentClass.h"/>
    <depend name="include/Main.h"/>
@@ -9398,7 +9858,7 @@
   </file>
   <file name="src/Main.cpp" >
    <depend name="include/Main.h"/>
-   <depend name="include/PlayState.h"/>
+   <depend name="include/RoomState.h"/>
    <depend name="include/flixel/FlxBasic.h"/>
    <depend name="include/flixel/FlxGame.h"/>
    <depend name="include/flixel/FlxState.h"/>
@@ -9473,13 +9933,12 @@
   </file>
   <file name="src/openfl/display/DisplayObject.cpp" tags="haxe,release">
    <depend name="include/Std.h"/>
-   <depend name="include/Type.h"/>
    <depend name="include/haxe/IMap.h"/>
    <depend name="include/haxe/ds/StringMap.h"/>
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
    <depend name="include/lime/app/IModule.h"/>
    <depend name="include/lime/graphics/Image.h"/>
-   <depend name="include/lime/graphics/RendererType.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
    <depend name="include/lime/graphics/cairo/Cairo.h"/>
    <depend name="include/lime/graphics/cairo/_CairoPattern/CairoPattern_Impl_.h"/>
    <depend name="include/lime/ui/MouseCursor.h"/>
@@ -9489,7 +9948,6 @@
    <depend name="include/openfl/_Vector/IVector.h"/>
    <depend name="include/openfl/_Vector/ObjectVector.h"/>
    <depend name="include/openfl/_internal/Lib.h"/>
-   <depend name="include/openfl/_internal/renderer/DrawCommandBuffer.h"/>
    <depend name="include/openfl/_internal/renderer/cairo/CairoDisplayObject.h"/>
    <depend name="include/openfl/_internal/renderer/cairo/CairoGraphics.h"/>
    <depend name="include/openfl/_internal/renderer/canvas/CanvasGraphics.h"/>
@@ -9573,7 +10031,6 @@
    <depend name="include/openfl/display/DOMRenderer.h"/>
    <depend name="include/openfl/display/DisplayObject.h"/>
    <depend name="include/openfl/display/DisplayObjectRenderer.h"/>
-   <depend name="include/openfl/display/Graphics.h"/>
    <depend name="include/openfl/display/IBitmapDrawable.h"/>
    <depend name="include/openfl/display/OpenGLRenderer.h"/>
    <depend name="include/openfl/events/EventDispatcher.h"/>
@@ -9601,18 +10058,22 @@
    <depend name="include/DocumentClass.h"/>
    <depend name="include/Main.h"/>
    <depend name="include/ManifestResources.h"/>
+   <depend name="include/Reflect.h"/>
    <depend name="include/Std.h"/>
    <depend name="include/flixel/system/FlxBasePreloader.h"/>
    <depend name="include/flixel/system/FlxPreloader.h"/>
    <depend name="include/flixel/system/_FlxBasePreloader/DefaultPreloader.h"/>
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/ds/StringMap.h"/>
    <depend name="include/lime/app/Application.h"/>
    <depend name="include/lime/app/IModule.h"/>
    <depend name="include/lime/app/Module.h"/>
-   <depend name="include/lime/app/Preloader.h"/>
+   <depend name="include/lime/app/_Event_Int_Int_Void.h"/>
    <depend name="include/lime/app/_Event_Void_Void.h"/>
    <depend name="include/lime/system/System.h"/>
    <depend name="include/lime/ui/Window.h"/>
    <depend name="include/lime/utils/AssetLibrary.h"/>
+   <depend name="include/lime/utils/Preloader.h"/>
    <depend name="include/openfl/display/Application.h"/>
    <depend name="include/openfl/display/DisplayObject.h"/>
    <depend name="include/openfl/display/DisplayObjectContainer.h"/>
@@ -9622,6 +10083,7 @@
    <depend name="include/openfl/display/Preloader.h"/>
    <depend name="include/openfl/display/Sprite.h"/>
    <depend name="include/openfl/display/Stage.h"/>
+   <depend name="include/openfl/display/Window.h"/>
    <depend name="include/openfl/events/ActivityEvent.h"/>
    <depend name="include/openfl/events/Event.h"/>
    <depend name="include/openfl/events/EventDispatcher.h"/>
@@ -9629,91 +10091,17 @@
    <depend name="include/openfl/events/IEventDispatcher.h"/>
   </file>
   <file name="src/lime/app/Application.cpp" tags="haxe,release">
-   <depend name="include/Reflect.h"/>
    <depend name="include/haxe/IMap.h"/>
    <depend name="include/haxe/ds/IntMap.h"/>
-   <depend name="include/lime/_backend/native/NativeApplication.h"/>
+   <depend name="include/haxe/ds/StringMap.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeApplication.h"/>
    <depend name="include/lime/app/Application.h"/>
    <depend name="include/lime/app/IModule.h"/>
    <depend name="include/lime/app/Module.h"/>
-   <depend name="include/lime/app/Preloader.h"/>
-   <depend name="include/lime/app/_Event_Int_Void.h"/>
-   <depend name="include/lime/app/_Event_Void_Void.h"/>
-   <depend name="include/lime/graphics/Renderer.h"/>
-   <depend name="include/lime/system/System.h"/>
-   <depend name="include/lime/ui/Window.h"/>
-  </file>
-  <file name="src/lime/_backend/native/NativeApplication.cpp" tags="haxe,release">
-   <depend name="include/List.h"/>
-   <depend name="include/Type.h"/>
-   <depend name="include/haxe/IMap.h"/>
-   <depend name="include/haxe/Timer.h"/>
-   <depend name="include/haxe/ds/IntMap.h"/>
-   <depend name="include/lime/_backend/native/NativeApplication.h"/>
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
-   <depend name="include/lime/_backend/native/NativeRenderer.h"/>
-   <depend name="include/lime/_backend/native/_NativeApplication/ApplicationEventInfo.h"/>
-   <depend name="include/lime/_backend/native/_NativeApplication/ClipboardEventInfo.h"/>
-   <depend name="include/lime/_backend/native/_NativeApplication/DropEventInfo.h"/>
-   <depend name="include/lime/_backend/native/_NativeApplication/GamepadEventInfo.h"/>
-   <depend name="include/lime/_backend/native/_NativeApplication/JoystickEventInfo.h"/>
-   <depend name="include/lime/_backend/native/_NativeApplication/KeyEventInfo.h"/>
-   <depend name="include/lime/_backend/native/_NativeApplication/MouseEventInfo.h"/>
-   <depend name="include/lime/_backend/native/_NativeApplication/RenderEventInfo.h"/>
-   <depend name="include/lime/_backend/native/_NativeApplication/SensorEventInfo.h"/>
-   <depend name="include/lime/_backend/native/_NativeApplication/TextEventInfo.h"/>
-   <depend name="include/lime/_backend/native/_NativeApplication/TouchEventInfo.h"/>
-   <depend name="include/lime/_backend/native/_NativeApplication/WindowEventInfo.h"/>
-   <depend name="include/lime/app/Application.h"/>
-   <depend name="include/lime/app/IModule.h"/>
-   <depend name="include/lime/app/Module.h"/>
-   <depend name="include/lime/app/_Event_Float_Float_Float_Void.h"/>
    <depend name="include/lime/app/_Event_Float_Float_Int_Void.h"/>
    <depend name="include/lime/app/_Event_Float_Float_Void.h"/>
-   <depend name="include/lime/app/_Event_Int_Float_Float_Void.h"/>
-   <depend name="include/lime/app/_Event_Int_Float_Void.h"/>
-   <depend name="include/lime/app/_Event_Int_Int_Void.h"/>
-   <depend name="include/lime/app/_Event_Int_Void.h"/>
-   <depend name="include/lime/app/_Event_Int_lime_ui_JoystickHatPosition_Void.h"/>
-   <depend name="include/lime/app/_Event_String_Int_Int_Void.h"/>
-   <depend name="include/lime/app/_Event_String_Void.h"/>
-   <depend name="include/lime/app/_Event_Void_Void.h"/>
-   <depend name="include/lime/app/_Event_lime_graphics_RenderContext_Void.h"/>
-   <depend name="include/lime/app/_Event_lime_ui_GamepadAxis_Float_Void.h"/>
-   <depend name="include/lime/app/_Event_lime_ui_GamepadButton_Void.h"/>
-   <depend name="include/lime/app/_Event_lime_ui_KeyCode_lime_ui_KeyModifier_Void.h"/>
-   <depend name="include/lime/app/_Event_lime_ui_Touch_Void.h"/>
-   <depend name="include/lime/graphics/RenderContext.h"/>
-   <depend name="include/lime/graphics/Renderer.h"/>
-   <depend name="include/lime/graphics/opengl/GL.h"/>
-   <depend name="include/lime/media/AudioContext.h"/>
-   <depend name="include/lime/media/AudioManager.h"/>
-   <depend name="include/lime/system/Clipboard.h"/>
-   <depend name="include/lime/system/Sensor.h"/>
-   <depend name="include/lime/system/System.h"/>
-   <depend name="include/lime/ui/Gamepad.h"/>
-   <depend name="include/lime/ui/Joystick.h"/>
-   <depend name="include/lime/ui/Touch.h"/>
-   <depend name="include/lime/ui/Window.h"/>
-   <depend name="include/lime/ui/_KeyModifier/KeyModifier_Impl_.h"/>
-  </file>
-  <file name="src/lime/_backend/native/NativeCFFI.cpp" tags="haxe,release">
-   <depend name="include/cpp/Prime.h"/>
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
-  </file>
-  <file name="src/cpp/Prime.cpp" >
-   <depend name="include/cpp/Prime.h"/>
-  </file>
-  <file name="src/lime/app/Module.cpp" tags="haxe,release">
-   <depend name="include/haxe/IMap.h"/>
-   <depend name="include/haxe/ds/IntMap.h"/>
-   <depend name="include/lime/app/Application.h"/>
-   <depend name="include/lime/app/IModule.h"/>
-   <depend name="include/lime/app/Module.h"/>
-   <depend name="include/lime/app/Preloader.h"/>
-   <depend name="include/lime/app/_Event_Float_Float_Int_Void.h"/>
-   <depend name="include/lime/app/_Event_Float_Float_Void.h"/>
+   <depend name="include/lime/app/_Event_Float_Float_lime_ui_MouseButton_Void.h"/>
+   <depend name="include/lime/app/_Event_Float_Float_lime_ui_MouseWheelMode_Void.h"/>
    <depend name="include/lime/app/_Event_Int_Float_Float_Void.h"/>
    <depend name="include/lime/app/_Event_Int_Float_Void.h"/>
    <depend name="include/lime/app/_Event_Int_Int_Void.h"/>
@@ -9729,20 +10117,89 @@
    <depend name="include/lime/app/_Event_lime_ui_Joystick_Void.h"/>
    <depend name="include/lime/app/_Event_lime_ui_KeyCode_lime_ui_KeyModifier_Void.h"/>
    <depend name="include/lime/app/_Event_lime_ui_Touch_Void.h"/>
+   <depend name="include/lime/app/_Event_lime_ui_Window_Void.h"/>
    <depend name="include/lime/graphics/RenderContext.h"/>
-   <depend name="include/lime/graphics/Renderer.h"/>
+   <depend name="include/lime/system/System.h"/>
    <depend name="include/lime/ui/Gamepad.h"/>
    <depend name="include/lime/ui/Joystick.h"/>
+   <depend name="include/lime/ui/MouseWheelMode.h"/>
    <depend name="include/lime/ui/Touch.h"/>
    <depend name="include/lime/ui/Window.h"/>
+   <depend name="include/lime/utils/Preloader.h"/>
+  </file>
+  <file name="src/lime/_internal/backend/native/NativeApplication.cpp" tags="haxe,release">
+   <depend name="include/List.h"/>
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/Timer.h"/>
+   <depend name="include/haxe/ds/IntMap.h"/>
+   <depend name="include/lime/_internal/backend/native/ApplicationEventInfo.h"/>
+   <depend name="include/lime/_internal/backend/native/ClipboardEventInfo.h"/>
+   <depend name="include/lime/_internal/backend/native/DropEventInfo.h"/>
+   <depend name="include/lime/_internal/backend/native/GamepadEventInfo.h"/>
+   <depend name="include/lime/_internal/backend/native/JoystickEventInfo.h"/>
+   <depend name="include/lime/_internal/backend/native/KeyEventInfo.h"/>
+   <depend name="include/lime/_internal/backend/native/MouseEventInfo.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeApplication.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeWindow.h"/>
+   <depend name="include/lime/_internal/backend/native/RenderEventInfo.h"/>
+   <depend name="include/lime/_internal/backend/native/SensorEventInfo.h"/>
+   <depend name="include/lime/_internal/backend/native/TextEventInfo.h"/>
+   <depend name="include/lime/_internal/backend/native/TouchEventInfo.h"/>
+   <depend name="include/lime/_internal/backend/native/WindowEventInfo.h"/>
+   <depend name="include/lime/app/Application.h"/>
+   <depend name="include/lime/app/IModule.h"/>
+   <depend name="include/lime/app/Module.h"/>
+   <depend name="include/lime/app/_Event_Float_Float_Float_Void.h"/>
+   <depend name="include/lime/app/_Event_Float_Float_Int_Void.h"/>
+   <depend name="include/lime/app/_Event_Float_Float_Void.h"/>
+   <depend name="include/lime/app/_Event_Float_Float_lime_ui_MouseButton_Void.h"/>
+   <depend name="include/lime/app/_Event_Float_Float_lime_ui_MouseWheelMode_Void.h"/>
+   <depend name="include/lime/app/_Event_Int_Float_Float_Void.h"/>
+   <depend name="include/lime/app/_Event_Int_Float_Void.h"/>
+   <depend name="include/lime/app/_Event_Int_Int_Void.h"/>
+   <depend name="include/lime/app/_Event_Int_Void.h"/>
+   <depend name="include/lime/app/_Event_Int_lime_ui_JoystickHatPosition_Void.h"/>
+   <depend name="include/lime/app/_Event_String_Int_Int_Void.h"/>
+   <depend name="include/lime/app/_Event_String_Void.h"/>
+   <depend name="include/lime/app/_Event_Void_Void.h"/>
+   <depend name="include/lime/app/_Event_lime_graphics_RenderContext_Void.h"/>
+   <depend name="include/lime/app/_Event_lime_ui_GamepadAxis_Float_Void.h"/>
+   <depend name="include/lime/app/_Event_lime_ui_GamepadButton_Void.h"/>
+   <depend name="include/lime/app/_Event_lime_ui_KeyCode_lime_ui_KeyModifier_Void.h"/>
+   <depend name="include/lime/app/_Event_lime_ui_Touch_Void.h"/>
+   <depend name="include/lime/graphics/RenderContext.h"/>
+   <depend name="include/lime/graphics/opengl/GL.h"/>
+   <depend name="include/lime/media/AudioContext.h"/>
+   <depend name="include/lime/media/AudioManager.h"/>
+   <depend name="include/lime/system/Clipboard.h"/>
+   <depend name="include/lime/system/Sensor.h"/>
+   <depend name="include/lime/system/System.h"/>
+   <depend name="include/lime/ui/Gamepad.h"/>
+   <depend name="include/lime/ui/Joystick.h"/>
+   <depend name="include/lime/ui/MouseWheelMode.h"/>
+   <depend name="include/lime/ui/Touch.h"/>
+   <depend name="include/lime/ui/Window.h"/>
+   <depend name="include/lime/ui/_KeyModifier/KeyModifier_Impl_.h"/>
+  </file>
+  <file name="src/lime/_internal/backend/native/NativeCFFI.cpp" tags="haxe,release">
+   <depend name="include/cpp/Prime.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
+  </file>
+  <file name="src/cpp/Prime.cpp" >
+   <depend name="include/cpp/Prime.h"/>
+  </file>
+  <file name="src/lime/app/Module.cpp" tags="haxe,release">
+   <depend name="include/lime/app/Application.h"/>
+   <depend name="include/lime/app/IModule.h"/>
+   <depend name="include/lime/app/Module.h"/>
+   <depend name="include/lime/app/_Event_Int_Void.h"/>
   </file>
   <file name="src/lime/app/IModule.cpp" >
    <depend name="include/lime/app/Application.h"/>
    <depend name="include/lime/app/IModule.h"/>
    <depend name="include/lime/app/Module.h"/>
-   <depend name="include/lime/app/Preloader.h"/>
-   <depend name="include/lime/graphics/Renderer.h"/>
-   <depend name="include/lime/ui/Window.h"/>
   </file>
   <file name="src/__boot__.cpp" >
    <depend name="include/openfl/display/GraphicsFillType.h"/>
@@ -9753,17 +10210,15 @@
    <depend name="include/openfl/_internal/stage3D/_AGALConverter/RegisterUsage.h"/>
    <depend name="include/openfl/_internal/stage3D/_AGALConverter/ProgramType.h"/>
    <depend name="include/openfl/_internal/renderer/DrawCommandType.h"/>
+   <depend name="include/lime/utils/CompressionAlgorithm.h"/>
+   <depend name="include/lime/ui/MouseWheelMode.h"/>
    <depend name="include/lime/ui/MouseCursor.h"/>
    <depend name="include/lime/system/_ThreadPool/ThreadPoolMessageType.h"/>
    <depend name="include/lime/system/SensorType.h"/>
    <depend name="include/lime/system/Endian.h"/>
-   <depend name="include/lime/media/AudioContext.h"/>
-   <depend name="include/lime/graphics/opengl/GLContextType.h"/>
-   <depend name="include/lime/graphics/format/BMPType.h"/>
-   <depend name="include/lime/graphics/console/Primitive.h"/>
-   <depend name="include/lime/graphics/RendererType.h"/>
-   <depend name="include/lime/graphics/RenderContext.h"/>
+   <depend name="include/lime/graphics/ImageFileFormat.h"/>
    <depend name="include/lime/graphics/ImageChannel.h"/>
+   <depend name="include/lime/_internal/format/BMPType.h"/>
    <depend name="include/haxe/io/Error.h"/>
    <depend name="include/haxe/StackItem.h"/>
    <depend name="include/lime/graphics/ImageType.h"/>
@@ -9860,6 +10315,7 @@
    <depend name="include/openfl/display/_ShaderParameterType/ShaderParameterType_Impl_.h"/>
    <depend name="include/openfl/display/_PixelSnapping/PixelSnapping_Impl_.h"/>
    <depend name="include/openfl/display/OpenGLRenderer.h"/>
+   <depend name="include/openfl/display/MovieClip.h"/>
    <depend name="include/openfl/display/LoaderInfo.h"/>
    <depend name="include/openfl/display/_LineScaleMode/LineScaleMode_Impl_.h"/>
    <depend name="include/openfl/display/_JointStyle/JointStyle_Impl_.h"/>
@@ -9871,6 +10327,9 @@
    <depend name="include/openfl/display/_CapsStyle/CapsStyle_Impl_.h"/>
    <depend name="include/openfl/display/_BlendMode/BlendMode_Impl_.h"/>
    <depend name="include/openfl/_internal/utils/PerlinNoise.h"/>
+   <depend name="include/openfl/_internal/text/_TextLayout/TextScript_Impl_.h"/>
+   <depend name="include/openfl/_internal/text/_TextLayout/TextDirection_Impl_.h"/>
+   <depend name="include/openfl/_internal/text/TextLayout.h"/>
    <depend name="include/openfl/_internal/text/TextEngine.h"/>
    <depend name="include/openfl/_internal/text/HTMLParser.h"/>
    <depend name="include/openfl/_internal/swf/SWFLite.h"/>
@@ -9890,7 +10349,7 @@
    <depend name="include/lime/utils/_UInt8Array/UInt8Array_Impl_.h"/>
    <depend name="include/lime/utils/_UInt32Array/UInt32Array_Impl_.h"/>
    <depend name="include/lime/utils/_UInt16Array/UInt16Array_Impl_.h"/>
-   <depend name="include/lime/utils/_Log/LogLevel_Impl_.h"/>
+   <depend name="include/lime/utils/_LogLevel/LogLevel_Impl_.h"/>
    <depend name="include/lime/utils/Log.h"/>
    <depend name="include/lime/utils/_Int8Array/Int8Array_Impl_.h"/>
    <depend name="include/lime/utils/_Int32Array/Int32Array_Impl_.h"/>
@@ -9907,9 +10366,6 @@
    <depend name="include/lime/ui/_GamepadButton/GamepadButton_Impl_.h"/>
    <depend name="include/lime/ui/_GamepadAxis/GamepadAxis_Impl_.h"/>
    <depend name="include/lime/ui/Gamepad.h"/>
-   <depend name="include/lime/text/unifill/Unicode.h"/>
-   <depend name="include/lime/text/_TextScript/TextScript_Impl_.h"/>
-   <depend name="include/lime/text/_TextDirection/TextDirection_Impl_.h"/>
    <depend name="include/lime/system/System.h"/>
    <depend name="include/lime/system/Sensor.h"/>
    <depend name="include/lime/system/JNI.h"/>
@@ -9918,16 +10374,16 @@
    <depend name="include/lime/net/curl/CURL.h"/>
    <depend name="include/lime/media/openal/ALC.h"/>
    <depend name="include/lime/media/openal/AL.h"/>
-   <depend name="include/lime/math/color/_RGBA/RGBA_Impl_.h"/>
+   <depend name="include/lime/math/_RGBA/RGBA_Impl_.h"/>
    <depend name="include/lime/math/_Matrix4/Matrix4_Impl_.h"/>
    <depend name="include/lime/math/_ColorMatrix/ColorMatrix_Impl_.h"/>
-   <depend name="include/lime/graphics/opengl/_WebGL2Context/WebGL2Context_Impl_.h"/>
    <depend name="include/lime/graphics/opengl/GL.h"/>
    <depend name="include/lime/graphics/cairo/_CairoFTFontFace/CairoFTFontFace_Impl_.h"/>
-   <depend name="include/lime/_backend/native/NativeGLRenderContext.h"/>
-   <depend name="include/lime/_backend/native/NativeAudioSource.h"/>
+   <depend name="include/lime/graphics/_WebGL2RenderContext/WebGL2RenderContext_Impl_.h"/>
+   <depend name="include/lime/_internal/unifill/Unicode.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeAudioSource.h"/>
    <depend name="include/haxe/xml/Parser.h"/>
-   <depend name="include/haxe/io/FPHelper.h"/>
    <depend name="include/haxe/crypto/Base64.h"/>
    <depend name="include/haxe/Unserializer.h"/>
    <depend name="include/haxe/Timer.h"/>
@@ -9960,6 +10416,13 @@
    <depend name="include/flixel/system/debug/stats/_Stats/GraphicMinimizeButton.h"/>
    <depend name="include/flixel/system/debug/log/LogStyle.h"/>
    <depend name="include/flixel/system/debug/log/Log.h"/>
+   <depend name="include/flixel/system/debug/interaction/tools/Transform.h"/>
+   <depend name="include/flixel/system/debug/interaction/tools/GraphicTransformCursorRotate.h"/>
+   <depend name="include/flixel/system/debug/interaction/tools/GraphicTransformCursorScaleXY.h"/>
+   <depend name="include/flixel/system/debug/interaction/tools/GraphicTransformCursorScaleX.h"/>
+   <depend name="include/flixel/system/debug/interaction/tools/GraphicTransformCursorScaleY.h"/>
+   <depend name="include/flixel/system/debug/interaction/tools/GraphicTransformCursorDefault.h"/>
+   <depend name="include/flixel/system/debug/interaction/tools/GraphicTransformTool.h"/>
    <depend name="include/flixel/system/debug/interaction/tools/GraphicCursorCross.h"/>
    <depend name="include/flixel/system/debug/interaction/tools/GraphicMoverTool.h"/>
    <depend name="include/flixel/system/debug/interaction/tools/GraphicEraserTool.h"/>
@@ -10039,20 +10502,45 @@
    <depend name="include/flixel/math/FlxPoint.h"/>
    <depend name="include/Xml.h"/>
    <depend name="include/StringTools.h"/>
+   <depend name="include/RoomState.h"/>
    <depend name="include/flixel/FlxBasic.h"/>
    <depend name="include/openfl/text/Font.h"/>
+   <depend name="include/__ASSET__manifest_default_json.h"/>
+   <depend name="include/__ASSET__manifest_cloudinforoom_json.h"/>
    <depend name="include/__ASSET__flixel_images_logo_default_png.h"/>
    <depend name="include/__ASSET__flixel_images_ui_button_png.h"/>
-   <depend name="include/lime/graphics/Image.h"/>
    <depend name="include/__ASSET__flixel_fonts_monsterrat_ttf.h"/>
    <depend name="include/__ASSET__flixel_fonts_nokiafc22_ttf.h"/>
    <depend name="include/__ASSET__flixel_sounds_flixel_ogg.h"/>
    <depend name="include/__ASSET__flixel_sounds_beep_ogg.h"/>
+   <depend name="include/__ASSET__assets_sounds_step1_wav.h"/>
+   <depend name="include/__ASSET__assets_images_template_png.h"/>
+   <depend name="include/__ASSET__assets_images_shoes_png.h"/>
+   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_roomparts_json.h"/>
+   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_item_statue_png.h"/>
+   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_item_door2_png.h"/>
+   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_item_door1_png.h"/>
+   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_cloudinforoom_map_png.h"/>
+   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_cloudinforoom_png.h"/>
+   <depend name="include/__ASSET__assets_images_pants_png.h"/>
+   <depend name="include/__ASSET__assets_images_overcoat_png.h"/>
+   <depend name="include/__ASSET__assets_images_jeans_png.h"/>
+   <depend name="include/__ASSET__assets_images_jacket_png.h"/>
+   <depend name="include/__ASSET__assets_images_hat2_png.h"/>
+   <depend name="include/__ASSET__assets_images_hat_png.h"/>
+   <depend name="include/__ASSET__assets_images_hair_png.h"/>
+   <depend name="include/__ASSET__assets_images_glasses_png.h"/>
+   <depend name="include/__ASSET__assets_images_face_png.h"/>
+   <depend name="include/__ASSET__assets_images_douli2_png.h"/>
+   <depend name="include/__ASSET__assets_images_douli_png.h"/>
+   <depend name="include/__ASSET__assets_images_body_png.h"/>
+   <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/AssetPaths.h"/>
    <depend name="include/openfl/display/DisplayObject.h"/>
    <depend name="include/ApplicationMain.h"/>
    <depend name="include/lime/app/Application.h"/>
-   <depend name="include/lime/_backend/native/NativeApplication.h"/>
-   <depend name="include/lime/_backend/native/NativeCFFI.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeApplication.h"/>
+   <depend name="include/lime/_internal/backend/native/NativeCFFI.h"/>
   </file>
   <file name="src/__files__.cpp" if='HXCPP_DEBUGGER'>
   </file>
@@ -10111,6 +10599,35 @@
 <file name="src/resources/__res_35.cpp" tags="optim-none" />
 <file name="src/resources/__res_36.cpp" tags="optim-none" />
 <file name="src/resources/__res_37.cpp" tags="optim-none" />
+<file name="src/resources/__res_38.cpp" tags="optim-none" />
+<file name="src/resources/__res_39.cpp" tags="optim-none" />
+<file name="src/resources/__res_40.cpp" tags="optim-none" />
+<file name="src/resources/__res_41.cpp" tags="optim-none" />
+<file name="src/resources/__res_42.cpp" tags="optim-none" />
+<file name="src/resources/__res_43.cpp" tags="optim-none" />
+<file name="src/resources/__res_44.cpp" tags="optim-none" />
+<file name="src/resources/__res_45.cpp" tags="optim-none" />
+<file name="src/resources/__res_46.cpp" tags="optim-none" />
+<file name="src/resources/__res_47.cpp" tags="optim-none" />
+<file name="src/resources/__res_48.cpp" tags="optim-none" />
+<file name="src/resources/__res_49.cpp" tags="optim-none" />
+<file name="src/resources/__res_50.cpp" tags="optim-none" />
+<file name="src/resources/__res_51.cpp" tags="optim-none" />
+<file name="src/resources/__res_52.cpp" tags="optim-none" />
+<file name="src/resources/__res_53.cpp" tags="optim-none" />
+<file name="src/resources/__res_54.cpp" tags="optim-none" />
+<file name="src/resources/__res_55.cpp" tags="optim-none" />
+<file name="src/resources/__res_56.cpp" tags="optim-none" />
+<file name="src/resources/__res_57.cpp" tags="optim-none" />
+<file name="src/resources/__res_58.cpp" tags="optim-none" />
+<file name="src/resources/__res_59.cpp" tags="optim-none" />
+<file name="src/resources/__res_60.cpp" tags="optim-none" />
+<file name="src/resources/__res_61.cpp" tags="optim-none" />
+<file name="src/resources/__res_62.cpp" tags="optim-none" />
+<file name="src/resources/__res_63.cpp" tags="optim-none" />
+<file name="src/resources/__res_64.cpp" tags="optim-none" />
+<file name="src/resources/__res_65.cpp" tags="optim-none" />
+<file name="src/resources/__res_66.cpp" tags="optim-none" />
 </files>
 <files id="__externs__">
 </files>

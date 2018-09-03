@@ -4,9 +4,13 @@ import flixel.FlxState;
 import flixel.FlxG;
 import flixel.input.keyboard.FlxKeyList;
 import flixel.math.FlxPoint;
+import lime.app.Future;
+import openfl.Assets;
+import openfl.utils.AssetLibrary;
+import openfl.utils.AssetType;
+
 import game.Avatar;
 import game.Room;
-import openfl.Assets;
 import sound.SoundManager;
 
 class RoomState extends FlxState
@@ -23,6 +27,7 @@ class RoomState extends FlxState
 	private static var keyDownList:FlxKeyList;
 	private static var audioManager:SoundManager;
 	private static var borderArray:Array<Int> = [0xFF010101, 0x00000000];
+	// private static var progress:Int = 0;
 	
 	override public function create():Void
 	{
@@ -37,13 +42,26 @@ class RoomState extends FlxState
 	private function setupRoom(roomName:String):Void
 	{
 		currentRoom = new Room(roomName);
-
+		Assets.loadLibrary("cloudInfoRoom").onComplete(roomDownloadComplete);
+		
 		add(currentRoom);
 		add(currentRoom.roomEntities);
 		
 		currentRoom.addAvatar(playerAvatar, 150, 250);
 		currentRoom.addItem("item_door1", 95, 220);
 		currentRoom.addItem("item_door2", 95, 220);
+	}
+	
+	private function roomDownloadComplete(completeLib:AssetLibrary):Void
+	{
+		trace(completeLib);
+		Assets.registerLibrary("cloudInfoRoom", completeLib);
+		var assetsList:Array<String> = Assets.list(AssetType.TEXT);
+		
+		for (str in assetsList)
+		{
+			trace(str);
+		}
 	}
 	
 	private function destroyRoom():Void

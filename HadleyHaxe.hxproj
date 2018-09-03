@@ -15,26 +15,21 @@
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
-    <class path="C:\HaxeToolkit\haxe\lib\flixel\4,4,0" />
-    <class path="C:\HaxeToolkit\haxe\lib\openfl\8,0,1\src" />
-    <class path="C:\HaxeToolkit\haxe\lib\lime\6,3,0" />
-    <class path="C:\HaxeToolkit\haxe\lib\thx,color\0,19,1\src" />
-    <class path="C:\HaxeToolkit\haxe\lib\thx,core\0,43,0\src" />
-    <class path="C:\HaxeToolkit\haxe\lib\hxColorToolkit\1,6,1" />
+    <class path="C:\HaxeToolkit\haxe\lib\flixel\4,5,0" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\8,4,1\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\lime\7,0,0\src" />
     <class path="source" />
-    <class path="C:\HaxeToolkit\haxe\lib\openfl\8,0,1\src\externs\core\flash" />
-    <class path="C:\HaxeToolkit\haxe\lib\openfl\8,0,1\src\externs\core\openfl" />
-    <class path="C:\HaxeToolkit\haxe\lib\openfl\8,0,1\src\externs\extras" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\8,4,1\externs\flash" />
     <class path="export\flash\haxe" />
   </classpaths>
   <!-- Build options -->
   <build>
-    <option directives="flixel=4.4.0&#xA;openfl=8.0.1&#xA;lime=6.3.0&#xA;thx.color=0.19.1&#xA;thx_core&#xA;thx.core=0.43.0&#xA;hxColorToolkit=1.6.1&#xA;FLX_RECORD&#xA;tools=6.3.0&#xA;no-compilation&#xA;openfl-flash&#xA;fdb&#xA;web&#xA;display" />
+    <option directives="flixel=4.5.0&#xA;openfl=8.4.1&#xA;lime=7.0.0&#xA;FLX_RECORD&#xA;tools=7.0.0&#xA;no-compilation&#xA;openfl-flash&#xA;fdb&#xA;web&#xA;display" />
     <option flashStrict="False" />
     <option noInlineOnDebug="False" />
     <option mainClass="ApplicationMain" />
     <option enabledebug="False" />
-    <option additional="--macro openfl._internal.utils.ExtraParams.include()&#xA;--macro lime.Lib.extraParams()&#xA;--macro flixel.system.macros.FlxDefines.run()&#xA;-swf-version 11.8&#xA;-debug " />
+    <option additional="--macro openfl._internal.utils.ExtraParams.include()&#xA;--macro lime._internal.macros.DefineMacro.run()&#xA;--macro flixel.system.macros.FlxDefines.run()&#xA;-swf-version 11.8&#xA;-debug " />
   </build>
   <!-- haxelib libraries -->
   <haxelib>

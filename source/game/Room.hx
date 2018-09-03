@@ -1,9 +1,13 @@
 package game;
 
+import flash.display.Bitmap;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.group.FlxSpriteGroup;
 import flixel.util.FlxSort;
+import lime.app.Future;
+import openfl.Assets;
+import openfl.utils.AssetLibrary;
 
 /**
  * ...
@@ -20,6 +24,7 @@ class Room extends FlxSprite
 	
 	public function new(_roomName:String, ?X:Float=0, ?Y:Float=0) 
 	{
+		// This function should get passed a dictionary of items from parsed manifest.
 		super(X, Y);
 		roomName = _roomName;
 		walkMap = new FlxSprite();

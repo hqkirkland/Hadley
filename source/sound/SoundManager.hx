@@ -3,7 +3,6 @@ package sound;
 import flixel.FlxG;
 import flixel.system.FlxSound;
 import flixel.system.FlxSoundGroup;
-import flixel.system.FlxAssets;
 
 /**
  * ...
@@ -19,7 +18,7 @@ class SoundManager
 	
 	private var walkSoundGroup:FlxSoundGroup;
 	
-	public function new() 
+	public function new()
 	{
 		walkSoundGroup = new FlxSoundGroup();
 		

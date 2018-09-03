@@ -6,6 +6,7 @@ import flixel.input.keyboard.FlxKeyList;
 import flixel.math.FlxPoint;
 import game.Avatar;
 import game.Room;
+import openfl.Assets;
 import sound.SoundManager;
 
 class RoomState extends FlxState
@@ -21,6 +22,7 @@ class RoomState extends FlxState
 	
 	private static var keyDownList:FlxKeyList;
 	private static var audioManager:SoundManager;
+	private static var borderArray:Array<Int> = [0xFF010101, 0x00000000];
 	
 	override public function create():Void
 	{
@@ -97,8 +99,8 @@ class RoomState extends FlxState
 				rx = playerAvatar.x + 17;
 				ry = playerAvatar.y + 69;
 				
-				lx = playerAvatar.x + 28;
-				ly = playerAvatar.y + 65;
+				lx = playerAvatar.x + 35;
+				ly = playerAvatar.y + 62;
 			}
 			
 			else if (Southwest)
@@ -149,8 +151,8 @@ class RoomState extends FlxState
 		// 1 is TRUE: Collision.
 		// 0 is FALSE: No Collision.
 		// Probably still have a problem with 0-pixels.
-		var ptR:Float = if (currentRoom.testWalkmap(rx, ry) == 0xFF010101) 1 else 0;
-		var ptL:Float = if (currentRoom.testWalkmap(lx, ly) == 0xFF010101) 1 else 0;
+		var ptR:Float = if (borderArray.indexOf(currentRoom.testWalkmap(rx, ry)) != -1) 1 else 0;
+		var ptL:Float = if (borderArray.indexOf(currentRoom.testWalkmap(rx, ry)) != -1) 1 else 0;
 		
 		return FlxPoint.get(ptR, ptL);
 	}
@@ -245,16 +247,11 @@ class RoomState extends FlxState
 			if (playerNextMovement.x == 1)
 			{
 				playerAvatar.velocityY = 0;
-				// Test this line.
-				// playerAvatar.velocity.set(0, playerAvatar.velocityY);
-				// playerAvatar.y -= 1;
 			}
 			
 			if (playerNextMovement.y == 1)
 			{
 				playerAvatar.velocityY = 0;
-				// playerAvatar.velocity.set(0, playerAvatar.velocityY);
-				// playerAvatar.y += 1;
 			}
 		}
 		
@@ -263,15 +260,11 @@ class RoomState extends FlxState
 			if (playerNextMovement.x == 1)
 			{
 				playerAvatar.velocityY = 0;
-				// playerAvatar.velocity.set(0, playerAvatar.velocityY);
-				// playerAvatar.y += 1;
 			}
 			
 			if (playerNextMovement.y == 1)
 			{
 				playerAvatar.velocityY = 0;
-				// playerAvatar.velocity.set(0, playerAvatar.velocityY);
-				// playerAvatar.y -= 1;
 			}
 		}
 	}

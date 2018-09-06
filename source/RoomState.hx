@@ -1,13 +1,13 @@
 package;
 
+import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.FlxG;
 import flixel.input.keyboard.FlxKeyList;
 import flixel.math.FlxPoint;
-import lime.app.Future;
 import openfl.Assets;
 import openfl.utils.AssetLibrary;
-import openfl.utils.AssetType;
+// import openfl.utils.AssetType;
 
 import game.Avatar;
 import game.Room;
@@ -27,47 +27,53 @@ class RoomState extends FlxState
 	private static var keyDownList:FlxKeyList;
 	private static var audioManager:SoundManager;
 	private static var borderArray:Array<Int> = [0xFF010101, 0x00000000];
-	// private static var progress:Int = 0;
+	private static var progress:Int = 0;
 	
 	override public function create():Void
 	{
 		super.create();
-		// FlxG.cawmera.follow(playerAvatar, FlxCameraFollowStyle.NO_DEAD_ZONE)
+		
 		playerAvatar = new Avatar("Monk");
 		audioManager = new SoundManager();
+
+		#if html5
+		FlxG.debugger.visible = true;
+		FlxG.log.redirectTraces = true;
+		#end
+
+		joinRoom("cloudInfoRoom");
+	}
+
+	private function joinRoom(roomName:String)
+	{
+		if (currentRoom != null)
+		{
+			destroyRoom();
+		}
 		
-		setupRoom("cloudInfoRoom");
+		currentRoom = new Room(roomName);
+		// TODO: onProgress() handler
+		Assets.loadLibrary(roomName).onComplete(loadRoom);
 	}
 	
-	private function setupRoom(roomName:String):Void
+	private function loadRoom(completeLib:AssetLibrary):Void
 	{
-		currentRoom = new Room(roomName);
-		Assets.loadLibrary("cloudInfoRoom").onComplete(roomDownloadComplete);
+		Assets.registerLibrary(currentRoom.roomName, completeLib);
+
+		var roomStructure:String = Assets.getText(currentRoom.roomName + ":assets/" + currentRoom.roomName + "/RoomObjects.json");
+		currentRoom.generateRoom(roomStructure);
+		
+		currentRoom.addAvatar(playerAvatar, 250, 250);
 		
 		add(currentRoom);
 		add(currentRoom.roomEntities);
-		
-		currentRoom.addAvatar(playerAvatar, 150, 250);
-		currentRoom.addItem("item_door1", 95, 220);
-		currentRoom.addItem("item_door2", 95, 220);
-	}
-	
-	private function roomDownloadComplete(completeLib:AssetLibrary):Void
-	{
-		trace(completeLib);
-		Assets.registerLibrary("cloudInfoRoom", completeLib);
-		var assetsList:Array<String> = Assets.list(AssetType.TEXT);
-		
-		for (str in assetsList)
-		{
-			trace(str);
-		}
 	}
 	
 	private function destroyRoom():Void
 	{
 		remove(currentRoom.roomEntities);
 		remove(currentRoom);
+		Assets.unloadLibrary(currentRoom.roomName);
 	}
 	
 	private function testNextPoints():FlxPoint
@@ -165,7 +171,7 @@ class RoomState extends FlxState
 		}
 
 		audioManager.currentSurface = currentRoom.testWalkmap(rx, ry);
-		// trace(rx + ", " + ly);
+
 		// 1 is TRUE: Collision.
 		// 0 is FALSE: No Collision.
 		// Probably still have a problem with 0-pixels.
@@ -287,8 +293,17 @@ class RoomState extends FlxState
 		}
 	}
 	
+	// Private function enter door:
+	// this.active = false;
+	// FlxG.switchTo(LoadState)
+	
 	override public function update(elapsed:Float):Void
 	{
+		if (!currentRoom.roomReady)
+		{
+			return;
+		}
+
 		// TODO: If in room//if in context..
 		playerAvatar.keysTriggered.North = FlxG.keys.pressed.UP && !FlxG.keys.pressed.DOWN;
 		playerAvatar.keysTriggered.South = FlxG.keys.pressed.DOWN && !FlxG.keys.pressed.UP;
@@ -305,6 +320,7 @@ class RoomState extends FlxState
 		smoothMovement();
 		audioManager.playWalkSound(playerAvatar.keysTriggered.Run);
 		
+		// Should this call be made in Room's update loop instead?
 		currentRoom.sortGraphics();
 		
 		super.update(elapsed);

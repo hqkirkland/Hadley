@@ -109,25 +109,25 @@ class Avatar extends FlxSprite
 	{
 		this.frames = FlxTileFrames.fromGraphic(FlxGraphic.fromBitmapData(avatarSheet.bitmapData), frameSizePoint);
 		
-		animation.add("StandUp", [0], 9, false, false);
-		animation.add("StandUpRight", [1], 9, false, false);
-		animation.add("StandRight", [2], 9, false, false);
-		animation.add("StandDownRight", [3], 9, false, false);
-		animation.add("StandDown", [4], 9, false, false);
+		animation.add("StandUp", [0], 0, false, false);
+		animation.add("StandUpRight", [1], 0, false, false);
+		animation.add("StandRight", [2], 0, false, false);
+		animation.add("StandDownRight", [3], 0, false, false);
+		animation.add("StandDown", [4], 0, false, false);
 		
-		animation.add("StandUpLeft", [1], 9, false, true);
-		animation.add("StandLeft", [2], 9, false, true);
-		animation.add("StandDownLeft", [3], 9, false, true);
+		animation.add("StandUpLeft", [1], 0, false, true);
+		animation.add("StandLeft", [2], 0, false, true);
+		animation.add("StandDownLeft", [3], 0, false, true);
 		
-		animation.add("HoldUp", [37], 9, false, false);
-		animation.add("HoldUpRight", [38], 9, false, false);
-		animation.add("HoldRight", [39], 9, false, false);
-		animation.add("HoldDownRight", [40], 9, false, false);
-		animation.add("HoldDown", [41], 9, false, false);
+		animation.add("HoldUp", [37], 0, false, false);
+		animation.add("HoldUpRight", [38], 0, false, false);
+		animation.add("HoldRight", [39], 0, false, false);
+		animation.add("HoldDownRight", [40], 0, false, false);
+		animation.add("HoldDown", [41], 0, false, false);
 		
-		animation.add("HoldUpLeft", [38], 9, false, true);
-		animation.add("HoldLeft", [39], 9, false, true);
-		animation.add("HoldDownLeft", [40], 9, false, true);
+		animation.add("HoldUpLeft", [38], 0, false, true);
+		animation.add("HoldLeft", [39], 0, false, true);
+		animation.add("HoldDownLeft", [40], 0, false, true);
 		
 		animation.add("WalkUp", [5, 6, 7, 8, 9, 10], 9, true, false);
 		animation.add("WalkDown", [29, 30, 31, 32, 33, 34], 9, true, false);
@@ -140,10 +140,10 @@ class Avatar extends FlxSprite
 		animation.add("WalkLeft", [17, 18, 19, 20, 21, 22], 9, true, true);
 		animation.add("WalkDownLeft", [23, 24, 25, 26, 27, 28], 9, true, true);
 		
-		animation.add("SitDownLeft", [35], 9, false, true);
-		animation.add("SitUpLeft", [36], 9, false, true);
-		animation.add("SitDownRight", [35], 9, false, false);
-		animation.add("SitUpRight", [36], 9, false, false);
+		animation.add("SitDownLeft", [35], 0, false, true);
+		animation.add("SitUpLeft", [36], 0, false, true);
+		animation.add("SitDownRight", [35], 0, false, false);
+		animation.add("SitUpRight", [36], 0, false, false);
 	}
 	
 	private function buildAnimationString():String

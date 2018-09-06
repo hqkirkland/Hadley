@@ -29,6 +29,7 @@
    <depend name="include/sys/io/FileOutput.h"/>
   </file>
   <file name="src/sys/io/FileInput.cpp" >
+   <depend name="include/haxe/io/Bytes.h"/>
    <depend name="include/haxe/io/Eof.h"/>
    <depend name="include/haxe/io/Error.h"/>
    <depend name="include/haxe/io/Input.h"/>
@@ -1285,6 +1286,10 @@
    <depend name="include/Type.h"/>
    <depend name="include/haxe/IMap.h"/>
    <depend name="include/haxe/ds/IntMap.h"/>
+   <depend name="include/haxe/ds/StringMap.h"/>
+   <depend name="include/hscript/Expr.h"/>
+   <depend name="include/hscript/Interp.h"/>
+   <depend name="include/hscript/Parser.h"/>
    <depend name="include/lime/app/IModule.h"/>
    <depend name="include/lime/utils/Log.h"/>
    <depend name="include/openfl/_internal/swf/FilterType.h"/>
@@ -4714,6 +4719,59 @@
   <file name="src/lime/_internal/backend/native/ApplicationEventInfo.cpp" >
    <depend name="include/lime/_internal/backend/native/ApplicationEventInfo.h"/>
   </file>
+  <file name="src/hscript/Parser.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/Type.h"/>
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/ds/GenericCell_hscript_Token.h"/>
+   <depend name="include/haxe/ds/GenericStack_hscript_Token.h"/>
+   <depend name="include/haxe/ds/StringMap.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/haxe/io/BytesInput.h"/>
+   <depend name="include/haxe/io/BytesOutput.h"/>
+   <depend name="include/haxe/io/Input.h"/>
+   <depend name="include/haxe/io/Output.h"/>
+   <depend name="include/haxe/io/StringInput.h"/>
+   <depend name="include/hscript/CType.h"/>
+   <depend name="include/hscript/Const.h"/>
+   <depend name="include/hscript/Error.h"/>
+   <depend name="include/hscript/Expr.h"/>
+   <depend name="include/hscript/FieldAccess.h"/>
+   <depend name="include/hscript/FieldKind.h"/>
+   <depend name="include/hscript/ModuleDecl.h"/>
+   <depend name="include/hscript/Parser.h"/>
+   <depend name="include/hscript/Token.h"/>
+  </file>
+  <file name="src/hscript/Token.cpp" >
+   <depend name="include/hscript/Const.h"/>
+   <depend name="include/hscript/Token.h"/>
+  </file>
+  <file name="src/hscript/_Interp/Stop.cpp" >
+   <depend name="include/hscript/_Interp/Stop.h"/>
+  </file>
+  <file name="src/hscript/FieldKind.cpp" >
+   <depend name="include/hscript/FieldKind.h"/>
+  </file>
+  <file name="src/hscript/FieldAccess.cpp" >
+   <depend name="include/hscript/FieldAccess.h"/>
+  </file>
+  <file name="src/hscript/ModuleDecl.cpp" >
+   <depend name="include/hscript/ModuleDecl.h"/>
+  </file>
+  <file name="src/hscript/Error.cpp" >
+   <depend name="include/hscript/Error.h"/>
+  </file>
+  <file name="src/hscript/CType.cpp" >
+   <depend name="include/hscript/CType.h"/>
+  </file>
+  <file name="src/hscript/Expr.cpp" >
+   <depend name="include/hscript/CType.h"/>
+   <depend name="include/hscript/Const.h"/>
+   <depend name="include/hscript/Expr.h"/>
+  </file>
+  <file name="src/hscript/Const.cpp" >
+   <depend name="include/hscript/Const.h"/>
+  </file>
   <file name="src/haxe/xml/Parser.cpp" >
    <depend name="include/Std.h"/>
    <depend name="include/StringBuf.h"/>
@@ -4758,6 +4816,12 @@
    <depend name="include/Xml.h"/>
    <depend name="include/haxe/xml/_Fast/NodeAccess.h"/>
   </file>
+  <file name="src/haxe/io/StringInput.cpp" >
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/haxe/io/BytesInput.h"/>
+   <depend name="include/haxe/io/Input.h"/>
+   <depend name="include/haxe/io/StringInput.h"/>
+  </file>
   <file name="src/haxe/io/Path.cpp" >
    <depend name="include/EReg.h"/>
    <depend name="include/StringBuf.h"/>
@@ -4773,15 +4837,30 @@
   <file name="src/haxe/io/Eof.cpp" >
    <depend name="include/haxe/io/Eof.h"/>
   </file>
+  <file name="src/haxe/io/BytesOutput.cpp" >
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/haxe/io/BytesBuffer.h"/>
+   <depend name="include/haxe/io/BytesOutput.h"/>
+   <depend name="include/haxe/io/Error.h"/>
+   <depend name="include/haxe/io/Output.h"/>
+  </file>
   <file name="src/haxe/io/Output.cpp" >
    <depend name="include/haxe/io/Bytes.h"/>
    <depend name="include/haxe/io/Error.h"/>
    <depend name="include/haxe/io/Output.h"/>
   </file>
+  <file name="src/haxe/io/BytesInput.cpp" >
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/haxe/io/BytesInput.h"/>
+   <depend name="include/haxe/io/Eof.h"/>
+   <depend name="include/haxe/io/Error.h"/>
+   <depend name="include/haxe/io/Input.h"/>
+  </file>
   <file name="src/haxe/io/Input.cpp" >
    <depend name="include/haxe/io/Bytes.h"/>
    <depend name="include/haxe/io/BytesBuffer.h"/>
    <depend name="include/haxe/io/Eof.h"/>
+   <depend name="include/haxe/io/Error.h"/>
    <depend name="include/haxe/io/Input.h"/>
   </file>
   <file name="src/haxe/io/BytesBuffer.cpp" >
@@ -4807,6 +4886,11 @@
    <depend name="include/StringBuf.h"/>
    <depend name="include/haxe/format/JsonParser.h"/>
   </file>
+  <file name="src/haxe/ds/_GenericStack/GenericStackIterator_hscript_Token.cpp" >
+   <depend name="include/haxe/ds/GenericCell_hscript_Token.h"/>
+   <depend name="include/haxe/ds/_GenericStack/GenericStackIterator_hscript_Token.h"/>
+   <depend name="include/hscript/Token.h"/>
+  </file>
   <file name="src/haxe/ds/StringMap.cpp" >
    <depend name="include/haxe/IMap.h"/>
    <depend name="include/haxe/ds/StringMap.h"/>
@@ -4814,6 +4898,16 @@
   <file name="src/haxe/ds/IntMap.cpp" >
    <depend name="include/haxe/IMap.h"/>
    <depend name="include/haxe/ds/IntMap.h"/>
+  </file>
+  <file name="src/haxe/ds/GenericStack_hscript_Token.cpp" >
+   <depend name="include/haxe/ds/GenericCell_hscript_Token.h"/>
+   <depend name="include/haxe/ds/GenericStack_hscript_Token.h"/>
+   <depend name="include/haxe/ds/_GenericStack/GenericStackIterator_hscript_Token.h"/>
+   <depend name="include/hscript/Token.h"/>
+  </file>
+  <file name="src/haxe/ds/GenericCell_hscript_Token.cpp" >
+   <depend name="include/haxe/ds/GenericCell_hscript_Token.h"/>
+   <depend name="include/hscript/Token.h"/>
   </file>
   <file name="src/haxe/ds/EnumValueMap.cpp" >
    <depend name="include/Reflect.h"/>
@@ -4910,12 +5004,20 @@
    <depend name="include/flixel/FlxBasic.h"/>
    <depend name="include/flixel/FlxObject.h"/>
    <depend name="include/flixel/FlxSprite.h"/>
+   <depend name="include/flixel/animation/FlxAnimationController.h"/>
+   <depend name="include/flixel/graphics/FlxGraphic.h"/>
+   <depend name="include/flixel/graphics/frames/FlxFramesCollection.h"/>
+   <depend name="include/flixel/graphics/frames/FlxTileFrames.h"/>
    <depend name="include/flixel/group/FlxTypedGroup.h"/>
    <depend name="include/flixel/group/FlxTypedSpriteGroup.h"/>
+   <depend name="include/flixel/math/FlxPoint.h"/>
+   <depend name="include/flixel/math/FlxRect.h"/>
    <depend name="include/flixel/util/IFlxDestroyable.h"/>
+   <depend name="include/flixel/util/IFlxPooled.h"/>
    <depend name="include/game/Avatar.h"/>
    <depend name="include/game/GraphicsSheet.h"/>
    <depend name="include/game/Room.h"/>
+   <depend name="include/haxe/format/JsonParser.h"/>
    <depend name="include/openfl/display/Bitmap.h"/>
    <depend name="include/openfl/display/BitmapData.h"/>
    <depend name="include/openfl/display/DisplayObject.h"/>
@@ -6110,6 +6212,7 @@
   </file>
   <file name="src/flixel/system/debug/watch/WatchEntryData.cpp" >
    <depend name="include/flixel/system/debug/watch/WatchEntryData.h"/>
+   <depend name="include/hscript/Expr.h"/>
   </file>
   <file name="src/flixel/system/debug/watch/WatchEntry.cpp" >
    <depend name="include/Reflect.h"/>
@@ -6121,6 +6224,7 @@
    <depend name="include/flixel/system/FlxAssets.h"/>
    <depend name="include/flixel/system/debug/DebuggerUtil.h"/>
    <depend name="include/flixel/system/debug/GraphicCloseButton.h"/>
+   <depend name="include/flixel/system/debug/console/ConsoleUtil.h"/>
    <depend name="include/flixel/system/debug/watch/EditableTextField.h"/>
    <depend name="include/flixel/system/debug/watch/WatchEntry.h"/>
    <depend name="include/flixel/system/debug/watch/WatchEntryData.h"/>
@@ -6129,6 +6233,7 @@
    <depend name="include/flixel/util/FlxDestroyUtil.h"/>
    <depend name="include/flixel/util/FlxStringUtil.h"/>
    <depend name="include/flixel/util/IFlxDestroyable.h"/>
+   <depend name="include/hscript/Expr.h"/>
    <depend name="include/openfl/display/BitmapData.h"/>
    <depend name="include/openfl/display/DisplayObject.h"/>
    <depend name="include/openfl/display/DisplayObjectContainer.h"/>
@@ -6217,6 +6322,7 @@
    <depend name="include/flixel/util/IFlxSignal.h"/>
    <depend name="include/flixel/util/_FlxSignal/FlxBaseSignal.h"/>
    <depend name="include/flixel/util/_FlxSignal/FlxSignal0.h"/>
+   <depend name="include/hscript/Expr.h"/>
    <depend name="include/openfl/display/BitmapData.h"/>
    <depend name="include/openfl/display/DisplayObject.h"/>
    <depend name="include/openfl/display/DisplayObjectContainer.h"/>
@@ -6773,6 +6879,33 @@
    <depend name="include/openfl/geom/Matrix.h"/>
    <depend name="include/openfl/geom/Rectangle.h"/>
   </file>
+  <file name="src/flixel/system/debug/console/_ConsoleUtil/Interp.cpp" >
+   <depend name="include/Reflect.h"/>
+   <depend name="include/flixel/system/debug/console/_ConsoleUtil/Interp.h"/>
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/ds/StringMap.h"/>
+   <depend name="include/hscript/Error.h"/>
+   <depend name="include/hscript/Interp.h"/>
+  </file>
+  <file name="src/hscript/Interp.cpp" >
+   <depend name="include/IntIterator.h"/>
+   <depend name="include/Reflect.h"/>
+   <depend name="include/Std.h"/>
+   <depend name="include/Type.h"/>
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/Log.h"/>
+   <depend name="include/haxe/ds/BalancedTree.h"/>
+   <depend name="include/haxe/ds/EnumValueMap.h"/>
+   <depend name="include/haxe/ds/IntMap.h"/>
+   <depend name="include/haxe/ds/ObjectMap.h"/>
+   <depend name="include/haxe/ds/StringMap.h"/>
+   <depend name="include/hscript/CType.h"/>
+   <depend name="include/hscript/Const.h"/>
+   <depend name="include/hscript/Error.h"/>
+   <depend name="include/hscript/Expr.h"/>
+   <depend name="include/hscript/Interp.h"/>
+   <depend name="include/hscript/_Interp/Stop.h"/>
+  </file>
   <file name="src/flixel/system/debug/console/ConsoleUtil.cpp" >
    <depend name="include/Reflect.h"/>
    <depend name="include/Std.h"/>
@@ -6780,9 +6913,15 @@
    <depend name="include/Type.h"/>
    <depend name="include/flixel/FlxG.h"/>
    <depend name="include/flixel/system/debug/console/ConsoleUtil.h"/>
+   <depend name="include/flixel/system/debug/console/_ConsoleUtil/Interp.h"/>
    <depend name="include/flixel/system/debug/log/LogStyle.h"/>
    <depend name="include/flixel/system/frontEnds/LogFrontEnd.h"/>
    <depend name="include/flixel/util/FlxStringUtil.h"/>
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/ds/StringMap.h"/>
+   <depend name="include/hscript/Expr.h"/>
+   <depend name="include/hscript/Interp.h"/>
+   <depend name="include/hscript/Parser.h"/>
   </file>
   <file name="src/flixel/system/debug/console/ConsoleHistory.cpp" >
    <depend name="include/flixel/FlxG.h"/>
@@ -6838,6 +6977,8 @@
    <depend name="include/openfl/events/IEventDispatcher.h"/>
   </file>
   <file name="src/flixel/system/debug/console/Console.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/StringTools.h"/>
    <depend name="include/flixel/FlxBasic.h"/>
    <depend name="include/flixel/FlxG.h"/>
    <depend name="include/flixel/FlxGame.h"/>
@@ -6855,7 +6996,11 @@
    <depend name="include/flixel/system/debug/console/Console.h"/>
    <depend name="include/flixel/system/debug/console/ConsoleCommands.h"/>
    <depend name="include/flixel/system/debug/console/ConsoleHistory.h"/>
+   <depend name="include/flixel/system/debug/console/ConsoleUtil.h"/>
+   <depend name="include/flixel/system/debug/log/LogStyle.h"/>
    <depend name="include/flixel/system/frontEnds/ConsoleFrontEnd.h"/>
+   <depend name="include/flixel/system/frontEnds/DebuggerFrontEnd.h"/>
+   <depend name="include/flixel/system/frontEnds/LogFrontEnd.h"/>
    <depend name="include/flixel/system/frontEnds/VCRFrontEnd.h"/>
    <depend name="include/flixel/util/FlxStringUtil.h"/>
    <depend name="include/flixel/util/IFlxDestroyable.h"/>
@@ -6872,8 +7017,10 @@
    <depend name="include/openfl/display/MovieClip.h"/>
    <depend name="include/openfl/display/Sprite.h"/>
    <depend name="include/openfl/display/Stage.h"/>
+   <depend name="include/openfl/events/Event.h"/>
    <depend name="include/openfl/events/EventDispatcher.h"/>
    <depend name="include/openfl/events/IEventDispatcher.h"/>
+   <depend name="include/openfl/events/KeyboardEvent.h"/>
    <depend name="include/openfl/geom/Rectangle.h"/>
    <depend name="include/openfl/text/TextField.h"/>
    <depend name="include/openfl/text/TextFormat.h"/>
@@ -6937,11 +7084,14 @@
    <depend name="include/flixel/system/debug/Window.h"/>
    <depend name="include/flixel/system/debug/completion/CompletionHandler.h"/>
    <depend name="include/flixel/system/debug/completion/CompletionList.h"/>
+   <depend name="include/flixel/system/debug/console/ConsoleUtil.h"/>
+   <depend name="include/flixel/system/debug/console/_ConsoleUtil/Interp.h"/>
    <depend name="include/flixel/system/debug/watch/Watch.h"/>
    <depend name="include/flixel/system/debug/watch/WatchEntryData.h"/>
    <depend name="include/flixel/system/frontEnds/WatchFrontEnd.h"/>
    <depend name="include/flixel/util/FlxArrayUtil.h"/>
    <depend name="include/flixel/util/FlxStringUtil.h"/>
+   <depend name="include/hscript/Interp.h"/>
    <depend name="include/lime/text/_UTF8String/UTF8String_Impl_.h"/>
    <depend name="include/openfl/display/DisplayObject.h"/>
    <depend name="include/openfl/display/DisplayObjectContainer.h"/>
@@ -9022,9 +9172,11 @@
    <depend name="include/flixel/FlxGame.h"/>
    <depend name="include/flixel/system/debug/FlxDebugger.h"/>
    <depend name="include/flixel/system/debug/Window.h"/>
+   <depend name="include/flixel/system/debug/console/ConsoleUtil.h"/>
    <depend name="include/flixel/system/debug/watch/Watch.h"/>
    <depend name="include/flixel/system/debug/watch/WatchEntryData.h"/>
    <depend name="include/flixel/system/frontEnds/WatchFrontEnd.h"/>
+   <depend name="include/hscript/Expr.h"/>
    <depend name="include/openfl/display/DisplayObject.h"/>
    <depend name="include/openfl/display/DisplayObjectContainer.h"/>
    <depend name="include/openfl/display/IBitmapDrawable.h"/>
@@ -9460,7 +9612,6 @@
    <depend name="include/flixel/util/IFlxPooled.h"/>
    <depend name="include/game/Avatar.h"/>
    <depend name="include/game/Room.h"/>
-   <depend name="include/haxe/Log.h"/>
    <depend name="include/lime/app/Future.h"/>
    <depend name="include/lime/utils/AssetLibrary.h"/>
    <depend name="include/openfl/utils/AssetLibrary.h"/>
@@ -9615,6 +9766,11 @@
    <depend name="include/haxe/Resource.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
   </file>
+  <file name="src/haxe/io/Bytes.cpp" tags="haxe,release">
+   <depend name="include/StringBuf.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/haxe/io/Error.h"/>
+  </file>
   <file name="src/__ASSET__assets_images_template_png.cpp" >
    <depend name="include/__ASSET__assets_images_template_png.h"/>
    <depend name="include/haxe/Resource.h"/>
@@ -9631,50 +9787,40 @@
    <depend name="include/lime/graphics/ImageBuffer.h"/>
    <depend name="include/lime/graphics/ImageType.h"/>
   </file>
-  <file name="src/__ASSET__assets_images_rooms_cloudinforoom_roomparts_json.cpp" >
-   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_roomparts_json.h"/>
-   <depend name="include/haxe/Resource.h"/>
-   <depend name="include/haxe/io/Bytes.h"/>
-  </file>
-  <file name="src/haxe/io/Bytes.cpp" tags="haxe,release">
-   <depend name="include/StringBuf.h"/>
-   <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/haxe/io/Error.h"/>
-  </file>
-  <file name="src/__ASSET__assets_images_rooms_cloudinforoom_item_statue_png.cpp" >
-   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_item_statue_png.h"/>
+  <file name="src/__ASSET__assets_images_rooms_cloudinforoom_item_statue_a_png.cpp" >
+   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_item_statue_a_png.h"/>
    <depend name="include/haxe/Resource.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
    <depend name="include/lime/graphics/Image.h"/>
    <depend name="include/lime/graphics/ImageBuffer.h"/>
    <depend name="include/lime/graphics/ImageType.h"/>
   </file>
-  <file name="src/__ASSET__assets_images_rooms_cloudinforoom_item_door2_png.cpp" >
-   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_item_door2_png.h"/>
+  <file name="src/__ASSET__assets_images_rooms_cloudinforoom_item_door2_a_png.cpp" >
+   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_item_door2_a_png.h"/>
    <depend name="include/haxe/Resource.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
    <depend name="include/lime/graphics/Image.h"/>
    <depend name="include/lime/graphics/ImageBuffer.h"/>
    <depend name="include/lime/graphics/ImageType.h"/>
   </file>
-  <file name="src/__ASSET__assets_images_rooms_cloudinforoom_item_door1_png.cpp" >
-   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_item_door1_png.h"/>
+  <file name="src/__ASSET__assets_images_rooms_cloudinforoom_item_door1_a_png.cpp" >
+   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_item_door1_a_png.h"/>
    <depend name="include/haxe/Resource.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
    <depend name="include/lime/graphics/Image.h"/>
    <depend name="include/lime/graphics/ImageBuffer.h"/>
    <depend name="include/lime/graphics/ImageType.h"/>
   </file>
-  <file name="src/__ASSET__assets_images_rooms_cloudinforoom_cloudinforoom_map_png.cpp" >
-   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_cloudinforoom_map_png.h"/>
+  <file name="src/__ASSET__assets_images_rooms_cloudinforoom_cloudinforoom_map_a_png.cpp" >
+   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_cloudinforoom_map_a_png.h"/>
    <depend name="include/haxe/Resource.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
    <depend name="include/lime/graphics/Image.h"/>
    <depend name="include/lime/graphics/ImageBuffer.h"/>
    <depend name="include/lime/graphics/ImageType.h"/>
   </file>
-  <file name="src/__ASSET__assets_images_rooms_cloudinforoom_cloudinforoom_png.cpp" >
-   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_cloudinforoom_png.h"/>
+  <file name="src/__ASSET__assets_images_rooms_cloudinforoom_cloudinforoom_a_png.cpp" >
+   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_cloudinforoom_a_png.h"/>
    <depend name="include/haxe/Resource.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
    <depend name="include/lime/graphics/Image.h"/>
@@ -9831,6 +9977,9 @@
   </file>
   <file name="src/Lambda.cpp" >
    <depend name="include/Lambda.h"/>
+  </file>
+  <file name="src/IntIterator.cpp" >
+   <depend name="include/IntIterator.h"/>
   </file>
   <file name="src/EReg.cpp" >
    <depend name="include/EReg.h"/>
@@ -10219,6 +10368,15 @@
    <depend name="include/lime/graphics/ImageFileFormat.h"/>
    <depend name="include/lime/graphics/ImageChannel.h"/>
    <depend name="include/lime/_internal/format/BMPType.h"/>
+   <depend name="include/hscript/Token.h"/>
+   <depend name="include/hscript/_Interp/Stop.h"/>
+   <depend name="include/hscript/FieldKind.h"/>
+   <depend name="include/hscript/FieldAccess.h"/>
+   <depend name="include/hscript/ModuleDecl.h"/>
+   <depend name="include/hscript/Error.h"/>
+   <depend name="include/hscript/CType.h"/>
+   <depend name="include/hscript/Expr.h"/>
+   <depend name="include/hscript/Const.h"/>
    <depend name="include/haxe/io/Error.h"/>
    <depend name="include/haxe/StackItem.h"/>
    <depend name="include/lime/graphics/ImageType.h"/>
@@ -10383,6 +10541,7 @@
    <depend name="include/lime/_internal/unifill/Unicode.h"/>
    <depend name="include/lime/_internal/backend/native/NativeOpenGLRenderContext.h"/>
    <depend name="include/lime/_internal/backend/native/NativeAudioSource.h"/>
+   <depend name="include/hscript/Parser.h"/>
    <depend name="include/haxe/xml/Parser.h"/>
    <depend name="include/haxe/crypto/Base64.h"/>
    <depend name="include/haxe/Unserializer.h"/>
@@ -10516,12 +10675,11 @@
    <depend name="include/__ASSET__assets_sounds_step1_wav.h"/>
    <depend name="include/__ASSET__assets_images_template_png.h"/>
    <depend name="include/__ASSET__assets_images_shoes_png.h"/>
-   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_roomparts_json.h"/>
-   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_item_statue_png.h"/>
-   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_item_door2_png.h"/>
-   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_item_door1_png.h"/>
-   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_cloudinforoom_map_png.h"/>
-   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_cloudinforoom_png.h"/>
+   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_item_statue_a_png.h"/>
+   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_item_door2_a_png.h"/>
+   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_item_door1_a_png.h"/>
+   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_cloudinforoom_map_a_png.h"/>
+   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_cloudinforoom_a_png.h"/>
    <depend name="include/__ASSET__assets_images_pants_png.h"/>
    <depend name="include/__ASSET__assets_images_overcoat_png.h"/>
    <depend name="include/__ASSET__assets_images_jeans_png.h"/>
@@ -10627,7 +10785,6 @@
 <file name="src/resources/__res_63.cpp" tags="optim-none" />
 <file name="src/resources/__res_64.cpp" tags="optim-none" />
 <file name="src/resources/__res_65.cpp" tags="optim-none" />
-<file name="src/resources/__res_66.cpp" tags="optim-none" />
 </files>
 <files id="__externs__">
 </files>

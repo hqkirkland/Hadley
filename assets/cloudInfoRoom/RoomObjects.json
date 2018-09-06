@@ -1,15 +1,24 @@
 {
-	"room": 
-	{
-		"channelId": "cloudInfoRoom",
-		"name": "Info Room",
-		"objects":
+	"name": "Info Room",
+	"parts":
+	[
 		{
-			"parts":
-			[
-				{"image": "item_door1", "layer": "1", "x": "95", "y": "220"},
-				{"image": "item_door1", "layer": "2", "x": "95", "y": "220"},
-			]
+			"asset": "item_door1", 
+			"x": 95, 
+			"y": 220,
+			"frameCount": 1
+		},
+		{
+			"asset": "item_door2", 
+			"x": 95, 
+			"y": 220,
+			"frameCount": 1
+		},
+		{
+			"asset": "item_statue_animated", 
+			"x": 250, 
+			"y": 220,
+			"frameCount": 3
 		}
-	}
+	]
 }

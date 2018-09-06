@@ -32,8 +32,12 @@
 	
 	<set name="BUILD_DIR" value="export" />
 	<classpath name="source" />
+	
+	<assets unless="flash" path="assets/cloudInfoRoom" embed="false" library="cloudInfoRoom" />
+	<assets if="flash" path="assets/cloudInfoRoom" embed="true" library="cloudInfoRoom" preload="true" />
 	<library name="cloudInfoRoom" type="pak" />
-	<assets path="assets/cloudInfoRoom" library="cloudInfoRoom" />
+
+	
 	<assets path="assets/images" embed="true" />
 	<assets path="assets/sounds" embed="true" />
 	<!-- _______________________________ Libraries ______________________________ -->

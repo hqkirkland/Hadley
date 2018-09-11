@@ -1,15 +1,17 @@
 package;
 
+import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.FlxG;
+import flixel.FlxCamera;
 import flixel.input.keyboard.FlxKeyList;
 import flixel.math.FlxPoint;
 import openfl.Assets;
 import openfl.utils.AssetLibrary;
-// import openfl.utils.AssetType;
 
 import game.Avatar;
+import game.Portal;
 import game.Room;
 import sound.SoundManager;
 
@@ -35,12 +37,10 @@ class RoomState extends FlxState
 		
 		playerAvatar = new Avatar("Monk");
 		audioManager = new SoundManager();
-
-		#if html5
-		FlxG.debugger.visible = true;
+		
+		FlxG.debugger.visible = false;
 		FlxG.log.redirectTraces = true;
-		#end
-
+		
 		joinRoom("cloudInfoRoom");
 	}
 
@@ -51,29 +51,42 @@ class RoomState extends FlxState
 			destroyRoom();
 		}
 		
+		playerAvatar.nextRoom = "";
+		
 		currentRoom = new Room(roomName);
-		// TODO: onProgress() handler
 		Assets.loadLibrary(roomName).onComplete(loadRoom);
 	}
 	
 	private function loadRoom(completeLib:AssetLibrary):Void
 	{
 		Assets.registerLibrary(currentRoom.roomName, completeLib);
-
-		var roomStructure:String = Assets.getText(currentRoom.roomName + ":assets/" + currentRoom.roomName + "/RoomObjects.json");
+		
+		var roomStructure:String = Assets.getText(currentRoom.roomName + ":assets/" + currentRoom.roomName + "/" + currentRoom.roomName + "_Objects.json");
 		currentRoom.generateRoom(roomStructure);
 		
-		currentRoom.addAvatar(playerAvatar, 250, 250);
+		currentRoom.addAvatar(playerAvatar, playerAvatar.exitRoom);
+		playerAvatar.exitRoom = "";
 		
 		add(currentRoom);
+		// add(currentRoom.walkMap);
 		add(currentRoom.roomEntities);
+		add(currentRoom.portalEntities);
+		
+		this.bgColor = currentRoom.backgroundColor;
+		//FlxG.camera.setScrollBoundsRect(currentRoom.walkMap.x, currentRoom.walkMap.y, currentRoom.walkMap.width, currentRoom.walkMap.height);
+		FlxG.camera.follow(playerAvatar, FlxCameraFollowStyle.TOPDOWN_TIGHT, .5);
+		
+		currentRoom.portalEntities.visible = false;
 	}
 	
 	private function destroyRoom():Void
 	{
+		// remove(currentRoom.walkMap);
+		remove(currentRoom.portalEntities);
 		remove(currentRoom.roomEntities);
 		remove(currentRoom);
-		Assets.unloadLibrary(currentRoom.roomName);
+		
+		//Assets.unloadLibrary(currentRoom.roomName);
 	}
 	
 	private function testNextPoints():FlxPoint
@@ -169,14 +182,24 @@ class RoomState extends FlxState
 				ly = playerAvatar.y + 65;
 			}
 		}
-
+		
 		audioManager.currentSurface = currentRoom.testWalkmap(rx, ry);
-
+		
 		// 1 is TRUE: Collision.
 		// 0 is FALSE: No Collision.
 		// Probably still have a problem with 0-pixels.
+		
+		rx -= playerAvatar.offset.x;
+		ry -= playerAvatar.offset.y;
+		
+		lx -= playerAvatar.offset.x;
+		ly -= playerAvatar.offset.y;
+		
 		var ptR:Float = if (borderArray.indexOf(currentRoom.testWalkmap(rx, ry)) != -1) 1 else 0;
-		var ptL:Float = if (borderArray.indexOf(currentRoom.testWalkmap(rx, ry)) != -1) 1 else 0;
+		var ptL:Float = if (borderArray.indexOf(currentRoom.testWalkmap(lx, ly)) != -1) 1 else 0;
+		
+		//trace(Std.string(rx - currentRoom.walkMap.x) + ", " + Std.string(ry - currentRoom.walkMap.y));
+		//trace("Player: " + playerAvatar.x + ", " + playerAvatar.y);
 		
 		return FlxPoint.get(ptR, ptL);
 	}
@@ -199,7 +222,7 @@ class RoomState extends FlxState
 		playerAvatar.canWalk = true;
 		
 		if (Northeast)
-		{			
+		{
 			if (playerNextMovement.x == 1)
 			{
 				playerAvatar.velocityX = 0;
@@ -303,7 +326,7 @@ class RoomState extends FlxState
 		{
 			return;
 		}
-
+		
 		// TODO: If in room//if in context..
 		playerAvatar.keysTriggered.North = FlxG.keys.pressed.UP && !FlxG.keys.pressed.DOWN;
 		playerAvatar.keysTriggered.South = FlxG.keys.pressed.DOWN && !FlxG.keys.pressed.UP;
@@ -320,9 +343,50 @@ class RoomState extends FlxState
 		smoothMovement();
 		audioManager.playWalkSound(playerAvatar.keysTriggered.Run);
 		
+		// TODO: Move fade trigger to the actual Avatar class
+		// Add switch/event.
+		// Wait. Shouldn't we wait on a "switch room" network packet 
+		// to fade another avatar out
+		
+		if (playerAvatar.nextRoom != "")
+		{
+			destroyRoom();
+			joinRoom(playerAvatar.nextRoom);
+		}
+		
+		if (playerAvatar.currentAction == Avatar.actionSet.Walk)
+		{
+			FlxG.overlap(playerAvatar, currentRoom.portalEntities, enterPortal);
+		}		
+		
 		// Should this call be made in Room's update loop instead?
 		currentRoom.sortGraphics();
 		
 		super.update(elapsed);
+	}
+	
+	public function enterPortal(objectA:FlxObject, objectB:FlxObject):Void
+	{
+		if (objectA == playerAvatar)
+		{			
+			if (cast(objectB, Portal).checkDirection(playerAvatar.currentDirection))
+			{
+				if (FlxG.pixelPerfectOverlap(playerAvatar, cast(objectB, Portal)))
+				{
+					playerAvatar.fadeAway(cast(objectB, Portal).nextRoom, currentRoom.roomName);
+				}
+			}
+		}
+		
+		else if (objectB == playerAvatar)
+		{			
+			if (cast(objectA, Portal).checkDirection(playerAvatar.currentDirection))
+			{
+				if (FlxG.pixelPerfectOverlap(playerAvatar, cast(objectA, Portal)))
+				{
+					playerAvatar.fadeAway(cast(objectA, Portal).nextRoom, currentRoom.roomName);
+				}
+			}
+		}
 	}
 }

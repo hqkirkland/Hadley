@@ -1,0 +1,29 @@
+{
+	"name": "Cloud Lift",
+	"walkMapX": 375,
+	"walkMapY": 383,
+	"background": "0xFF071B18",
+	"parts":
+	[
+		{
+			"type": "object",
+			"asset": "item_lamp",
+			"x": 640,
+			"y": 415,
+			"frameCount": 1
+		},
+		{
+			"type": "portal",
+			"asset": "portal_1_b",
+			"x": 810,
+			"y": 535,
+			"frameCount": 0,
+			"isDefault": true,
+			"nextRoom": "cloudInfoRoom",
+			"entryDirection": "NorthWest",
+			"exitDirections": [ "SouthWest", "South", "SouthEast" ],
+			"setX": 800,
+			"setY": 470
+		}
+	]
+}

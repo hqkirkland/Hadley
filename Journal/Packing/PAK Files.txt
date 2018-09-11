@@ -1,0 +1,18 @@
+PAK files are just file streams layered on top of each other.
+
+
+Also, PAK files are embedded into Flash file automatically.
+	- I've set embed="false" to see if this is still the case.
+
+HTML5 requires libraries to be registered, prefixes to be used.
+
+Not sure about flash?
+	- 
+
+<assets unless="flash" path="assets/cloudInfoRoom" embed="false" library="cloudInfoRoom" />
+<assets if="flash" path="assets/cloudInfoRoom" embed="true" library="cloudInfoRoom" preload="true" />
+<library name="cloudInfoRoom" type="pak" />
+
+roomName + ":assets/" + roomName + "/images/" + roomName + ".png"
+
+That works

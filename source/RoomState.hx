@@ -7,6 +7,7 @@ import flixel.FlxG;
 import flixel.FlxCamera;
 import flixel.input.keyboard.FlxKeyList;
 import flixel.math.FlxPoint;
+import flixel.math.FlxRect;
 import openfl.Assets;
 import openfl.utils.AssetLibrary;
 
@@ -38,8 +39,10 @@ class RoomState extends FlxState
 		playerAvatar = new Avatar("Monk");
 		audioManager = new SoundManager();
 		
-		FlxG.debugger.visible = false;
+		FlxG.debugger.visible = true;
 		FlxG.log.redirectTraces = true;
+		
+		FlxG.autoPause = false;
 		
 		joinRoom("cloudInfoRoom");
 	}
@@ -73,8 +76,10 @@ class RoomState extends FlxState
 		add(currentRoom.portalEntities);
 		
 		this.bgColor = currentRoom.backgroundColor;
-		//FlxG.camera.setScrollBoundsRect(currentRoom.walkMap.x, currentRoom.walkMap.y, currentRoom.walkMap.width, currentRoom.walkMap.height);
-		FlxG.camera.follow(playerAvatar, FlxCameraFollowStyle.TOPDOWN_TIGHT, .5);
+		
+		FlxG.camera.setScrollBoundsRect(100, 100, currentRoom.width - 100, currentRoom.height);
+		FlxG.camera.follow(playerAvatar, FlxCameraFollowStyle.PLATFORMER, .5);
+		//FlxG.camera.deadzone = new FlxRect(currentRoom.x, currentRoom.y, 25, 10);
 		
 		currentRoom.portalEntities.visible = false;
 	}
@@ -183,8 +188,6 @@ class RoomState extends FlxState
 			}
 		}
 		
-		audioManager.currentSurface = currentRoom.testWalkmap(rx, ry);
-		
 		// 1 is TRUE: Collision.
 		// 0 is FALSE: No Collision.
 		// Probably still have a problem with 0-pixels.
@@ -197,6 +200,7 @@ class RoomState extends FlxState
 		
 		var ptR:Float = if (borderArray.indexOf(currentRoom.testWalkmap(rx, ry)) != -1) 1 else 0;
 		var ptL:Float = if (borderArray.indexOf(currentRoom.testWalkmap(lx, ly)) != -1) 1 else 0;
+		audioManager.currentSurface = currentRoom.testWalkmap(rx, ry);
 		
 		//trace(Std.string(rx - currentRoom.walkMap.x) + ", " + Std.string(ry - currentRoom.walkMap.y));
 		//trace("Player: " + playerAvatar.x + ", " + playerAvatar.y);
@@ -341,6 +345,7 @@ class RoomState extends FlxState
 		
 		playerNextMovement = testNextPoints();
 		smoothMovement();
+		
 		audioManager.playWalkSound(playerAvatar.keysTriggered.Run);
 		
 		// TODO: Move fade trigger to the actual Avatar class

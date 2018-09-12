@@ -5014,8 +5014,10 @@
    <depend name="include/flixel/math/FlxRect.h"/>
    <depend name="include/flixel/util/IFlxDestroyable.h"/>
    <depend name="include/flixel/util/IFlxPooled.h"/>
+   <depend name="include/flixel/util/_FlxColor/FlxColor_Impl_.h"/>
    <depend name="include/game/Avatar.h"/>
    <depend name="include/game/GraphicsSheet.h"/>
+   <depend name="include/game/Portal.h"/>
    <depend name="include/game/Room.h"/>
    <depend name="include/haxe/format/JsonParser.h"/>
    <depend name="include/openfl/display/Bitmap.h"/>
@@ -5024,6 +5026,16 @@
    <depend name="include/openfl/display/IBitmapDrawable.h"/>
    <depend name="include/openfl/events/EventDispatcher.h"/>
    <depend name="include/openfl/events/IEventDispatcher.h"/>
+   <depend name="include/openfl/utils/Assets.h"/>
+  </file>
+  <file name="src/game/Portal.cpp" >
+   <depend name="include/flixel/FlxBasic.h"/>
+   <depend name="include/flixel/FlxObject.h"/>
+   <depend name="include/flixel/FlxSprite.h"/>
+   <depend name="include/flixel/util/IFlxDestroyable.h"/>
+   <depend name="include/game/Portal.h"/>
+   <depend name="include/openfl/display/BitmapData.h"/>
+   <depend name="include/openfl/display/IBitmapDrawable.h"/>
   </file>
   <file name="src/game/GraphicsSheet.cpp" >
    <depend name="include/game/GraphicsSheet.h"/>
@@ -5078,6 +5090,9 @@
    <depend name="include/flixel/graphics/frames/FlxTileFrames.h"/>
    <depend name="include/flixel/math/FlxPoint.h"/>
    <depend name="include/flixel/math/FlxRect.h"/>
+   <depend name="include/flixel/tweens/FlxEase.h"/>
+   <depend name="include/flixel/tweens/FlxTween.h"/>
+   <depend name="include/flixel/tweens/misc/VarTween.h"/>
    <depend name="include/flixel/util/FlxPool_flixel_math_FlxPoint.h"/>
    <depend name="include/flixel/util/IFlxDestroyable.h"/>
    <depend name="include/flixel/util/IFlxPool.h"/>
@@ -9594,6 +9609,8 @@
   <file name="src/RoomState.cpp" >
    <depend name="include/RoomState.h"/>
    <depend name="include/flixel/FlxBasic.h"/>
+   <depend name="include/flixel/FlxCamera.h"/>
+   <depend name="include/flixel/FlxCameraFollowStyle.h"/>
    <depend name="include/flixel/FlxG.h"/>
    <depend name="include/flixel/FlxObject.h"/>
    <depend name="include/flixel/FlxSprite.h"/>
@@ -9606,12 +9623,17 @@
    <depend name="include/flixel/input/keyboard/FlxKeyList.h"/>
    <depend name="include/flixel/input/keyboard/FlxKeyboard.h"/>
    <depend name="include/flixel/math/FlxPoint.h"/>
+   <depend name="include/flixel/system/frontEnds/DebuggerFrontEnd.h"/>
+   <depend name="include/flixel/system/frontEnds/LogFrontEnd.h"/>
+   <depend name="include/flixel/util/FlxCollision.h"/>
    <depend name="include/flixel/util/FlxPool_flixel_math_FlxPoint.h"/>
    <depend name="include/flixel/util/IFlxDestroyable.h"/>
    <depend name="include/flixel/util/IFlxPool.h"/>
    <depend name="include/flixel/util/IFlxPooled.h"/>
    <depend name="include/game/Avatar.h"/>
+   <depend name="include/game/Portal.h"/>
    <depend name="include/game/Room.h"/>
+   <depend name="include/haxe/Log.h"/>
    <depend name="include/lime/app/Future.h"/>
    <depend name="include/lime/utils/AssetLibrary.h"/>
    <depend name="include/openfl/utils/AssetLibrary.h"/>
@@ -9692,6 +9714,11 @@
   </file>
   <file name="src/__ASSET__manifest_default_json.cpp" >
    <depend name="include/__ASSET__manifest_default_json.h"/>
+   <depend name="include/haxe/Resource.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+  </file>
+  <file name="src/__ASSET__manifest_cloudlift_json.cpp" >
+   <depend name="include/__ASSET__manifest_cloudlift_json.h"/>
    <depend name="include/haxe/Resource.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
   </file>
@@ -9781,46 +9808,6 @@
   </file>
   <file name="src/__ASSET__assets_images_shoes_png.cpp" >
    <depend name="include/__ASSET__assets_images_shoes_png.h"/>
-   <depend name="include/haxe/Resource.h"/>
-   <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/graphics/Image.h"/>
-   <depend name="include/lime/graphics/ImageBuffer.h"/>
-   <depend name="include/lime/graphics/ImageType.h"/>
-  </file>
-  <file name="src/__ASSET__assets_images_rooms_cloudinforoom_item_statue_a_png.cpp" >
-   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_item_statue_a_png.h"/>
-   <depend name="include/haxe/Resource.h"/>
-   <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/graphics/Image.h"/>
-   <depend name="include/lime/graphics/ImageBuffer.h"/>
-   <depend name="include/lime/graphics/ImageType.h"/>
-  </file>
-  <file name="src/__ASSET__assets_images_rooms_cloudinforoom_item_door2_a_png.cpp" >
-   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_item_door2_a_png.h"/>
-   <depend name="include/haxe/Resource.h"/>
-   <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/graphics/Image.h"/>
-   <depend name="include/lime/graphics/ImageBuffer.h"/>
-   <depend name="include/lime/graphics/ImageType.h"/>
-  </file>
-  <file name="src/__ASSET__assets_images_rooms_cloudinforoom_item_door1_a_png.cpp" >
-   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_item_door1_a_png.h"/>
-   <depend name="include/haxe/Resource.h"/>
-   <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/graphics/Image.h"/>
-   <depend name="include/lime/graphics/ImageBuffer.h"/>
-   <depend name="include/lime/graphics/ImageType.h"/>
-  </file>
-  <file name="src/__ASSET__assets_images_rooms_cloudinforoom_cloudinforoom_map_a_png.cpp" >
-   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_cloudinforoom_map_a_png.h"/>
-   <depend name="include/haxe/Resource.h"/>
-   <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/lime/graphics/Image.h"/>
-   <depend name="include/lime/graphics/ImageBuffer.h"/>
-   <depend name="include/lime/graphics/ImageType.h"/>
-  </file>
-  <file name="src/__ASSET__assets_images_rooms_cloudinforoom_cloudinforoom_a_png.cpp" >
-   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_cloudinforoom_a_png.h"/>
    <depend name="include/haxe/Resource.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
    <depend name="include/lime/graphics/Image.h"/>
@@ -10665,6 +10652,7 @@
    <depend name="include/flixel/FlxBasic.h"/>
    <depend name="include/openfl/text/Font.h"/>
    <depend name="include/__ASSET__manifest_default_json.h"/>
+   <depend name="include/__ASSET__manifest_cloudlift_json.h"/>
    <depend name="include/__ASSET__manifest_cloudinforoom_json.h"/>
    <depend name="include/__ASSET__flixel_images_logo_default_png.h"/>
    <depend name="include/__ASSET__flixel_images_ui_button_png.h"/>
@@ -10675,11 +10663,6 @@
    <depend name="include/__ASSET__assets_sounds_step1_wav.h"/>
    <depend name="include/__ASSET__assets_images_template_png.h"/>
    <depend name="include/__ASSET__assets_images_shoes_png.h"/>
-   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_item_statue_a_png.h"/>
-   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_item_door2_a_png.h"/>
-   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_item_door1_a_png.h"/>
-   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_cloudinforoom_map_a_png.h"/>
-   <depend name="include/__ASSET__assets_images_rooms_cloudinforoom_cloudinforoom_a_png.h"/>
    <depend name="include/__ASSET__assets_images_pants_png.h"/>
    <depend name="include/__ASSET__assets_images_overcoat_png.h"/>
    <depend name="include/__ASSET__assets_images_jeans_png.h"/>
@@ -10781,10 +10764,6 @@
 <file name="src/resources/__res_59.cpp" tags="optim-none" />
 <file name="src/resources/__res_60.cpp" tags="optim-none" />
 <file name="src/resources/__res_61.cpp" tags="optim-none" />
-<file name="src/resources/__res_62.cpp" tags="optim-none" />
-<file name="src/resources/__res_63.cpp" tags="optim-none" />
-<file name="src/resources/__res_64.cpp" tags="optim-none" />
-<file name="src/resources/__res_65.cpp" tags="optim-none" />
 </files>
 <files id="__externs__">
 </files>

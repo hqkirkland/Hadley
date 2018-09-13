@@ -1,13 +1,13 @@
 package;
 
 import flixel.FlxObject;
-import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.FlxG;
 import flixel.FlxCamera;
 import flixel.input.keyboard.FlxKeyList;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
+import flixel.system.scaleModes.FixedScaleMode;
 import openfl.Assets;
 import openfl.utils.AssetLibrary;
 
@@ -35,13 +35,13 @@ class RoomState extends FlxState
 	override public function create():Void
 	{
 		super.create();
+		FlxG.scaleMode = new FixedScaleMode();
 		
 		playerAvatar = new Avatar("Monk");
 		audioManager = new SoundManager();
 		
-		FlxG.debugger.visible = true;
 		FlxG.log.redirectTraces = true;
-		
+		FlxG.debugger.visible = true;
 		FlxG.autoPause = false;
 		
 		joinRoom("cloudInfoRoom");
@@ -75,11 +75,41 @@ class RoomState extends FlxState
 		add(currentRoom.roomEntities);
 		add(currentRoom.portalEntities);
 		
-		this.bgColor = currentRoom.backgroundColor;
+		this.bgColor = currentRoom.backgroundColor;		
 		
-		FlxG.camera.setScrollBoundsRect(100, 100, currentRoom.width - 100, currentRoom.height);
-		FlxG.camera.follow(playerAvatar, FlxCameraFollowStyle.PLATFORMER, .5);
-		//FlxG.camera.deadzone = new FlxRect(currentRoom.x, currentRoom.y, 25, 10);
+		var ROOM_MIN_X:Float;
+		var ROOM_MAX_X:Float;
+		var ROOM_MIN_Y:Float;
+		var ROOM_MAX_Y:Float;
+		
+		if (currentRoom.width < FlxG.width)
+		{
+			ROOM_MIN_X = 0;
+			ROOM_MAX_X = (FlxG.width / 2) + (currentRoom.width / 2);
+		}
+		
+		else
+		{
+			ROOM_MIN_X = currentRoom.x;
+			ROOM_MAX_X = currentRoom.width;
+		}
+		
+		if (currentRoom.height < FlxG.height)
+		{
+			ROOM_MIN_Y = 0;
+			ROOM_MAX_Y = (FlxG.height / 2) + (currentRoom.height / 2);
+		}
+		
+		else
+		{
+			ROOM_MIN_Y = currentRoom.y;
+			ROOM_MAX_Y = currentRoom.height;
+		}
+		
+		FlxG.camera.setScrollBoundsRect(ROOM_MIN_X, ROOM_MIN_Y, ROOM_MAX_X, ROOM_MAX_Y);
+		FlxG.camera.follow(playerAvatar, FlxCameraFollowStyle.LOCKON, .25);
+		
+		FlxG.camera.deadzone = new FlxRect(FlxG.camera.deadzone.x, FlxG.camera.deadzone.y, FlxG.camera.deadzone.width, FlxG.camera.deadzone.height / 2);
 		
 		currentRoom.portalEntities.visible = false;
 	}
@@ -200,6 +230,10 @@ class RoomState extends FlxState
 		
 		var ptR:Float = if (borderArray.indexOf(currentRoom.testWalkmap(rx, ry)) != -1) 1 else 0;
 		var ptL:Float = if (borderArray.indexOf(currentRoom.testWalkmap(lx, ly)) != -1) 1 else 0;
+		
+		var ptR:Float = 0;
+		var ptL:Float = 0;
+		
 		audioManager.currentSurface = currentRoom.testWalkmap(rx, ry);
 		
 		//trace(Std.string(rx - currentRoom.walkMap.x) + ", " + Std.string(ry - currentRoom.walkMap.y));
@@ -346,7 +380,12 @@ class RoomState extends FlxState
 		playerNextMovement = testNextPoints();
 		smoothMovement();
 		
-		audioManager.playWalkSound(playerAvatar.keysTriggered.Run);
+		if (!playerAvatar.enableWalk)
+		{
+			audioManager.currentSurface = 0x0;
+		}
+		
+		audioManager.playWalkSound(playerAvatar.keysTriggered.run);
 		
 		// TODO: Move fade trigger to the actual Avatar class
 		// Add switch/event.

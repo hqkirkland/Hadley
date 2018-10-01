@@ -386,6 +386,7 @@ class Avatar extends FlxSprite
 		previousKeysTriggered.East = false;
 		previousKeysTriggered.West = false;
 		
+		chatGroup.clear();
 		chatGroup = new BubbleStack(this.username);
 	}
 
@@ -398,5 +399,13 @@ class Avatar extends FlxSprite
 				enableWalk = true;
 			}
 		}});
+	}
+	
+	public function speakUp(message:String, action:String)
+	{
+		if (action == "enter")
+		{
+			chatGroup.newBubble(message);
+		}
 	}
 }

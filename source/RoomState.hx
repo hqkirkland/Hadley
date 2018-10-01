@@ -75,7 +75,6 @@ class RoomState extends FlxUIState
 		currentRoom.generateRoom(roomStructure);
 		
 		currentRoom.addAvatar(playerAvatar, playerAvatar.exitRoom);
-		remove(playerAvatar.chatGroup);
 		playerAvatar.exitRoom = "";
 		
 		add(currentRoom);
@@ -87,27 +86,19 @@ class RoomState extends FlxUIState
 		
 		tf = new FlxInputText(50, 100, 300);
 		tf.borderColor = 0xFFFFFFFF;
-		tf.x = 50;
-		tf.y = 200;
+		tf.x = 150;
+		tf.y = 400;
 		tf.width = 300;
 		tf.height = 15;
 		tf.caretWidth = 5;
-		tf.callback = speakUp;
+		tf.callback = playerAvatar.speakUp;
+		tf.text = "";
 		add(tf);
 		
 		setupCamera();
 		
 		this.bgColor = currentRoom.backgroundColor;
 		currentRoom.portalEntities.visible = false;
-	}
-	
-	private function speakUp(message:String, action:String)
-	{
-		if (action == "enter")
-		{
-			tf.text = "";
-			playerAvatar.chatGroup.newBubble(message);
-		}
 	}
 	
 	private function setupCamera():Void
@@ -468,7 +459,5 @@ class RoomState extends FlxUIState
 				}
 			}
 		}
-
-		tf.callback = speakUp;
 	}
 }

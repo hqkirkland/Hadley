@@ -13,12 +13,31 @@
 			"frameCount": 1
 		},
 		{
-			"type": "portal",
+			"type": "elevator",
+			"asset": "elevator",
+			"x": 310,
+			"y": 600,
+			"maskX": 310,
+			"maskY": 389,
+			"frameCount": 1,
+			"frequency": 15
+		},
+		{
+			"type": "object",
+			"asset": "elevator_dropmask",
+			"x": 240,
+			"y": 520,
+			"frameCount": 0
+		}
+	],
+	
+	"portals":
+	[
+		{
 			"asset": "portal_1_b",
 			"x": 810,
 			"y": 535,
 			"frameCount": 0,
-			"isDefault": true,
 			"nextRoom": "cloudInfoRoom",
 			"entryDirection": "NorthWest",
 			"exitDirections": [ "SouthWest", "South", "SouthEast" ],

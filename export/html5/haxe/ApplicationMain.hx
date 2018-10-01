@@ -26,7 +26,7 @@ import haxe.macro.Expr;
 		
 		#if (js && html5)
 		#if (munit || utest)
-		lime.system.System.embed ("HadleyHaxe", null, 800, 600);
+		lime.system.System.embed ("HadleyHaxe", null, 975, 550);
 		#end
 		#else
 		create (null);
@@ -38,7 +38,7 @@ import haxe.macro.Expr;
 		
 		var config = {
 			
-			build: "18",
+			build: "21",
 			company: "Nodebay.com",
 			file: "HadleyHaxe",
 			fps: 24,
@@ -59,7 +59,7 @@ import haxe.macro.Expr;
 					display: 0,
 					fullscreen: false,
 					hardware: true,
-					height: 600,
+					height: 550,
 					hidden: #if munit true #else false #end,
 					maximized: false,
 					minimized: false,
@@ -68,7 +68,7 @@ import haxe.macro.Expr;
 					stencilBuffer: true,
 					title: "HadleyHaxe",
 					vsync: true,
-					width: 800,
+					width: 975,
 					x: null,
 					y: null
 				},
@@ -92,7 +92,7 @@ import haxe.macro.Expr;
 		
 		#if (js && html5)
 		#if (munit || utest)
-		lime.system.System.embed (projectName, null, 800, 600, config);
+		lime.system.System.embed (projectName, null, 975, 550, config);
 		#end
 		#else
 		create (config);
@@ -110,11 +110,12 @@ import haxe.macro.Expr;
 		#if (lime >= "7.0.0")
 		ManifestResources.init (config);
 		
-		app.meta["build"] = "18";
+		app.meta["build"] = "21";
 		app.meta["company"] = "Nodebay.com";
 		app.meta["file"] = "HadleyHaxe";
 		app.meta["name"] = "HadleyHaxe";
 		app.meta["packageName"] = "com.example.myapp";
+		app.meta["version"] = "0.0.1";
 		
 		#if !flash
 		
@@ -127,14 +128,14 @@ import haxe.macro.Expr;
 			element: null,
 			frameRate: 24,
 			#if !web fullscreen: false, #end
-			height: 600,
+			height: 550,
 			hidden: #if munit true #else false #end,
 			maximized: false,
 			minimized: false,
 			parameters: {},
 			resizable: false,
 			title: "HadleyHaxe",
-			width: 800,
+			width: 975,
 			x: null,
 			y: null,
 			

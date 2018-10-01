@@ -38,7 +38,7 @@ import haxe.macro.Expr;
 		
 		var config = {
 			
-			build: "18",
+			build: "21",
 			company: "Nodebay.com",
 			file: "HadleyHaxe",
 			fps: 24,
@@ -110,11 +110,12 @@ import haxe.macro.Expr;
 		#if (lime >= "7.0.0")
 		ManifestResources.init (config);
 		
-		app.meta["build"] = "18";
+		app.meta["build"] = "21";
 		app.meta["company"] = "Nodebay.com";
 		app.meta["file"] = "HadleyHaxe";
 		app.meta["name"] = "HadleyHaxe";
 		app.meta["packageName"] = "com.example.myapp";
+		app.meta["version"] = "0.0.1";
 		
 		#if !flash
 		

@@ -12,6 +12,7 @@ class Portal extends FlxSprite
 	public var startDirection:String;
 	public var exitDirections:Array<String>;
 	public var isDefault:Bool = false;
+	public var enabled:Bool = true;
 	public var setX:Int;
 	public var setY:Int;
 	

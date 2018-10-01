@@ -12,6 +12,8 @@ import openfl.geom.Point;
 import openfl.geom.Rectangle;
 import openfl.utils.Object;
 
+import game.BubbleStack;
+
 /**
  * ...
  * @author ...
@@ -36,6 +38,10 @@ class Avatar extends FlxSprite
 	public var velocityX:Float = 0;
 	public var velocityY:Float = 0;
 	
+	public var chatGroup:BubbleStack;
+	
+	//public var chatBubbles:FlxTypedSpriteGroup<Chatbubble>;
+	
 	public var keysTriggered:Object = { North: false, South: false, East: false, West: false, Run: false };
 	public var previousKeysTriggered:Object = { North: false, South: false, East: false, West: false };
 	
@@ -54,12 +60,13 @@ class Avatar extends FlxSprite
 	
 	// (This too) It saves CPU to pre-determine velocities rather than calculate them every frame.
 	private static var orthogVelocity:FlxPoint = new FlxPoint(96, 48);
-	private static var diagVelocity:FlxPoint = new FlxPoint(80, 26);
+	private static var diagVelocity:FlxPoint = new FlxPoint(92.3, 26);
 	
 	public function new(_username:String) 
 	{
 		super();
 		username = _username;
+		chatGroup = new BubbleStack(username);
 		
 		// TODO: Create figure object, or create typedef for clothing objects.
 		itemArray = new Array<Object>();
@@ -122,16 +129,16 @@ class Avatar extends FlxSprite
 		animation.add("HoldWest", [39], 0, false, true);
 		animation.add("HoldSouthWest", [40], 0, false, true);
 		
-		animation.add("WalkNorth", [5, 6, 7, 8, 9, 10], 9, true, false);
-		animation.add("WalkSouth", [29, 30, 31, 32, 33, 34], 9, true, false);
+		animation.add("WalkNorth", [5, 6, 7, 8, 9, 10], 10, true, false);
+		animation.add("WalkSouth", [29, 30, 31, 32, 33, 34], 10, true, false);
 		
-		animation.add("WalkNorthEast", [11, 12, 13, 14, 15, 16], 9, true, false);
-		animation.add("WalkEast", [17, 18, 19, 20, 21, 22], 9, true, false);
-		animation.add("WalkSouthEast", [23, 24, 25, 26, 27, 28], 9, true, false);
+		animation.add("WalkNorthEast", [11, 12, 13, 14, 15, 16], 10, true, false);
+		animation.add("WalkEast", [17, 18, 19, 20, 21, 22], 10, true, false);
+		animation.add("WalkSouthEast", [23, 24, 25, 26, 27, 28], 10, true, false);
 		
-		animation.add("WalkNorthWest", [11, 12, 13, 14, 15, 16], 9, true, true);
-		animation.add("WalkWest", [17, 18, 19, 20, 21, 22], 9, true, true);
-		animation.add("WalkSouthWest", [23, 24, 25, 26, 27, 28], 9, true, true);
+		animation.add("WalkNorthWest", [11, 12, 13, 14, 15, 16], 10, true, true);
+		animation.add("WalkWest", [17, 18, 19, 20, 21, 22], 10, true, true);
+		animation.add("WalkSouthWest", [23, 24, 25, 26, 27, 28], 10, true, true);
 		
 		animation.add("SitSouthWest", [35], 0, false, true);
 		animation.add("SitNorthWest", [36], 0, false, true);
@@ -141,18 +148,11 @@ class Avatar extends FlxSprite
 	
 	override public function update(elapsed:Float):Void
 	{
-		
-		/*testSprite = new FlxSprite(overlapRectangle.x, overlapRectangle.y);
-		testSprite = testSprite.makeGraphic(10, 10);
-		this.stamp(testSprite);*/
-		
-		// trace(this.x + ", " + this.y);
-		
-		/*
-		overlapRectangle.x = this.x + 15;
-		overlapRectangle.y = this.y + 40;*/
-		
 		doAnimation();
+		//chatGroup.x = ((this.x - this.offset.x) + (this.frameWidth / 2)) - (this.chatGroup.width / 2);
+		chatGroup.x = (this.x - this.offset.x) + ((this.frameWidth / 2) - (this.chatGroup.width / 2));
+		chatGroup.y = Math.ceil(this.y - this.frameHeight);
+		
 		super.update(elapsed);
     }
 
@@ -167,6 +167,8 @@ class Avatar extends FlxSprite
 		{ this.velocity = FlxPoint.get(this.velocityX * 1.66, this.velocityY * 1.66); }
 		else
 		{ this.velocity = FlxPoint.get(this.velocityX, this.velocityY); }
+		
+		chatGroup.velocity = this.velocity;
 		
 		this.velocity.put();
 	}
@@ -371,27 +373,30 @@ class Avatar extends FlxSprite
 	{
 		enableWalk = false;
 		exitRoom = lastRoom;
-
+		
 		FlxTween.tween(this, { alpha: 0 }, 0.5, { ease: FlxEase.smoothStepIn, onComplete: {
 			function(_) 
 			{
 				nextRoom = newRoom;
-			} 
+			}
 		}});
 		
 		previousKeysTriggered.North = false;
 		previousKeysTriggered.South = false;
 		previousKeysTriggered.East = false;
 		previousKeysTriggered.West = false;
+		
+		chatGroup = new BubbleStack(this.username);
 	}
 
 	public function fadeIn():Void
 	{
-		FlxTween.tween(this, { alpha: 1 }, 0.5, { ease: FlxEase.smoothStepIn, onComplete: {
+		FlxTween.tween(this, { alpha: 1 }, 0.5, { ease: FlxEase.smoothStepIn, onComplete: 
+		{
 			function(_) 
 			{
 				enableWalk = true;
 			}
-		} });
+		}});
 	}
 }

@@ -27,6 +27,7 @@ class SoundManager
 		woodWalk.endTime = woodWalk.length - 100;
 		woodWalk.loopTime = 50;
 		walkSoundGroup.add(woodWalk);
+		walkSoundGroup.volume = .50;
 		
 		// stoneWalk = loadWavSound(AssetPaths.StepX__wav);
 		// stoneWalk.looped = true;

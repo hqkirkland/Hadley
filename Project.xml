@@ -10,14 +10,14 @@
 	
 	<!--Minimum without FLX_NO_GAMEPAD: 11.8, without FLX_NO_NATIVE_CURSOR: 11.2-->
 	<set name="SWF_VERSION" value="11.8" />
-	<setenv name="SWF_PLAYER" value="C:/Users/Hunter/AppData/Local/HaxeDevelop/Apps/flashsa/28.0.0/flashplayer_28_sa_debug.exe" />
+	<setenv name="SWF_PLAYER" value="C:/Users/Hunter/AppData/Local/HaxeDevelop/Apps/flashsa/30.0.0/flashplayer_30_sa_debug.exe" />
 	
 	<!-- ____________________________ Window Settings ___________________________ -->
 	
 	<!--These window settings apply to all targets-->
 	<window width="975" height="550" fps="24" background="#000000" hardware="true" vsync="true" />
 	
-	<window if="flash" orientation="landscape" fullscreen="false" resizable="false" />
+	<window if="flash" orientation="landscape" fullscreen="false" resizable="true" />
 	
 	<!--HTML5-specific-->
 	<window if="html5" resizable="false" />
@@ -40,13 +40,14 @@
 	<assets unless="flash" path="assets/cloudLift" embed="false" library="cloudLift" />
 	<assets if="flash" path="assets/cloudLift" embed="true" library="cloudLift" preload="true" />
 	<library name="cloudLift" type="pak" />
-
 	
 	<assets path="assets/images" embed="true" />
+	<assets path="assets/images/interface" embed="true" />
 	<assets path="assets/sounds" embed="true" />
 	<!-- _______________________________ Libraries ______________________________ -->
 
 	<haxelib name="flixel" />
+	<haxelib name="flixel-ui" />
 	
 	<!--In case you want to use the addons package-->
 	<!--<haxelib name="flixel-addons" />-->

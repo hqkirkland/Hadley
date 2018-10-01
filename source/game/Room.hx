@@ -13,6 +13,8 @@ import flixel.util.FlxSort;
 import haxe.Json;
 import openfl.Assets;
 import openfl.display.BitmapData;
+import flixel.tweens.FlxTween;
+import flixel.tweens.FlxEase;
 
 /**
  * ...
@@ -25,6 +27,7 @@ typedef RoomStructure = {
 	var walkMapY:Int;
 	var background:String;
 	var parts:Array<RoomPart>;
+	var portals:Array<RoomPortal>;
 }
 
 typedef RoomPart = {
@@ -33,12 +36,21 @@ typedef RoomPart = {
 	var x:Int;
 	var y:Int;
 	var frameCount:Int;
-	@:optional var nextRoom:String;
-	@:optional var isDefault:Bool;
-	@:optional var entryDirection:String;
-	@:optional var exitDirections:Array<String>;
-	@:optional var setX:Int;
-	@:optional var setY:Int;
+	@:optional var maskX:Int;
+	@:optional var maskY:Int;
+	@:optional var frequency:Int;
+}
+
+typedef RoomPortal = {
+	var asset:String;
+	var x:Int;
+	var y:Int;
+	var frameCount:Int;
+	var nextRoom:String;
+	var entryDirection:String;
+	var exitDirections:Array<String>;
+	var setX:Int;
+	var setY:Int;
 }
 
 class Room extends FlxSprite
@@ -46,7 +58,9 @@ class Room extends FlxSprite
 	public var roomName:String;
 
 	public var roomEntities:FlxTypedSpriteGroup<FlxSprite> = new FlxTypedSpriteGroup<FlxSprite>();
-	public var portalEntities:FlxTypedSpriteGroup<Portal> = new FlxTypedSpriteGroup<Portal>();	
+	public var portalEntities:FlxTypedSpriteGroup<Portal> = new FlxTypedSpriteGroup<Portal>();
+	public var vehicleEntities:FlxTypedSpriteGroup<FlxSprite> = new FlxTypedSpriteGroup<FlxSprite>();
+	
 	public var walkMap:FlxSprite;
 	public var roomReady:Bool = false;
 	public var backgroundColor:FlxColor;
@@ -75,27 +89,44 @@ class Room extends FlxSprite
 		for (i in 0...objectStructure.parts.length)
 		{
 			var currentPart:RoomPart = objectStructure.parts[i];
+			var partSprite:FlxSprite = generateItem(currentPart.asset, currentPart.x, currentPart.y, currentPart.frameCount);
 			
-			if (currentPart.type == "object")
+			if (currentPart.type == "elevator")
 			{
-				var partSprite:FlxSprite = generateItem(currentPart.asset, currentPart.x, currentPart.y, currentPart.frameCount);
+				// Definitely need custom class for vehicle.
+				var maskSprite:FlxSprite = generateItem(currentPart.asset + "_mask", currentPart.maskX, currentPart.maskY);
+				
+				var toX:Float = partSprite.x;
+				var toY:Float = partSprite.y - (partSprite.height * 1.66);
+				
+				FlxTween.tween(partSprite, { x: toX, y: toY }, 3, { type: FlxTweenType.PINGPONG, ease: FlxEase.smootherStepInOut, startDelay: 2, loopDelay: 3 });
+				
+				vehicleEntities.add(partSprite);
+				vehicleEntities.add(maskSprite);
+			}
+			
+			else
+			{
 				roomEntities.add(partSprite);
 			}
+		}
+		
+		for (i in 0...objectStructure.portals.length)
+		{
+			var currentPortal:RoomPortal = objectStructure.portals[i];
 			
-			else if (currentPart.type == "portal")
-			{
-				var portalBmp:BitmapData = Assets.getBitmapData(roomName + ":assets/" + roomName + "/images/" + currentPart.asset + ".png");
-				var startDirection:String = currentPart.entryDirection;
-				var exitDirections:Array<String> = currentPart.exitDirections;
-				var nextRoom:String = currentPart.nextRoom;
-				var setX:Int = currentPart.setX;
-				var setY:Int = currentPart.setY;
-				
-				var portalSprite:Portal = new Portal(portalBmp, startDirection, exitDirections, nextRoom, setX, setY, currentPart.x, currentPart.y);
-				portalSprite.isDefault = portalEntities.length == 0;
-				
-				portalEntities.add(portalSprite);
-			}
+			var portalBmp:BitmapData = Assets.getBitmapData(roomName + ":assets/" + roomName + "/images/" + currentPortal.asset + ".png");
+			var startDirection:String = currentPortal.entryDirection;
+			var exitDirections:Array<String> = currentPortal.exitDirections;
+			var nextRoom:String = currentPortal.nextRoom;
+			var setX:Int = currentPortal.setX;
+			var setY:Int = currentPortal.setY;
+			
+			var portalSprite:Portal = new Portal(portalBmp, startDirection, exitDirections, nextRoom, setX, setY, currentPortal.x, currentPortal.y);
+			portalSprite.isDefault = portalEntities.length == 0;
+			portalSprite.visible = false;
+			
+			portalEntities.add(portalSprite);
 		}
 		
 		roomReady = true;

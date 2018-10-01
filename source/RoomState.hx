@@ -1,22 +1,26 @@
 package;
 
 import flixel.FlxObject;
-import flixel.FlxState;
 import flixel.FlxG;
 import flixel.FlxCamera;
-import flixel.input.keyboard.FlxKeyList;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
+import flixel.addons.ui.FlxUIState;
+import flixel.input.keyboard.FlxKeyList;
 import flixel.system.scaleModes.FixedScaleMode;
+import flixel.text.FlxText;
+import flixel.addons.ui.FlxInputText;
+
 import openfl.Assets;
 import openfl.utils.AssetLibrary;
 
 import game.Avatar;
+//import game.BubbleStack;
 import game.Portal;
 import game.Room;
 import sound.SoundManager;
 
-class RoomState extends FlxState
+class RoomState extends FlxUIState
 {
 	public static var playerAvatar:Avatar;
 	public static var currentRoom:Room;
@@ -26,11 +30,13 @@ class RoomState extends FlxState
 	private var Southeast:Bool;
 	private var Southwest:Bool;
 	private var Northwest:Bool;
+	//private var chat:BubbleStack;
 	
 	private static var keyDownList:FlxKeyList;
 	private static var audioManager:SoundManager;
 	private static var borderArray:Array<Int> = [0xFF010101, 0x00000000];
-	private static var progress:Int = 0;
+	
+	private var tf:FlxInputText;
 	
 	override public function create():Void
 	{
@@ -40,7 +46,7 @@ class RoomState extends FlxState
 		playerAvatar = new Avatar("Monk");
 		audioManager = new SoundManager();
 		
-		FlxG.log.redirectTraces = true;
+		//FlxG.log.redirectTraces = true;
 		FlxG.debugger.visible = true;
 		FlxG.autoPause = false;
 		
@@ -48,7 +54,7 @@ class RoomState extends FlxState
 	}
 
 	private function joinRoom(roomName:String)
-	{
+	{		
 		if (currentRoom != null)
 		{
 			destroyRoom();
@@ -57,6 +63,7 @@ class RoomState extends FlxState
 		playerAvatar.nextRoom = "";
 		
 		currentRoom = new Room(roomName);
+		
 		Assets.loadLibrary(roomName).onComplete(loadRoom);
 	}
 	
@@ -68,15 +75,43 @@ class RoomState extends FlxState
 		currentRoom.generateRoom(roomStructure);
 		
 		currentRoom.addAvatar(playerAvatar, playerAvatar.exitRoom);
+		remove(playerAvatar.chatGroup);
 		playerAvatar.exitRoom = "";
 		
 		add(currentRoom);
-		// add(currentRoom.walkMap);
+		add(currentRoom.vehicleEntities);
 		add(currentRoom.roomEntities);
 		add(currentRoom.portalEntities);
+		add(playerAvatar.chatGroup);
+		//playerAvatar.chatGroup.y = playerAvatar.y;
 		
-		this.bgColor = currentRoom.backgroundColor;		
+		tf = new FlxInputText(50, 100, 300);
+		tf.borderColor = 0xFFFFFFFF;
+		tf.x = 50;
+		tf.y = 200;
+		tf.width = 300;
+		tf.height = 15;
+		tf.caretWidth = 5;
+		tf.callback = speakUp;
+		add(tf);
 		
+		setupCamera();
+		
+		this.bgColor = currentRoom.backgroundColor;
+		currentRoom.portalEntities.visible = false;
+	}
+	
+	private function speakUp(message:String, action:String)
+	{
+		if (action == "enter")
+		{
+			tf.text = "";
+			playerAvatar.chatGroup.newBubble(message);
+		}
+	}
+	
+	private function setupCamera():Void
+	{
 		var ROOM_MIN_X:Float;
 		var ROOM_MAX_X:Float;
 		var ROOM_MIN_Y:Float;
@@ -110,8 +145,6 @@ class RoomState extends FlxState
 		FlxG.camera.follow(playerAvatar, FlxCameraFollowStyle.LOCKON, .25);
 		
 		FlxG.camera.deadzone = new FlxRect(FlxG.camera.deadzone.x, FlxG.camera.deadzone.y, FlxG.camera.deadzone.width, FlxG.camera.deadzone.height / 2);
-		
-		currentRoom.portalEntities.visible = false;
 	}
 	
 	private function destroyRoom():Void
@@ -119,6 +152,7 @@ class RoomState extends FlxState
 		// remove(currentRoom.walkMap);
 		remove(currentRoom.portalEntities);
 		remove(currentRoom.roomEntities);
+		remove(currentRoom.vehicleEntities);
 		remove(currentRoom);
 		
 		//Assets.unloadLibrary(currentRoom.roomName);
@@ -231,13 +265,7 @@ class RoomState extends FlxState
 		var ptR:Float = if (borderArray.indexOf(currentRoom.testWalkmap(rx, ry)) != -1) 1 else 0;
 		var ptL:Float = if (borderArray.indexOf(currentRoom.testWalkmap(lx, ly)) != -1) 1 else 0;
 		
-		var ptR:Float = 0;
-		var ptL:Float = 0;
-		
 		audioManager.currentSurface = currentRoom.testWalkmap(rx, ry);
-		
-		//trace(Std.string(rx - currentRoom.walkMap.x) + ", " + Std.string(ry - currentRoom.walkMap.y));
-		//trace("Player: " + playerAvatar.x + ", " + playerAvatar.y);
 		
 		return FlxPoint.get(ptR, ptL);
 	}
@@ -294,7 +322,7 @@ class RoomState extends FlxState
 		}
 		
 		else if (Southeast)
-		{			
+		{
 			if (playerNextMovement.x == 1)
 			{
 				playerAvatar.velocityX = 0;
@@ -360,6 +388,8 @@ class RoomState extends FlxState
 	
 	override public function update(elapsed:Float):Void
 	{
+		super.update(elapsed);
+		
 		if (!currentRoom.roomReady)
 		{
 			return;
@@ -406,18 +436,21 @@ class RoomState extends FlxState
 		// Should this call be made in Room's update loop instead?
 		currentRoom.sortGraphics();
 		
-		super.update(elapsed);
+		
 	}
 	
 	public function enterPortal(objectA:FlxObject, objectB:FlxObject):Void
 	{
 		if (objectA == playerAvatar)
-		{			
+		{
 			if (cast(objectB, Portal).checkDirection(playerAvatar.currentDirection))
 			{
-				if (FlxG.pixelPerfectOverlap(playerAvatar, cast(objectB, Portal)))
+				if (cast(objectB, Portal).enabled)
 				{
-					playerAvatar.fadeAway(cast(objectB, Portal).nextRoom, currentRoom.roomName);
+					if (FlxG.pixelPerfectOverlap(playerAvatar, cast(objectB, Portal)))
+					{
+						playerAvatar.fadeAway(cast(objectB, Portal).nextRoom, currentRoom.roomName);
+					}
 				}
 			}
 		}
@@ -426,11 +459,16 @@ class RoomState extends FlxState
 		{			
 			if (cast(objectA, Portal).checkDirection(playerAvatar.currentDirection))
 			{
-				if (FlxG.pixelPerfectOverlap(playerAvatar, cast(objectA, Portal)))
+				if (cast(objectA, Portal).enabled)
 				{
-					playerAvatar.fadeAway(cast(objectA, Portal).nextRoom, currentRoom.roomName);
+					if (FlxG.pixelPerfectOverlap(playerAvatar, cast(objectA, Portal)))
+					{
+						playerAvatar.fadeAway(cast(objectA, Portal).nextRoom, currentRoom.roomName);
+					}
 				}
 			}
 		}
+
+		tf.callback = speakUp;
 	}
 }

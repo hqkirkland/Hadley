@@ -12,7 +12,7 @@
 			"name": "HTML5",
 			"type": "chrome",
 			"request": "launch",
-			"url": "http://127.0.0.1:3000",
+			"url": "http://127.0.0.1:2000",
 			"sourceMaps": true,
 			"webRoot": "${workspaceFolder}"
 		},

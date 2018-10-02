@@ -400,12 +400,4 @@ class Avatar extends FlxSprite
 			}
 		}});
 	}
-	
-	public function speakUp(message:String, action:String)
-	{
-		if (action == "enter")
-		{
-			chatGroup.newBubble(message);
-		}
-	}
 }

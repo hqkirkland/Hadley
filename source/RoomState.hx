@@ -8,7 +8,6 @@ import flixel.math.FlxRect;
 import flixel.addons.ui.FlxUIState;
 import flixel.input.keyboard.FlxKeyList;
 import flixel.system.scaleModes.FixedScaleMode;
-import flixel.text.FlxText;
 import flixel.addons.ui.FlxInputText;
 
 import openfl.Assets;
@@ -37,6 +36,8 @@ class RoomState extends FlxUIState
 	private static var borderArray:Array<Int> = [0xFF010101, 0x00000000];
 	
 	private var tf:FlxInputText;
+	
+	private var t:Int = 0;
 	
 	override public function create():Void
 	{
@@ -83,7 +84,6 @@ class RoomState extends FlxUIState
 		add(currentRoom.portalEntities);
 		add(playerAvatar.chatGroup);
 		//playerAvatar.chatGroup.y = playerAvatar.y;
-		
 		tf = new FlxInputText(50, 100, 300);
 		tf.borderColor = 0xFFFFFFFF;
 		tf.x = 150;
@@ -91,7 +91,7 @@ class RoomState extends FlxUIState
 		tf.width = 300;
 		tf.height = 15;
 		tf.caretWidth = 5;
-		tf.callback = playerAvatar.speakUp;
+		tf.callback = speakUp;
 		tf.text = "";
 		add(tf);
 		
@@ -99,6 +99,15 @@ class RoomState extends FlxUIState
 		
 		this.bgColor = currentRoom.backgroundColor;
 		currentRoom.portalEntities.visible = false;
+	}
+	
+	private function speakUp(message:String, action:String):Void
+	{
+		if (action == "enter")
+		{
+			playerAvatar.chatGroup.newBubble(message);
+			tf.text = "";
+		}
 	}
 	
 	private function setupCamera():Void
@@ -145,6 +154,7 @@ class RoomState extends FlxUIState
 		remove(currentRoom.roomEntities);
 		remove(currentRoom.vehicleEntities);
 		remove(currentRoom);
+		remove(tf);
 		
 		//Assets.unloadLibrary(currentRoom.roomName);
 	}

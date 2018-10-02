@@ -15,7 +15,7 @@ class BubbleStack extends FlxTypedSpriteGroup<ChatBubble>
 	
 	public function new(username:String) 
 	{
-		super(10);
+		super(5);
 		//this.height = 1;
 		speaker = username;
 	}
@@ -23,14 +23,24 @@ class BubbleStack extends FlxTypedSpriteGroup<ChatBubble>
 	public function newBubble(message:String):Void
 	{
 		var newBubble:ChatBubble = new ChatBubble(speaker, message, 0);
+		newBubble.x = 0;
+		
+		var i:Int = 0;
 		
 		FlxTween.tween(newBubble, { alpha: 1 }, 0.5, { ease: FlxEase.smootherStepInOut });
+		FlxTween.tween(newBubble, { alpha: 0 }, 0.5, { ease: FlxEase.smoothStepOut, startDelay: 5, onComplete: {
+			function(_) 
+			{
+				//this.remove(newBubble);
+				newBubble.destroy();
+			}
+		}});
 		
-		newBubble.x = 0;
+		
 		for (bubble in this)
-		{
+		{			
 			FlxTween.tween(bubble, { y: bubble.y - newBubble.height }, 0.5, { ease: FlxEase.smootherStepOut });
-			//bubble.y -= newBubble.height;
+			i++;
 		}
 		
 		newBubble.y = -1 * newBubble.height;

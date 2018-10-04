@@ -2,6 +2,7 @@ package game;
 
 import flixel.util.FlxColor;
 import game.Avatar;
+import openfl.utils.Dictionary;
 
 import flixel.FlxObject;
 import flixel.FlxSprite;
@@ -56,7 +57,8 @@ typedef RoomPortal = {
 class Room extends FlxSprite
 {
 	public var roomName:String;
-
+	
+	public var roomUsers:Dictionary<String, Avatar> = new Dictionary<String, Avatar>();
 	public var roomEntities:FlxTypedSpriteGroup<FlxSprite> = new FlxTypedSpriteGroup<FlxSprite>();
 	public var portalEntities:FlxTypedSpriteGroup<Portal> = new FlxTypedSpriteGroup<Portal>();
 	public var vehicleEntities:FlxTypedSpriteGroup<FlxSprite> = new FlxTypedSpriteGroup<FlxSprite>();
@@ -70,8 +72,12 @@ class Room extends FlxSprite
 		// This function should get passed a dictionary of items from parsed manifest.
 		super(X, Y);
 		roomName = _roomName;
-		
 		walkMap = new FlxSprite();
+	}
+	
+	override public function update(elapsed:Float):Void
+	{
+		super.update(elapsed);
 	}
 	
 	public function generateRoom(roomStruct:String):Void
@@ -164,7 +170,8 @@ class Room extends FlxSprite
 		
 		newAvatar.currentDirection = entryPortal.startDirection;
 		
-		roomEntities.add(newAvatar);
+		roomUsers.set(newAvatar.username, newAvatar);
+		roomEntities.add(roomUsers[newAvatar.username]);
 		
 		newAvatar.fadeIn();
 	}
@@ -197,7 +204,7 @@ class Room extends FlxSprite
 		
 		return 0;
 	}
-
+	
 	public function testWalkmap(nx:Float, ny:Float):Int
 	{
 		return this.walkMap.pixels.getPixel32(Std.int(nx - walkMap.x), Std.int(ny - walkMap.y));

@@ -37,6 +37,7 @@ class Avatar extends FlxSprite
 	public var exitRoom:String = "";
 	public var velocityX:Float = 0;
 	public var velocityY:Float = 0;
+	public var playerNextMovement:FlxPoint;
 	
 	public var chatGroup:BubbleStack;
 	
@@ -92,7 +93,15 @@ class Avatar extends FlxSprite
 		this.offset.y = 63;
 	}
 	
-	public function generateAvatar():Void
+	public function changeAppearance(appearanceString:String):Void
+	{
+		fadeAway();
+		generateAvatar();
+		generateAnimation();
+		fadeIn();
+	}
+	
+	private function generateAvatar():Void
 	{
 		var itemSprite:FlxSprite = new FlxSprite(0, 0);
 		
@@ -155,7 +164,6 @@ class Avatar extends FlxSprite
 		
 		super.update(elapsed);
     }
-
 	
 	private function doAnimation():Void
 	{
@@ -171,6 +179,118 @@ class Avatar extends FlxSprite
 		chatGroup.velocity = this.velocity;
 		
 		this.velocity.put();
+	}
+	
+	public function smoothMovement():Void
+	{
+		// X is R
+		// Y is L
+		// South means SWITCH SHIFTS of L and R.
+		
+		if (playerNextMovement.x == 1 && playerNextMovement.y == 1)
+		{
+			this.velocityX = 0;
+			this.velocityY = 0;
+			this.velocity.set(0, 0);
+			this.canWalk = false;
+			return;
+		}
+		
+		this.canWalk = true;
+		
+		if (keysTriggered.North && keysTriggered.East)
+		{
+			if (playerNextMovement.x == 1)
+			{
+				this.velocityX = 0;
+				this.velocity.set(0, this.velocityY);
+				this.x -= 3;
+			}
+			
+			else if (playerNextMovement.y == 1)
+			{
+				this.velocityX = 0;
+				this.velocity.set(0, this.velocityY);
+				this.x += 3;
+			}
+		}
+		
+		else if (keysTriggered.South && keysTriggered.West)
+		{			
+			if (this.x == 1)
+			{
+				this.velocityX = 0;
+				this.velocity.set(0, this.velocityY);
+				this.x += 2;
+			}
+			
+			else if (playerNextMovement.y == 1)
+			{
+				this.velocityX = 0;
+				this.velocity.set(0, this.velocityY);
+				this.x -= 3;
+			}
+		}
+		
+		else if (keysTriggered.South && keysTriggered.East)
+		{
+			if (this.x == 1)
+			{
+				this.velocityX = 0;
+				this.velocity.set(0, this.velocityY);
+				this.x += 2;
+			}
+			
+			else if (playerNextMovement.y == 1)
+			{
+				this.velocityX = 0;
+				this.velocity.set(0, this.velocityY);
+				this.x -= 3;
+			}
+		}
+		
+		else if (keysTriggered.North && keysTriggered.West)
+		{			
+			if (playerNextMovement.x == 1)
+			{
+				this.velocityX = 0;
+				this.velocity.set(0, this.velocityY);
+				this.x -= 1;
+			}
+			
+			else if (playerNextMovement.y == 1)
+			{
+				this.velocityX = 0;
+				this.velocity.set(0, this.velocityY);
+				this.x += 3;
+			}
+		}
+		
+		else if (keysTriggered.East)
+		{			
+			if (playerNextMovement.x == 1)
+			{
+				this.velocityY = 0;
+			}
+			
+			if (playerNextMovement.y == 1)
+			{
+				this.velocityY = 0;
+			}
+		}
+		
+		else if (keysTriggered.West)
+		{
+			if (playerNextMovement.x == 1)
+			{
+				this.velocityY = 0;
+			}
+			
+			if (playerNextMovement.y == 1)
+			{
+				this.velocityY = 0;
+			}
+		}
 	}
 	
 	private function buildAnimationString():String
@@ -368,8 +488,8 @@ class Avatar extends FlxSprite
 		
 		return currentAction + currentDirection;
 	}
-	
-	public function fadeAway(newRoom:String, lastRoom:String):Void
+		
+	public function leaveRoom(newRoom:String, lastRoom:String):Void
 	{
 		enableWalk = false;
 		exitRoom = lastRoom;
@@ -388,6 +508,11 @@ class Avatar extends FlxSprite
 		
 		chatGroup.clear();
 		chatGroup = new BubbleStack(this.username);
+	}
+	
+	public function fadeAway():Void
+	{
+		FlxTween.tween(this, { alpha: 0 }, 0.5, { ease: FlxEase.smoothStepIn});
 	}
 
 	public function fadeIn():Void

@@ -19,14 +19,13 @@ class ChatBubble extends FlxSprite
 	private var fontData:String;
 	private var chatFont:FlxBitmapFont;
 	private var textFormat:FlxTextFormat;
-	
 	private	var lines:Array<String> = new Array<String>();
-	
 	private var bubbleCorner:FlxSprite;
 	private var bubbleOutline:FlxSprite;
 	private var bubblePointer:FlxSprite;
 	
 	public static var MAX_LINE:Int = 115;
+	
 	private static var LINE_MARGIN:Int = 15;
 	private static var useDefaultRenderMethod:Bool;
 	

@@ -1,5 +1,6 @@
 package;
 
+import communication.GameConnection;
 import flixel.FlxObject;
 import flixel.FlxG;
 import flixel.FlxCamera;
@@ -14,7 +15,6 @@ import openfl.Assets;
 import openfl.utils.AssetLibrary;
 
 import game.Avatar;
-//import game.BubbleStack;
 import game.Portal;
 import game.Room;
 import sound.SoundManager;
@@ -23,7 +23,6 @@ class RoomState extends FlxUIState
 {
 	public static var playerAvatar:Avatar;
 	public static var currentRoom:Room;
-	public static var playerNextMovement:FlxPoint;
 	
 	private var Northeast:Bool;
 	private var Southeast:Bool;
@@ -34,35 +33,31 @@ class RoomState extends FlxUIState
 	private static var keyDownList:FlxKeyList;
 	private static var audioManager:SoundManager;
 	private static var borderArray:Array<Int> = [0xFF010101, 0x00000000];
+	private static var gamecon:GameConnection;
 	
 	private var tf:FlxInputText;
 	
-	private var t:Int = 0;
-	
 	override public function create():Void
 	{
-		super.create();
+		super.create(); 
 		FlxG.scaleMode = new FixedScaleMode();
 		
 		playerAvatar = new Avatar("Monk");
 		audioManager = new SoundManager();
 		
-		//FlxG.log.redirectTraces = true;
-		FlxG.debugger.visible = true;
 		FlxG.autoPause = false;
 		
 		joinRoom("cloudInfoRoom");
 	}
-
+	
 	private function joinRoom(roomName:String)
-	{		
+	{
 		if (currentRoom != null)
 		{
 			destroyRoom();
 		}
 		
 		playerAvatar.nextRoom = "";
-		
 		currentRoom = new Room(roomName);
 		
 		Assets.loadLibrary(roomName).onComplete(loadRoom);
@@ -83,7 +78,7 @@ class RoomState extends FlxUIState
 		add(currentRoom.roomEntities);
 		add(currentRoom.portalEntities);
 		add(playerAvatar.chatGroup);
-		//playerAvatar.chatGroup.y = playerAvatar.y;
+		
 		tf = new FlxInputText(50, 100, 300);
 		tf.borderColor = 0xFFFFFFFF;
 		tf.x = 150;
@@ -99,15 +94,6 @@ class RoomState extends FlxUIState
 		
 		this.bgColor = currentRoom.backgroundColor;
 		currentRoom.portalEntities.visible = false;
-	}
-	
-	private function speakUp(message:String, action:String):Void
-	{
-		if (action == "enter")
-		{
-			playerAvatar.chatGroup.newBubble(message);
-			tf.text = "";
-		}
 	}
 	
 	private function setupCamera():Void
@@ -155,8 +141,6 @@ class RoomState extends FlxUIState
 		remove(currentRoom.vehicleEntities);
 		remove(currentRoom);
 		remove(tf);
-		
-		//Assets.unloadLibrary(currentRoom.roomName);
 	}
 	
 	private function testNextPoints():FlxPoint
@@ -271,122 +255,6 @@ class RoomState extends FlxUIState
 		return FlxPoint.get(ptR, ptL);
 	}
 	
-	private function smoothMovement():Void
-	{
-		// X is R
-		// Y is L
-		// South means SWITCH SHIFTS of L and R.
-		
-		if (playerNextMovement.x == 1 && playerNextMovement.y == 1)
-		{
-			playerAvatar.velocityX = 0;
-			playerAvatar.velocityY = 0;
-			playerAvatar.velocity.set(0, 0);
-			playerAvatar.canWalk = false;
-			return;
-		}
-		
-		playerAvatar.canWalk = true;
-		
-		if (Northeast)
-		{
-			if (playerNextMovement.x == 1)
-			{
-				playerAvatar.velocityX = 0;
-				playerAvatar.velocity.set(0, playerAvatar.velocityY);
-				playerAvatar.x -= 3;
-			}
-			
-			else if (playerNextMovement.y == 1)
-			{
-				playerAvatar.velocityX = 0;
-				playerAvatar.velocity.set(0, playerAvatar.velocityY);
-				playerAvatar.x += 3;
-			}
-		}
-		
-		else if (Southwest)
-		{			
-			if (playerNextMovement.x == 1)
-			{
-				playerAvatar.velocityX = 0;
-				playerAvatar.velocity.set(0, playerAvatar.velocityY);
-				playerAvatar.x += 2;
-			}
-			
-			else if (playerNextMovement.y == 1)
-			{
-				playerAvatar.velocityX = 0;
-				playerAvatar.velocity.set(0, playerAvatar.velocityY);
-				playerAvatar.x -= 3;
-			}
-		}
-		
-		else if (Southeast)
-		{
-			if (playerNextMovement.x == 1)
-			{
-				playerAvatar.velocityX = 0;
-				playerAvatar.velocity.set(0, playerAvatar.velocityY);
-				playerAvatar.x += 2;
-			}
-			
-			else if (playerNextMovement.y == 1)
-			{
-				playerAvatar.velocityX = 0;
-				playerAvatar.velocity.set(0, playerAvatar.velocityY);
-				playerAvatar.x -= 3;
-			}
-		}
-		
-		else if (Northwest)
-		{			
-			if (playerNextMovement.x == 1)
-			{
-				playerAvatar.velocityX = 0;
-				playerAvatar.velocity.set(0, playerAvatar.velocityY);
-				playerAvatar.x -= 1;
-			}
-			
-			else if (playerNextMovement.y == 1)
-			{
-				playerAvatar.velocityX = 0;
-				playerAvatar.velocity.set(0, playerAvatar.velocityY);
-				playerAvatar.x += 3;
-			}
-		}
-		
-		else if (playerAvatar.keysTriggered.East)
-		{			
-			if (playerNextMovement.x == 1)
-			{
-				playerAvatar.velocityY = 0;
-			}
-			
-			if (playerNextMovement.y == 1)
-			{
-				playerAvatar.velocityY = 0;
-			}
-		}
-		
-		else if (playerAvatar.keysTriggered.West)
-		{
-			if (playerNextMovement.x == 1)
-			{
-				playerAvatar.velocityY = 0;
-			}
-			
-			if (playerNextMovement.y == 1)
-			{
-				playerAvatar.velocityY = 0;
-			}
-		}
-	}
-	
-	// Private function enter door:
-	// this.active = false;
-	// FlxG.switchTo(LoadState)
-	
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
@@ -408,8 +276,8 @@ class RoomState extends FlxUIState
 		this.Southwest = playerAvatar.keysTriggered.South && playerAvatar.keysTriggered.West;
 		this.Northwest = playerAvatar.keysTriggered.North && playerAvatar.keysTriggered.West;
 		
-		playerNextMovement = testNextPoints();
-		smoothMovement();
+		playerAvatar.playerNextMovement = testNextPoints();
+		playerAvatar.smoothMovement();
 		
 		if (!playerAvatar.enableWalk)
 		{
@@ -417,11 +285,6 @@ class RoomState extends FlxUIState
 		}
 		
 		audioManager.playWalkSound(playerAvatar.keysTriggered.run);
-		
-		// TODO: Move fade trigger to the actual Avatar class
-		// Add switch/event.
-		// Wait. Shouldn't we wait on a "switch room" network packet 
-		// to fade another avatar out
 		
 		if (playerAvatar.nextRoom != "")
 		{
@@ -432,12 +295,24 @@ class RoomState extends FlxUIState
 		if (playerAvatar.currentAction == Avatar.actionSet.Walk)
 		{
 			FlxG.overlap(playerAvatar, currentRoom.portalEntities, enterPortal);
-		}		
+		}
 		
 		// Should this call be made in Room's update loop instead?
 		currentRoom.sortGraphics();
-		
-		
+	}
+	
+	private function speakUp(message:String, action:String):Void
+	{
+		if (action == "enter")
+		{
+			/*if (message == "connect")
+			{
+				connection = new GameConnection();
+			}*/
+			
+			playerAvatar.chatGroup.newBubble(message);
+			tf.text = "";
+		}
 	}
 	
 	public function enterPortal(objectA:FlxObject, objectB:FlxObject):Void
@@ -450,7 +325,7 @@ class RoomState extends FlxUIState
 				{
 					if (FlxG.pixelPerfectOverlap(playerAvatar, cast(objectB, Portal)))
 					{
-						playerAvatar.fadeAway(cast(objectB, Portal).nextRoom, currentRoom.roomName);
+						playerAvatar.leaveRoom(cast(objectB, Portal).nextRoom, currentRoom.roomName);
 					}
 				}
 			}
@@ -464,7 +339,7 @@ class RoomState extends FlxUIState
 				{
 					if (FlxG.pixelPerfectOverlap(playerAvatar, cast(objectA, Portal)))
 					{
-						playerAvatar.fadeAway(cast(objectA, Portal).nextRoom, currentRoom.roomName);
+						playerAvatar.leaveRoom(cast(objectA, Portal).nextRoom, currentRoom.roomName);
 					}
 				}
 			}

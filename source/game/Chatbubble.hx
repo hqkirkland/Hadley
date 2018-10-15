@@ -1,11 +1,12 @@
 package game;
 
+import openfl.Assets;
+
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxBitmapFont;
 import flixel.text.FlxText;
-import openfl.utils.ByteArray;
+
 import util.FlxBitmapTextBlittable;
-import openfl.Assets;
 
 /**
  * ...

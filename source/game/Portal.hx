@@ -1,5 +1,7 @@
 package game;
+
 import flixel.FlxSprite;
+
 import openfl.display.BitmapData;
 
 /**

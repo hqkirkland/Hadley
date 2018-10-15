@@ -1,19 +1,21 @@
 package;
 
-import communication.GameConnection;
+import haxe.Json;
+
+import openfl.Assets;
+import openfl.events.ProgressEvent;
+import openfl.utils.AssetLibrary;
+
 import flixel.FlxObject;
 import flixel.FlxG;
 import flixel.FlxCamera;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
 import flixel.addons.ui.FlxUIState;
-import flixel.input.keyboard.FlxKeyList;
 import flixel.system.scaleModes.FixedScaleMode;
 import flixel.addons.ui.FlxInputText;
 
-import openfl.Assets;
-import openfl.utils.AssetLibrary;
-
+import communication.NetworkManager;
 import game.Avatar;
 import game.Portal;
 import game.Room;
@@ -28,12 +30,12 @@ class RoomState extends FlxUIState
 	private var Southeast:Bool;
 	private var Southwest:Bool;
 	private var Northwest:Bool;
-	//private var chat:BubbleStack;
 	
-	private static var keyDownList:FlxKeyList;
+	private var nextRoom:String;
+	private var exitRoom:String;
+	
 	private static var audioManager:SoundManager;
 	private static var borderArray:Array<Int> = [0xFF010101, 0x00000000];
-	private static var gamecon:GameConnection;
 	
 	private var tf:FlxInputText;
 	
@@ -41,11 +43,13 @@ class RoomState extends FlxUIState
 	{
 		super.create(); 
 		FlxG.scaleMode = new FixedScaleMode();
+		FlxG.autoPause = false;
 		
 		playerAvatar = new Avatar("Monk");
 		audioManager = new SoundManager();
 		
-		FlxG.autoPause = false;
+		NetworkManager.connect("71.78.101.154", 1626);
+		NetworkManager.networkSocket.addEventListener(ProgressEvent.SOCKET_DATA, handlePacket);
 		
 		joinRoom("cloudInfoRoom");
 	}
@@ -57,7 +61,7 @@ class RoomState extends FlxUIState
 			destroyRoom();
 		}
 		
-		playerAvatar.nextRoom = "";
+		this.nextRoom = "";
 		currentRoom = new Room(roomName);
 		
 		Assets.loadLibrary(roomName).onComplete(loadRoom);
@@ -70,8 +74,8 @@ class RoomState extends FlxUIState
 		var roomStructure:String = Assets.getText(currentRoom.roomName + ":assets/" + currentRoom.roomName + "/" + currentRoom.roomName + "_Objects.json");
 		currentRoom.generateRoom(roomStructure);
 		
-		currentRoom.addAvatar(playerAvatar, playerAvatar.exitRoom);
-		playerAvatar.exitRoom = "";
+		currentRoom.addAvatar(playerAvatar, exitRoom);
+		exitRoom = "";
 		
 		add(currentRoom);
 		add(currentRoom.vehicleEntities);
@@ -94,6 +98,8 @@ class RoomState extends FlxUIState
 		
 		this.bgColor = currentRoom.backgroundColor;
 		currentRoom.portalEntities.visible = false;
+		
+		NetworkManager.sendJoinRoom(currentRoom.roomName);
 	}
 	
 	private function setupCamera():Void
@@ -264,6 +270,23 @@ class RoomState extends FlxUIState
 			return;
 		}
 		
+		if (nextRoom != "" && playerAvatar.fadeComplete)
+		{
+			destroyRoom();
+			joinRoom(nextRoom);
+		}
+		
+		if (playerAvatar.currentAction == Avatar.actionSet.Walk)
+		{
+			FlxG.overlap(playerAvatar, currentRoom.portalEntities, enterPortal);
+			NetworkManager.sendMotion();
+		}
+		
+		if (!playerAvatar.enableWalk)
+		{
+			audioManager.currentSurface = 0x0;
+		}
+		
 		// TODO: If in room//if in context..
 		playerAvatar.keysTriggered.North = FlxG.keys.pressed.UP && !FlxG.keys.pressed.DOWN;
 		playerAvatar.keysTriggered.South = FlxG.keys.pressed.DOWN && !FlxG.keys.pressed.UP;
@@ -279,37 +302,13 @@ class RoomState extends FlxUIState
 		playerAvatar.playerNextMovement = testNextPoints();
 		playerAvatar.smoothMovement();
 		
-		if (!playerAvatar.enableWalk)
-		{
-			audioManager.currentSurface = 0x0;
-		}
-		
 		audioManager.playWalkSound(playerAvatar.keysTriggered.run);
-		
-		if (playerAvatar.nextRoom != "")
-		{
-			destroyRoom();
-			joinRoom(playerAvatar.nextRoom);
-		}
-		
-		if (playerAvatar.currentAction == Avatar.actionSet.Walk)
-		{
-			FlxG.overlap(playerAvatar, currentRoom.portalEntities, enterPortal);
-		}
-		
-		// Should this call be made in Room's update loop instead?
-		currentRoom.sortGraphics();
 	}
 	
 	private function speakUp(message:String, action:String):Void
 	{
 		if (action == "enter")
 		{
-			/*if (message == "connect")
-			{
-				connection = new GameConnection();
-			}*/
-			
 			playerAvatar.chatGroup.newBubble(message);
 			tf.text = "";
 		}
@@ -325,24 +324,44 @@ class RoomState extends FlxUIState
 				{
 					if (FlxG.pixelPerfectOverlap(playerAvatar, cast(objectB, Portal)))
 					{
-						playerAvatar.leaveRoom(cast(objectB, Portal).nextRoom, currentRoom.roomName);
+						nextRoom = cast(objectB, Portal).nextRoom;
+						exitRoom = currentRoom.roomName;
+						playerAvatar.leaveRoom();
 					}
 				}
 			}
 		}
 		
 		else if (objectB == playerAvatar)
-		{			
+		{
 			if (cast(objectA, Portal).checkDirection(playerAvatar.currentDirection))
 			{
 				if (cast(objectA, Portal).enabled)
 				{
 					if (FlxG.pixelPerfectOverlap(playerAvatar, cast(objectA, Portal)))
 					{
-						playerAvatar.leaveRoom(cast(objectA, Portal).nextRoom, currentRoom.roomName);
+						nextRoom = cast(objectA, Portal).nextRoom;
+						exitRoom = currentRoom.roomName;
+						playerAvatar.leaveRoom();
 					}
 				}
 			}
+		}
+	}
+	
+	public function handlePacket(e:ProgressEvent):Void
+	{
+		var byteCount:Int = Math.ceil(e.bytesLoaded);
+		var packetString:String = NetworkManager.networkSocket.readUTFBytes(byteCount);
+		var packet:Dynamic = Json.parse(packetString);
+		
+		switch(packet.id)
+		{
+			case 10:
+				var handledPacket:IncomingJoinPacket = Json.parse(packetString);
+				trace(handledPacket.fromRoom);
+				currentRoom.addAvatar(new Avatar("Test"), handledPacket.fromRoom);
+			default:
 		}
 	}
 }

@@ -1,26 +1,28 @@
 package game;
 
-import flixel.util.FlxColor;
-import game.Avatar;
+import haxe.Json;
+
+import openfl.Assets;
+import openfl.display.BitmapData;
 import openfl.utils.Dictionary;
 
+import flixel.util.FlxColor;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxTileFrames;
 import flixel.group.FlxSpriteGroup;
 import flixel.math.FlxPoint;
-import flixel.util.FlxSort;
-import haxe.Json;
-import openfl.Assets;
-import openfl.display.BitmapData;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
+import flixel.util.FlxSort;
+
+import game.Avatar;
 
 /**
  * ...
  * @author Hunter
- */ 
+ */
 
 typedef RoomStructure = {
 	var name:String;
@@ -78,6 +80,7 @@ class Room extends FlxSprite
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
+		sortGraphics();
 	}
 	
 	public function generateRoom(roomStruct:String):Void
@@ -214,7 +217,7 @@ class Room extends FlxSprite
 	{
 		roomEntities.sort(byDepth, FlxSort.ASCENDING);
 	}
-	
+
 	private static inline function byDepth(Order:Int, Obj1:FlxObject, Obj2:FlxObject):Int
 	{
 		var ay:Float = Obj1.y + Obj1.height;

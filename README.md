@@ -12,6 +12,6 @@ Features:
 * Item Colorization: Complete
 * Room Sprite Placement: Almost Complete
 * Room Physics: Partially Complete
-* Networking: Not Started
+* Networking: Partially Complete
 
 Core Improvements:

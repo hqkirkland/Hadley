@@ -38,18 +38,18 @@ import haxe.macro.Expr;
 		
 		var config = {
 			
-			build: "26",
+			build: "25",
 			company: "Nodebay.com",
 			file: "HadleyHaxe",
 			fps: 24,
 			name: "HadleyHaxe",
-			orientation: "landscape",
+			orientation: "",
 			packageName: "com.example.myapp",
 			version: "0.0.1",
 			windows: [
 				
 				{
-					allowHighDPI: true,
+					allowHighDPI: false,
 					alwaysOnTop: false,
 					antialiasing: 0,
 					background: 0,
@@ -64,7 +64,7 @@ import haxe.macro.Expr;
 					maximized: false,
 					minimized: false,
 					parameters: {},
-					resizable: true,
+					resizable: false,
 					stencilBuffer: true,
 					title: "HadleyHaxe",
 					vsync: true,
@@ -110,7 +110,7 @@ import haxe.macro.Expr;
 		#if (lime >= "7.0.0")
 		ManifestResources.init (config);
 		
-		app.meta["build"] = "26";
+		app.meta["build"] = "25";
 		app.meta["company"] = "Nodebay.com";
 		app.meta["file"] = "HadleyHaxe";
 		app.meta["name"] = "HadleyHaxe";
@@ -121,7 +121,7 @@ import haxe.macro.Expr;
 		
 		var attributes:lime.ui.WindowAttributes = {
 			
-			allowHighDPI: true,
+			allowHighDPI: false,
 			alwaysOnTop: false,
 			borderless: false,
 			// display: 0,
@@ -133,7 +133,7 @@ import haxe.macro.Expr;
 			maximized: false,
 			minimized: false,
 			parameters: {},
-			resizable: true,
+			resizable: false,
 			title: "HadleyHaxe",
 			width: 975,
 			x: null,

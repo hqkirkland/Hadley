@@ -1,21 +1,26 @@
 package;
 
+import communication.messages.ServerMotionPacket;
 import haxe.Json;
 
 import openfl.Assets;
 import openfl.events.ProgressEvent;
 import openfl.utils.AssetLibrary;
+import openfl.utils.ByteArray;
 
 import flixel.FlxObject;
 import flixel.FlxG;
 import flixel.FlxCamera;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
+import flixel.addons.ui.FlxInputText;
 import flixel.addons.ui.FlxUIState;
 import flixel.system.scaleModes.FixedScaleMode;
-import flixel.addons.ui.FlxInputText;
 
 import communication.NetworkManager;
+import communication.messages.Packet;
+import communication.messages.MessageType;
+import communication.messages.ServerJoinPacket;
 import game.Avatar;
 import game.Portal;
 import game.Room;
@@ -26,10 +31,7 @@ class RoomState extends FlxUIState
 	public static var playerAvatar:Avatar;
 	public static var currentRoom:Room;
 	
-	private var Northeast:Bool;
-	private var Southeast:Bool;
-	private var Southwest:Bool;
-	private var Northwest:Bool;
+	private var playerAvatar2:Avatar;
 	
 	private var nextRoom:String;
 	private var exitRoom:String;
@@ -48,8 +50,8 @@ class RoomState extends FlxUIState
 		playerAvatar = new Avatar("Monk");
 		audioManager = new SoundManager();
 		
-		NetworkManager.connect("71.78.101.154", 1626);
-		NetworkManager.networkSocket.addEventListener(ProgressEvent.SOCKET_DATA, handlePacket);
+		NetworkManager.connect("72.182.108.158", 1626);
+		NetworkManager.networkSocket.addEventListener(ProgressEvent.SOCKET_DATA, receivePacket);
 		
 		joinRoom("cloudInfoRoom");
 	}
@@ -149,97 +151,102 @@ class RoomState extends FlxUIState
 		remove(tf);
 	}
 	
-	private function testNextPoints():FlxPoint
+	private function testNextPoints(testAvatar:Avatar):FlxPoint
 	{
+		var Northeast:Bool = testAvatar.keysTriggered.North && testAvatar.keysTriggered.East;
+		var Northwest:Bool = testAvatar.keysTriggered.North && testAvatar.keysTriggered.West;
+		var Southeast:Bool = testAvatar.keysTriggered.South && testAvatar.keysTriggered.East;
+		var Southwest:Bool = testAvatar.keysTriggered.South && testAvatar.keysTriggered.West;
+		
 		var rx:Float = 0;
 		var ry:Float = 0;
 		
 		var lx:Float = 0;
 		var ly:Float = 0;
 		
-		if (playerAvatar.keysTriggered.North)
+		if (testAvatar.keysTriggered.North)
 		{
 			if (Northeast)
 			{
 				// Represents right foot.
-				rx = playerAvatar.x + 33;
-				ry = playerAvatar.y + 60;
+				rx = testAvatar.x + 33;
+				ry = testAvatar.y + 60;
 				
 				// Represents left foot.
-				lx = playerAvatar.x + 20;
-				ly = playerAvatar.y + 57;
+				lx = testAvatar.x + 20;
+				ly = testAvatar.y + 57;
 			}
 			
 			else if (Northwest)
 			{
-				rx = playerAvatar.x + 20;
-				ry = playerAvatar.y + 57;
+				rx = testAvatar.x + 20;
+				ry = testAvatar.y + 57;
 				
-				lx = playerAvatar.x + 7;
-				ly = playerAvatar.y + 60;
+				lx = testAvatar.x + 7;
+				ly = testAvatar.y + 60;
 			}
 			
 			else
 			{
-				rx = playerAvatar.x + 30;
-				ry = playerAvatar.y + 55;
+				rx = testAvatar.x + 30;
+				ry = testAvatar.y + 55;
 				
-				lx = playerAvatar.x + 10;
-				ly = playerAvatar.y + 55;
+				lx = testAvatar.x + 10;
+				ly = testAvatar.y + 55;
 			}
 		}
 		
-		if (playerAvatar.keysTriggered.South)
+		if (testAvatar.keysTriggered.South)
 		{
 			if (Southeast)
 			{
-				rx = playerAvatar.x + 17;
-				ry = playerAvatar.y + 69;
+				rx = testAvatar.x + 17;
+				ry = testAvatar.y + 69;
 				
-				lx = playerAvatar.x + 35;
-				ly = playerAvatar.y + 62;
+				lx = testAvatar.x + 35;
+				ly = testAvatar.y + 62;
 			}
 			
 			else if (Southwest)
 			{
-				rx = playerAvatar.x + 10;
-				ry = playerAvatar.y + 65;
+				rx = testAvatar.x + 10;
+				ry = testAvatar.y + 65;
 				
-				lx = playerAvatar.x + 20;
-				ly = playerAvatar.y + 65;
+				lx = testAvatar.x + 20;
+				ly = testAvatar.y + 65;
 			}
 			
 			else
 			{
-				rx = playerAvatar.x + 10;
-				ry = playerAvatar.y + 70;
+				rx = testAvatar.x + 10;
+				ry = testAvatar.y + 70;
 				
-				lx = playerAvatar.x + 30;
-				ly = playerAvatar.y + 70;
+				lx = testAvatar.x + 30;
+				ly = testAvatar.y + 70;
 			}
 		}
 		
-		if (playerAvatar.keysTriggered.East)
+		if (testAvatar.keysTriggered.East)
 		{
 			if (!Southeast && !Northeast)
 			{
-				rx = playerAvatar.x + 26;
-				ry = playerAvatar.y + 63;
+				rx = testAvatar.x + 26;
+				ry = testAvatar.y + 63;
 				
-				lx = playerAvatar.x + 26;
-				ly = playerAvatar.y + 58;
+				lx = testAvatar.x + 26;
+				ly = testAvatar.y + 58;
 			}
 		}
 		
-		if (playerAvatar.keysTriggered.West)
+		if (testAvatar.keysTriggered.West)
 		{
 			if (!Southwest && !Northwest)
 			{
-				rx = playerAvatar.x + 10;
-				ry = playerAvatar.y + 58;
+				rx = testAvatar.x + 10;
+				ry = testAvatar.y + 58;
 				
-				lx = playerAvatar.x + 10;
-				ly = playerAvatar.y + 65;
+				lx = testAvatar.x + 10;
+				ly = testAvatar.y + 65;
 			}
 		}
 		
@@ -247,11 +254,11 @@ class RoomState extends FlxUIState
 		// 0 is FALSE: No Collision.
 		// Probably still have a problem with 0-pixels.
 		
-		rx -= playerAvatar.offset.x;
-		ry -= playerAvatar.offset.y;
+		rx -= testAvatar.offset.x;
+		ry -= testAvatar.offset.y;
 		
-		lx -= playerAvatar.offset.x;
-		ly -= playerAvatar.offset.y;
+		lx -= testAvatar.offset.x;
+		ly -= testAvatar.offset.y;
 		
 		var ptR:Float = if (borderArray.indexOf(currentRoom.testWalkmap(rx, ry)) != -1) 1 else 0;
 		var ptL:Float = if (borderArray.indexOf(currentRoom.testWalkmap(lx, ly)) != -1) 1 else 0;
@@ -276,17 +283,6 @@ class RoomState extends FlxUIState
 			joinRoom(nextRoom);
 		}
 		
-		if (playerAvatar.currentAction == Avatar.actionSet.Walk)
-		{
-			FlxG.overlap(playerAvatar, currentRoom.portalEntities, enterPortal);
-			NetworkManager.sendMotion();
-		}
-		
-		if (!playerAvatar.enableWalk)
-		{
-			audioManager.currentSurface = 0x0;
-		}
-		
 		// TODO: If in room//if in context..
 		playerAvatar.keysTriggered.North = FlxG.keys.pressed.UP && !FlxG.keys.pressed.DOWN;
 		playerAvatar.keysTriggered.South = FlxG.keys.pressed.DOWN && !FlxG.keys.pressed.UP;
@@ -294,12 +290,27 @@ class RoomState extends FlxUIState
 		playerAvatar.keysTriggered.West = FlxG.keys.pressed.LEFT && !FlxG.keys.pressed.RIGHT;
 		playerAvatar.keysTriggered.Run = FlxG.keys.pressed.SHIFT;
 		
-		this.Northeast = playerAvatar.keysTriggered.North && playerAvatar.keysTriggered.East;
-		this.Southeast = playerAvatar.keysTriggered.South && playerAvatar.keysTriggered.East;
-		this.Southwest = playerAvatar.keysTriggered.South && playerAvatar.keysTriggered.West;
-		this.Northwest = playerAvatar.keysTriggered.North && playerAvatar.keysTriggered.West;
+		if (playerAvatar.currentAction == Avatar.actionSet.Walk)
+		{
+			FlxG.overlap(playerAvatar, currentRoom.portalEntities, enterPortal);
+			var motionChanged:Bool = checkMovementChange();
+			
+			if (motionChanged)
+			{
+				NetworkManager.sendMotion(playerAvatar.keysTriggered.North, 
+										  playerAvatar.keysTriggered.South, 
+										  playerAvatar.keysTriggered.East, 
+										  playerAvatar.keysTriggered.West,
+										  playerAvatar.keysTriggered.Run);
+			}
+		}
 		
-		playerAvatar.playerNextMovement = testNextPoints();
+		if (!playerAvatar.enableWalk)
+		{
+			audioManager.currentSurface = 0x0;
+		}
+		
+		playerAvatar.playerNextMovement = testNextPoints(playerAvatar);
 		playerAvatar.smoothMovement();
 		
 		audioManager.playWalkSound(playerAvatar.keysTriggered.run);
@@ -349,19 +360,60 @@ class RoomState extends FlxUIState
 		}
 	}
 	
-	public function handlePacket(e:ProgressEvent):Void
+	public function receivePacket(e:ProgressEvent):Void
 	{
 		var byteCount:Int = Math.ceil(e.bytesLoaded);
-		var packetString:String = NetworkManager.networkSocket.readUTFBytes(byteCount);
-		var packet:Dynamic = Json.parse(packetString);
+		var serverPacket:Packet = NetworkManager.handlePacket(byteCount);
 		
-		switch(packet.id)
+		switch (serverPacket.messageId)
 		{
-			case 10:
-				var handledPacket:IncomingJoinPacket = Json.parse(packetString);
-				trace(handledPacket.fromRoom);
-				currentRoom.addAvatar(new Avatar("Test"), handledPacket.fromRoom);
+			case MessageType.JoinRoom:
+				var joinPacket:ServerJoinPacket = cast(serverPacket, ServerJoinPacket);
+				playerAvatar2 = new Avatar("Monk2");
+				currentRoom.addAvatar(playerAvatar2, joinPacket.fromRoom);
+			case MessageType.Motion:
+				var motionPacket:ServerMotionPacket = cast(serverPacket, ServerMotionPacket);
+				playerAvatar2.keysTriggered.North = motionPacket.north;
+				playerAvatar2.keysTriggered.South = motionPacket.south;
+				playerAvatar2.keysTriggered.East = motionPacket.east;
+				playerAvatar2.keysTriggered.West = motionPacket.west;
+				playerAvatar2.keysTriggered.Run = motionPacket.run;
+				
+				playerAvatar2.playerNextMovement = testNextPoints(playerAvatar2);
+				playerAvatar2.smoothMovement();
+				
 			default:
+				return;
 		}
+	}
+	
+	public function checkMovementChange():Bool
+	{
+		if (playerAvatar.keysTriggered.North != playerAvatar.previousKeysTriggered.North)
+		{
+			return true;
+		}
+		
+		if (playerAvatar.keysTriggered.South != playerAvatar.previousKeysTriggered.South)
+		{
+			return true;
+		}
+		
+		if (playerAvatar.keysTriggered.East != playerAvatar.previousKeysTriggered.East)
+		{
+			return true;
+		}
+		
+		if (playerAvatar.keysTriggered.West != playerAvatar.previousKeysTriggered.West)
+		{
+			return true;
+		}
+		
+		if (playerAvatar.keysTriggered.Run != playerAvatar.previousKeysTriggered.Run)
+		{
+			return true;
+		}
+		
+		return false;
 	}
 }

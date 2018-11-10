@@ -44,7 +44,7 @@ class Avatar extends FlxSprite
 	//public var chatBubbles:FlxTypedSpriteGroup<Chatbubble>;
 	
 	public var keysTriggered:Object = { North: false, South: false, East: false, West: false, Run: false };
-	public var previousKeysTriggered:Object = { North: false, South: false, East: false, West: false };
+	public var previousKeysTriggered:Object = { North: false, South: false, East: false, West: false, Run: false };
 	
 	public var overlapRectangle:FlxObject = new FlxObject(0, 0, 10, 10);
 	
@@ -171,7 +171,7 @@ class Avatar extends FlxSprite
 		
 		animation.play(animationString);
 		
-		if (keysTriggered.Run) 
+		if (previousKeysTriggered.Run) 
 		{ this.velocity = FlxPoint.get(this.velocityX * 1.66, this.velocityY * 1.66); }
 		else
 		{ this.velocity = FlxPoint.get(this.velocityX, this.velocityY); }
@@ -485,6 +485,8 @@ class Avatar extends FlxSprite
 			else if (previousKeysTriggered.North)
 			{ currentDirection = directionSet.North; }
 		}
+		
+		previousKeysTriggered.Run = keysTriggered.Run;
 		
 		return currentAction + currentDirection;
 	}

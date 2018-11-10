@@ -4,7 +4,7 @@ import openfl.utils.Object;
  * @author Hunter
  */
 
-class OutgoingMotionPacket implements Packet
+class OutgoingMotionPacket extends Packet
 {
 	public var id:Int = 11;
 	public var body:Dynamic;

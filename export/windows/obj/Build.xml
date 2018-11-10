@@ -4959,7 +4959,7 @@
    <depend name="include/openfl/geom/Matrix.h"/>
    <depend name="include/openfl/geom/Rectangle.h"/>
   </file>
-  <file name="src/game/Chatbubble.cpp" >
+  <file name="src/game/ChatBubble.cpp" >
    <depend name="include/Xml.h"/>
    <depend name="include/flixel/FlxBasic.h"/>
    <depend name="include/flixel/FlxObject.h"/>
@@ -4971,7 +4971,7 @@
    <depend name="include/flixel/text/FlxTextFormat.h"/>
    <depend name="include/flixel/util/IFlxDestroyable.h"/>
    <depend name="include/flixel/util/IFlxPooled.h"/>
-   <depend name="include/game/Chatbubble.h"/>
+   <depend name="include/game/ChatBubble.h"/>
    <depend name="include/haxe/IMap.h"/>
    <depend name="include/haxe/ds/IntMap.h"/>
    <depend name="include/openfl/display/BitmapData.h"/>
@@ -4981,31 +4981,17 @@
   </file>
   <file name="src/game/BubbleStack.cpp" >
    <depend name="include/flixel/FlxBasic.h"/>
-   <depend name="include/flixel/FlxG.h"/>
-   <depend name="include/flixel/FlxGame.h"/>
    <depend name="include/flixel/FlxObject.h"/>
    <depend name="include/flixel/FlxSprite.h"/>
    <depend name="include/flixel/group/FlxTypedGroup.h"/>
    <depend name="include/flixel/group/FlxTypedGroupIterator.h"/>
    <depend name="include/flixel/group/FlxTypedSpriteGroup.h"/>
-   <depend name="include/flixel/system/debug/FlxDebugger.h"/>
-   <depend name="include/flixel/system/debug/Window.h"/>
-   <depend name="include/flixel/system/debug/watch/Watch.h"/>
-   <depend name="include/flixel/system/debug/watch/WatchEntryData.h"/>
-   <depend name="include/flixel/system/frontEnds/WatchFrontEnd.h"/>
    <depend name="include/flixel/tweens/FlxEase.h"/>
    <depend name="include/flixel/tweens/FlxTween.h"/>
    <depend name="include/flixel/tweens/misc/VarTween.h"/>
    <depend name="include/flixel/util/IFlxDestroyable.h"/>
    <depend name="include/game/BubbleStack.h"/>
-   <depend name="include/game/Chatbubble.h"/>
-   <depend name="include/openfl/display/DisplayObject.h"/>
-   <depend name="include/openfl/display/DisplayObjectContainer.h"/>
-   <depend name="include/openfl/display/IBitmapDrawable.h"/>
-   <depend name="include/openfl/display/InteractiveObject.h"/>
-   <depend name="include/openfl/display/Sprite.h"/>
-   <depend name="include/openfl/events/EventDispatcher.h"/>
-   <depend name="include/openfl/events/IEventDispatcher.h"/>
+   <depend name="include/game/ChatBubble.h"/>
   </file>
   <file name="src/game/Avatar.cpp" >
    <depend name="include/Std.h"/>
@@ -11273,6 +11259,14 @@
    <depend name="include/haxe/Resource.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
   </file>
+  <file name="src/__ASSET__assets_images_interface_bubble_8.cpp" >
+   <depend name="include/__ASSET__assets_images_interface_bubble_8.h"/>
+   <depend name="include/haxe/Resource.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/lime/graphics/ImageBuffer.h"/>
+   <depend name="include/lime/graphics/ImageType.h"/>
+  </file>
   <file name="src/__ASSET__assets_images_interface_bubble_7.cpp" >
    <depend name="include/__ASSET__assets_images_interface_bubble_7.h"/>
    <depend name="include/haxe/Resource.h"/>
@@ -11376,6 +11370,14 @@
   </file>
   <file name="src/__ASSET__assets_images_jacket_png.cpp" >
    <depend name="include/__ASSET__assets_images_jacket_png.h"/>
+   <depend name="include/haxe/Resource.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/lime/graphics/Image.h"/>
+   <depend name="include/lime/graphics/ImageBuffer.h"/>
+   <depend name="include/lime/graphics/ImageType.h"/>
+  </file>
+  <file name="src/__ASSET__assets_images_interface_bubble_1_7_0_png.cpp" >
+   <depend name="include/__ASSET__assets_images_interface_bubble_1_7_0_png.h"/>
    <depend name="include/haxe/Resource.h"/>
    <depend name="include/haxe/io/Bytes.h"/>
    <depend name="include/lime/graphics/Image.h"/>
@@ -12149,7 +12151,7 @@
    <depend name="include/haxe/Timer.h"/>
    <depend name="include/haxe/Serializer.h"/>
    <depend name="include/game/GraphicsSheet.h"/>
-   <depend name="include/game/Chatbubble.h"/>
+   <depend name="include/game/ChatBubble.h"/>
    <depend name="include/game/Avatar.h"/>
    <depend name="include/flixel/util/LabelValuePair.h"/>
    <depend name="include/flixel/util/FlxSpriteUtil.h"/>
@@ -12323,6 +12325,7 @@
    <depend name="include/__ASSET__flixel_sounds_flixel_ogg.h"/>
    <depend name="include/__ASSET__flixel_sounds_beep_ogg.h"/>
    <depend name="include/__ASSET__assets_sounds_step1_wav.h"/>
+   <depend name="include/__ASSET__assets_images_interface_bubble_8.h"/>
    <depend name="include/__ASSET__assets_images_interface_bubble_7.h"/>
    <depend name="include/__ASSET__assets_images_interface_bubble_6.h"/>
    <depend name="include/__ASSET__assets_images_interface_bubble_5.h"/>
@@ -12337,6 +12340,7 @@
    <depend name="include/__ASSET__assets_images_overcoat_png.h"/>
    <depend name="include/__ASSET__assets_images_jeans_png.h"/>
    <depend name="include/__ASSET__assets_images_jacket_png.h"/>
+   <depend name="include/__ASSET__assets_images_interface_bubble_1_7_0_png.h"/>
    <depend name="include/__ASSET__assets_images_interface_bubble_1_6_0_png.h"/>
    <depend name="include/__ASSET__assets_images_interface_bubble_1_5_0_png.h"/>
    <depend name="include/__ASSET__assets_images_interface_bubble_1_4_0_png.h"/>
@@ -12488,6 +12492,8 @@
 <file name="src/resources/__res_105.cpp" tags="optim-none" />
 <file name="src/resources/__res_106.cpp" tags="optim-none" />
 <file name="src/resources/__res_107.cpp" tags="optim-none" />
+<file name="src/resources/__res_108.cpp" tags="optim-none" />
+<file name="src/resources/__res_109.cpp" tags="optim-none" />
 </files>
 <files id="__externs__">
 </files>

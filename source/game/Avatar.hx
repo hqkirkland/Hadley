@@ -1,5 +1,10 @@
 package game;
 
+import openfl.display.BitmapData;
+import openfl.geom.Point;
+import openfl.geom.Rectangle;
+import openfl.utils.Object;
+
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.graphics.FlxGraphic;
@@ -7,10 +12,6 @@ import flixel.graphics.frames.FlxTileFrames;
 import flixel.math.FlxPoint;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
-import openfl.display.BitmapData;
-import openfl.geom.Point;
-import openfl.geom.Rectangle;
-import openfl.utils.Object;
 
 import game.BubbleStack;
 
@@ -33,18 +34,17 @@ class Avatar extends FlxSprite
 	public var isHolding:Bool = false;
 	public var currentAction:String = "Stand";
 	public var currentDirection:String = "South";
-	public var nextRoom:String = "";
-	public var exitRoom:String = "";
 	public var velocityX:Float = 0;
 	public var velocityY:Float = 0;
 	public var playerNextMovement:FlxPoint;
+	public var fadeComplete:Bool = false;
 	
 	public var chatGroup:BubbleStack;
 	
 	//public var chatBubbles:FlxTypedSpriteGroup<Chatbubble>;
 	
 	public var keysTriggered:Object = { North: false, South: false, East: false, West: false, Run: false };
-	public var previousKeysTriggered:Object = { North: false, South: false, East: false, West: false };
+	public var previousKeysTriggered:Object = { North: false, South: false, East: false, West: false, Run: false };
 	
 	public var overlapRectangle:FlxObject = new FlxObject(0, 0, 10, 10);
 	
@@ -171,7 +171,7 @@ class Avatar extends FlxSprite
 		
 		animation.play(animationString);
 		
-		if (keysTriggered.Run) 
+		if (previousKeysTriggered.Run) 
 		{ this.velocity = FlxPoint.get(this.velocityX * 1.66, this.velocityY * 1.66); }
 		else
 		{ this.velocity = FlxPoint.get(this.velocityX, this.velocityY); }
@@ -486,20 +486,16 @@ class Avatar extends FlxSprite
 			{ currentDirection = directionSet.North; }
 		}
 		
+		previousKeysTriggered.Run = keysTriggered.Run;
+		
 		return currentAction + currentDirection;
 	}
-		
-	public function leaveRoom(newRoom:String, lastRoom:String):Void
+	
+	public function leaveRoom():Void
 	{
 		enableWalk = false;
-		exitRoom = lastRoom;
 		
-		FlxTween.tween(this, { alpha: 0 }, 0.5, { ease: FlxEase.smoothStepIn, onComplete: {
-			function(_) 
-			{
-				nextRoom = newRoom;
-			}
-		}});
+		fadeAway();
 		
 		previousKeysTriggered.North = false;
 		previousKeysTriggered.South = false;
@@ -512,7 +508,13 @@ class Avatar extends FlxSprite
 	
 	public function fadeAway():Void
 	{
-		FlxTween.tween(this, { alpha: 0 }, 0.5, { ease: FlxEase.smoothStepIn});
+		FlxTween.tween(this, { alpha: 0 }, 0.5, { ease: FlxEase.smoothStepIn, onComplete: 
+		{
+			function(_) 
+			{
+				fadeComplete = true;
+			}
+		}});
 	}
 
 	public function fadeIn():Void
@@ -522,6 +524,7 @@ class Avatar extends FlxSprite
 			function(_) 
 			{
 				enableWalk = true;
+				fadeComplete = false;
 			}
 		}});
 	}

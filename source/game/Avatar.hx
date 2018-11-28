@@ -30,14 +30,15 @@ class Avatar extends FlxSprite
 	public var itemArray:Array<Object>;
 	
 	public var canWalk:Bool = true;
-	public var enableWalk:Bool = true;
-	public var isHolding:Bool = false;
 	public var currentAction:String = "Stand";
 	public var currentDirection:String = "South";
+	public var enableWalk:Bool = true;
+	public var fadeComplete:Bool = false;
+	public var isHolding:Bool = false;
+
 	public var velocityX:Float = 0;
 	public var velocityY:Float = 0;
 	public var playerNextMovement:FlxPoint;
-	public var fadeComplete:Bool = false;
 	
 	public var chatGroup:BubbleStack;
 	
@@ -71,15 +72,14 @@ class Avatar extends FlxSprite
 		
 		// TODO: Create figure object, or create typedef for clothing objects.
 		itemArray = new Array<Object>();
-		itemArray[0] = { Asset: "Body", Color: 0, TypeNum: 0 };
-		itemArray[1] = { Asset: "Shoes", Color: 1, TypeNum: 2 };
-		itemArray[2] = { Asset: "Jeans", Color: 1, TypeNum: 2 };
-		itemArray[3] = { Asset: "Overcoat", Color: 1, TypeNum: 2 };
-		itemArray[4] = { Asset: "Douli2", Color: 0, TypeNum: 2 };
-		itemArray[5] = { Asset: "Face", Color: 0, TypeNum: 0 };
-		itemArray[6] = { Asset: "Hair", Color: 1, TypeNum: 1 };
-		itemArray[7] = { Asset: "Glasses", Color: 0, TypeNum: 2 };
-		itemArray[8] = { Asset: "Douli", Color: 0, TypeNum: 2 };
+		var figureString:String = "1^1^2^2^3^2^4^2^5b^1^6^1^7^2^8^1";
+		var figure:Array<String> = figureString.split('^');
+		var tempTypeArray:Array<Int> = [ 0, 2, 2, 2, 2, 0, 1, 2 ];
+		
+		for (i in 0...8)
+		{
+			itemArray[i] = { Asset: figure[i * 2], Color: Std.parseInt(figure[(i * 2) + 1]) - 1, TypeNum: tempTypeArray[i] };
+		}
 		
 		this.pixels = new BitmapData(41, 68, true, 0x00000000);
 		
@@ -107,9 +107,9 @@ class Avatar extends FlxSprite
 		
 		for (item in itemArray)
 		{
-			itemSprite.loadGraphic("assets/images/" + item.Asset + ".png");
+			itemSprite.loadGraphic("assets/items/" + item.Asset + ".png");
 			
-			itemSprite.pixels = avatarSheet.colorItem(itemSprite.pixels, item.Color, item.TypeNum);			
+			itemSprite.pixels = GraphicsSheet.colorItem(itemSprite.pixels, item.Color, item.TypeNum);			
 			avatarSheet.drawItem(itemSprite.pixels);
 		}
 	}

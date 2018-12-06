@@ -71,20 +71,7 @@ class Avatar extends FlxSprite
 		chatGroup = new BubbleStack(username);
 		
 		// TODO: Create figure object, or create typedef for clothing objects.
-		itemArray = new Array<Object>();
-		var figureString:String = "1^1^2^2^3^2^4^2^5b^1^6^1^7^2^8^1";
-		var figure:Array<String> = figureString.split('^');
-		var tempTypeArray:Array<Int> = [ 0, 2, 2, 2, 2, 0, 1, 2 ];
-		
-		for (i in 0...8)
-		{
-			itemArray[i] = { Asset: figure[i * 2], Color: Std.parseInt(figure[(i * 2) + 1]) - 1, TypeNum: tempTypeArray[i] };
-		}
-		
-		this.pixels = new BitmapData(41, 68, true, 0x00000000);
-		
-		generateAvatar();
-		generateAnimation();
+		setAppearance("1^1^2^2^3^2^4^2^5b^1^6^1^7^2^8^1^5^1");
 		
 		this.width = 10;
 		this.height = 5;
@@ -93,8 +80,19 @@ class Avatar extends FlxSprite
 		this.offset.y = 63;
 	}
 	
-	public function changeAppearance(appearanceString:String):Void
+	public function setAppearance(appearanceString:String):Void
 	{
+		itemArray = new Array<Object>();
+		var figure:Array<String> = appearanceString.split('^');
+		var tempTypeArray:Array<Int> = [ 0, 2, 2, 2, 2, 0, 1, 2, 2];
+		
+		for (i in 0...9)
+		{
+			itemArray[i] = { Asset: figure[i * 2], Color: Std.parseInt(figure[(i * 2) + 1]) - 1, TypeNum: tempTypeArray[i] };
+		}
+		
+		this.pixels = new BitmapData(41, 68, true, 0x00000000);
+		
 		fadeAway();
 		generateAvatar();
 		generateAnimation();
@@ -158,7 +156,7 @@ class Avatar extends FlxSprite
 	override public function update(elapsed:Float):Void
 	{
 		doAnimation();
-		//chatGroup.x = ((this.x - this.offset.x) + (this.frameWidth / 2)) - (this.chatGroup.width / 2);
+		
 		chatGroup.x = (this.x - this.offset.x) + ((this.frameWidth / 2) - (this.chatGroup.width / 2));
 		chatGroup.y = Math.ceil(this.y - this.frameHeight);
 		
@@ -250,7 +248,7 @@ class Avatar extends FlxSprite
 		}
 		
 		else if (keysTriggered.North && keysTriggered.West)
-		{			
+		{
 			if (playerNextMovement.x == 1)
 			{
 				this.velocityX = 0;
@@ -267,7 +265,7 @@ class Avatar extends FlxSprite
 		}
 		
 		else if (keysTriggered.East)
-		{			
+		{
 			if (playerNextMovement.x == 1)
 			{
 				this.velocityY = 0;

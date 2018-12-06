@@ -1,6 +1,5 @@
 package;
 
-import communication.messages.ServerMotionPacket;
 import haxe.Json;
 
 import openfl.Assets;
@@ -18,9 +17,10 @@ import flixel.addons.ui.FlxUIState;
 import flixel.system.scaleModes.FixedScaleMode;
 
 import communication.NetworkManager;
-import communication.messages.Packet;
+import communication.messages.ServerPacket;
+import communication.messages.ServerJoinRoomPacket;
 import communication.messages.MessageType;
-import communication.messages.ServerJoinPacket;
+
 import game.Avatar;
 import game.Portal;
 import game.Room;
@@ -50,7 +50,7 @@ class RoomState extends FlxUIState
 		playerAvatar = new Avatar("Monk");
 		audioManager = new SoundManager();
 		
-		NetworkManager.connect("72.182.108.158", 1626);
+		NetworkManager.connect("72.182.108.158", 4000);
 		NetworkManager.networkSocket.addEventListener(ProgressEvent.SOCKET_DATA, receivePacket);
 		
 		joinRoom("cloudInfoRoom");
@@ -363,24 +363,14 @@ class RoomState extends FlxUIState
 	public function receivePacket(e:ProgressEvent):Void
 	{
 		var byteCount:Int = Math.ceil(e.bytesLoaded);
-		var serverPacket:Packet = NetworkManager.handlePacket(byteCount);
+		var serverPacket:ServerPacket = NetworkManager.handlePacket(byteCount);
 		
 		switch (serverPacket.messageId)
 		{
 			case MessageType.JoinRoom:
-				var joinPacket:ServerJoinPacket = cast(serverPacket, ServerJoinPacket);
-				playerAvatar2 = new Avatar("Monk2");
-				currentRoom.addAvatar(playerAvatar2, joinPacket.fromRoom);
-			case MessageType.Motion:
-				var motionPacket:ServerMotionPacket = cast(serverPacket, ServerMotionPacket);
-				playerAvatar2.keysTriggered.North = motionPacket.north;
-				playerAvatar2.keysTriggered.South = motionPacket.south;
-				playerAvatar2.keysTriggered.East = motionPacket.east;
-				playerAvatar2.keysTriggered.West = motionPacket.west;
-				playerAvatar2.keysTriggered.Run = motionPacket.run;
-				
-				playerAvatar2.playerNextMovement = testNextPoints(playerAvatar2);
-				playerAvatar2.smoothMovement();
+				var joinPacket:ServerJoinRoomPacket = cast(serverPacket, ServerJoinRoomPacket);
+				playerAvatar2 = new Avatar(joinPacket.senderId);
+				currentRoom.addAvatar(playerAvatar2, joinPacket.senderId);
 				
 			default:
 				return;

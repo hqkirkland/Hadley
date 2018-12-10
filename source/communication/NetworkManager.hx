@@ -33,7 +33,6 @@ class NetworkManager
 		netBytes.position = 3;
 		
 		var packetId:Int = netBytes.readShort();
-		trace(packetId);
 		
 		switch (packetId)
 		{

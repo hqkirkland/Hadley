@@ -7,11 +7,20 @@ import openfl.utils.ByteArray.ByteArrayData;
  */
 class ServerMovementPacket extends ServerPacket
 {
-	public var roomName:String;
+	public var north:Bool;
+	public var south:Bool;
+	public var east:Bool;
+	public var west:Bool;
+	public var run:Bool;
 	
 	public function new(_messageBytes:ByteArrayData)
 	{
 		super(_messageBytes, MessageType.Movement);
-		roomName = readString();
+		
+		north = readChar() == 0x1;
+		south = readChar() == 0x1;
+		east = readChar() == 0x1;
+		west = readChar() == 0x1;
+		run = readChar() == 0x1;
 	}
 }

@@ -1,5 +1,6 @@
 package;
 
+import communication.messages.ServerMovementPacket;
 import haxe.Json;
 
 import openfl.Assets;
@@ -305,6 +306,16 @@ class RoomState extends FlxUIState
 			}
 		}
 		
+		if (playerAvatar.currentAction != playerAvatar.previousAction)
+		{
+			if (playerAvatar.currentAction == Avatar.actionSet.Stand)
+			{
+				NetworkManager.sendMotion(false, false, false, false, false);
+			}
+		}
+		
+		
+		
 		if (!playerAvatar.enableWalk)
 		{
 			audioManager.currentSurface = 0x0;
@@ -313,7 +324,7 @@ class RoomState extends FlxUIState
 		playerAvatar.playerNextMovement = testNextPoints(playerAvatar);
 		playerAvatar.smoothMovement();
 		
-		audioManager.playWalkSound(playerAvatar.keysTriggered.run);
+		audioManager.playWalkSound(playerAvatar.keysTriggered.Run);
 	}
 	
 	private function speakUp(message:String, action:String):Void
@@ -371,6 +382,17 @@ class RoomState extends FlxUIState
 				var joinPacket:ServerJoinRoomPacket = cast(serverPacket, ServerJoinRoomPacket);
 				playerAvatar2 = new Avatar(joinPacket.senderId);
 				currentRoom.addAvatar(playerAvatar2, joinPacket.senderId);
+				
+			case MessageType.Movement:
+				var movePacket:ServerMovementPacket = cast(serverPacket, ServerMovementPacket);
+				playerAvatar2.keysTriggered.North = movePacket.north;
+				playerAvatar2.keysTriggered.South = movePacket.south;
+				playerAvatar2.keysTriggered.East = movePacket.east;
+				playerAvatar2.keysTriggered.West = movePacket.west;
+				playerAvatar2.keysTriggered.Run = movePacket.run;
+				
+				playerAvatar2.playerNextMovement = testNextPoints(playerAvatar2);
+				playerAvatar2.smoothMovement();
 				
 			default:
 				return;

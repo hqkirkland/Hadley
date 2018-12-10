@@ -31,6 +31,7 @@ class Avatar extends FlxSprite
 	
 	public var canWalk:Bool = true;
 	public var currentAction:String = "Stand";
+	public var previousAction:String = "";
 	public var currentDirection:String = "South";
 	public var enableWalk:Bool = true;
 	public var fadeComplete:Bool = false;
@@ -185,6 +186,8 @@ class Avatar extends FlxSprite
 		// Y is L
 		// South means SWITCH SHIFTS of L and R.
 		
+		previousAction = currentAction;
+		
 		if (playerNextMovement.x == 1 && playerNextMovement.y == 1)
 		{
 			this.velocityX = 0;
@@ -214,7 +217,7 @@ class Avatar extends FlxSprite
 		}
 		
 		else if (keysTriggered.South && keysTriggered.West)
-		{			
+		{
 			if (this.x == 1)
 			{
 				this.velocityX = 0;
@@ -303,7 +306,7 @@ class Avatar extends FlxSprite
 		}
 		
 		if (keysTriggered.North && keysTriggered.East) 
-		{			
+		{
 			previousKeysTriggered.North = true;
 			previousKeysTriggered.South = false;
 			
@@ -381,7 +384,7 @@ class Avatar extends FlxSprite
 			
 			previousKeysTriggered.East = true;
 			previousKeysTriggered.West = false;
-
+			
 			if (canWalk)
 			{
 				currentAction = actionSet.Walk;
@@ -484,7 +487,7 @@ class Avatar extends FlxSprite
 			{ currentDirection = directionSet.North; }
 		}
 		
-		previousKeysTriggered.Run = keysTriggered.Run;
+		previousKeysTriggered.Run = keysTriggered.Run;		
 		
 		return currentAction + currentDirection;
 	}
@@ -514,12 +517,12 @@ class Avatar extends FlxSprite
 			}
 		}});
 	}
-
+	
 	public function fadeIn():Void
 	{
 		FlxTween.tween(this, { alpha: 1 }, 0.5, { ease: FlxEase.smoothStepIn, onComplete: 
 		{
-			function(_) 
+			function(_)
 			{
 				enableWalk = true;
 				fadeComplete = false;

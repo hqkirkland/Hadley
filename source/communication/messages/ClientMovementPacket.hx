@@ -1,4 +1,5 @@
 package communication.messages;
+
 import openfl.utils.ByteArray;
 
 /**
@@ -11,8 +12,12 @@ class ClientMovementPacket extends ClientPacket
 	{
 		super(MessageType.Movement);
 		
-		var messageData:ByteArrayData = new ByteArrayData();		
+		var messageData:ByteArrayData = new ByteArrayData();
+		
+		#if flash
 		messageData.length = 32;
+		#end
+		
 		messageData.position = 6;
 		
 		if (north) messageData.writeByte(0x1) else messageData.writeByte(0x0);
@@ -22,7 +27,11 @@ class ClientMovementPacket extends ClientPacket
 		if (run) messageData.writeByte(0x1) else messageData.writeByte(0x0);
 		
 		messageBytes = new ByteArrayData();
+		
+		#if flash
 		messageBytes.length = messageData.position;
+		#end
+		
 		messageBytes.writeBytes(messageData, 0, messageBytes.length);
 		
 		writeHeader(messageBytes.length - 6);

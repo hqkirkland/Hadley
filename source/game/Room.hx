@@ -6,15 +6,15 @@ import openfl.Assets;
 import openfl.display.BitmapData;
 import openfl.utils.Dictionary;
 
-import flixel.util.FlxColor;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxTileFrames;
 import flixel.group.FlxSpriteGroup;
 import flixel.math.FlxPoint;
-import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
+import flixel.util.FlxColor;
 import flixel.util.FlxSort;
 
 import game.Avatar;
@@ -210,7 +210,12 @@ class Room extends FlxSprite
 	
 	public function testWalkmap(nx:Float, ny:Float):Int
 	{
-		return this.walkMap.pixels.getPixel32(Std.int(nx - walkMap.x), Std.int(ny - walkMap.y));
+		if (this.walkMap.pixels != null)
+		{
+			return this.walkMap.pixels.getPixel32(Std.int(nx - walkMap.x), Std.int(ny - walkMap.y));
+		}
+		
+		return 0;
 	}
 	
 	public function sortGraphics():Void

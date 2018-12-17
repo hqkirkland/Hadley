@@ -39,7 +39,7 @@ class Avatar extends FlxSprite
 
 	public var velocityX:Float = 0;
 	public var velocityY:Float = 0;
-	public var playerNextMovement:FlxPoint;
+	public var playerNextMovement:FlxPoint = FlxPoint.get(0, 0);
 	
 	public var chatGroup:BubbleStack;
 	
@@ -72,7 +72,6 @@ class Avatar extends FlxSprite
 		chatGroup = new BubbleStack(username);
 		
 		// TODO: Create figure object, or create typedef for clothing objects.
-		setAppearance("1^1^2^2^3^2^4^2^5b^1^6^1^7^2^8^1^5^1");
 		
 		this.width = 10;
 		this.height = 5;
@@ -85,11 +84,11 @@ class Avatar extends FlxSprite
 	{
 		itemArray = new Array<Object>();
 		var figure:Array<String> = appearanceString.split('^');
-		var tempTypeArray:Array<Int> = [ 0, 2, 2, 2, 2, 0, 1, 2, 2];
 		
-		for (i in 0...9)
+		for (i in 0...8)
 		{
-			itemArray[i] = { Asset: figure[i * 2], Color: Std.parseInt(figure[(i * 2) + 1]) - 1, TypeNum: tempTypeArray[i] };
+			var item:ClothingItem = ClientData.itemMap[Std.parseInt(figure[i * 2])];
+			itemArray[i] = { Asset: item, Color: Std.parseInt(figure[(i * 2) + 1]) };
 		}
 		
 		this.pixels = new BitmapData(41, 68, true, 0x00000000);
@@ -106,9 +105,9 @@ class Avatar extends FlxSprite
 		
 		for (item in itemArray)
 		{
-			itemSprite.loadGraphic("assets/items/" + item.Asset + ".png");
+			itemSprite.loadGraphic("assets/items/" + item.Asset.gameItemId + ".png");
 			
-			itemSprite.pixels = GraphicsSheet.colorItem(itemSprite.pixels, item.Color, item.TypeNum);			
+			itemSprite.pixels = GraphicsSheet.colorItem(itemSprite.pixels, item.Color, item.Asset.itemType);			
 			avatarSheet.drawItem(itemSprite.pixels);
 		}
 	}
@@ -218,7 +217,7 @@ class Avatar extends FlxSprite
 		
 		else if (keysTriggered.South && keysTriggered.West)
 		{
-			if (this.x == 1)
+			if (playerNextMovement.x == 1)
 			{
 				this.velocityX = 0;
 				this.velocity.set(0, this.velocityY);
@@ -235,7 +234,7 @@ class Avatar extends FlxSprite
 		
 		else if (keysTriggered.South && keysTriggered.East)
 		{
-			if (this.x == 1)
+			if (playerNextMovement.x == 1)
 			{
 				this.velocityX = 0;
 				this.velocity.set(0, this.velocityY);

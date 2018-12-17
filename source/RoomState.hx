@@ -1,12 +1,10 @@
 package;
 
-import communication.messages.ServerMovementPacket;
-import haxe.Json;
-
+import game.ClientData;
 import openfl.Assets;
+import openfl.events.Event;
 import openfl.events.ProgressEvent;
 import openfl.utils.AssetLibrary;
-import openfl.utils.ByteArray;
 
 import flixel.FlxObject;
 import flixel.FlxG;
@@ -20,6 +18,7 @@ import flixel.system.scaleModes.FixedScaleMode;
 import communication.NetworkManager;
 import communication.messages.ServerPacket;
 import communication.messages.ServerJoinRoomPacket;
+import communication.messages.ServerMovementPacket;
 import communication.messages.MessageType;
 
 import game.Avatar;
@@ -32,29 +31,45 @@ class RoomState extends FlxUIState
 	public static var playerAvatar:Avatar;
 	public static var currentRoom:Room;
 	
-	private var playerAvatar2:Avatar;
-	
-	private var nextRoom:String;
-	private var exitRoom:String;
+	private static var nextRoom:String;
+	private static var exitRoom:String;
 	
 	private static var audioManager:SoundManager;
 	private static var borderArray:Array<Int> = [0xFF010101, 0x00000000];
+	
+	private static var roomAvatars:Map<String, Avatar>;
 	
 	private var tf:FlxInputText;
 	
 	override public function create():Void
 	{
-		super.create(); 
+		super.create();
 		FlxG.scaleMode = new FixedScaleMode();
 		FlxG.autoPause = false;
 		
-		playerAvatar = new Avatar("Monk");
+		var rand:Int = Math.ceil(Math.random() * 1000);		
+		
+		var setupLoader:ClientData = new ClientData();
+		setupLoader.addEventListener(Event.COMPLETE, initiateConnection); 
+		setupLoader.start();
+		
+		playerAvatar = new Avatar("" + rand);
 		audioManager = new SoundManager();
 		
-		NetworkManager.connect("72.182.108.158", 4000);
+	}
+	
+	private function initiateConnection(e:Event)
+	{
+		NetworkManager.connect("72.182.108.158", 4000, playerAvatar.username, "WHIRLPOOL-2018");
+		NetworkManager.networkSocket.addEventListener(Event.CONNECT, doLogin);
 		NetworkManager.networkSocket.addEventListener(ProgressEvent.SOCKET_DATA, receivePacket);
-		
+	}
+	
+	private function doLogin(e:Event)
+	{
+		NetworkManager.sendAuthenticate();
 		joinRoom("cloudInfoRoom");
+		playerAvatar.setAppearance("1^0^2^2^3^2^4^2^6^0^7^1^8^0^5^0");
 	}
 	
 	private function joinRoom(roomName:String)
@@ -64,10 +79,15 @@ class RoomState extends FlxUIState
 			destroyRoom();
 		}
 		
-		this.nextRoom = "";
+		roomAvatars = new Map<String, Avatar>();
+		roomAvatars.set(playerAvatar.username, playerAvatar);
+		
+		nextRoom = "";
 		currentRoom = new Room(roomName);
 		
 		Assets.loadLibrary(roomName).onComplete(loadRoom);
+		
+		NetworkManager.sendJoinRoom(currentRoom.roomName);
 	}
 	
 	private function loadRoom(completeLib:AssetLibrary):Void
@@ -86,6 +106,7 @@ class RoomState extends FlxUIState
 		add(currentRoom.portalEntities);
 		add(playerAvatar.chatGroup);
 		
+		#if flash
 		tf = new FlxInputText(50, 100, 300);
 		tf.borderColor = 0xFFFFFFFF;
 		tf.x = 150;
@@ -96,13 +117,12 @@ class RoomState extends FlxUIState
 		tf.callback = speakUp;
 		tf.text = "";
 		add(tf);
+		#end
 		
 		setupCamera();
 		
 		this.bgColor = currentRoom.backgroundColor;
 		currentRoom.portalEntities.visible = false;
-		
-		NetworkManager.sendJoinRoom(currentRoom.roomName);
 	}
 	
 	private function setupCamera():Void
@@ -149,7 +169,9 @@ class RoomState extends FlxUIState
 		remove(currentRoom.roomEntities);
 		remove(currentRoom.vehicleEntities);
 		remove(currentRoom);
+		#if flash
 		remove(tf);
+		#end
 	}
 	
 	private function testNextPoints(testAvatar:Avatar):FlxPoint
@@ -273,6 +295,11 @@ class RoomState extends FlxUIState
 	{
 		super.update(elapsed);
 		
+		if (currentRoom == null)
+		{
+			return;
+		}
+		
 		if (!currentRoom.roomReady)
 		{
 			return;
@@ -298,22 +325,25 @@ class RoomState extends FlxUIState
 			
 			if (motionChanged)
 			{
+				/*
 				NetworkManager.sendMotion(playerAvatar.keysTriggered.North, 
 										  playerAvatar.keysTriggered.South, 
 										  playerAvatar.keysTriggered.East, 
 										  playerAvatar.keysTriggered.West,
 										  playerAvatar.keysTriggered.Run);
-			}
+				*/
+			}			
 		}
 		
 		if (playerAvatar.currentAction != playerAvatar.previousAction)
 		{
 			if (playerAvatar.currentAction == Avatar.actionSet.Stand)
 			{
-				NetworkManager.sendMotion(false, false, false, false, false);
+				//NetworkManager.sendMotion(false, false, false, false, false);
 			}
 		}
 		
+		playerAvatar.playerNextMovement = testNextPoints(playerAvatar);
 		
 		
 		if (!playerAvatar.enableWalk)
@@ -321,7 +351,6 @@ class RoomState extends FlxUIState
 			audioManager.currentSurface = 0x0;
 		}
 		
-		playerAvatar.playerNextMovement = testNextPoints(playerAvatar);
 		playerAvatar.smoothMovement();
 		
 		audioManager.playWalkSound(playerAvatar.keysTriggered.Run);
@@ -332,7 +361,9 @@ class RoomState extends FlxUIState
 		if (action == "enter")
 		{
 			playerAvatar.chatGroup.newBubble(message);
+			#if flash
 			tf.text = "";
+			#end
 		}
 	}
 	
@@ -376,23 +407,35 @@ class RoomState extends FlxUIState
 		var byteCount:Int = Math.ceil(e.bytesLoaded);
 		var serverPacket:ServerPacket = NetworkManager.handlePacket(byteCount);
 		
-		switch (serverPacket.messageId)
+		if (!roomAvatars.exists(serverPacket.senderId))
 		{
+			if (serverPacket.messageId != MessageType.JoinRoom)
+			{
+				trace(serverPacket.senderId + ":<Avatar> was not found.");
+				return;
+			}
+		}
+		
+		switch (serverPacket.messageId)
+		{			
 			case MessageType.JoinRoom:
 				var joinPacket:ServerJoinRoomPacket = cast(serverPacket, ServerJoinRoomPacket);
-				playerAvatar2 = new Avatar(joinPacket.senderId);
-				currentRoom.addAvatar(playerAvatar2, joinPacket.senderId);
+				roomAvatars.set(joinPacket.senderId, new Avatar(joinPacket.senderId));
+				currentRoom.addAvatar(roomAvatars[joinPacket.senderId], joinPacket.fromRoom);
 				
 			case MessageType.Movement:
 				var movePacket:ServerMovementPacket = cast(serverPacket, ServerMovementPacket);
-				playerAvatar2.keysTriggered.North = movePacket.north;
-				playerAvatar2.keysTriggered.South = movePacket.south;
-				playerAvatar2.keysTriggered.East = movePacket.east;
-				playerAvatar2.keysTriggered.West = movePacket.west;
-				playerAvatar2.keysTriggered.Run = movePacket.run;
+				//var playerAvatar2:Avatar = roomAvatars[movePacket.senderId];
 				
-				playerAvatar2.playerNextMovement = testNextPoints(playerAvatar2);
-				playerAvatar2.smoothMovement();
+				roomAvatars[movePacket.senderId].keysTriggered.North = movePacket.north;
+				roomAvatars[movePacket.senderId].keysTriggered.South = movePacket.south;
+				roomAvatars[movePacket.senderId].keysTriggered.East = movePacket.east;
+				roomAvatars[movePacket.senderId].keysTriggered.West = movePacket.west;
+				roomAvatars[movePacket.senderId].keysTriggered.Run = movePacket.run;
+				
+				// This doesn't let SmoothMovement work.
+				roomAvatars[movePacket.senderId].playerNextMovement = FlxPoint.get(0, 0);
+				roomAvatars[movePacket.senderId].smoothMovement();
 				
 			default:
 				return;

@@ -1,10 +1,11 @@
 package communication;
 
 import openfl.net.Socket;
+import openfl.events.Event;
 import openfl.utils.ByteArray;
 
 import communication.messages.MessageType;
-import communication.messages.ClientPacket;
+import communication.messages.ClientAuthenticatePacket;
 import communication.messages.ClientJoinRoomPacket;
 import communication.messages.ClientMovementPacket;
 import communication.messages.ServerPacket;
@@ -19,16 +20,27 @@ class NetworkManager
 	public static var isConnected:Bool;
 	public static var networkSocket:Socket;
 	
-	public static function connect(ipAddress:String, port:Int)
+	private static var username;
+	private static var ticket;
+	
+	public static function connect(ipAddress:String, port:Int, _username:String, _ticket:String)
 	{
-		networkSocket = new Socket(ipAddress, port);
+		username = _username;
+		ticket = _ticket;
+		
+		networkSocket = new Socket();
+		networkSocket.connect(ipAddress, port);
 		networkSocket.timeout = 1800;
 	}
 	
 	public static function handlePacket(packetLength:Int):ServerPacket
 	{
 		var netBytes:ByteArrayData = new ByteArrayData();
+		
+		#if flash
 		netBytes.length = packetLength;
+		#end
+		
 		networkSocket.readBytes(netBytes);
 		netBytes.position = 3;
 		
@@ -43,6 +55,13 @@ class NetworkManager
 		}
 		
 		return new ServerPacket(new ByteArrayData());
+	}
+	
+	public static function sendAuthenticate():Void
+	{
+		isConnected = true;
+		networkSocket.writeBytes(new ClientAuthenticatePacket(username, ticket).messageBytes);
+		networkSocket.flush();
 	}
 	
 	public static function sendJoinRoom(roomName:String):Void

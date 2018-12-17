@@ -2,7 +2,6 @@ package communication.messages;
 
 import openfl.utils.ByteArray.ByteArrayData;
 
-import communication.messages.MessageType;
 /**
  * ...
  * @author Hunter

@@ -1,7 +1,10 @@
 package game;
+
 import openfl.display.BitmapData;
-import openfl.geom.Point;
 import openfl.display.Bitmap;
+import openfl.geom.Point;
+
+import game.ItemColor;
 
 /**
  * ...
@@ -13,24 +16,7 @@ class GraphicsSheet extends Bitmap
 	private static var staticPoint:Point = new Point(0, 0);
 	
 	// Item replacement colors.
-	private static var itemColors:Array<Array<Int>> = 
-	[
-		[ 0xFF000000, 0xFF000000, 0xFF000000, 0xFF000000 ],
-		[ 0xFF111111, 0xFF222222, 0xFF333333, 0xFF444444 ],
-		[ 0xFF2B3271, 0xFF5D8CEC, 0xFF96BFF6, 0xFFA5CCFF ]
-	];
-	
-	private static var hairColors:Array<Array<Int>> = 
-	[
-		[ 0xFF000000, 0xFF000000, 0xFF000000, 0xFF000000 ],
-		[ 0xFF0D0602, 0xFF1E0D05, 0xFF341A09, 0xFF57330F ]
-	];
-	
-	private static var skinColors:Array<Array<Int>> = 
-	[
-		[ 0xFF000000, 0xFF000000, 0xFF000000, 0xFF000000 ]
-	];
-	
+	public static var avatarColors:Map<Int, ItemColor> = new Map();
 	// Palettes.
 	private static var greenPalette:Array<Int> = [ 0xFF003300, 0xFF009900, 0xFF33CC33, 0xFF66FF66 ];
 	private static var bluePalette:Array<Int>  = [ 0xFF003366, 0xFF0066CC, 0xFF0099FF, 0xFF33CCFF ];
@@ -65,39 +51,69 @@ class GraphicsSheet extends Bitmap
 			return itemBitmap;
 		}
 		
+		var replacementColor:ItemColor = avatarColors[colorNumber];
+		
 		// Skin.
 		if (typeNumber == 0)
 		{
+			itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", skinPalette[0], replacementColor.channel1);
+			itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", skinPalette[1], replacementColor.channel2);
+			itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", skinPalette[2], replacementColor.channel3);
+			itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", skinPalette[3], replacementColor.channel4);
+			
+			/*
 			for (n in 0...skinPalette.length)
 			{
-				var replacementColor:Int = skinColors[colorNumber][n];
+				var replacementColor:Int = itemColors[n];
 				itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", skinPalette[n], replacementColor);
 			};
+			*/
 		}
 		
+		// Hair.
 		else if (typeNumber == 1)
 		{
+			itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", hairPalette[0], replacementColor.channel1);
+			itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", hairPalette[1], replacementColor.channel2);
+			itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", hairPalette[2], replacementColor.channel3);
+			itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", hairPalette[3], replacementColor.channel4);
+			
+			/*
 			for (n in 0...hairPalette.length)
 			{
 				var replacementColor:Int = hairColors[colorNumber][n];
 				itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", hairPalette[n], replacementColor);
 			}
+			*/
 		}
 		
 		// Item.
 		else if (typeNumber == 2)
 		{
+			itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", greenPalette[0], replacementColor.channel1);
+			itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", greenPalette[1], replacementColor.channel2);
+			itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", greenPalette[2], replacementColor.channel3);
+			itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", greenPalette[3], replacementColor.channel4);
+			
+			itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", bluePalette[0], replacementColor.channel1);
+			itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", bluePalette[1], replacementColor.channel2);
+			itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", bluePalette[2], replacementColor.channel3);
+			itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", bluePalette[3], replacementColor.channel4);
+			
+			/*
 			for (n in 0...greenPalette.length)
 			{
 				var replacementColor:Int = itemColors[colorNumber][n];
 				itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", greenPalette[n], replacementColor);
 			}
 			
+			
 			for (n in 0...bluePalette.length)
 			{
 				var replacementColor:Int = itemColors[colorNumber][n];
 				itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", bluePalette[n], replacementColor);
 			}
+			*/
 		}
 		
 		return itemBitmap;

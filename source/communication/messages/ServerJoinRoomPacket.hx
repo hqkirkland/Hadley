@@ -8,10 +8,12 @@ import openfl.utils.ByteArray.ByteArrayData;
 class ServerJoinRoomPacket extends ServerPacket
 {
 	public var fromRoom:String;
+	public var appearance:String;
 	
 	public function new(_messageBytes:ByteArrayData)
 	{
 		super(_messageBytes, MessageType.JoinRoom);
 		fromRoom = readString();
+		appearance = readString();
 	}
 }

@@ -1,16 +1,16 @@
 package communication.messages;
 
-import openfl.utils.ByteArray;
+import openfl.utils.ByteArray.ByteArrayData;
 
 /**
  * ...
  * @author Hunter
  */
-class ClientJoinRoomPacket extends ClientPacket
+class ClientAuthenticatePacket extends ClientPacket
 {
-	public function new(destRoom:String)
+	public function new(senderId:String, ticket:String)
 	{
-		super(MessageType.JoinRoom);
+		super(MessageType.Authenticate);
 		
 		var messageData:ByteArrayData = new ByteArrayData();
 		
@@ -20,9 +20,11 @@ class ClientJoinRoomPacket extends ClientPacket
 		
 		messageData.position = 6;
 		
-		messageData.writeByte(destRoom.length);
-		messageData.writeUTFBytes(destRoom);
-		trace(messageData.position);
+		messageData.writeByte(senderId.length);
+		messageData.writeUTFBytes(senderId);
+		
+		messageData.writeByte(ticket.length);
+		messageData.writeUTFBytes(ticket);
 		
 		messageBytes = new ByteArrayData();
 		

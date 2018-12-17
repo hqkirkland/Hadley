@@ -46,19 +46,21 @@ class RoomState extends FlxUIState
 		super.create();
 		FlxG.scaleMode = new FixedScaleMode();
 		FlxG.autoPause = false;
+		FlxG.debugger.drawDebug = true;
 		
-		var rand:Int = Math.ceil(Math.random() * 1000);		
 		
 		var setupLoader:ClientData = new ClientData();
 		setupLoader.addEventListener(Event.COMPLETE, initiateConnection); 
 		setupLoader.start();
 		
-		playerAvatar = new Avatar("" + rand);
 		audioManager = new SoundManager();
 	}
 	
 	private function initiateConnection(e:Event)
 	{
+		var rand:Int = Math.ceil(Math.random() * 1000);
+		playerAvatar = new Avatar("" + rand);
+		
 		NetworkManager.connect("72.182.108.158", 4000, playerAvatar.username, "WHIRLPOOL-2018");
 		NetworkManager.networkSocket.addEventListener(Event.CONNECT, doLogin);
 		NetworkManager.networkSocket.addEventListener(ProgressEvent.SOCKET_DATA, receivePacket);
@@ -68,7 +70,6 @@ class RoomState extends FlxUIState
 	{
 		NetworkManager.sendAuthenticate();
 		joinRoom("cloudInfoRoom");
-		playerAvatar.setAppearance("1^0^2^2^3^2^4^2^6^0^7^1^8^0^5^0");
 	}
 	
 	private function joinRoom(roomName:String)

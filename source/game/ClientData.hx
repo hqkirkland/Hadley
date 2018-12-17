@@ -45,6 +45,11 @@ class ClientData extends EventDispatcher
 			item.itemDesc = itemData[3];
 			item.layered = (itemData[4] == 1);
 			
+			if (item.layered)
+			{
+				item.layeredAsset = item.gameItemId + "b";
+			}
+			
 			itemMap.set(item.gameItemId, item);
 		}
 		

@@ -221,6 +221,7 @@ class Room extends FlxSprite
 	public function sortGraphics():Void
 	{
 		roomEntities.sort(byDepth, FlxSort.ASCENDING);
+		return;
 	}
 
 	private static inline function byDepth(Order:Int, Obj1:FlxObject, Obj2:FlxObject):Int

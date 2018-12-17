@@ -71,13 +71,14 @@ class Avatar extends FlxSprite
 		username = _username;
 		chatGroup = new BubbleStack(username);
 		
-		// TODO: Create figure object, or create typedef for clothing objects.
-		
+		setAppearance("1^0^2^2^3^2^4^2^6^0^7^1^8^0^5^0");
 		this.width = 10;
 		this.height = 5;
 		
 		this.offset.x = 15;
 		this.offset.y = 63;
+		
+		// TODO: Create figure object, or create typedef for clothing objects.
 	}
 	
 	public function setAppearance(appearanceString:String):Void
@@ -87,8 +88,36 @@ class Avatar extends FlxSprite
 		
 		for (i in 0...8)
 		{
-			var item:ClothingItem = ClientData.itemMap[Std.parseInt(figure[i * 2])];
-			itemArray[i] = { Asset: item, Color: Std.parseInt(figure[(i * 2) + 1]) };
+			var gameItemKey:Int = Std.parseInt(figure[i * 2]);
+			
+			if (gameItemKey == 0)
+			{
+				itemArray[i] = null;
+				continue;
+			}
+			
+			var item:Object = {
+				gameItem: ClientData.itemMap[gameItemKey], 
+				assetPath: gameItemKey,
+				itemColor: Std.parseInt(figure[(i * 2) + 1])
+			};
+			
+			itemArray.push(item);
+			
+			/*
+			if (item.gameItem.layered && i == 7)
+			{
+				var layerItem:Object = {
+					gameItem: ClientData.itemMap[gameItemKey],
+					assetPath: ClientData.itemMap[gameItemKey].layeredAsset,
+					itemColor: Std.parseInt(figure[(i * 2) + 1])
+				};
+				
+				itemArray.insert(4, layerItem);
+			}*/
+			
+			//var item:ClothingItem = ClientData.itemMap[Std.parseInt(figure[i * 2])];			
+			//itemArray[i] = { Asset: item, Color: Std.parseInt(figure[(i * 2) + 1]) };
 		}
 		
 		this.pixels = new BitmapData(41, 68, true, 0x00000000);
@@ -105,9 +134,14 @@ class Avatar extends FlxSprite
 		
 		for (item in itemArray)
 		{
-			itemSprite.loadGraphic("assets/items/" + item.Asset.gameItemId + ".png");
+			if (item == null)
+			{
+				continue;
+			}
 			
-			itemSprite.pixels = GraphicsSheet.colorItem(itemSprite.pixels, item.Color, item.Asset.itemType);			
+			itemSprite.loadGraphic("assets/items/" + item.assetPath + ".png");
+			
+			itemSprite.pixels = GraphicsSheet.colorItem(itemSprite.pixels, item.itemColor, item.gameItem.itemType);			
 			avatarSheet.drawItem(itemSprite.pixels);
 		}
 	}

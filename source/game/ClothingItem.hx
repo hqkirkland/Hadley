@@ -8,6 +8,7 @@ class ClothingItem
 	public var gameItemId:Int;
 	public var itemName:String;
 	public var layered:Bool;
+	public var layeredAsset:String;
 	public var itemType:Int;
 	public var itemDesc:String;
 	

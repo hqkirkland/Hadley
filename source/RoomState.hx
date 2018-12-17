@@ -46,8 +46,7 @@ class RoomState extends FlxUIState
 		super.create();
 		FlxG.scaleMode = new FixedScaleMode();
 		FlxG.autoPause = false;
-		FlxG.debugger.drawDebug = true;
-		
+		//FlxG.debugger.drawDebug = true;		
 		
 		var setupLoader:ClientData = new ClientData();
 		setupLoader.addEventListener(Event.COMPLETE, initiateConnection); 
@@ -60,6 +59,7 @@ class RoomState extends FlxUIState
 	{
 		var rand:Int = Math.ceil(Math.random() * 1000);
 		playerAvatar = new Avatar("" + rand);
+		playerAvatar.setAppearance("1^0^2^2^3^2^4^2^6^0^7^1^8^0^5^0");
 		
 		NetworkManager.connect("72.182.108.158", 4000, playerAvatar.username, "WHIRLPOOL-2018");
 		NetworkManager.networkSocket.addEventListener(Event.CONNECT, doLogin);

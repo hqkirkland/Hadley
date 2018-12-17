@@ -71,13 +71,6 @@ class Avatar extends FlxSprite
 		username = _username;
 		chatGroup = new BubbleStack(username);
 		
-		setAppearance("1^0^2^2^3^2^4^2^6^0^7^1^8^0^5^0");
-		this.width = 10;
-		this.height = 5;
-		
-		this.offset.x = 15;
-		this.offset.y = 63;
-		
 		// TODO: Create figure object, or create typedef for clothing objects.
 	}
 	
@@ -126,6 +119,12 @@ class Avatar extends FlxSprite
 		generateAvatar();
 		generateAnimation();
 		fadeIn();
+		
+		this.width = 10;
+		this.height = 5;
+		
+		this.offset.x = 15;
+		this.offset.y = 63;
 	}
 	
 	private function generateAvatar():Void

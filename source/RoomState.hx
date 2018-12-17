@@ -55,7 +55,6 @@ class RoomState extends FlxUIState
 		
 		playerAvatar = new Avatar("" + rand);
 		audioManager = new SoundManager();
-		
 	}
 	
 	private function initiateConnection(e:Event)

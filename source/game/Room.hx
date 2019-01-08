@@ -4,7 +4,6 @@ import haxe.Json;
 
 import openfl.Assets;
 import openfl.display.BitmapData;
-import openfl.utils.Dictionary;
 
 import flixel.FlxObject;
 import flixel.FlxSprite;
@@ -60,7 +59,6 @@ class Room extends FlxSprite
 {
 	public var roomName:String;
 	
-	public var roomUsers:Dictionary<String, Avatar> = new Dictionary<String, Avatar>();
 	public var roomEntities:FlxTypedSpriteGroup<FlxSprite> = new FlxTypedSpriteGroup<FlxSprite>();
 	public var portalEntities:FlxTypedSpriteGroup<Portal> = new FlxTypedSpriteGroup<Portal>();
 	public var vehicleEntities:FlxTypedSpriteGroup<FlxSprite> = new FlxTypedSpriteGroup<FlxSprite>();
@@ -172,9 +170,7 @@ class Room extends FlxSprite
 		newAvatar.y = this.y + entryPortal.setY + newAvatar.offset.y;
 		
 		newAvatar.currentDirection = entryPortal.startDirection;
-		
-		roomUsers.set(newAvatar.username, newAvatar);
-		roomEntities.add(roomUsers[newAvatar.username]);
+		roomEntities.add(newAvatar);
 		
 		newAvatar.fadeIn();
 	}

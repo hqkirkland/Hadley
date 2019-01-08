@@ -1,6 +1,5 @@
 package;
 
-import game.ClientData;
 import openfl.Assets;
 import openfl.events.Event;
 import openfl.events.ProgressEvent;
@@ -20,8 +19,8 @@ import communication.messages.ServerPacket;
 import communication.messages.ServerJoinRoomPacket;
 import communication.messages.ServerMovementPacket;
 import communication.messages.MessageType;
-
 import game.Avatar;
+import game.ClientData;
 import game.Portal;
 import game.Room;
 import sound.SoundManager;
@@ -46,7 +45,7 @@ class RoomState extends FlxUIState
 		super.create();
 		FlxG.scaleMode = new FixedScaleMode();
 		FlxG.autoPause = false;
-		//FlxG.debugger.drawDebug = true;		
+		//FlxG.debugger.drawDebug = true;
 		
 		var setupLoader:ClientData = new ClientData();
 		setupLoader.addEventListener(Event.COMPLETE, initiateConnection); 
@@ -55,10 +54,10 @@ class RoomState extends FlxUIState
 		audioManager = new SoundManager();
 	}
 	
-	private function initiateConnection(e:Event)
+	private function initiateConnection(e:Event):Void
 	{
 		var rand:Int = Math.ceil(Math.random() * 1000);
-		playerAvatar = new Avatar("" + rand);
+		playerAvatar = new Avatar("Monk");
 		playerAvatar.setAppearance("1^0^2^2^3^2^4^2^6^0^7^1^8^0^5^0");
 		
 		NetworkManager.connect("72.182.108.158", 4000, playerAvatar.username, "WHIRLPOOL-2018");
@@ -66,13 +65,13 @@ class RoomState extends FlxUIState
 		NetworkManager.networkSocket.addEventListener(ProgressEvent.SOCKET_DATA, receivePacket);
 	}
 	
-	private function doLogin(e:Event)
+	private function doLogin(e:Event):Void
 	{
 		NetworkManager.sendAuthenticate();
 		joinRoom("cloudInfoRoom");
 	}
 	
-	private function joinRoom(roomName:String)
+	private function joinRoom(roomName:String):Void
 	{
 		if (currentRoom != null)
 		{

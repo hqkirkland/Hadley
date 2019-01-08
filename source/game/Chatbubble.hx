@@ -44,9 +44,9 @@ class ChatBubble extends FlxSprite
 		chatFont = FlxBitmapFont.fromAngelCode(AssetPaths.arialBitmap_Size14px_0__png, Xml.parse(fontData));
 		textFormat = new FlxTextFormat(0x0);
 		
-		bubbleCorner = new FlxSprite(0, 0, Assets.getBitmapData("assets/interface/bubble_1_1_0.png"));
-		bubblePointer = new FlxSprite(0, 0, Assets.getBitmapData("assets/interface/bubble_1_5_0.png"));
-		bubbleOutline = new FlxSprite(0, 0, Assets.getBitmapData("assets/interface/bubble_1_6_0.png"));
+		bubbleCorner = new FlxSprite(0, 0, Assets.getBitmapData("assets/interface/chat/bubble_1_1_0.png"));
+		bubblePointer = new FlxSprite(0, 0, Assets.getBitmapData("assets/interface/chat/bubble_1_5_0.png"));
+		bubbleOutline = new FlxSprite(0, 0, Assets.getBitmapData("assets/interface/chat/bubble_1_6_0.png"));
 		
 		makeLinesOptimized(message);
 		generateBubble(speaker, gender);

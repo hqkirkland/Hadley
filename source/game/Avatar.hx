@@ -97,7 +97,7 @@ class Avatar extends FlxSprite
 			
 			itemArray.push(item);
 			
-			/*
+			
 			if (item.gameItem.layered && i == 7)
 			{
 				var layerItem:Object = {
@@ -107,7 +107,7 @@ class Avatar extends FlxSprite
 				};
 				
 				itemArray.insert(4, layerItem);
-			}*/
+			}
 			
 			//var item:ClothingItem = ClientData.itemMap[Std.parseInt(figure[i * 2])];			
 			//itemArray[i] = { Asset: item, Color: Std.parseInt(figure[(i * 2) + 1]) };

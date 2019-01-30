@@ -9,6 +9,7 @@ import openfl.events.Event;
 class ApiEvent extends Event
 {
 	public var result:Dynamic;
+	public var statusCode:Int = 0;
 	public var error:ApiError;
 	
 	public static inline var LOGIN:String = "Login";
@@ -16,8 +17,9 @@ class ApiEvent extends Event
 	public static inline var USERDATA:String = "FetchUserData";
 	public static inline var ERROR:String = "ApiError";
 	
-	public function new(type:String, bubbles:Bool=false, cancelable:Bool=false) 
+	public function new(type:String, ?status:Int=200, bubbles:Bool=false, cancelable:Bool=false) 
 	{
 		super(type, bubbles, cancelable);
+		statusCode = status;
 	}
 }

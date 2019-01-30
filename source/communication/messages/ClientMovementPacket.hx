@@ -1,6 +1,7 @@
 package communication.messages;
 
 import openfl.utils.ByteArray;
+import openfl.utils.Endian;
 
 /**
  * ...
@@ -8,11 +9,12 @@ import openfl.utils.ByteArray;
  */
 class ClientMovementPacket extends ClientPacket
 {
-	public function new(north:Bool, south:Bool, east:Bool, west:Bool, run:Bool)
+	public function new(north:Bool, south:Bool, east:Bool, west:Bool, run:Bool, x:Float, y:Float)
 	{
 		super(MessageType.Movement);
 		
 		var messageData:ByteArrayData = new ByteArrayData();
+		messageData.endian = Endian.BIG_ENDIAN;
 		
 		#if flash
 		messageData.length = 32;
@@ -25,6 +27,9 @@ class ClientMovementPacket extends ClientPacket
 		if (east) messageData.writeByte(0x1) else messageData.writeByte(0x0);
 		if (west) messageData.writeByte(0x1) else messageData.writeByte(0x0);
 		if (run) messageData.writeByte(0x1) else messageData.writeByte(0x0);
+		
+		messageData.writeByte(Math.ceil(x / 24));
+		messageData.writeByte(Math.ceil(y / 24));
 		
 		messageBytes = new ByteArrayData();
 		

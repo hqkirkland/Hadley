@@ -29,28 +29,35 @@ class ApiClient extends EventDispatcher
 	private function errorHandler(e:IOErrorEvent):Void
 	{
 		var urlClient:URLLoader = cast e.target;
-		trace("Error code: " + e.text);
+		
+		var statusCode:Int = Std.parseInt(e.text);
 		
 		if (urlClient.data != null)
 		{
 			var apiError:ApiError = cast Json.parse(urlClient.data);
+			trace(apiError.message);
 			
 			if (apiError.message != null)
 			{
-				raiseError(apiError);
+				raiseError(apiError, statusCode);
 			}
 			
 			else
 			{
-				trace(e.text);
-				raiseError({ message: "An unknown error occurred. Please retry the request." });
+				raiseError({ message: "An unknown API error occurred. Please retry the request." }, statusCode);
 			}
+		}
+		
+		else
+		{
+			raiseError({ message: "An unknown API error occurred. Please retry the request." }, statusCode);
 		}
 	}
 	
-	private function raiseError(apiError:ApiError):Void
-	{		
-		var errorEvent:ApiEvent = new ApiEvent(ApiEvent.ERROR);
+	private function raiseError(apiError:ApiError, statusCode:Int):Void
+	{
+		trace("Error code: " + apiError.message);
+		var errorEvent:ApiEvent = new ApiEvent(ApiEvent.ERROR, statusCode);
 		errorEvent.error = apiError;
 		
 		dispatchEvent(errorEvent);
@@ -103,7 +110,7 @@ class ApiClient extends EventDispatcher
 		
 		apiToken = cast response;
 		
-		var apiEvent:ApiEvent = new ApiEvent(ApiEvent.LOGIN, true, false);
+		var apiEvent:ApiEvent = new ApiEvent(ApiEvent.LOGIN, null, true, false);
 		dispatchEvent(apiEvent);
 	}
 	

@@ -24,7 +24,7 @@ class SoundManager
 		
 		var woodWalk:FlxSound = FlxG.sound.load(AssetPaths.Step1__wav);
 		woodWalk.looped = true;
-		woodWalk.endTime = woodWalk.length - 100;
+		woodWalk.endTime = woodWalk.length - 75;
 		woodWalk.loopTime = 50;
 		walkSoundGroup.add(woodWalk);
 		walkSoundGroup.volume = .50;

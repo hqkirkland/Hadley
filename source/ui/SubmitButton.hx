@@ -1,52 +1,77 @@
 package ui;
 
+import flash.geom.Point;
+import flixel.graphics.frames.FlxFramesCollection;
+import flixel.util.FlxColor;
 import openfl.Assets;
 import openfl.display.BitmapData;
-import openfl.display.Shape;
-import openfl.filters.DropShadowFilter;
 import openfl.geom.Matrix;
 import openfl.geom.Rectangle;
 import openfl.text.TextField;
 import openfl.text.TextFieldType;
 import openfl.text.TextFormat;
 
+import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.ui.FlxButton;
+import flixel.graphics.FlxGraphic;
 import flixel.addons.ui.FlxUI9SliceSprite;
+
 /**
  * ...
  * @author Hunter
  */
-class SubmitButton extends FlxSprite
+class SubmitButton extends FlxButton
 {
-	public var backgroundShape:Shape;
+	public var button:FlxButton;
 	
-	public function new(width:Int, height:Int, ?title:String=null) 
+	#if flash
+	private var titleFormat:TextFormat = new TextFormat("Arial", 16, 0xFFFFFF, true);
+	#else
+	private var titleFormat:TextFormat = new TextFormat(Assets.getFont("assets/interface/fonts/HelveticaRoundedLT-Black.otf").fontName, 16, 0xFFFFFF, false);
+	#end
+	
+	private static var buttonSlice:FlxUI9SliceSprite;
+	private static var buttonPressedSlice:FlxUI9SliceSprite;
+	
+	private var buttonWidth:Int;
+	private var buttonHeight:Int;
+	private var buttonBmp:BitmapData;
+	
+	public function new(_width:Int, _height:Int, title:String, onClick:Void->Void)
 	{
-		super();
+		super(0, 0, null, onClick);
 		
-		this.loadGraphicFromSprite(new FlxUI9SliceSprite(0, 0, Assets.getBitmapData("assets/interface/login/images/greenButton.png"),
-								   new Rectangle(this.x, this.y, width, height),
-								   [ 11, 11, 13, 13 ]));
+		buttonWidth = _width;
+		buttonHeight = _height;
 		
-		if (title != null)
+		var titleBox:TextField = new TextField();
+		titleBox.type = TextFieldType.DYNAMIC;
+		titleBox.text = title;
+		titleBox.setTextFormat(titleFormat);
+		
+		buttonBmp = new BitmapData(buttonWidth * 3, buttonHeight * 3, true, 0x0);
+		
+		var count:Int = 1;
+		var parts:Array<String> = [ "", "_hover", "_press" ];
+		var srcRectangle:Rectangle = new Rectangle(0, 0, buttonWidth, buttonHeight);
+		var m:Matrix = new Matrix(1, 0, 0, 1, (buttonWidth * 0) + ((buttonWidth / 2) - (titleBox.textWidth / 2) - 3), (buttonHeight / 2) - (titleBox.textHeight / 2));
+
+		for (state in parts)
 		{
-			var titleBox:TextField = new TextField();
-			titleBox.type = TextFieldType.DYNAMIC;
-			titleBox.text = title;
+			var bmp:BitmapData = FlxGraphic.fromAssetKey("assets/interface/login/images/greenButton" + state + ".png").bitmap;
+			var buttonSlice:FlxUI9SliceSprite = new FlxUI9SliceSprite(0, 0, bmp, srcRectangle, [ 11, 11, 13, 13 ]);
 			
-			#if flash
-			// So for some reason you have to use SET with dynamic on Flash.
-			titleBox.setTextFormat(new TextFormat("Arial", 14, 0xFFFFFF, true));
-			#else
-			titleBox.setTextFormat(new TextFormat(Assets.getFont("assets/interface/text/HelveticaRounded-Bold.otf").fontName, 18, 0xFFFFFF, true));
-			#end
+			buttonBmp.copyPixels(buttonSlice.pixels, srcRectangle, new Point(buttonWidth * (count - 1), 0));
 			
-			this.pixels.draw(titleBox, new Matrix(1, 0, 0, 1, (this.width / 2) - 20, (this.height / 2) - 7));
+			buttonSlice.destroy();
+			
+			buttonBmp.draw(titleBox, m);
+			m.tx = m.tx + buttonWidth;
+			
+			count++;
 		}
-	}
-	
-	override function update(elapsed:Float):Void
-	{
-		super.update(elapsed);
+		
+		this.loadGraphic(FlxGraphic.fromBitmapData(buttonBmp), true, buttonWidth, buttonHeight);
 	}
 }

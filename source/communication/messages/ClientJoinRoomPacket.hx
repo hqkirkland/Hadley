@@ -1,7 +1,7 @@
 package communication.messages;
 
 import openfl.utils.ByteArray;
-
+import openfl.utils.Endian;
 /**
  * ...
  * @author Hunter
@@ -13,6 +13,7 @@ class ClientJoinRoomPacket extends ClientPacket
 		super(MessageType.JoinRoom);
 		
 		var messageData:ByteArrayData = new ByteArrayData();
+		messageData.endian = Endian.BIG_ENDIAN;
 		
 		#if flash
 		messageData.length = 32;
@@ -22,7 +23,6 @@ class ClientJoinRoomPacket extends ClientPacket
 		
 		messageData.writeByte(destRoom.length);
 		messageData.writeUTFBytes(destRoom);
-		trace(messageData.position);
 		
 		messageBytes = new ByteArrayData();
 		

@@ -115,10 +115,12 @@ class Avatar extends FlxSprite
 		
 		this.pixels = new BitmapData(41, 68, true, 0x00000000);
 		
-		fadeAway();
+		this.alpha = 0;
 		generateAvatar();
 		generateAnimation();
 		fadeIn();
+		
+		this.alpha = 1;
 		
 		this.width = 10;
 		this.height = 5;

@@ -1,6 +1,8 @@
 package ui;
 
+import flixel.graphics.FlxGraphic;
 import openfl.Assets;
+import openfl.display.BitmapData;
 import openfl.text.TextField;
 import openfl.text.TextFieldType;
 import openfl.text.TextFormat;
@@ -16,46 +18,39 @@ import flixel.util.FlxColor;
 class Label extends FlxSprite
 {
 	public var textBox:TextField;
-	private var _textSize:Int;
 	
-	public function new(textSize:Int=14) 
+	private var fontSize:Int;
+	private var fontColor:Int;
+	private var backgroundColor:Int = 0x0;
+	
+	public function new(text:String, textSize:Int=14, ?fgColor:Int=0xFF34363A, ?bgColor:Int=0x00000000) 
 	{
 		super();
-		this.makeGraphic(100, 20, FlxColor.TRANSPARENT);
 		
-		_textSize = textSize;
-	}
-	
-	public function addText(text:String)
-	{
-		if (textBox != null)
-		{
-			FlxG.stage.removeChild(textBox);
-		}
+		fontColor = fgColor;
+		backgroundColor = bgColor;
 		
+		fontSize = textSize;
 		textBox = new TextField();
 		textBox.type = TextFieldType.DYNAMIC;
-		textBox.text = text;
+		
 		#if flash
-		// So for some reason you have to use SET with dynamic on Flash.
-		textBox.setTextFormat(new TextFormat("Arial", _textSize, 0x34363A, true));
+		textBox.setTextFormat(new TextFormat("Arial", fontSize, fontColor, true));
 		#else
-		textBox.setTextFormat(new TextFormat(Assets.getFont("assets/interface/text/HelveticaRounded-Bold.otf").fontName, _textSize, 0x34363A, false));
+		textBox.setTextFormat(new TextFormat(Assets.getFont("assets/interface/fonts/HelveticaRoundedLT-Black.otf").fontName, fontSize, fontColor, false));
 		#end
-		textBox.width = 100;
+		
+		textBox.width = (text.length + 1) * textSize;
 		textBox.height = 20;
 		textBox.background = false;
-		FlxG.stage.addChild(textBox);
+		
+		setText(text);
 	}
 	
-	override function update(elapsed:Float):Void
+	public function setText(text:String)
 	{
-		if (this.textBox != null)
-		{
-			this.textBox.x = this.x;
-			this.textBox.y = this.y;
-		}
-		
-		super.update(elapsed);
+		this.makeGraphic(Math.ceil(textBox.width), Math.ceil(textBox.height), FlxColor.fromInt(backgroundColor), true);
+		textBox.text = text;
+		this.pixels.draw(textBox);
 	}
 }

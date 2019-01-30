@@ -12,6 +12,8 @@ class ServerMovementPacket extends ServerPacket
 	public var east:Bool;
 	public var west:Bool;
 	public var run:Bool;
+	public var x:Int;
+	public var y:Int;
 	
 	public function new(_messageBytes:ByteArrayData)
 	{

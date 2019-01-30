@@ -43,7 +43,7 @@ class LoginInputBox extends FlxSprite
 		textInput.defaultTextFormat = new TextFormat("Arial", 14, 0x34363A, true);
 		textInput.y = this.y + 5;
 		#else
-		textInput.setTextFormat(new TextFormat(Assets.getFont("assets/interface/text/HelveticaRounded-Bold.otf").fontName, 14, 0x34363A, false, null, null, null, null, null, 12, null, null, 1));
+		textInput.setTextFormat(new TextFormat(Assets.getFont("assets/interface/fonts/HelveticaRoundedLT-Black.otf").fontName, 14, 0x34363A, false, null, null, null, null, null, 12, null, null, 1));
 		textInput.y = this.y + 5;
 		#end
 		textInput.width = 225;

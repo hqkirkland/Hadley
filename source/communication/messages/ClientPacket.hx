@@ -1,6 +1,7 @@
 package communication.messages;
 
 import openfl.utils.ByteArray.ByteArrayData;
+import openfl.utils.Endian;
 
 /**
  * ...
@@ -19,9 +20,11 @@ class ClientPacket
 	public function writeHeader(messageLength:Int):Void
 	{
 		messageBytes.position = 0;
+		messageBytes.endian = Endian.BIG_ENDIAN;
 		messageBytes.writeByte(0xa);
 		messageBytes.writeShort(messageLength);
 		messageBytes.writeShort(messageId);
 		messageBytes.writeByte(0x1f);
+
 	}
 }

@@ -1,7 +1,7 @@
 package communication.messages;
 
-import openfl.utils.ByteArray.ByteArrayData;
-
+import openfl.utils.ByteArray;
+import openfl.utils.Endian;
 /**
  * ...
  * @author Hunter
@@ -13,6 +13,7 @@ class ClientAuthenticatePacket extends ClientPacket
 		super(MessageType.Authenticate);
 		
 		var messageData:ByteArrayData = new ByteArrayData();
+		messageData.endian = Endian.BIG_ENDIAN;
 		
 		#if flash
 		messageData.length = 32;

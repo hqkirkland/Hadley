@@ -2,6 +2,7 @@ package communication.messages;
 
 import communication.messages.MessageType;
 import openfl.utils.ByteArray.ByteArrayData;
+import openfl.utils.Endian;
 /**
  * ...
  * @author Hunter
@@ -15,9 +16,18 @@ class ServerPacket
 	public function new(_messageBytes:ByteArrayData, ?_messageId:Int=0)
 	{
 		messageBytes = _messageBytes;
+		messageBytes.endian = Endian.BIG_ENDIAN;
 		messageId = _messageId;
 		
 		messageBytes.position = 6;
+
+		if (messageBytes.length == 0)
+		{
+			#if flash
+			messageBytes.length = 16;
+			#end
+		}
+		
 		senderId = readString();
 	}
 	

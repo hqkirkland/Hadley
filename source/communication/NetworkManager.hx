@@ -3,6 +3,7 @@ package communication;
 import openfl.net.Socket;
 import openfl.events.Event;
 import openfl.utils.ByteArray;
+import openfl.utils.Endian;
 
 import communication.messages.MessageType;
 import communication.messages.ClientAuthenticatePacket;
@@ -11,6 +12,7 @@ import communication.messages.ClientMovementPacket;
 import communication.messages.ServerPacket;
 import communication.messages.ServerJoinRoomPacket;
 import communication.messages.ServerMovementPacket;
+import communication.messages.ServerRoomIdentityPacket;
 /**
  * ...
  * @author Hunter
@@ -36,6 +38,7 @@ class NetworkManager
 	public static function handlePacket(packetLength:Int):ServerPacket
 	{
 		var netBytes:ByteArrayData = new ByteArrayData();
+		netBytes.endian = Endian.BIG_ENDIAN;
 		
 		#if flash
 		netBytes.length = packetLength;
@@ -52,6 +55,10 @@ class NetworkManager
 				return new ServerJoinRoomPacket(netBytes);
 			case MessageType.Movement:
 				return new ServerMovementPacket(netBytes);
+			case MessageType.RoomIdentity:
+				return new ServerRoomIdentityPacket(netBytes);
+			default:
+				return new ServerPacket(new ByteArrayData());
 		}
 		
 		return new ServerPacket(new ByteArrayData());
@@ -60,19 +67,22 @@ class NetworkManager
 	public static function sendAuthenticate():Void
 	{
 		isConnected = true;
+		networkSocket.flush();
 		networkSocket.writeBytes(new ClientAuthenticatePacket(username, ticket).messageBytes);
 		networkSocket.flush();
 	}
 	
 	public static function sendJoinRoom(roomName:String):Void
 	{
+		networkSocket.flush();
 		networkSocket.writeBytes(new ClientJoinRoomPacket(roomName).messageBytes);
 		networkSocket.flush();
 	}
 	
-	public static function sendMotion(north:Bool, south:Bool, east:Bool, west:Bool, run:Bool)
+	public static function sendMotion(north:Bool, south:Bool, east:Bool, west:Bool, run:Bool, x:Float=0, y:Float=0)
 	{
-		networkSocket.writeBytes(new ClientMovementPacket(north, south, east, west, run).messageBytes);
+		networkSocket.flush();
+		networkSocket.writeBytes(new ClientMovementPacket(north, south, east, west, run, x, y).messageBytes);
 		networkSocket.flush();
 	}
 }

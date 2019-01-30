@@ -1,5 +1,6 @@
 package;
 
+import communication.messages.ServerRoomIdentityPacket;
 import openfl.Assets;
 import openfl.events.Event;
 import openfl.events.ProgressEvent;
@@ -45,7 +46,6 @@ class RoomState extends FlxUIState
 		super.create();
 		FlxG.scaleMode = new FixedScaleMode();
 		FlxG.autoPause = false;
-		//FlxG.debugger.drawDebug = true;
 		
 		var setupLoader:ClientData = new ClientData();
 		setupLoader.addEventListener(Event.COMPLETE, initiateConnection); 
@@ -57,7 +57,7 @@ class RoomState extends FlxUIState
 	private function initiateConnection(e:Event):Void
 	{
 		var rand:Int = Math.ceil(Math.random() * 1000);
-		playerAvatar = new Avatar("Monk");
+		playerAvatar = new Avatar("Monk" + rand);
 		playerAvatar.setAppearance("1^0^2^2^3^2^4^2^6^0^7^1^8^0^5^0");
 		
 		NetworkManager.connect("72.182.108.158", 4000, playerAvatar.username, "WHIRLPOOL-2018");
@@ -85,8 +85,6 @@ class RoomState extends FlxUIState
 		currentRoom = new Room(roomName);
 		
 		Assets.loadLibrary(roomName).onComplete(loadRoom);
-		
-		NetworkManager.sendJoinRoom(currentRoom.roomName);
 	}
 	
 	private function loadRoom(completeLib:AssetLibrary):Void
@@ -122,6 +120,7 @@ class RoomState extends FlxUIState
 		
 		this.bgColor = currentRoom.backgroundColor;
 		currentRoom.portalEntities.visible = false;
+		NetworkManager.sendJoinRoom(currentRoom.roomName);
 	}
 	
 	private function setupCamera():Void
@@ -323,27 +322,26 @@ class RoomState extends FlxUIState
 			var motionChanged:Bool = checkMovementChange();
 			
 			if (motionChanged)
-			{
-				/*
+			{				
 				NetworkManager.sendMotion(playerAvatar.keysTriggered.North, 
 										  playerAvatar.keysTriggered.South, 
 										  playerAvatar.keysTriggered.East, 
 										  playerAvatar.keysTriggered.West,
-										  playerAvatar.keysTriggered.Run);
-				*/
-			}			
+										  playerAvatar.keysTriggered.Run,
+										  playerAvatar.x,
+										  playerAvatar.y);
+			}
 		}
 		
 		if (playerAvatar.currentAction != playerAvatar.previousAction)
 		{
 			if (playerAvatar.currentAction == Avatar.actionSet.Stand)
 			{
-				//NetworkManager.sendMotion(false, false, false, false, false);
+				NetworkManager.sendMotion(false, false, false, false, false, playerAvatar.x, playerAvatar.y);
 			}
 		}
 		
 		playerAvatar.playerNextMovement = testNextPoints(playerAvatar);
-		
 		
 		if (!playerAvatar.enableWalk)
 		{
@@ -405,10 +403,10 @@ class RoomState extends FlxUIState
 	{
 		var byteCount:Int = Math.ceil(e.bytesLoaded);
 		var serverPacket:ServerPacket = NetworkManager.handlePacket(byteCount);
-		
+
 		if (!roomAvatars.exists(serverPacket.senderId))
 		{
-			if (serverPacket.messageId != MessageType.JoinRoom)
+			if (serverPacket.messageId != MessageType.JoinRoom && serverPacket.messageId != MessageType.RoomIdentity)
 			{
 				trace(serverPacket.senderId + ":<Avatar> was not found.");
 				return;
@@ -416,15 +414,17 @@ class RoomState extends FlxUIState
 		}
 		
 		switch (serverPacket.messageId)
-		{			
+		{
 			case MessageType.JoinRoom:
 				var joinPacket:ServerJoinRoomPacket = cast(serverPacket, ServerJoinRoomPacket);
+				
 				roomAvatars.set(joinPacket.senderId, new Avatar(joinPacket.senderId));
+				roomAvatars[joinPacket.senderId].setAppearance(joinPacket.appearance);
+				
 				currentRoom.addAvatar(roomAvatars[joinPacket.senderId], joinPacket.fromRoom);
 				
 			case MessageType.Movement:
 				var movePacket:ServerMovementPacket = cast(serverPacket, ServerMovementPacket);
-				//var playerAvatar2:Avatar = roomAvatars[movePacket.senderId];
 				
 				roomAvatars[movePacket.senderId].keysTriggered.North = movePacket.north;
 				roomAvatars[movePacket.senderId].keysTriggered.South = movePacket.south;
@@ -435,6 +435,16 @@ class RoomState extends FlxUIState
 				// This doesn't let SmoothMovement work.
 				roomAvatars[movePacket.senderId].playerNextMovement = FlxPoint.get(0, 0);
 				roomAvatars[movePacket.senderId].smoothMovement();
+				
+			case MessageType.RoomIdentity:
+				var identityPacket:ServerRoomIdentityPacket = cast(serverPacket, ServerRoomIdentityPacket);
+				roomAvatars.set(identityPacket.senderId, new Avatar(identityPacket.senderId));
+				roomAvatars[identityPacket.senderId].setAppearance(identityPacket.appearance);
+				
+				currentRoom.addAvatar(roomAvatars[identityPacket.senderId], "");
+				
+				roomAvatars[identityPacket.senderId].x = identityPacket.x;
+				roomAvatars[identityPacket.senderId].y = identityPacket.y;
 				
 			default:
 				return;

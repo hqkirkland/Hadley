@@ -1,5 +1,6 @@
 package communication;
 
+import communication.messages.ServerExitRoomPacket;
 import openfl.net.Socket;
 import openfl.events.Event;
 import openfl.utils.ByteArray;
@@ -57,6 +58,8 @@ class NetworkManager
 				return new ServerMovementPacket(netBytes);
 			case MessageType.RoomIdentity:
 				return new ServerRoomIdentityPacket(netBytes);
+			case MessageType.ExitRoom:
+				return new ServerExitRoomPacket(netBytes);
 			default:
 				return new ServerPacket(new ByteArrayData());
 		}

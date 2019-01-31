@@ -28,8 +28,8 @@ class ClientMovementPacket extends ClientPacket
 		if (west) messageData.writeByte(0x1) else messageData.writeByte(0x0);
 		if (run) messageData.writeByte(0x1) else messageData.writeByte(0x0);
 		
-		messageData.writeByte(Math.ceil(x / 24));
-		messageData.writeByte(Math.ceil(y / 24));
+		messageData.writeShort(Math.ceil(x));
+		messageData.writeShort(Math.ceil(y));
 		
 		messageBytes = new ByteArrayData();
 		

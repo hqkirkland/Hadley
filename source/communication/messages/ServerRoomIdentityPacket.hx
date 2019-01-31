@@ -16,7 +16,7 @@ class ServerRoomIdentityPacket extends ServerPacket
 		super(_messageBytes, MessageType.RoomIdentity);
 		
 		appearance = readString();
-		x = readChar() * 24;
-		y = readChar() * 24;
+		x = readUInt16();
+		y = readUInt16();
 	}
 }

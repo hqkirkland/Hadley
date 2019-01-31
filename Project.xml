@@ -15,7 +15,7 @@
 	<!-- ____________________________ Window Settings ___________________________ -->
 	
 	<!--These window settings apply to all targets-->
-	<window width="975" height="550" fps="24" background="#000000" hardware="true" vsync="true" />
+	<window width="950" height="550" fps="24" background="#000000" hardware="true" vsync="true" />
 	
 	<window if="flash" orientation="landscape" fullscreen="false" resizable="true" />
 	
@@ -41,8 +41,8 @@
 	<assets if="flash" path="assets/cloudLift" embed="true" library="cloudLift" preload="true" />
 	<library name="cloudLift" type="pak" />
 	
-	<assets path="assets/images" embed="true" />
-	<assets path="assets/images/interface" embed="true" />
+	<assets path="assets/interface" embed="true" />
+	<assets path="assets/items" embed="true" />
 	<assets path="assets/sounds" embed="true" />
 	<!-- _______________________________ Libraries ______________________________ -->
 

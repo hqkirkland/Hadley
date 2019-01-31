@@ -121,6 +121,7 @@ class RoomState extends FlxUIState
 		this.bgColor = currentRoom.backgroundColor;
 		currentRoom.portalEntities.visible = false;
 		NetworkManager.sendJoinRoom(currentRoom.roomName);
+		NetworkManager.sendMotion(false, false, false, false, false, playerAvatar.x, playerAvatar.y);
 	}
 	
 	private function setupCamera():Void
@@ -431,10 +432,16 @@ class RoomState extends FlxUIState
 				roomAvatars[movePacket.senderId].keysTriggered.East = movePacket.east;
 				roomAvatars[movePacket.senderId].keysTriggered.West = movePacket.west;
 				roomAvatars[movePacket.senderId].keysTriggered.Run = movePacket.run;
-				
-				// This doesn't let SmoothMovement work.
+
+				// This stops SmoothMovement from running and screwing everything up.
 				roomAvatars[movePacket.senderId].playerNextMovement = FlxPoint.get(0, 0);
 				roomAvatars[movePacket.senderId].smoothMovement();
+				
+				if (roomAvatars[movePacket.senderId].currentAction == Avatar.actionSet.Walk)
+				{
+					roomAvatars[movePacket.senderId].x = movePacket.x;
+					roomAvatars[movePacket.senderId].y = movePacket.y;
+				}
 				
 			case MessageType.RoomIdentity:
 				var identityPacket:ServerRoomIdentityPacket = cast(serverPacket, ServerRoomIdentityPacket);

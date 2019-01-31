@@ -24,5 +24,8 @@ class ServerMovementPacket extends ServerPacket
 		east = readChar() == 0x1;
 		west = readChar() == 0x1;
 		run = readChar() == 0x1;
+		
+		x = readUInt16();
+		y = readUInt16();
 	}
 }

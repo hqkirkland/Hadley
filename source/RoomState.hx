@@ -15,6 +15,7 @@ import flixel.math.FlxRect;
 import flixel.addons.ui.FlxInputText;
 import flixel.addons.ui.FlxUIState;
 import flixel.system.scaleModes.FixedScaleMode;
+import flixel.input.keyboard.FlxKey;
 
 import communication.NetworkManager;
 import communication.messages.ServerPacket;
@@ -317,30 +318,45 @@ class RoomState extends FlxUIState
 		playerAvatar.keysTriggered.West = FlxG.keys.pressed.LEFT && !FlxG.keys.pressed.RIGHT;
 		playerAvatar.keysTriggered.Run = FlxG.keys.pressed.SHIFT;
 		
+		// Player was walking, but now has stopped.
+		
+		if (playerAvatar.currentAction == Avatar.actionSet.Stand && playerAvatar.previousAction == Avatar.actionSet.Walk)
+		{
+			// So stop the movement.
+			NetworkManager.sendMotion(false,
+									  false,
+									  false,
+									  false,
+									  false,
+									  playerAvatar.x,
+									  playerAvatar.y);
+		}
+		
+		else if (checkMovementChange())
+		{
+			NetworkManager.sendMotion(playerAvatar.keysTriggered.North, 
+									  playerAvatar.keysTriggered.South, 
+									  playerAvatar.keysTriggered.East, 
+									  playerAvatar.keysTriggered.West,
+									  playerAvatar.keysTriggered.Run,
+									  playerAvatar.x,
+									  playerAvatar.y);
+		}
+		
 		if (playerAvatar.currentAction == Avatar.actionSet.Walk)
 		{
 			FlxG.overlap(playerAvatar, currentRoom.portalEntities, enterPortal);
-			var motionChanged:Bool = checkMovementChange();
-			
-			if (motionChanged)
-			{				
-				NetworkManager.sendMotion(playerAvatar.keysTriggered.North, 
-										  playerAvatar.keysTriggered.South, 
-										  playerAvatar.keysTriggered.East, 
-										  playerAvatar.keysTriggered.West,
-										  playerAvatar.keysTriggered.Run,
-										  playerAvatar.x,
-										  playerAvatar.y);
-			}
 		}
 		
-		if (playerAvatar.currentAction != playerAvatar.previousAction)
+
+		
+		/*if (playerAvatar.currentAction != playerAvatar.previousAction)
 		{
 			if (playerAvatar.currentAction == Avatar.actionSet.Stand)
 			{
 				NetworkManager.sendMotion(false, false, false, false, false, playerAvatar.x, playerAvatar.y);
 			}
-		}
+		}*/
 		
 		playerAvatar.playerNextMovement = testNextPoints(playerAvatar);
 		
@@ -432,15 +448,16 @@ class RoomState extends FlxUIState
 				roomAvatars[movePacket.senderId].keysTriggered.East = movePacket.east;
 				roomAvatars[movePacket.senderId].keysTriggered.West = movePacket.west;
 				roomAvatars[movePacket.senderId].keysTriggered.Run = movePacket.run;
-
-				// This stops SmoothMovement from running and screwing everything up.
+				
 				roomAvatars[movePacket.senderId].playerNextMovement = FlxPoint.get(0, 0);
 				roomAvatars[movePacket.senderId].smoothMovement();
 				
 				if (roomAvatars[movePacket.senderId].currentAction == Avatar.actionSet.Stand)
 				{
+					
 					roomAvatars[movePacket.senderId].x = movePacket.x;
 					roomAvatars[movePacket.senderId].y = movePacket.y;
+					
 				}
 				
 			case MessageType.RoomIdentity:
@@ -468,12 +485,24 @@ class RoomState extends FlxUIState
 	
 	public function checkMovementChange():Bool
 	{
-		return true;
-		if (playerAvatar.keysTriggered.North != playerAvatar.previousKeysTriggered.North)
+		if (FlxG.keys.anyJustPressed([UP, DOWN, LEFT, RIGHT]))
 		{
 			return true;
 		}
 		
+		if (FlxG.keys.anyJustReleased([UP, DOWN, LEFT, RIGHT]))
+		{
+			return true;
+		}
+		
+		return false;
+		
+		/*
+		if (playerAvatar.keysTriggered.North != playerAvatar.previousKeysTriggered.North)
+		{
+			return true;
+		}
+
 		if (playerAvatar.keysTriggered.South != playerAvatar.previousKeysTriggered.South)
 		{
 			return true;
@@ -493,6 +522,7 @@ class RoomState extends FlxUIState
 		{
 			return true;
 		}
+		*/
 		
 		return false;
 	}

@@ -25,6 +25,5 @@ class ClientPacket
 		messageBytes.writeShort(messageLength);
 		messageBytes.writeShort(messageId);
 		messageBytes.writeByte(0x1f);
-
 	}
 }

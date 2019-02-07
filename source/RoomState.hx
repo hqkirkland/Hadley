@@ -4,6 +4,7 @@ import communication.messages.ServerExitRoomPacket;
 import communication.messages.ServerRoomIdentityPacket;
 import openfl.Assets;
 import openfl.events.Event;
+import openfl.events.KeyboardEvent;
 import openfl.events.ProgressEvent;
 import openfl.utils.AssetLibrary;
 
@@ -15,21 +16,24 @@ import flixel.math.FlxRect;
 import flixel.addons.ui.FlxInputText;
 import flixel.addons.ui.FlxUIState;
 import flixel.system.scaleModes.FixedScaleMode;
-import flixel.input.keyboard.FlxKey;
 
 import communication.NetworkManager;
 import communication.messages.ServerPacket;
 import communication.messages.ServerJoinRoomPacket;
 import communication.messages.ServerMovementPacket;
+import communication.messages.ServerRoomChatPacket;
 import communication.messages.MessageType;
 import game.Avatar;
 import game.ClientData;
 import game.Portal;
 import game.Room;
 import sound.SoundManager;
+import ui.ChatInputBox;
 
 class RoomState extends FlxUIState
 {
+	public var username:String;
+	
 	public static var playerAvatar:Avatar;
 	public static var currentRoom:Room;
 	
@@ -41,7 +45,7 @@ class RoomState extends FlxUIState
 	
 	private static var roomAvatars:Map<String, Avatar>;
 	
-	private var tf:FlxInputText;
+	private var chat:ChatInputBox;
 	
 	override public function create():Void
 	{
@@ -59,7 +63,7 @@ class RoomState extends FlxUIState
 	private function initiateConnection(e:Event):Void
 	{
 		var rand:Int = Math.ceil(Math.random() * 1000);
-		playerAvatar = new Avatar("Monk" + rand);
+		playerAvatar = new Avatar(username + rand);
 		playerAvatar.setAppearance("1^0^2^2^3^2^4^2^6^0^7^1^8^0^5^0");
 		
 		NetworkManager.connect("72.182.108.158", 4000, playerAvatar.username, "WHIRLPOOL-2018");
@@ -105,18 +109,12 @@ class RoomState extends FlxUIState
 		add(currentRoom.portalEntities);
 		add(playerAvatar.chatGroup);
 		
-		#if flash
-		tf = new FlxInputText(50, 100, 300);
-		tf.borderColor = 0xFFFFFFFF;
-		tf.x = 150;
-		tf.y = 400;
-		tf.width = 300;
-		tf.height = 15;
-		tf.caretWidth = 5;
-		tf.callback = speakUp;
-		tf.text = "";
-		add(tf);
-		#end
+		chat = new ChatInputBox(0x0);
+		chat.x = 400;
+		chat.y = 400;
+		add(chat);
+		
+		chat.textInput.addEventListener(KeyboardEvent.KEY_DOWN, chatBarEnter);
 		
 		setupCamera();
 		
@@ -169,9 +167,6 @@ class RoomState extends FlxUIState
 		remove(currentRoom.roomEntities);
 		remove(currentRoom.vehicleEntities);
 		remove(currentRoom);
-		#if flash
-		remove(tf);
-		#end
 	}
 	
 	private function testNextPoints(testAvatar:Avatar):FlxPoint
@@ -348,16 +343,6 @@ class RoomState extends FlxUIState
 			FlxG.overlap(playerAvatar, currentRoom.portalEntities, enterPortal);
 		}
 		
-
-		
-		/*if (playerAvatar.currentAction != playerAvatar.previousAction)
-		{
-			if (playerAvatar.currentAction == Avatar.actionSet.Stand)
-			{
-				NetworkManager.sendMotion(false, false, false, false, false, playerAvatar.x, playerAvatar.y);
-			}
-		}*/
-		
 		playerAvatar.playerNextMovement = testNextPoints(playerAvatar);
 		
 		if (!playerAvatar.enableWalk)
@@ -370,15 +355,19 @@ class RoomState extends FlxUIState
 		audioManager.playWalkSound(playerAvatar.keysTriggered.Run);
 	}
 	
-	private function speakUp(message:String, action:String):Void
+	private function chatBarEnter(e:KeyboardEvent)
 	{
-		if (action == "enter")
+		if (e.keyCode == 13)
 		{
-			playerAvatar.chatGroup.newBubble(message);
-			#if flash
-			tf.text = "";
-			#end
+			speakUp(chat.textInput.text);
+			NetworkManager.sendRoomChat(chat.textInput.text);
+			chat.textInput.text = "";
 		}
+	}
+	
+	private function speakUp(message:String):Void
+	{
+		playerAvatar.chatGroup.newBubble(message);
 	}
 	
 	public function enterPortal(objectA:FlxObject, objectB:FlxObject):Void
@@ -439,6 +428,7 @@ class RoomState extends FlxUIState
 				roomAvatars[joinPacket.senderId].setAppearance(joinPacket.appearance);
 				
 				currentRoom.addAvatar(roomAvatars[joinPacket.senderId], joinPacket.fromRoom);
+				add(roomAvatars[joinPacket.senderId].chatGroup);
 				
 			case MessageType.Movement:
 				var movePacket:ServerMovementPacket = cast(serverPacket, ServerMovementPacket);
@@ -466,7 +456,8 @@ class RoomState extends FlxUIState
 				roomAvatars[identityPacket.senderId].setAppearance(identityPacket.appearance);
 				
 				currentRoom.addAvatar(roomAvatars[identityPacket.senderId], "");
-				
+				add(roomAvatars[identityPacket.senderId].chatGroup);
+
 				if (identityPacket.x != 0 && identityPacket.y != 0)
 				{
 					roomAvatars[identityPacket.senderId].x = identityPacket.x;
@@ -476,8 +467,13 @@ class RoomState extends FlxUIState
 			case MessageType.ExitRoom:
 				var exitPacket:ServerExitRoomPacket = cast(serverPacket, ServerExitRoomPacket);
 				roomAvatars[exitPacket.senderId].leaveRoom();
+				remove(roomAvatars[exitPacket.senderId].chatGroup);
 				roomAvatars.remove(exitPacket.senderId);
-				
+			
+			case MessageType.RoomChat:
+				var roomChatPacket:ServerRoomChatPacket = cast(serverPacket, ServerRoomChatPacket);
+				roomAvatars[roomChatPacket.senderId].chatGroup.newBubble(roomChatPacket.chatMessage);
+
 			default:
 				return;
 		}
@@ -494,35 +490,6 @@ class RoomState extends FlxUIState
 		{
 			return true;
 		}
-		
-		return false;
-		
-		/*
-		if (playerAvatar.keysTriggered.North != playerAvatar.previousKeysTriggered.North)
-		{
-			return true;
-		}
-
-		if (playerAvatar.keysTriggered.South != playerAvatar.previousKeysTriggered.South)
-		{
-			return true;
-		}
-		
-		if (playerAvatar.keysTriggered.East != playerAvatar.previousKeysTriggered.East)
-		{
-			return true;
-		}
-		
-		if (playerAvatar.keysTriggered.West != playerAvatar.previousKeysTriggered.West)
-		{
-			return true;
-		}
-		
-		if (playerAvatar.keysTriggered.Run != playerAvatar.previousKeysTriggered.Run)
-		{
-			return true;
-		}
-		*/
 		
 		return false;
 	}

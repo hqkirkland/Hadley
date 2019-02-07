@@ -29,14 +29,16 @@ class LoginState extends FlxState
 	{
 		super.create();
 		Assets.cache.enabled = false;
+		
 		FlxG.autoPause = false;
 		FlxG.scaleMode = new FixedScaleMode();
+		
 		apiClient = new ApiClient();
 		
 		var panorama:FlxSprite = new FlxSprite(0, 0, "assets/interface/login/images/panorama.png");
 		add(panorama);
 		
-		backgroundBox = new NoticeBox(400, 200, "sign in");		
+		backgroundBox = new NoticeBox(400, 200, "sign in");
 		backgroundBox.x = (FlxG.width / 2) - (backgroundBox.backgroundShape.width / 2);
 		backgroundBox.y = backgroundBox.backgroundShape.height / 2;
 		add(backgroundBox);
@@ -79,9 +81,19 @@ class LoginState extends FlxState
 	
 	private function onClick():Void
 	{
+		#if !flash
 		apiClient.addEventListener(ApiEvent.ERROR, handleError);
 		apiClient.addEventListener(ApiEvent.LOGIN, doLogin);
 		apiClient.login(usernameBox.textInput.text, passwordBox.textInput.text);
+		#else
+		var _roomState:RoomState = new RoomState();
+		_roomState.username = "Monk";
+		
+		usernameBox.removeElements();
+		passwordBox.removeElements();
+		
+		FlxG.switchState(_roomState);
+		#end
 	}
 	
 	private function handleEnter(e:KeyboardEvent):Void
@@ -116,7 +128,7 @@ class LoginState extends FlxState
 	private function notifySuccess(text:String)
 	{
 		remove(noticeLabel);
-	
+		
 		noticeLabel = new Label(text, 14, 0xFF008800);
 		noticeLabel.x = backgroundBox.x + 20;
 		noticeLabel.y = backgroundBox.y + 50;
@@ -126,7 +138,7 @@ class LoginState extends FlxState
 	private function notifyNotice(text:String)
 	{
 		remove(noticeLabel);
-	
+		
 		noticeLabel = new Label(text);
 		noticeLabel.x = backgroundBox.x + 20;
 		noticeLabel.y = backgroundBox.y + 50;
@@ -135,12 +147,28 @@ class LoginState extends FlxState
 	
 	private function doLogin(e:ApiEvent):Void
 	{
-		notifySuccess("Welcome, " + usernameBox.textInput.text + "!");
-		FlxG.switchState(new RoomState());
+		apiClient.removeEventListener(ApiEvent.LOGIN, doLogin);
+		apiClient.addEventListener(ApiEvent.USERDATA, fetchComplete);
+		
+		apiClient.fetchUserdata(apiClient.apiToken.userId);
+	}
+	
+	private function fetchComplete(e:ApiEvent):Void
+	{
+		apiClient.removeEventListener(ApiEvent.USERDATA, fetchComplete);
+		trace("Welcome, " + e.result.username);
+		
+		var _roomState:RoomState = new RoomState();
+		_roomState.username = e.result.username;
+		
+		usernameBox.removeElements();
+		passwordBox.removeElements();
+		
+		FlxG.switchState(_roomState);
 	}
 	
 	override public function update(elapsed:Float):Void
 	{
-		super.update(elapsed);		
+		super.update(elapsed);
 	}
 }

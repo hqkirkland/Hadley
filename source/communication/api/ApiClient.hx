@@ -8,7 +8,12 @@ import openfl.events.ProgressEvent;
 import openfl.events.IOErrorEvent;
 import openfl.net.URLLoader;
 import openfl.net.URLRequest;
+import openfl.net.URLRequestHeader;
 import openfl.net.URLVariables;
+
+#if flash
+import openfl.system.Security;
+#end
 
 import communication.api.events.ApiEvent;
 
@@ -29,7 +34,6 @@ class ApiClient extends EventDispatcher
 	private function errorHandler(e:IOErrorEvent):Void
 	{
 		var urlClient:URLLoader = cast e.target;
-		
 		var statusCode:Int = Std.parseInt(e.text);
 		
 		if (urlClient.data != null)
@@ -79,13 +83,6 @@ class ApiClient extends EventDispatcher
 		trace("Progress made.");
 	}
 	
-	/*
-	public function login(username:String, password:String):Void
-	{
-		var httpReq:HTTPRequest = new HTTPRequest();
-		httpReq
-	}*/
-	
 	public function login(username:String, password:String):Void
 	{		
 		var loginVars:URLVariables = new URLVariables();
@@ -100,17 +97,23 @@ class ApiClient extends EventDispatcher
 		
 		loginClient.addEventListener(IOErrorEvent.IO_ERROR, errorHandler);
 		loginClient.addEventListener(Event.COMPLETE, loginHandler);
+		
 		loginClient.load(loginRequest);
 	}
 
 	private function loginHandler(e:Event):Void
 	{
 		var loginClient:URLLoader = cast e.target;
+		
+		loginClient.removeEventListener(Event.COMPLETE, loginHandler);
+		loginClient.removeEventListener(IOErrorEvent.IO_ERROR, errorHandler);
+		
 		var response:Dynamic = Json.parse(loginClient.data);
 		
 		apiToken = cast response;
 		
 		var apiEvent:ApiEvent = new ApiEvent(ApiEvent.LOGIN, null, true, false);
+		
 		dispatchEvent(apiEvent);
 	}
 	
@@ -119,18 +122,27 @@ class ApiClient extends EventDispatcher
 		var userdataRequest:URLRequest = new URLRequest(Endpoints.USERDATA + userId);
 		userdataRequest.method = "GET";
 		
+		var credentialsHeader:URLRequestHeader = new URLRequestHeader("Authorization", "Bearer " + apiToken.access_token);
+		userdataRequest.requestHeaders.push(credentialsHeader);
+		
 		var userdataClient:URLLoader = new URLLoader();
+		
 		userdataClient.addEventListener(Event.COMPLETE, userdataHandler);
+		userdataClient.addEventListener(IOErrorEvent.IO_ERROR, errorHandler);
+		
 		userdataClient.load(userdataRequest);
 	}
 	
 	private function userdataHandler(e:Event):Void
 	{
 		var userdataClient:URLLoader = cast e.target;
-		trace(userdataClient.data);
+		
+		userdataClient.removeEventListener(Event.COMPLETE, userdataHandler);
+		userdataClient.removeEventListener(IOErrorEvent.IO_ERROR, errorHandler);
 		
 		var apiEvent:ApiEvent = new ApiEvent(ApiEvent.USERDATA, false, false);
-		apiEvent.result = userdataClient.data;
+		apiEvent.result = Json.parse(userdataClient.data);
+		
 		dispatchEvent(apiEvent);
 	}
 }

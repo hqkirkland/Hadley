@@ -1,5 +1,6 @@
 package communication;
 
+import communication.messages.ClientRoomChatPacket;
 import communication.messages.ServerExitRoomPacket;
 import openfl.net.Socket;
 import openfl.events.Event;
@@ -14,6 +15,7 @@ import communication.messages.ServerPacket;
 import communication.messages.ServerJoinRoomPacket;
 import communication.messages.ServerMovementPacket;
 import communication.messages.ServerRoomIdentityPacket;
+import communication.messages.ServerRoomChatPacket;
 /**
  * ...
  * @author Hunter
@@ -60,6 +62,8 @@ class NetworkManager
 				return new ServerRoomIdentityPacket(netBytes);
 			case MessageType.ExitRoom:
 				return new ServerExitRoomPacket(netBytes);
+			case MessageType.RoomChat:
+				return new ServerRoomChatPacket(netBytes);
 			default:
 				return new ServerPacket(new ByteArrayData());
 		}
@@ -86,6 +90,13 @@ class NetworkManager
 	{
 		networkSocket.flush();
 		networkSocket.writeBytes(new ClientMovementPacket(north, south, east, west, run, x, y).messageBytes);
+		networkSocket.flush();
+	}
+	
+	public static function sendRoomChat(chatMessage:String):Void
+	{
+		networkSocket.flush();
+		networkSocket.writeBytes(new ClientRoomChatPacket(chatMessage).messageBytes);
 		networkSocket.flush();
 	}
 }

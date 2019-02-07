@@ -39,6 +39,7 @@ class LoginInputBox extends FlxSprite
 	{
 		textInput = new TextField();
 		textInput.type = TextFieldType.INPUT;
+		
 		#if flash
 		textInput.defaultTextFormat = new TextFormat("Arial", 14, 0x34363A, true);
 		textInput.y = this.y + 5;
@@ -46,6 +47,7 @@ class LoginInputBox extends FlxSprite
 		textInput.setTextFormat(new TextFormat(Assets.getFont("assets/interface/fonts/HelveticaRoundedLT-Black.otf").fontName, 14, 0x34363A, false, null, null, null, null, null, 12, null, null, 1));
 		textInput.y = this.y + 5;
 		#end
+		
 		textInput.width = 225;
 		textInput.height = 21;
 		textInput.antiAliasType = AntiAliasType.NORMAL;
@@ -57,5 +59,10 @@ class LoginInputBox extends FlxSprite
 		textInput.displayAsPassword = isPasswordBox;
 		
 		FlxG.stage.addChild(textInput);
+	}
+	
+	public function removeElements():Void
+	{
+		FlxG.stage.removeChild(textInput);
 	}
 }

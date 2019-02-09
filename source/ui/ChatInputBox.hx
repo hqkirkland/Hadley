@@ -34,7 +34,7 @@ class ChatInputBox extends FlxSprite
 		#if flash
 		textInput.defaultTextFormat = new TextFormat("Arial", 14, foregroundColor, true);
 		#else
-		textInput.setTextFormat(new TextFormat(Assets.getFont("assets/interface/fonts/HelveticaRoundedLT-Black.otf").fontName, 14, foregroundColor, false, null, null, null, null, null, 12, null, null, 1));
+		textInput.setTextFormat(new TextFormat("Arial", 14, foregroundColor, false, null, null, null, null, null, 12, null, null, 1));
 		#end
 		
 		textInput.width = 225;

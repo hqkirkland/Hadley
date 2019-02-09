@@ -11,10 +11,10 @@ import openfl.utils.AssetLibrary;
 import flixel.FlxObject;
 import flixel.FlxG;
 import flixel.FlxCamera;
+import flixel.FlxState;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
 import flixel.addons.ui.FlxInputText;
-import flixel.addons.ui.FlxUIState;
 import flixel.system.scaleModes.FixedScaleMode;
 
 import communication.NetworkManager;
@@ -30,7 +30,7 @@ import game.Room;
 import sound.SoundManager;
 import ui.ChatInputBox;
 
-class RoomState extends FlxUIState
+class RoomState extends FlxState
 {
 	public var username:String;
 	
@@ -50,6 +50,7 @@ class RoomState extends FlxUIState
 	override public function create():Void
 	{
 		super.create();
+		
 		FlxG.scaleMode = new FixedScaleMode();
 		FlxG.autoPause = false;
 		
@@ -110,8 +111,8 @@ class RoomState extends FlxUIState
 		add(playerAvatar.chatGroup);
 		
 		chat = new ChatInputBox(0x0);
-		chat.x = 400;
-		chat.y = 400;
+		chat.x = currentRoom.x + 400;
+		chat.y = currentRoom.y + 400;
 		add(chat);
 		
 		chat.textInput.addEventListener(KeyboardEvent.KEY_DOWN, chatBarEnter);
@@ -444,10 +445,8 @@ class RoomState extends FlxUIState
 				
 				if (roomAvatars[movePacket.senderId].currentAction == Avatar.actionSet.Stand)
 				{
-					
 					roomAvatars[movePacket.senderId].x = movePacket.x;
 					roomAvatars[movePacket.senderId].y = movePacket.y;
-					
 				}
 				
 			case MessageType.RoomIdentity:

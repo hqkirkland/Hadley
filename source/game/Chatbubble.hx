@@ -218,7 +218,7 @@ class ChatBubble extends FlxSprite
 		
 		var usernameText:FlxBitmapTextBlittable = new FlxBitmapTextBlittable(chatFont, true);
 		usernameText.antialiasing = false;
-		usernameText.color = 0xFF2077B9;
+		usernameText.color = 0xFF7AADD4;
 		usernameText.pixelPerfectRender = false;
 		usernameText.text = speaker + ": ";
 		stamp(usernameText, startX + 10, 8);

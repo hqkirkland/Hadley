@@ -10,8 +10,6 @@ Features:
 * Avatar Animation: Complete
 * Avatar Movement: Complete
 * Item Colorization: Complete
-* Room Sprite Placement: Almost Complete
+* Room Sprite Placement: Complete
 * Room Physics: Partially Complete
 * Networking: Partially Complete
-
-Core Improvements:

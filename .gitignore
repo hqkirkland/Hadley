@@ -1,2 +1,4 @@
 obj/
-export/html5/
+export/*.*
+.vscode/
+dump/

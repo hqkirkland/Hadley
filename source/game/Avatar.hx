@@ -97,7 +97,7 @@ class Avatar extends FlxSprite
 			
 			itemArray.push(item);
 			
-			
+			// This is the hat! Since there's a piece behind the hat, there's an extra step!
 			if (item.gameItem.layered && i == 7)
 			{
 				var layerItem:Object = {

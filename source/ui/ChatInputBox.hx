@@ -41,7 +41,7 @@ class ChatInputBox extends FlxSprite
 		textInput.height = 21;
 		textInput.antiAliasType = AntiAliasType.NORMAL;
 		textInput.multiline = false;
-		textInput.background = true;
+		textInput.background = false;
 		textInput.backgroundColor = backgroundColor;
 		
 		FlxG.stage.addChild(textInput);

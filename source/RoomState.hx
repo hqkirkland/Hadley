@@ -1,7 +1,5 @@
 package;
 
-import communication.messages.ServerExitRoomPacket;
-import communication.messages.ServerRoomIdentityPacket;
 import openfl.Assets;
 import openfl.events.Event;
 import openfl.events.KeyboardEvent;
@@ -14,7 +12,6 @@ import flixel.FlxCamera;
 import flixel.FlxState;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
-import flixel.addons.ui.FlxInputText;
 import flixel.system.scaleModes.FixedScaleMode;
 
 import communication.NetworkManager;
@@ -22,6 +19,8 @@ import communication.messages.ServerPacket;
 import communication.messages.ServerJoinRoomPacket;
 import communication.messages.ServerMovementPacket;
 import communication.messages.ServerRoomChatPacket;
+import communication.messages.ServerExitRoomPacket;
+import communication.messages.ServerRoomIdentityPacket;
 import communication.messages.MessageType;
 import game.Avatar;
 import game.ClientData;
@@ -29,6 +28,7 @@ import game.Portal;
 import game.Room;
 import sound.SoundManager;
 import ui.ChatInputBox;
+import ui.StarboardInterface;
 
 class RoomState extends FlxState
 {
@@ -47,12 +47,19 @@ class RoomState extends FlxState
 	
 	private var chat:ChatInputBox;
 	
+	private var starboard:StarboardInterface;
+	private var starboardCam:FlxCamera;
+	
 	override public function create():Void
 	{
 		super.create();
 		
 		FlxG.scaleMode = new FixedScaleMode();
 		FlxG.autoPause = false;
+		
+		starboard = new StarboardInterface();
+		starboard.x = 0;
+		starboard.y = 0;
 		
 		var setupLoader:ClientData = new ClientData();
 		setupLoader.addEventListener(Event.COMPLETE, initiateConnection); 
@@ -65,7 +72,8 @@ class RoomState extends FlxState
 	{
 		var rand:Int = Math.ceil(Math.random() * 1000);
 		playerAvatar = new Avatar(username + rand);
-		playerAvatar.setAppearance("1^0^2^2^3^2^4^2^6^0^7^1^8^0^5^0");
+		playerAvatar.setAppearance("1^0^2^2^3^2^4^2^6^0^7^4^8^0^5^0");
+		starboard.setMirrorLook(playerAvatar.pixels);
 		
 		NetworkManager.connect("72.182.108.158", 4000, playerAvatar.username, "WHIRLPOOL-2018");
 		NetworkManager.networkSocket.addEventListener(Event.CONNECT, doLogin);
@@ -109,10 +117,11 @@ class RoomState extends FlxState
 		add(currentRoom.roomEntities);
 		add(currentRoom.portalEntities);
 		add(playerAvatar.chatGroup);
+		add(starboard);
 		
 		chat = new ChatInputBox(0x0);
-		chat.x = currentRoom.x + 400;
-		chat.y = currentRoom.y + 400;
+		chat.x = 0;
+		chat.y = 0;
 		add(chat);
 		
 		chat.textInput.addEventListener(KeyboardEvent.KEY_DOWN, chatBarEnter);
@@ -163,11 +172,11 @@ class RoomState extends FlxState
 	
 	private function destroyRoom():Void
 	{
-		// remove(currentRoom.walkMap);
 		remove(currentRoom.portalEntities);
 		remove(currentRoom.roomEntities);
 		remove(currentRoom.vehicleEntities);
 		remove(currentRoom);
+		remove(starboard);
 	}
 	
 	private function testNextPoints(testAvatar:Avatar):FlxPoint
@@ -284,7 +293,7 @@ class RoomState extends FlxState
 		
 		audioManager.currentSurface = currentRoom.testWalkmap(rx, ry);
 		
-		return FlxPoint.get(ptR, ptL);
+		return FlxPoint.get(0, 0);
 	}
 	
 	override public function update(elapsed:Float):Void

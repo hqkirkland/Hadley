@@ -41,7 +41,14 @@
 	<assets if="flash" path="assets/cloudLift" embed="true" library="cloudLift" preload="true" />
 	<library name="cloudLift" type="pak" />
 	
-	<assets path="assets/interface" embed="true" />
+	<assets unless="flash" path="assets/interface/starboard" embed="false" library="starboard" />
+	<assets if="flash" path="assets/interface/starboard" embed="true" library="starboard" preload="true" />
+	<library name="starboard" embed="true" />
+	
+	<assets path="assets/interface/chat" embed="true" />
+	<assets path="assets/interface/fonts" embed="true" />
+	<assets path="assets/interface/login" embed="true" />
+	
 	<assets path="assets/items" embed="true" />
 	<assets path="assets/sounds" embed="true" />
 	<!-- _______________________________ Libraries ______________________________ -->

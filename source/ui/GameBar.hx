@@ -16,7 +16,7 @@ import flixel.util.FlxSpriteUtil;
 class GameBar extends FlxSpriteGroup
 {
 	public var baseWood:FlxSprite;
-	
+	public var chatBox:ChatInputBox;
 	public var avatarMirror:FlxSprite;
 	public var petMirror:FlxSprite;
 	
@@ -34,25 +34,28 @@ class GameBar extends FlxSpriteGroup
 		add(new FlxSprite(baseWood.x, baseWood.y, Assets.getBitmapData("starboard:assets/interface/starboard/elements/gamebar/gamebar_seal_left.png")));
 		add(new FlxSprite(this.width - 29, baseWood.y, Assets.getBitmapData("starboard:assets/interface/starboard/elements/gamebar/gamebar_seal_right.png")));
 		
-		avatarMirror = new FlxSprite(21, -23, Assets.getBitmapData("starboard:assets/interface/starboard/elements/gamebar/gamebar_mirror_avatar.png"));
-		avatarMaskSprite = new FlxSprite(0, 0, Assets.getBitmapData("starboard:assets/interface/starboard/elements/gamebar/gamebar_mirror_mask.png"));
-		
-		/*
-		FlxG.watch.add(this, "x", "GameBarX");
-		FlxG.watch.add(this, "y", "GameBarY");
-		
-		FlxG.watch.add(baseWood, "x", "BaseWoodX");
-		FlxG.watch.add(baseWood, "y", "BaseWoodY");
-		*/
-		
-		add(avatarMirror);
+		chatBox = new ChatInputBox(0xFF232323, 238, -5);
+		add(chatBox);
 	}
 	
 	public function setReflections(avatarBmp:BitmapData)
 	{
-		var inSpr:FlxSprite = new FlxSprite(0, 0, avatarBmp);		
+		if (avatarMirror == null || avatarMaskSprite == null)
+		{
+			avatarMirror = new FlxSprite(21, -23, Assets.getBitmapData("starboard:assets/interface/starboard/elements/gamebar/gamebar_mirror_avatar.png"));
+			avatarMaskSprite = new FlxSprite(0, 0, Assets.getBitmapData("starboard:assets/interface/starboard/elements/gamebar/gamebar_mirror_mask.png"));
+		
+			add(avatarMirror);
+		}
+		
+		avatarBmp.threshold(avatarBmp, avatarBmp.rect, new Point(0, 0), "==", 0x00000000, 0xFF00FF00);
+		
+		var inSpr:FlxSprite = new FlxSprite(0, 0, avatarBmp);
 		var outSpr:FlxSprite = new FlxSprite(0, 0);
 		
-		FlxSpriteUtil.alphaMaskFlxSprite(inSpr, avatarMirror, outSpr);
+		FlxSpriteUtil.alphaMaskFlxSprite(inSpr, avatarMaskSprite, outSpr);
+		outSpr.pixels.threshold(outSpr.pixels, avatarBmp.rect, new Point(0, 0), "==", 0xFF00FF00, 0x0);
+		
+		avatarMirror.stamp(outSpr, 0, 6);
 	}
 }

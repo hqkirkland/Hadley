@@ -41,7 +41,7 @@
 	<assets if="flash" path="assets/cloudLift" embed="true" library="cloudLift" preload="true" />
 	<library name="cloudLift" type="pak" />
 	
-	<assets unless="flash" path="assets/interface/starboard" embed="false" library="starboard" />
+	<assets unless="flash" path="assets/interface/starboard" embed="true" library="starboard" />
 	<assets if="flash" path="assets/interface/starboard" embed="true" library="starboard" preload="true" />
 	<library name="starboard" embed="true" />
 	

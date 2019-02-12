@@ -6,7 +6,6 @@ import openfl.text.AntiAliasType;
 import openfl.text.TextField;
 import openfl.text.TextFieldType;
 import openfl.text.TextFormat;
-import openfl.display.BitmapData;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -20,13 +19,10 @@ class ChatInputBox extends FlxSprite
 	public var textInput:TextField;
 	
 	private static var zeroPoint:Point = new Point(0, 0);
-	private static var staticPoint:Point = new Point(0, 0);	
 	
-	public function new(?foregroundColor:UInt=0x000000, ?backgroundColor:UInt=0xFFFFFF)
+	public function new(?foregroundColor:UInt=0x000000, ?x:Float=0, ?y:Float=0)
 	{
-		super();
-		
-		this.pixels = new BitmapData(1, 1, true, 0x0);
+		super(x, y, Assets.getBitmapData("starboard:assets/interface/starboard/elements/gamebar/gamebar_chat_box.png"));
 		
 		textInput = new TextField();
 		textInput.type = TextFieldType.INPUT;
@@ -42,7 +38,8 @@ class ChatInputBox extends FlxSprite
 		textInput.antiAliasType = AntiAliasType.NORMAL;
 		textInput.multiline = false;
 		textInput.background = false;
-		textInput.backgroundColor = backgroundColor;
+		textInput.x = this.x;
+		textInput.y = this.y;
 		
 		FlxG.stage.addChild(textInput);
 	}

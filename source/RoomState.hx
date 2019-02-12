@@ -44,9 +44,7 @@ class RoomState extends FlxState
 	private static var borderArray:Array<Int> = [0xFF010101, 0x00000000];
 	
 	private static var roomAvatars:Map<String, Avatar>;
-	
-	private var chat:ChatInputBox;
-	
+		
 	private var starboard:StarboardInterface;
 	private var starboardCam:FlxCamera;
 	
@@ -73,6 +71,7 @@ class RoomState extends FlxState
 		var rand:Int = Math.ceil(Math.random() * 1000);
 		playerAvatar = new Avatar(username + rand);
 		playerAvatar.setAppearance("1^0^2^2^3^2^4^2^6^0^7^4^8^0^5^0");
+		playerAvatar.drawFrame(true);
 		starboard.setMirrorLook(playerAvatar.pixels);
 		
 		NetworkManager.connect("72.182.108.158", 4000, playerAvatar.username, "WHIRLPOOL-2018");
@@ -119,12 +118,7 @@ class RoomState extends FlxState
 		add(playerAvatar.chatGroup);
 		add(starboard);
 		
-		chat = new ChatInputBox(0x0);
-		chat.x = 0;
-		chat.y = 0;
-		add(chat);
-		
-		chat.textInput.addEventListener(KeyboardEvent.KEY_DOWN, chatBarEnter);
+		starboard.gameBar.chatBox.textInput.addEventListener(KeyboardEvent.KEY_DOWN, chatBarEnter);
 		
 		setupCamera();
 		
@@ -369,9 +363,9 @@ class RoomState extends FlxState
 	{
 		if (e.keyCode == 13)
 		{
-			speakUp(chat.textInput.text);
-			NetworkManager.sendRoomChat(chat.textInput.text);
-			chat.textInput.text = "";
+			speakUp(starboard.gameBar.chatBox.textInput.text);
+			NetworkManager.sendRoomChat(starboard.gameBar.chatBox.textInput.text);
+			starboard.gameBar.chatBox.textInput.text = "";
 		}
 	}
 	

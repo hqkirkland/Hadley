@@ -1,7 +1,7 @@
 package;
 
 import openfl.Assets;
-import openfl.events.Event;
+import openfl.utils.AssetLibrary;
 import openfl.events.KeyboardEvent;
 
 import flixel.FlxSprite;
@@ -28,6 +28,8 @@ class LoginState extends FlxState
 	override public function create():Void
 	{
 		super.create();
+		
+		Assets.loadLibrary("starboard").onComplete(libraryLoaded);
 		Assets.cache.enabled = false;
 		
 		FlxG.autoPause = false;
@@ -77,6 +79,11 @@ class LoginState extends FlxState
 		add(loginButton);
 		
 		passwordBox.textInput.addEventListener(KeyboardEvent.KEY_DOWN, handleEnter);
+	}
+	
+	private function libraryLoaded(completeLib:AssetLibrary):Void
+	{
+		Assets.registerLibrary("starboard", completeLib);
 	}
 	
 	private function onClick():Void

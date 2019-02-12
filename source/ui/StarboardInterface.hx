@@ -24,13 +24,6 @@ class StarboardInterface extends FlxSpriteGroup
 	{
 		super();
 		
-		Assets.loadLibrary("starboard").onComplete(libraryLoaded);	
-	}
-	
-	private function libraryLoaded(completeLib:AssetLibrary):Void
-	{
-		Assets.registerLibrary("starboard", completeLib);
-		
 		gameBar = new GameBar();
 		gameBar.x = 0;
 		gameBar.y = FlxG.height - Math.ceil(gameBar.baseWood.height);

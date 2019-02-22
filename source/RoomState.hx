@@ -14,6 +14,7 @@ import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
 import flixel.system.scaleModes.FixedScaleMode;
 
+
 import communication.NetworkManager;
 import communication.messages.ServerPacket;
 import communication.messages.ServerJoinRoomPacket;
@@ -27,7 +28,6 @@ import game.ClientData;
 import game.Portal;
 import game.Room;
 import sound.SoundManager;
-import ui.ChatInputBox;
 import ui.StarboardInterface;
 
 class RoomState extends FlxState
@@ -54,6 +54,9 @@ class RoomState extends FlxState
 		
 		FlxG.scaleMode = new FixedScaleMode();
 		FlxG.autoPause = false;
+		FlxG.sound.muteKeys = null;
+		FlxG.sound.volumeDownKeys = null;
+		FlxG.sound.volumeUpKeys = null;
 		
 		starboard = new StarboardInterface();
 		starboard.x = 0;
@@ -287,7 +290,7 @@ class RoomState extends FlxState
 		
 		audioManager.currentSurface = currentRoom.testWalkmap(rx, ry);
 		
-		return FlxPoint.get(0, 0);
+		return FlxPoint.get(ptR, ptL);
 	}
 	
 	override public function update(elapsed:Float):Void

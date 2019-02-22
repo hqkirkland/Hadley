@@ -21,6 +21,7 @@ class ChatBubble extends FlxSprite
 	private var chatFont:FlxBitmapFont;
 	private var textFormat:FlxTextFormat;
 	private	var lines:Array<String> = new Array<String>();
+	
 	private var bubbleCorner:FlxSprite;
 	private var bubbleOutline:FlxSprite;
 	private var bubblePointer:FlxSprite;

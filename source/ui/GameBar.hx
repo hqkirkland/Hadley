@@ -17,8 +17,9 @@ class GameBar extends FlxSpriteGroup
 {
 	public var baseWood:FlxSprite;
 	public var chatBox:ChatInputBox;
-	public var avatarMirror:FlxSprite;
+	public var playerMirror:AvatarMirror;
 	public var petMirror:FlxSprite;
+	public var sampleWindow:Window;
 	
 	private var avatarMaskSprite:FlxSprite;
 
@@ -36,26 +37,21 @@ class GameBar extends FlxSpriteGroup
 		
 		chatBox = new ChatInputBox(0xFF232323, 238, -5);
 		add(chatBox);
+		
+		playerMirror = new AvatarMirror();
+		playerMirror.x = 21;
+		playerMirror.y = -23;
 	}
 	
-	public function setReflections(avatarBmp:BitmapData)
+	override public function update(elapsed:Float):Void
 	{
-		if (avatarMirror == null || avatarMaskSprite == null)
-		{
-			avatarMirror = new FlxSprite(21, -23, Assets.getBitmapData("starboard:assets/interface/starboard/elements/gamebar/gamebar_mirror_avatar.png"));
-			avatarMaskSprite = new FlxSprite(0, 0, Assets.getBitmapData("starboard:assets/interface/starboard/elements/gamebar/gamebar_mirror_mask.png"));
-		
-			add(avatarMirror);
-		}
-		
-		avatarBmp.threshold(avatarBmp, avatarBmp.rect, new Point(0, 0), "==", 0x00000000, 0xFF00FF00);
-		
-		var inSpr:FlxSprite = new FlxSprite(0, 0, avatarBmp);
-		var outSpr:FlxSprite = new FlxSprite(0, 0);
-		
-		FlxSpriteUtil.alphaMaskFlxSprite(inSpr, avatarMaskSprite, outSpr);
-		outSpr.pixels.threshold(outSpr.pixels, avatarBmp.rect, new Point(0, 0), "==", 0xFF00FF00, 0x0);
-		
-		avatarMirror.stamp(outSpr, 0, 6);
+		super.update(elapsed);
+	}
+	
+	public function setReflections(avatarBmp:BitmapData):Void
+	{
+		playerMirror.setAppearance(avatarBmp);
+		playerMirror.animation.play("Inactive");
+		add(playerMirror);
 	}
 }

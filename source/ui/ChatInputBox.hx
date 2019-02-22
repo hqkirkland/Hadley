@@ -37,18 +37,19 @@ class ChatInputBox extends FlxSprite
 		textInput.height = 21;
 		textInput.antiAliasType = AntiAliasType.NORMAL;
 		textInput.multiline = false;
-		textInput.background = false;
-		textInput.x = this.x;
+		textInput.background = true;
+		textInput.x = this.x + 200;
 		textInput.y = this.y;
 		
 		FlxG.stage.addChild(textInput);
+		
+		textInput.x = this.x;
+		textInput.y = this.y;
 	}
 	
 	public override function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
-		textInput.x = this.x;
-		textInput.y = this.y;
 	}
 	
 	public function removeElements():Void

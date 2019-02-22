@@ -20,10 +20,7 @@ class LoginInputBox extends FlxSprite
 	public var textInput:TextField;
 
 	private var isPasswordBox:Bool = false;
-	
-	private static var zeroPoint:Point = new Point(0, 0);
-	private static var staticPoint:Point = new Point(0, 0);	
-	
+		
 	public function new(color:UInt, ?hideValue:Bool=false) 
 	{
 		super();
@@ -31,7 +28,7 @@ class LoginInputBox extends FlxSprite
 		
 		var sprite:FlxSprite = new FlxSprite();
 		sprite.loadGraphic("assets/interface/login/images/emptyBox.png");
-		sprite.pixels.threshold(sprite.pixels, sprite.pixels.rect, zeroPoint, "==", 0xFF00FF00, color);
+		sprite.pixels.threshold(sprite.pixels, sprite.pixels.rect, _flashPointZero, "==", 0xFF00FF00, color);
 		this.pixels = sprite.pixels;
 	}
 	

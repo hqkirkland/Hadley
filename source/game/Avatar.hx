@@ -57,7 +57,6 @@ class Avatar extends FlxSprite
 	private static var sheetCanvas:BitmapData = new BitmapData(1722, 68);
 	
 	// TODO: Make zeroPoint, frameSizePoint, sheetRect constants in constants Class.
-	private static var zeroPoint:Point = new Point(0, 0);
 	private static var frameSizePoint:FlxPoint = new FlxPoint(41, 68);
 	private static var sheetRect:Rectangle = new Rectangle(0, 0, 1722, 68);
 	

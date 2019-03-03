@@ -9,19 +9,22 @@ class ClothingItem
 	public var itemName:String;
 	public var layered:Bool;
 	public var layeredAsset:String;
-	public var itemType:Int;
+	public var colorType:Int;
+	public var itemType:String;
 	public var itemDesc:String;
 	
-	public function new(typeString:String)
+	public function new(_classString:String)
 	{
-		switch (typeString)
+		itemType = _classString;
+		
+		switch (itemType)
 		{
-			case "Skin":
-				itemType = 0;
+			case "Body", "Face":
+				colorType = 0;
 			case "Hair":
-				itemType = 1;
-			case "Clothing":
-				itemType = 2;
+				colorType = 1;
+			case "Clothing", "Shoes", "Pants", "Shirt", "Hat", "Glasses":
+				colorType = 2;
 		}
 	}
 }

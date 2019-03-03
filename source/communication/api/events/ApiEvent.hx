@@ -16,6 +16,7 @@ class ApiEvent extends Event
 	public static inline var REFRESH:String = "RefreshToken";
 	public static inline var USERDATA:String = "FetchUserData";
 	public static inline var ERROR:String = "ApiError";
+	public static inline var ITEMDATA:String = "FetchItemData";
 	
 	public function new(type:String, ?status:Int=200, bubbles:Bool=false, cancelable:Bool=false) 
 	{

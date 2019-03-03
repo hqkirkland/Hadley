@@ -1,14 +1,14 @@
 package game;
 
-import flixel.FlxG;
 import haxe.Json;
+
 import openfl.events.Event;
 import openfl.events.EventDispatcher;
-import openfl.utils.Object;
-
 import openfl.net.URLLoader;
 import openfl.net.URLRequest;
 
+import communication.api.ApiClient;
+import communication.api.events.ApiEvent;
 import game.ClothingItem;
 import game.ItemColor;
 /**
@@ -18,42 +18,53 @@ import game.ItemColor;
  
 class ClientData extends EventDispatcher
 {
-	public static var itemMap:Map<Int, ClothingItem>;
+	public static var clothingItems:Map<Int, ClothingItem>;
 	
 	private static var loader:URLLoader;
+	private static var apiClient:ApiClient = new ApiClient();
 	
 	public function start():Void
 	{
-		itemMap = new Map();
+		clothingItems = new Map();
 		
-		var req:URLRequest = new URLRequest("http://dreamland.nodebay.com/gamedata/itemdata/all");
-		
-		loader = new URLLoader();
-		loader.addEventListener(Event.COMPLETE, itemFetchComplete);
-		loader.load(req);
+		apiClient.fetchItemdata();
+		apiClient.addEventListener(ApiEvent.ITEMDATA, itemFetchComplete);
 	}
 	
-	private function itemFetchComplete(e:Event)
+	public static function buildAppearanceString(itemSet:Array<ClothingItem>):Void
 	{
-		var itemDataSet:Array<Array<Dynamic>> = Json.parse(loader.data);
+		var figure:Array<String> = new Array<String>();
+		
+		for (item in itemSet)
+		{
+			switch (item.itemType)
+			{
+				case "Body":
+				case "Face":
+				case "Hair":
+				case "Shoes":
+				case "Pants":
+				case "Shirt":
+				case "Hat":
+				case "Glasses":
+			}
+		}
+	}
+	
+	private function itemFetchComplete(apiEvent:ApiEvent):Void
+	{
+		var itemDataSet:Array<Array<Dynamic>> = Json.parse(apiEvent.result);
 		
 		for (itemData in itemDataSet)
 		{
-			var item:ClothingItem = new ClothingItem(itemData[1]);
-			item.gameItemId = itemData[0];
-			item.itemName = itemData[2];
-			item.itemDesc = itemData[3];
-			item.layered = (itemData[4] == 1);
-			
-			if (item.layered)
+			switch (itemData[1])
 			{
-				item.layeredAsset = item.gameItemId + "b";
+				case "Clothing", "Shoes", "Pants", "Shirt", "Hat", "Glasses", "Hair", "Face", "Body":
+					pushClothingItem(itemData);
 			}
-			
-			itemMap.set(item.gameItemId, item);
 		}
 		
-		loader.removeEventListener(Event.COMPLETE, itemFetchComplete);
+		apiClient.removeEventListener(ApiEvent.ITEMDATA, itemFetchComplete);
 		
 		var req:URLRequest = new URLRequest("http://dreamland.nodebay.com/gamedata/colors");
 		loader = new URLLoader();
@@ -61,6 +72,21 @@ class ClientData extends EventDispatcher
 		loader.addEventListener(Event.COMPLETE, finalize);
 	}
 	
+	private function pushClothingItem(itemData:Array<Dynamic>):Void
+	{
+		var item:ClothingItem = new ClothingItem(itemData[1]);
+		item.gameItemId = itemData[0];
+		item.itemName = itemData[2];
+		item.itemDesc = itemData[3];
+		item.layered = (itemData[4] == 1);
+		
+		if (item.layered)
+		{
+			item.layeredAsset = item.gameItemId + "b";
+		}
+		
+		clothingItems.set(item.gameItemId, item);
+	}
 	
 	private function finalize(e:Event)
 	{

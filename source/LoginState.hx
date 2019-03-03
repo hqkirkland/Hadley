@@ -157,7 +157,8 @@ class LoginState extends FlxState
 		apiClient.removeEventListener(ApiEvent.LOGIN, doLogin);
 		apiClient.addEventListener(ApiEvent.USERDATA, fetchComplete);
 		
-		apiClient.fetchUserdata(apiClient.apiToken.userId);
+		// Must use static instance of apiToken.
+		apiClient.fetchUserdata(ApiClient.apiToken.userId);
 	}
 	
 	private function fetchComplete(e:ApiEvent):Void

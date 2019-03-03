@@ -20,7 +20,7 @@ import flixel.group.FlxSpriteGroup;
 class StarboardInterface extends FlxSpriteGroup
 {
 	public var gameBar:GameBar;
-	public var windowSystem:FlxTypedSpriteGroup<Window>;
+	public static var windowSystem:FlxTypedSpriteGroup<Window>;
 	
 	public function new() 
 	{
@@ -50,7 +50,7 @@ class StarboardInterface extends FlxSpriteGroup
 		{
 			if (gameBar.sampleWindow == null)
 			{
-				gameBar.sampleWindow = new Window("Title", 200, 200, 300, 300);
+				gameBar.sampleWindow = new AvatarWindow();
 				add(gameBar.sampleWindow);
 			}
 			

@@ -43,7 +43,7 @@ class GraphicsSheet extends Bitmap
 		this.bitmapData.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", 0xFFFF0000);
 	}
 	
-	public static function colorItem(itemBitmap:BitmapData, colorNumber:Int, typeNumber:Int):BitmapData
+	public static function colorItem(itemBitmap:BitmapData, colorNumber:Int, colorTypeNumber:Int):BitmapData
 	{
 		// No color shift for item.
 		if (colorNumber == 0)
@@ -54,7 +54,7 @@ class GraphicsSheet extends Bitmap
 		var replacementColor:ItemColor = avatarColors[colorNumber];
 		
 		// Skin.
-		if (typeNumber == 0)
+		if (colorTypeNumber == 0)
 		{
 			itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", skinPalette[0], replacementColor.channel1);
 			itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", skinPalette[1], replacementColor.channel2);
@@ -71,7 +71,7 @@ class GraphicsSheet extends Bitmap
 		}
 		
 		// Hair.
-		else if (typeNumber == 1)
+		else if (colorTypeNumber == 1)
 		{
 			itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", hairPalette[0], replacementColor.channel1);
 			itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", hairPalette[1], replacementColor.channel2);
@@ -88,7 +88,7 @@ class GraphicsSheet extends Bitmap
 		}
 		
 		// Item.
-		else if (typeNumber == 2)
+		else if (colorTypeNumber == 2)
 		{
 			itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", greenPalette[0], replacementColor.channel1);
 			itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", greenPalette[1], replacementColor.channel2);

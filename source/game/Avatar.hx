@@ -27,6 +27,7 @@ class Avatar extends FlxSprite
 	
 	// TODO: Convert to some kind of object w/ attribute for each body piece.
 	// Also attribute for each piece color.
+	// ACTUALLY: Maybe not? Doing that would make it harder to iterate..
 	public var itemArray:Array<Object>;
 	
 	public var canWalk:Bool = true;
@@ -89,7 +90,7 @@ class Avatar extends FlxSprite
 			}
 			
 			var item:Object = {
-				gameItem: ClientData.itemMap[gameItemKey], 
+				gameItem: ClientData.clothingItems[gameItemKey], 
 				assetPath: gameItemKey,
 				itemColor: Std.parseInt(figure[(i * 2) + 1])
 			};
@@ -97,19 +98,17 @@ class Avatar extends FlxSprite
 			itemArray.push(item);
 			
 			// This is the hat! Since there's a piece behind the hat, there's an extra step!
+			// Need to figure out which position the other clothing items should be placed, if 'layered'
 			if (item.gameItem.layered && i == 7)
 			{
 				var layerItem:Object = {
-					gameItem: ClientData.itemMap[gameItemKey],
-					assetPath: ClientData.itemMap[gameItemKey].layeredAsset,
+					gameItem: ClientData.clothingItems[gameItemKey],
+					assetPath: ClientData.clothingItems[gameItemKey].layeredAsset,
 					itemColor: Std.parseInt(figure[(i * 2) + 1])
 				};
 				
 				itemArray.insert(4, layerItem);
 			}
-			
-			//var item:ClothingItem = ClientData.itemMap[Std.parseInt(figure[i * 2])];			
-			//itemArray[i] = { Asset: item, Color: Std.parseInt(figure[(i * 2) + 1]) };
 		}
 		
 		this.pixels = new BitmapData(41, 68, true, 0x00000000);
@@ -141,7 +140,7 @@ class Avatar extends FlxSprite
 			
 			itemSprite.loadGraphic("assets/items/" + item.assetPath + ".png");
 			
-			itemSprite.pixels = GraphicsSheet.colorItem(itemSprite.pixels, item.itemColor, item.gameItem.itemType);			
+			itemSprite.pixels = GraphicsSheet.colorItem(itemSprite.pixels, item.itemColor, item.gameItem.colorType);			
 			avatarSheet.drawItem(itemSprite.pixels);
 		}
 	}

@@ -6,7 +6,7 @@ package game;
 typedef ItemColor =
 {
 	var colorId:Int;
-	var itemType:String;
+	var colorType:String;
 	var channel1:Int;
 	var channel2:Int;
 	var channel3:Int;

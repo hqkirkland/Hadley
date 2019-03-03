@@ -11,10 +11,6 @@ import openfl.net.URLRequest;
 import openfl.net.URLRequestHeader;
 import openfl.net.URLVariables;
 
-#if flash
-import openfl.system.Security;
-#end
-
 import communication.api.events.ApiEvent;
 
 /**
@@ -23,8 +19,9 @@ import communication.api.events.ApiEvent;
  */
 class ApiClient extends EventDispatcher
 {
-	public var apiToken:Token;
 	public var loginClient:URLLoader;
+	
+	public static var apiToken:Token;
 	
 	public function new()
 	{
@@ -140,8 +137,39 @@ class ApiClient extends EventDispatcher
 		userdataClient.removeEventListener(Event.COMPLETE, userdataHandler);
 		userdataClient.removeEventListener(IOErrorEvent.IO_ERROR, errorHandler);
 		
-		var apiEvent:ApiEvent = new ApiEvent(ApiEvent.USERDATA, false, false);
+		var apiEvent:ApiEvent = new ApiEvent(ApiEvent.USERDATA, null, false, false);
 		apiEvent.result = Json.parse(userdataClient.data);
+		
+		dispatchEvent(apiEvent);
+	}
+	
+	public function fetchItemdata(?itemType:String="all"):Void
+	{
+		var itemdataRequest:URLRequest = new URLRequest(Endpoints.ITEMDATA + itemType);
+		itemdataRequest.method = "GET";
+		
+		#if !flash
+		var credentialsHeader:URLRequestHeader = new URLRequestHeader("Authorization", "Bearer " + apiToken.access_token);
+		itemdataRequest.requestHeaders.push(credentialsHeader);
+		#end
+		
+		var itemdataClient:URLLoader = new URLLoader();
+		
+		itemdataClient.addEventListener(Event.COMPLETE, itemdataHandler);
+		itemdataClient.addEventListener(IOErrorEvent.IO_ERROR, errorHandler);
+		
+		itemdataClient.load(itemdataRequest);
+	}
+	
+	private function itemdataHandler(e:Event):Void
+	{
+		var itemdataClient:URLLoader = cast e.target;
+		
+		itemdataClient.removeEventListener(Event.COMPLETE, itemdataHandler);
+		itemdataClient.removeEventListener(IOErrorEvent.IO_ERROR, errorHandler);
+		
+		var apiEvent:ApiEvent = new ApiEvent(ApiEvent.ITEMDATA, null, false, false);
+		apiEvent.result = itemdataClient.data;
 		
 		dispatchEvent(apiEvent);
 	}

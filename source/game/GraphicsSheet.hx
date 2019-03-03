@@ -43,8 +43,13 @@ class GraphicsSheet extends Bitmap
 		this.bitmapData.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", 0xFFFF0000);
 	}
 	
-	public static function colorItem(itemBitmap:BitmapData, colorNumber:Int, colorTypeNumber:Int):BitmapData
+	public static function colorItem(itemBitmap:BitmapData, colorNumber:Int, colorTypeNumber:Int, ?stripGreen:Bool=false):BitmapData
 	{
+		if (stripGreen)
+		{
+			itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", 0xFF00FF00);
+		}
+		
 		// No color shift for item.
 		if (colorNumber == 0)
 		{

@@ -20,6 +20,13 @@ import game.BubbleStack;
  * @author ...
  */
 
+typedef AvatarItem =
+{
+	var gameItem:ClothingItem;
+	var assetPath:String;
+	var itemColor:Int;
+}
+
 class Avatar extends FlxSprite 
 {
 	public var username:String;
@@ -28,7 +35,7 @@ class Avatar extends FlxSprite
 	// TODO: Convert to some kind of object w/ attribute for each body piece.
 	// Also attribute for each piece color.
 	// ACTUALLY: Maybe not? Doing that would make it harder to iterate..
-	public var itemArray:Array<Object>;
+	public var itemArray:Array<AvatarItem>;
 	
 	public var canWalk:Bool = true;
 	public var currentAction:String = "Stand";
@@ -76,22 +83,22 @@ class Avatar extends FlxSprite
 	
 	public function setAppearance(appearanceString:String):Void
 	{
-		itemArray = new Array<Object>();
+		itemArray = new Array<AvatarItem>();
 		var figure:Array<String> = appearanceString.split('^');
 		
 		for (i in 0...8)
 		{
 			var gameItemKey:Int = Std.parseInt(figure[i * 2]);
 			
-			if (gameItemKey == 0)
+			if (gameItemKey == 0 || !ClientData.clothingItems.exists(gameItemKey))
 			{
 				itemArray[i] = null;
 				continue;
 			}
 			
-			var item:Object = {
+			var item:AvatarItem = {
 				gameItem: ClientData.clothingItems[gameItemKey], 
-				assetPath: gameItemKey,
+				assetPath: Std.string(gameItemKey),
 				itemColor: Std.parseInt(figure[(i * 2) + 1])
 			};
 			
@@ -101,7 +108,7 @@ class Avatar extends FlxSprite
 			// Need to figure out which position the other clothing items should be placed, if 'layered'
 			if (item.gameItem.layered && i == 7)
 			{
-				var layerItem:Object = {
+				var layerItem:AvatarItem = {
 					gameItem: ClientData.clothingItems[gameItemKey],
 					assetPath: ClientData.clothingItems[gameItemKey].layeredAsset,
 					itemColor: Std.parseInt(figure[(i * 2) + 1])

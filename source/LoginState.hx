@@ -34,6 +34,7 @@ class LoginState extends FlxState
 		
 		FlxG.autoPause = false;
 		FlxG.scaleMode = new FixedScaleMode();
+		FlxG.mouse.useSystemCursor = true;
 		
 		apiClient = new ApiClient();
 		

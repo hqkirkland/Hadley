@@ -37,17 +37,6 @@ class ClientData extends EventDispatcher
 		
 		for (item in itemSet)
 		{
-			switch (item.itemType)
-			{
-				case "Body":
-				case "Face":
-				case "Hair":
-				case "Shoes":
-				case "Pants":
-				case "Shirt":
-				case "Hat":
-				case "Glasses":
-			}
 		}
 	}
 	

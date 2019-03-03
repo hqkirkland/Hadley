@@ -1,6 +1,5 @@
 package ui;
 
-import flixel.group.FlxGroup.FlxTypedGroup;
 import openfl.Assets;
 import openfl.display.BitmapData;
 import openfl.geom.Point;
@@ -8,6 +7,8 @@ import openfl.geom.Point;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
+
+import game.ClothingType;
 
 /**
  * ...
@@ -82,13 +83,51 @@ class AvatarWindow extends Window
 	{
 		slotBoxes = new FlxTypedGroup<SlotBox>(5);
 		
-		var slotBox:SlotBox = new SlotBox();
+		var hatSlotBox:SlotBox = new SlotBox();
+		var glassesSlotBox:SlotBox = new SlotBox();
+		var shirtSlotBox:SlotBox = new SlotBox();
+		var pantsSlotBox:SlotBox = new SlotBox();
+		var shoesSlotBox:SlotBox = new SlotBox();
 		
-		slotBoxes.add(slotBox);
-		slotBox.enableMouseSpring();
-		slotBox.lockPosition(5, 5);
-		slotBoxes.members[0].setGameItem(7, 1);
+		for (item in RoomState.playerAvatar.itemArray)
+		{
+			//trace(item.gameItem.itemType + ": " + item.gameItem.gameItemId + "^" + item.itemColor);
+			
+			switch (item.gameItem.itemType)
+			{
+				case ClothingType.HAT:
+					if (item.gameItem.layered && !hatSlotBox.validItemSet)
+					{
+						hatSlotBox.setGameItem(item.gameItem.gameItemId, item.itemColor);
+					}
+					
+				case ClothingType.GLASSES:
+					glassesSlotBox.setGameItem(item.gameItem.gameItemId, item.itemColor);
+				case ClothingType.SHIRT:
+					shirtSlotBox.setGameItem(item.gameItem.gameItemId, item.itemColor);
+				case ClothingType.PANTS:
+					pantsSlotBox.setGameItem(item.gameItem.gameItemId, item.itemColor);
+				case ClothingType.SHOES:
+					shoesSlotBox.setGameItem(item.gameItem.gameItemId, item.itemColor);
+			}
+		}
 		
-		add(slotBoxes.members[0]);
+		slotBoxes.add(hatSlotBox);
+		slotBoxes.add(glassesSlotBox);
+		slotBoxes.add(shirtSlotBox);
+		slotBoxes.add(pantsSlotBox);
+		slotBoxes.add(shoesSlotBox);
+		
+		hatSlotBox.lockPosition((avatarContainer.x - baseWindow.x) + 5, (avatarContainer.y - baseWindow.y) + 30);
+		glassesSlotBox.lockPosition((avatarContainer.x - baseWindow.x) + 5, (avatarContainer.y - baseWindow.y) + 115);
+		
+		shirtSlotBox.lockPosition((avatarContainer.x - baseWindow.x + avatarContainer.width) - (5 + shirtSlotBox.width), (avatarContainer.y - baseWindow.y) + 30);
+		pantsSlotBox.lockPosition((avatarContainer.x - baseWindow.x + avatarContainer.width) - (5 + pantsSlotBox.width), (avatarContainer.y - baseWindow.y) + 72);
+		shoesSlotBox.lockPosition((avatarContainer.x - baseWindow.x + avatarContainer.width) - (5 + shoesSlotBox.width), (avatarContainer.y - baseWindow.y) + 115);
+		
+		for (member in slotBoxes)
+		{
+			add(member);
+		}
 	}
 }

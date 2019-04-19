@@ -1,0 +1,219 @@
+{
+	"name": "Cloud Garden",
+	"walkMapX": 0,
+	"walkMapY": 0,
+	"background": "0x00000000",
+	"parts":
+	[
+		{
+			"type": "object",
+			"asset": "statue_1", 
+			"x": 368, 
+			"y": 303,
+			"frameCount": 1
+		},
+		{
+			"type": "object",
+			"asset": "tree_1", 
+			"x": 313, 
+			"y": 95,
+			"frameCount": 1
+		},
+		{
+			"type": "object",
+			"asset": "tree_2", 
+			"x": 446,
+			"y": 377,
+			"frameCount": 1
+		},
+		{
+			"type": "object",
+			"asset": "tree_3", 
+			"x": 510, 
+			"y": 320,
+			"frameCount": 1
+		},
+		{
+			"type": "object",
+			"asset": "tree_4", 
+			"x": 600, 
+			"y": 130,
+			"frameCount": 1
+		},
+		{
+			"type": "object",
+			"asset": "tree_5", 
+			"x": 600, 
+			"y": 213,
+			"frameCount": 1
+		},
+		{
+			"type": "object",
+			"asset": "tree_6", 
+			"x": 664, 
+			"y": 282,
+			"frameCount": 1
+		},		
+		{
+			"type": "object",
+			"asset": "tree_7", 
+			"x": 722, 
+			"y": 258,
+			"frameCount": 1
+		},
+		{
+			"type": "object",
+			"asset": "tree_8", 
+			"x": 482, 
+			"y": 225,
+			"frameCount": 1
+		},
+		{
+			"type": "object",
+			"asset": "tree_9", 
+			"x": 581, 
+			"y": 225,
+			"frameCount": 1
+		},
+		{
+			"type": "object",
+			"asset": "tree_10", 
+			"x": 637, 
+			"y": 175,
+			"frameCount": 1
+		},
+		{
+			"type": "object",
+			"asset": "tree_11", 
+			"x": 837, 
+			"y": 313,
+			"frameCount": 1
+		},
+		{
+			"type": "object",
+			"asset": "tree_12", 
+			"x": 196, 
+			"y": 168,
+			"frameCount": 1
+		},
+		{
+			"type": "object",
+			"asset": "windmill_1", 
+			"x": 411, 
+			"y": 59,
+			"frameCount": 8
+		},
+		{
+			"type": "object",
+			"asset": "west_wall_1",
+			"x": 213,
+			"y": 362,
+			"frameCount": 1
+		},
+		{
+			"type": "object",
+			"asset": "west_wall_2",
+			"x": 240,
+			"y": 369,
+			"frameCount": 1
+		},
+		{
+			"type": "object",
+			"asset": "west_wall_3",
+			"x": 282,
+			"y": 369,
+			"frameCount": 1
+		},
+		{
+			"type": "object",
+			"asset": "west_wall_4",
+			"x": 324,
+			"y": 396,
+			"frameCount": 1
+		},
+		{
+			"type": "object",
+			"asset": "east_wall_1",
+			"x": 396,
+			"y": 388,
+			"frameCount": 1
+		},
+		{
+			"type": "object",
+			"asset": "east_wall_2",
+			"x": 429,
+			"y": 402,
+			"frameCount": 1
+		},
+		{
+			"type": "object",
+			"asset": "east_wall_3",
+			"x": 483,
+			"y": 386,
+			"frameCount": 1
+		},
+		{
+			"type": "object",
+			"asset": "east_wall_4",
+			"x": 532,
+			"y": 370,
+			"frameCount": 1
+		},
+		{
+			"type": "object",
+			"asset": "east_barrier_1",
+			"x": 577,
+			"y": 370,
+			"frameCount": 1
+		},
+		{
+			"type": "object",
+			"asset": "east_barrier_2",
+			"x": 672,
+			"y": 401,
+			"frameCount": 1
+		},
+		{
+			"type": "object",
+			"asset": "west_barrier_1",
+			"x": 218,
+			"y": 306,
+			"frameCount": 1
+		},
+		{
+			"type": "object",
+			"asset": "west_pillar_1",
+			"x": 149,
+			"y": 224,
+			"frameCount": 1
+		},
+		{
+			"type": "object",
+			"asset": "west_pillar_2",
+			"x": 149,
+			"y": 277,
+			"frameCount": 1
+		},
+		{
+			"type": "object",
+			"asset": "bridge_half_1",
+			"x": 716,
+			"y": 502,
+			"frameCount": 1
+		}
+	],
+	"portals":
+	[
+		{
+			"asset": "portal_2_b",
+			"x": 695, 
+			"y": 200,
+			"frameCount": 0,
+			"nextRoom": "cloudLift",
+			"entryDirection": "SouthWest",
+			"exitDirections": [ "North", "NorthEast", "East" ],
+			"setX": 650,
+			"setY": 200
+		}
+	]
+}

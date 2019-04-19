@@ -34,7 +34,7 @@ class LoginInputBox extends FlxSprite
 	
 	public function addElements():Void
 	{
-		textInput = new TextField();
+		textInput = new TextField(); 
 		textInput.type = TextFieldType.INPUT;
 		
 		#if flash

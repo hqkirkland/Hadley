@@ -38,7 +38,6 @@ class ChatBubble extends FlxSprite
 	{
 		super();
 		this.alpha = 0;
-		
 		var message:String = speaker + ": " + messageContent;
 		
 		fontData = Assets.getText(AssetPaths.arialBitmap_Size14px__fnt);

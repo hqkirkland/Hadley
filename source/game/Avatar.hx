@@ -62,7 +62,6 @@ class Avatar extends FlxSprite
 	public static var directionSet:Object = { North: "North", South: "South", East: "East", West: "West" };
 	
 	private var avatarSheet:GraphicsSheet = new GraphicsSheet(1772, 68);
-	private static var sheetCanvas:BitmapData = new BitmapData(1722, 68);
 	
 	// TODO: Make zeroPoint, frameSizePoint, sheetRect constants in constants Class.
 	private static var frameSizePoint:FlxPoint = new FlxPoint(41, 68);
@@ -83,6 +82,7 @@ class Avatar extends FlxSprite
 	
 	public function setAppearance(appearanceString:String):Void
 	{
+		avatarSheet = new GraphicsSheet(1772, 68);
 		itemArray = new Array<AvatarItem>();
 		var figure:Array<String> = appearanceString.split('^');
 		
@@ -90,9 +90,15 @@ class Avatar extends FlxSprite
 		{
 			var gameItemKey:Int = Std.parseInt(figure[i * 2]);
 			
+			// 4 needs to be a slot strictly reserved for the back of 2-part hats.
+			if (i == 4)
+			{
+				itemArray.push(null);
+			}
+			
 			if (gameItemKey == 0 || !ClientData.clothingItems.exists(gameItemKey))
 			{
-				itemArray[i] = null;
+				itemArray.push(null);
 				continue;
 			}
 			
@@ -103,6 +109,7 @@ class Avatar extends FlxSprite
 			};
 			
 			itemArray.push(item);
+			MasterInventory.addItemById(item.gameItem.gameItemId);
 			
 			// This is the hat! Since there's a piece behind the hat, there's an extra step!
 			// Need to figure out which position the other clothing items should be placed, if 'layered'
@@ -114,7 +121,7 @@ class Avatar extends FlxSprite
 					itemColor: Std.parseInt(figure[(i * 2) + 1])
 				};
 				
-				itemArray.insert(4, layerItem);
+				itemArray[4] = layerItem;
 			}
 		}
 		

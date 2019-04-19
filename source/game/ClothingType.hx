@@ -13,4 +13,29 @@ class ClothingType
 	public static inline var GLASSES:String = "Glasses";
 	public static inline var HAIR:String = "Hair";
 	public static inline var HAT:String = "Hat";
+	
+	public static inline function typeToNum(typeString:String):Int
+	{
+		switch (typeString)
+		{
+			case BODY:
+				return 0;
+			case SHOES:
+				return 1;
+			case PANTS:
+				return 2;
+			case SHIRT:
+				return 3;
+			case FACE:
+				return 5;
+			case HAIR:
+				return 6;
+			case GLASSES:
+				return 7;
+			case HAT:
+				return 8;
+			default:
+				return -1;
+		}
+	}
 }

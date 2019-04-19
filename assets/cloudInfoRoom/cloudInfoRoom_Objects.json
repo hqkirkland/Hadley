@@ -32,6 +32,17 @@
 			"exitDirections": [ "North", "NorthWest", "West" ],
 			"setX": 95,
 			"setY": 160
+		},
+		{
+			"asset": "portal_2_a",
+			"x": 115, 
+			"y": 300,
+			"frameCount": 0,
+			"nextRoom": "cloudGarden",
+			"entryDirection": "NorthEast",
+			"exitDirections": [ "South", "SouthWest", "West" ],
+			"setX": 95,
+			"setY": 160
 		}
 	]
 }

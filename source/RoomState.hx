@@ -1,5 +1,6 @@
 package;
 
+import game.MasterInventory;
 import openfl.Assets;
 import openfl.events.Event;
 import openfl.events.KeyboardEvent;
@@ -13,7 +14,6 @@ import flixel.FlxState;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
 import flixel.system.scaleModes.FixedScaleMode;
-
 
 import communication.NetworkManager;
 import communication.messages.ServerPacket;
@@ -36,17 +36,15 @@ class RoomState extends FlxState
 	
 	public static var playerAvatar:Avatar;
 	public static var currentRoom:Room;
-	
+	public static var starboard:StarboardInterface;
+	public static var roomAvatars:Map<String, Avatar>;
+	public static var masterInventory:MasterInventory;
+
 	private static var nextRoom:String;
 	private static var exitRoom:String;
-	
 	private static var audioManager:SoundManager;
 	private static var borderArray:Array<Int> = [0xFF010101, 0x00000000];
-	
-	private static var roomAvatars:Map<String, Avatar>;
-		
-	private var starboard:StarboardInterface;
-	private var starboardCam:FlxCamera;
+	private static var starboardCam:FlxCamera;
 	
 	override public function create():Void
 	{
@@ -118,6 +116,7 @@ class RoomState extends FlxState
 		add(currentRoom.vehicleEntities);
 		add(currentRoom.roomEntities);
 		add(currentRoom.portalEntities);
+		//add(currentRoom.walkMap);
 		add(playerAvatar.chatGroup);
 		add(starboard);
 		
@@ -366,10 +365,23 @@ class RoomState extends FlxState
 	{
 		if (e.keyCode == 13)
 		{
-			speakUp(starboard.gameBar.chatBox.textInput.text);
-			NetworkManager.sendRoomChat(starboard.gameBar.chatBox.textInput.text);
+			var messageText:String = starboard.gameBar.chatBox.textInput.text;
+			
+			if (messageText != "")
+			{
+				speakUp(messageText);
+				NetworkManager.sendRoomChat(messageText);
+			}
+			
 			starboard.gameBar.chatBox.textInput.text = "";
 		}
+		
+		#if html5
+		if (e.keyCode == 32)
+		{
+			starboard.gameBar.chatBox.textInput.appendText(" ");
+		}
+		#end
 	}
 	
 	private function speakUp(message:String):Void
@@ -410,78 +422,16 @@ class RoomState extends FlxState
 				}
 			}
 		}
+		
+		playerAvatar.playerNextMovement = FlxPoint.get(0, 0);
 	}
 	
 	public function receivePacket(e:ProgressEvent):Void
 	{
 		var byteCount:Int = Math.ceil(e.bytesLoaded);
 		var serverPacket:ServerPacket = NetworkManager.handlePacket(byteCount);
-
-		if (!roomAvatars.exists(serverPacket.senderId))
-		{
-			if (serverPacket.messageId != MessageType.JoinRoom && serverPacket.messageId != MessageType.RoomIdentity)
-			{
-				trace(serverPacket.senderId + ":<Avatar> was not found.");
-				return;
-			}
-		}
 		
-		switch (serverPacket.messageId)
-		{
-			case MessageType.JoinRoom:
-				var joinPacket:ServerJoinRoomPacket = cast(serverPacket, ServerJoinRoomPacket);
-				
-				roomAvatars.set(joinPacket.senderId, new Avatar(joinPacket.senderId));
-				roomAvatars[joinPacket.senderId].setAppearance(joinPacket.appearance);
-				
-				currentRoom.addAvatar(roomAvatars[joinPacket.senderId], joinPacket.fromRoom);
-				add(roomAvatars[joinPacket.senderId].chatGroup);
-				
-			case MessageType.Movement:
-				var movePacket:ServerMovementPacket = cast(serverPacket, ServerMovementPacket);
-				
-				roomAvatars[movePacket.senderId].keysTriggered.North = movePacket.north;
-				roomAvatars[movePacket.senderId].keysTriggered.South = movePacket.south;
-				roomAvatars[movePacket.senderId].keysTriggered.East = movePacket.east;
-				roomAvatars[movePacket.senderId].keysTriggered.West = movePacket.west;
-				roomAvatars[movePacket.senderId].keysTriggered.Run = movePacket.run;
-				
-				roomAvatars[movePacket.senderId].playerNextMovement = FlxPoint.get(0, 0);
-				roomAvatars[movePacket.senderId].smoothMovement();
-				
-				if (roomAvatars[movePacket.senderId].currentAction == Avatar.actionSet.Stand)
-				{
-					roomAvatars[movePacket.senderId].x = movePacket.x;
-					roomAvatars[movePacket.senderId].y = movePacket.y;
-				}
-				
-			case MessageType.RoomIdentity:
-				var identityPacket:ServerRoomIdentityPacket = cast(serverPacket, ServerRoomIdentityPacket);
-				roomAvatars.set(identityPacket.senderId, new Avatar(identityPacket.senderId));
-				roomAvatars[identityPacket.senderId].setAppearance(identityPacket.appearance);
-				
-				currentRoom.addAvatar(roomAvatars[identityPacket.senderId], "");
-				add(roomAvatars[identityPacket.senderId].chatGroup);
-
-				if (identityPacket.x != 0 && identityPacket.y != 0)
-				{
-					roomAvatars[identityPacket.senderId].x = identityPacket.x;
-					roomAvatars[identityPacket.senderId].y = identityPacket.y;
-				}
-			
-			case MessageType.ExitRoom:
-				var exitPacket:ServerExitRoomPacket = cast(serverPacket, ServerExitRoomPacket);
-				roomAvatars[exitPacket.senderId].leaveRoom();
-				remove(roomAvatars[exitPacket.senderId].chatGroup);
-				roomAvatars.remove(exitPacket.senderId);
-			
-			case MessageType.RoomChat:
-				var roomChatPacket:ServerRoomChatPacket = cast(serverPacket, ServerRoomChatPacket);
-				roomAvatars[roomChatPacket.senderId].chatGroup.newBubble(roomChatPacket.chatMessage);
-
-			default:
-				return;
-		}
+		Receiver.react(serverPacket);
 	}
 	
 	public function checkMovementChange():Bool

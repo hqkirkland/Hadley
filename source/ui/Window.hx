@@ -46,6 +46,7 @@ class Window extends FlxSpriteGroup
 		
 		baseWindow = new FlxExtendedSprite(0, 0, new BitmapData(width, height, true, 0x0));
 		baseWindow.antialiasing = false;
+		baseWindow.mousePressedCallback = dragCompleteCallback;
 		
 		constructWindowBase();
 		
@@ -61,8 +62,18 @@ class Window extends FlxSpriteGroup
 		
 		if (closeBox.isPressed)
 		{
-			this.visible = false;
+			closeWindow();
 		}
+	}
+	
+	private function dragCompleteCallback(obj:FlxExtendedSprite, x:Float, y:Float)
+	{
+	
+	}
+	
+	private function closeWindow():Void
+	{
+		this.visible = false;
 	}
 	
 	private function constructWindowBase():Void

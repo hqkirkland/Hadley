@@ -1,6 +1,7 @@
 package ui;
 
 import openfl.Assets;
+import openfl.events.KeyboardEvent;
 import openfl.geom.Point;
 import openfl.text.AntiAliasType;
 import openfl.text.TextField;
@@ -24,27 +25,26 @@ class ChatInputBox extends FlxSprite
 	{
 		super(x, y, Assets.getBitmapData("starboard:assets/interface/starboard/elements/gamebar/gamebar_chat_box.png"));
 		
-		textInput = new TextField();
+		textInput = new TextField();		
 		textInput.type = TextFieldType.INPUT;
+		textInput.addEventListener(KeyboardEvent.KEY_DOWN, handleSpace);
 		
 		#if flash
-		textInput.defaultTextFormat = new TextFormat("Arial", 14, foregroundColor, true);
+		textInput.defaultTextFormat = new TextFormat("Arial", 12, foregroundColor, true);
 		#else
-		textInput.setTextFormat(new TextFormat("Arial", 14, foregroundColor, false, null, null, null, null, null, 12, null, null, 1));
+		textInput.setTextFormat(new TextFormat("Arial", 8, foregroundColor, false, null, null, null, null, null, 12, null, null, 1));
 		#end
 		
 		textInput.width = 225;
 		textInput.height = 21;
 		textInput.antiAliasType = AntiAliasType.NORMAL;
 		textInput.multiline = false;
-		textInput.background = true;
-		textInput.x = this.x + 200;
-		textInput.y = this.y;
+		textInput.background = false;
 		
 		FlxG.stage.addChild(textInput);
 		
-		textInput.x = this.x;
-		textInput.y = this.y;
+		textInput.x = 360;
+		textInput.y = 510 + Math.ceil(textInput.height / 2);
 	}
 	
 	public override function update(elapsed:Float):Void
@@ -55,5 +55,16 @@ class ChatInputBox extends FlxSprite
 	public function removeElements():Void
 	{
 		FlxG.stage.removeChild(textInput);
+	}
+	
+	private function handleSpace(e:KeyboardEvent):Void
+	{
+		#if !flash
+		if (e.keyCode == 32)
+		{
+			textInput.appendText(" ");
+			textInput.caretIndex += 1;
+		}
+		#end
 	}
 }

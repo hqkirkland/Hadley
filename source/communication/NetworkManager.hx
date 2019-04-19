@@ -1,6 +1,8 @@
 package communication;
 
+import communication.messages.ClientChangeClothesPacket;
 import communication.messages.ClientRoomChatPacket;
+import communication.messages.ServerChangeClothesPacket;
 import communication.messages.ServerExitRoomPacket;
 import openfl.net.Socket;
 import openfl.events.Event;
@@ -64,6 +66,8 @@ class NetworkManager
 				return new ServerExitRoomPacket(netBytes);
 			case MessageType.RoomChat:
 				return new ServerRoomChatPacket(netBytes);
+			case MessageType.ChangeClothes:
+				return new ServerChangeClothesPacket(netBytes);
 			default:
 				return new ServerPacket(new ByteArrayData());
 		}
@@ -97,6 +101,13 @@ class NetworkManager
 	{
 		networkSocket.flush();
 		networkSocket.writeBytes(new ClientRoomChatPacket(chatMessage).messageBytes);
+		networkSocket.flush();
+	}
+	
+	public static function sendChangeClothes(appearanceString:String)
+	{
+		networkSocket.flush();
+		networkSocket.writeBytes(new ClientChangeClothesPacket(appearanceString).messageBytes);
 		networkSocket.flush();
 	}
 }

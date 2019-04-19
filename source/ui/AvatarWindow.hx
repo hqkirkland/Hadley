@@ -1,5 +1,6 @@
 package ui;
 
+import flixel.addons.display.FlxExtendedSprite;
 import openfl.Assets;
 import openfl.display.BitmapData;
 import openfl.geom.Point;
@@ -18,12 +19,23 @@ class AvatarWindow extends Window
 {
 	private static var avatarContainer:FlxSprite;
 	
+	private static var hatSlotBox:WieldBox;
+	private static var glassesSlotBox:WieldBox;
+	private static var shirtSlotBox:WieldBox;
+	private static var pantsSlotBox:WieldBox;
+	private static var shoesSlotBox:WieldBox;
+	
+	private static var hatItemList:ItemList;
+	
 	private static var containerCornerTopRight:BitmapData;
 	private static var containerCornerTopLeft:BitmapData;
 	private static var containerCornerBottomRight:BitmapData;
 	private static var containerCornerBottomLeft:BitmapData;
 	
-	private static var slotBoxes:FlxTypedGroup<SlotBox>;
+	private static var wieldBoxes:FlxTypedGroup<WieldBox>;
+	private static var playerPreview:AvatarPreview;
+	
+	private static var changeButton:WindowButton;
 	
 	public function new() 
 	{
@@ -34,6 +46,13 @@ class AvatarWindow extends Window
 		containerCornerBottomRight = Assets.getBitmapData("starboard:assets/interface/starboard/elements/element_container_rounded_bottom_right.png");
 		containerCornerBottomLeft = Assets.getBitmapData("starboard:assets/interface/starboard/elements/element_container_rounded_bottom_left.png");
 		
+		changeButton = new WindowButton(2, "starboard:assets/interface/starboard/elements/buttons/change_look.png");
+		changeButton.addAnimation("", [0]);
+		changeButton.addAnimation("clicked", [1], false, true);
+		
+		changeButton.mouseReleasedCallback = this.changeButtonClickCallback;
+		add(changeButton);
+		
 		makeContainer();
 		placeBoxes();
 	}
@@ -42,20 +61,99 @@ class AvatarWindow extends Window
 	{
 		super.update(elapsed);
 		
+		changeButton.x = baseWindow.x + baseWindow.width - changeButton.width - 10;
+		changeButton.y = baseWindow.y + baseWindow.height - changeButton.height - 10;
+		
 		avatarContainer.x = baseWindow.x + 12;
 		avatarContainer.y = baseWindow.y + 60;
 		
-		for (slotBox in slotBoxes)
+		for (wieldBox in wieldBoxes)
 		{
-			slotBox.x = baseWindow.x + slotBox.posX;
-			slotBox.y = baseWindow.y + slotBox.posY;
+			wieldBox.x = baseWindow.x + wieldBox.posX;
+			wieldBox.y = baseWindow.y + wieldBox.posY;
 		}
+		
+		playerPreview.x = avatarContainer.x + playerPreview.posX;
+		playerPreview.y = baseWindow.y + playerPreview.posY;
+		
+		if (hatSlotBox.isPressed)
+		{
+			/*
+			playerPreview.clearItem(ClothingType.HAT);
+			hatSlotBox.clearGameItem();
+			*/
+			
+			// This is where it would help to have an avatar body data structure.
+			// Could check to see if the item in the slot is the hat the user has equipped.
+			
+			if (hatItemList == null)
+			{
+				hatItemList = new ItemList(ClothingType.HAT, baseWindow.x - 129, baseWindow.y + 30);
+				add(hatItemList);
+			}
+			
+			else if (!hatItemList.visible)
+			{
+				add(hatItemList);
+				hatItemList.visible = true;
+			}
+			
+			else
+			{
+				remove(hatItemList);
+				hatItemList.visible = false;
+			}
+		}
+		
+		if (hatItemList != null)
+		{
+			hatItemList.x = baseWindow.x - hatItemList.width;
+			hatItemList.y = baseWindow.y + 100;
+		}
+		
+		
+		if (glassesSlotBox.isPressed)
+		{
+			playerPreview.clearItem(ClothingType.GLASSES);
+			glassesSlotBox.clearGameItem();
+		}
+		
+		if (shirtSlotBox.isPressed)
+		{
+			playerPreview.clearItem(ClothingType.SHIRT);
+			shirtSlotBox.clearGameItem();
+		}
+		
+		if (pantsSlotBox.isPressed)
+		{
+			playerPreview.clearItem(ClothingType.PANTS);
+			pantsSlotBox.clearGameItem();
+		}
+		
+		if (shoesSlotBox.isPressed)
+		{
+			playerPreview.clearItem(ClothingType.SHOES);
+			shoesSlotBox.clearGameItem();
+		}
+	}
+	
+	override private function closeWindow():Void
+	{
+		super.closeWindow();
+		playerPreview.set(RoomState.playerAvatar.itemArray);
+	}
+	
+	private function changeButtonClickCallback(_obj:FlxExtendedSprite, x:Int, y:Int)
+	{
+		trace(playerPreview.appearanceString);
+		
+		RoomState.starboard.changeAppearance(playerPreview.appearanceString);
 	}
 	
 	private function makeContainer():Void
 	{
 		avatarContainer = new FlxSprite(12, 60);
-		avatarContainer.pixels = new BitmapData(Math.floor(this.baseWindow.width) - 24, Math.ceil(this.baseWindow.height - 60 - 14), true, 0xFFFFFFFF);
+		avatarContainer.pixels = new BitmapData(Math.floor(this.baseWindow.width) - 24, Math.ceil(this.baseWindow.height - 60 - 34), true, 0xFFFFFFFF);
 		
 		avatarContainer.pixels.copyPixels(containerCornerTopLeft, containerCornerTopLeft.rect, new Point(0, 0), null, null, true); 
 		avatarContainer.pixels.copyPixels(containerCornerTopRight, containerCornerTopRight.rect, new Point(avatarContainer.width - 5, 0), null, null, true);
@@ -77,21 +175,31 @@ class AvatarWindow extends Window
 		}
 		
 		add(avatarContainer);
+		
+		playerPreview = new AvatarPreview(RoomState.playerAvatar.itemArray);
+		playerPreview.posX = (avatarContainer.width / 2) - (playerPreview.width / 2);
+		playerPreview.posY = 100;
+		add(playerPreview);
 	}
 	
 	private function placeBoxes():Void
 	{
-		slotBoxes = new FlxTypedGroup<SlotBox>(5);
+		wieldBoxes = new FlxTypedGroup<WieldBox>(5);
 		
-		var hatSlotBox:SlotBox = new SlotBox();
-		var glassesSlotBox:SlotBox = new SlotBox();
-		var shirtSlotBox:SlotBox = new SlotBox();
-		var pantsSlotBox:SlotBox = new SlotBox();
-		var shoesSlotBox:SlotBox = new SlotBox();
+		hatSlotBox = new WieldBox(ClothingType.HAT);
+		glassesSlotBox = new WieldBox(ClothingType.GLASSES);
+		shirtSlotBox = new WieldBox(ClothingType.SHIRT);
+		pantsSlotBox = new WieldBox(ClothingType.PANTS);
+		shoesSlotBox = new WieldBox(ClothingType.SHOES);
 		
 		for (item in RoomState.playerAvatar.itemArray)
 		{
 			//trace(item.gameItem.itemType + ": " + item.gameItem.gameItemId + "^" + item.itemColor);
+			
+			if (item == null)
+			{
+				continue;
+			}
 			
 			switch (item.gameItem.itemType)
 			{
@@ -112,20 +220,19 @@ class AvatarWindow extends Window
 			}
 		}
 		
-		slotBoxes.add(hatSlotBox);
-		slotBoxes.add(glassesSlotBox);
-		slotBoxes.add(shirtSlotBox);
-		slotBoxes.add(pantsSlotBox);
-		slotBoxes.add(shoesSlotBox);
+		wieldBoxes.add(hatSlotBox);
+		wieldBoxes.add(glassesSlotBox);
+		wieldBoxes.add(shirtSlotBox);
+		wieldBoxes.add(pantsSlotBox);
+		wieldBoxes.add(shoesSlotBox);
 		
-		hatSlotBox.lockPosition((avatarContainer.x - baseWindow.x) + 5, (avatarContainer.y - baseWindow.y) + 30);
-		glassesSlotBox.lockPosition((avatarContainer.x - baseWindow.x) + 5, (avatarContainer.y - baseWindow.y) + 115);
+		hatSlotBox.lockPosition((avatarContainer.x - baseWindow.x) + 5, (avatarContainer.y - baseWindow.y) + 26);
+		glassesSlotBox.lockPosition((avatarContainer.x - baseWindow.x) + 5, (avatarContainer.y - baseWindow.y) + 111);
+		shirtSlotBox.lockPosition((avatarContainer.x - baseWindow.x + avatarContainer.width) - (5 + shirtSlotBox.width), (avatarContainer.y - baseWindow.y) + 26);
+		pantsSlotBox.lockPosition((avatarContainer.x - baseWindow.x + avatarContainer.width) - (5 + pantsSlotBox.width), (avatarContainer.y - baseWindow.y) + 68);
+		shoesSlotBox.lockPosition((avatarContainer.x - baseWindow.x + avatarContainer.width) - (5 + shoesSlotBox.width), (avatarContainer.y - baseWindow.y) + 111);
 		
-		shirtSlotBox.lockPosition((avatarContainer.x - baseWindow.x + avatarContainer.width) - (5 + shirtSlotBox.width), (avatarContainer.y - baseWindow.y) + 30);
-		pantsSlotBox.lockPosition((avatarContainer.x - baseWindow.x + avatarContainer.width) - (5 + pantsSlotBox.width), (avatarContainer.y - baseWindow.y) + 72);
-		shoesSlotBox.lockPosition((avatarContainer.x - baseWindow.x + avatarContainer.width) - (5 + shoesSlotBox.width), (avatarContainer.y - baseWindow.y) + 115);
-		
-		for (member in slotBoxes)
+		for (member in wieldBoxes)
 		{
 			add(member);
 		}

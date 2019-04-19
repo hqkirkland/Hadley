@@ -2,7 +2,6 @@ package ui;
 
 import openfl.Assets;
 import openfl.display.BitmapData;
-import openfl.geom.Point;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -19,7 +18,7 @@ class GameBar extends FlxSpriteGroup
 	public var chatBox:ChatInputBox;
 	public var playerMirror:AvatarMirror;
 	public var petMirror:FlxSprite;
-	public var sampleWindow:Window;
+	public var avatarWindow:Window;
 	
 	private var avatarMaskSprite:FlxSprite;
 
@@ -37,10 +36,6 @@ class GameBar extends FlxSpriteGroup
 		
 		chatBox = new ChatInputBox(0xFF232323, 238, -5);
 		add(chatBox);
-		
-		playerMirror = new AvatarMirror();
-		playerMirror.x = 21;
-		playerMirror.y = -23;
 	}
 	
 	override public function update(elapsed:Float):Void
@@ -50,6 +45,9 @@ class GameBar extends FlxSpriteGroup
 	
 	public function setReflections(avatarBmp:BitmapData):Void
 	{
+		playerMirror = new AvatarMirror();
+		playerMirror.x = 21;
+		playerMirror.y = -23;
 		playerMirror.setAppearance(avatarBmp);
 		playerMirror.animation.play("Inactive");
 		add(playerMirror);

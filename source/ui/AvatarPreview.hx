@@ -32,10 +32,10 @@ class AvatarPreview extends FlxSprite
 	public function new(_itemArray:Array<AvatarItem>, ?x:Float=0, ?y:Float=0):Void
 	{
 		super(x, y);
-		set(_itemArray);
+		setLook(_itemArray);
 	}
 	
-	public function set(_itemArray:Array<AvatarItem>):Void
+	public function setLook(_itemArray:Array<AvatarItem>):Void
 	{
 		itemArray = _itemArray;
 		regenerate();
@@ -150,6 +150,40 @@ class AvatarPreview extends FlxSprite
 		}
 		
 		regenerate();
+	}
+	
+	public function isWearingItem(checkedItem:ClothingItem):Bool
+	{
+		switch (checkedItem.itemType)
+		{
+			case ClothingType.HAT:
+				if (itemArray[8] != null)
+				{
+					return itemArray[8].gameItem.gameItemId == checkedItem.gameItemId;
+				}
+			case ClothingType.GLASSES:
+				if (itemArray[7] != null)
+				{
+					return itemArray[7].gameItem.gameItemId == checkedItem.gameItemId;
+				}
+			case ClothingType.SHIRT:
+				if (itemArray[3] != null)
+				{
+					return itemArray[3].gameItem.gameItemId == checkedItem.gameItemId;
+				}
+			case ClothingType.PANTS:
+				if (itemArray[2] != null)
+				{
+					return itemArray[2].gameItem.gameItemId == checkedItem.gameItemId;
+				}
+			case ClothingType.SHOES:
+				if (itemArray[1] != null)
+				{
+					return itemArray[1].gameItem.gameItemId == checkedItem.gameItemId;
+				}
+		}
+		
+		return false;
 	}
 	
 	public function wearItem(wornItem:ClothingItem, ?colorId:Int=0)

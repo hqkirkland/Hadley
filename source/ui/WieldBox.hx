@@ -18,6 +18,7 @@ import game.GraphicsSheet;
 class WieldBox extends FlxExtendedSprite
 {	
 	public var gameItemBitmap:BitmapData;
+	public var clothingType:String;
 	public var validItemSet:Bool = false;
 	
 	// Relative positions.
@@ -32,8 +33,9 @@ class WieldBox extends FlxExtendedSprite
 	public function new(clothingItemType:String, ?x:Float, ?y:Float):Void
 	{
 		super(x, y, Assets.getBitmapData("starboard:assets/interface/starboard/elements/item_slot_selected.png"));		
+		clothingType = clothingItemType;
 		
-		switch (clothingItemType)
+		switch (clothingType)
 		{
 			case ClothingType.HAT:
 				icon = Assets.getBitmapData("starboard:assets/interface/starboard/elements/icons/hat_slot_icon.png");

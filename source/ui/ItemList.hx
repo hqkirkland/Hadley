@@ -3,6 +3,7 @@ package ui;
 import openfl.Assets;
 import openfl.display.BitmapData;
 
+import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.display.FlxExtendedSprite;
 import flixel.group.FlxSpriteGroup;
@@ -22,18 +23,21 @@ class ItemList extends FlxSpriteGroup
 	public var selectedItem:ClothingItem;
 	public var slotBoxes:Array<SlotBox>;
 	public var itemsByType:Array<ClothingItem>;
+	public var closeButton:FlxExtendedSprite;
+	public var newPicked:Bool;
 	
 	public var posX:Float;
 	public var posY:Float;
 	
 	private var currentPage:Int = 0;
 	private var currentSlot:Int = 0;
-
+	
 	private static var itemGridContainer:BitmapData;
+	private static var itemGridContainerX:BitmapData;
 	private static var itemSlotInventory:BitmapData;
 	private static var itemSlotSelected:BitmapData;
 	
-	private static var itemSlotCursor:FlxSprite;
+	private var itemSlotCursor:FlxSprite;
 	
 	public function new(itemType:String, ?firstItem:Int=0, ?x:Float, ?y:Float):Void
 	{
@@ -42,16 +46,20 @@ class ItemList extends FlxSpriteGroup
 		// Use first item to scan for 
 		
 		itemGridContainer = Assets.getBitmapData("starboard:assets/interface/starboard/elements/item_grid_container.png");
+		itemGridContainerX = Assets.getBitmapData("starboard:assets/interface/starboard/elements/item_grid_container_x.png");
 		itemSlotInventory = Assets.getBitmapData("starboard:assets/interface/starboard/elements/item_slot_inventory.png");
-		itemSlotSelected = Assets.getBitmapData("starboard:assets/interface/starboard/elements/item_slot_selected.png");
+		itemSlotSelected  = Assets.getBitmapData("starboard:assets/interface/starboard/elements/item_slot_selected.png");
+		
+		closeButton = new FlxExtendedSprite(120, 2, itemGridContainerX);
 		
 		listType = itemType;
 		itemsByType = MasterInventory.wardrobe.filter(matchClothingType);
+		selectedItem = itemsByType[0];
 		
 		slotBoxes = new Array<SlotBox>();
 		
 		add(new FlxSprite(0, 0, itemGridContainer));
-
+		
 		for (i in 0...9)
 		{
 			var slotX:Int = 5 + (((i % 3) * 30) + ((i % 3) * 10));
@@ -70,13 +78,21 @@ class ItemList extends FlxSpriteGroup
 		itemSlotCursor = new FlxSprite();
 		itemSlotCursor.loadGraphic(itemSlotSelected);
 		add(itemSlotCursor);
+		
 		itemSlotCursor.x = slotBoxes[0].x;
 		itemSlotCursor.y = slotBoxes[0].y;
+		
+		add(closeButton);
 	}
 	
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
+		
+		if (closeButton.isPressed)
+		{
+			this.visible = false;
+		}
 		
 		for (i in 0...9)
 		{
@@ -84,13 +100,18 @@ class ItemList extends FlxSpriteGroup
 			{
 				currentSlot = i;
 				
-				add(itemSlotCursor);
 				itemSlotCursor.x = slotBoxes[i].x;
 				itemSlotCursor.y = slotBoxes[i].y;
-					
+				
 				if (slotBoxes[i].gameItem != selectedItem)
 				{
 					selectedItem = slotBoxes[i].gameItem;
+					newPicked = true;
+				}
+				
+				else
+				{
+					newPicked = false;
 				}
 				
 				break;

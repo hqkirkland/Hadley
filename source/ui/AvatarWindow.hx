@@ -26,13 +26,18 @@ class AvatarWindow extends Window
 	private static var shoesSlotBox:WieldBox;
 	
 	private static var hatItemList:ItemList;
-	
+	private static var glassesItemList:ItemList;
+	private static var shirtItemList:ItemList;
+	private static var pantsItemList:ItemList;
+	private static var shoesItemList:ItemList;
+
 	private static var containerCornerTopRight:BitmapData;
 	private static var containerCornerTopLeft:BitmapData;
 	private static var containerCornerBottomRight:BitmapData;
 	private static var containerCornerBottomLeft:BitmapData;
 	
 	private static var wieldBoxes:FlxTypedGroup<WieldBox>;
+	private static var itemLists:FlxTypedGroup<ItemList>;
 	private static var playerPreview:AvatarPreview;
 	
 	private static var changeButton:WindowButton;
@@ -40,7 +45,8 @@ class AvatarWindow extends Window
 	public function new() 
 	{
 		super("Avatar", 200, 250, 300, 100);
-		
+		itemLists = new FlxTypedGroup<ItemList>();
+
 		containerCornerTopRight = Assets.getBitmapData("starboard:assets/interface/starboard/elements/element_container_rounded_top_right.png");
 		containerCornerTopLeft = Assets.getBitmapData("starboard:assets/interface/starboard/elements/element_container_rounded_top_left.png");
 		containerCornerBottomRight = Assets.getBitmapData("starboard:assets/interface/starboard/elements/element_container_rounded_bottom_right.png");
@@ -51,10 +57,13 @@ class AvatarWindow extends Window
 		changeButton.addAnimation("clicked", [1], false, true);
 		
 		changeButton.mouseReleasedCallback = this.changeButtonClickCallback;
+		
 		add(changeButton);
 		
 		makeContainer();
 		placeBoxes();
+		update(0);
+		setupItemLists();
 	}
 	
 	override function update(elapsed:Float):Void
@@ -73,81 +82,119 @@ class AvatarWindow extends Window
 			wieldBox.y = baseWindow.y + wieldBox.posY;
 		}
 		
+		for (itemList in itemLists)
+		{
+			if (itemList.newPicked)
+			{
+				if (itemList.selectedItem == null)
+				{
+					playerPreview.clearItem(itemList.listType);
+				}
+				
+				else
+				{
+					playerPreview.wearItem(itemList.selectedItem);
+				}
+			}
+			
+			itemList.x = baseWindow.x + itemList.posX;
+			itemList.y = baseWindow.y + itemList.posY;
+		}
+		
 		playerPreview.x = avatarContainer.x + playerPreview.posX;
 		playerPreview.y = baseWindow.y + playerPreview.posY;
-		
-		if (hatSlotBox.isPressed)
-		{
-			/*
-			playerPreview.clearItem(ClothingType.HAT);
-			hatSlotBox.clearGameItem();
-			*/
-			
-			// This is where it would help to have an avatar body data structure.
-			// Could check to see if the item in the slot is the hat the user has equipped.
-			
-			if (hatItemList == null)
-			{
-				hatItemList = new ItemList(ClothingType.HAT, baseWindow.x - 129, baseWindow.y + 30);
-				add(hatItemList);
-			}
-			
-			else if (!hatItemList.visible)
-			{
-				add(hatItemList);
-				hatItemList.visible = true;
-			}
-			
-			else
-			{
-				remove(hatItemList);
-				hatItemList.visible = false;
-			}
-		}
-		
-		if (hatItemList != null)
-		{
-			hatItemList.x = baseWindow.x - hatItemList.width;
-			hatItemList.y = baseWindow.y + 100;
-		}
-		
-		
-		if (glassesSlotBox.isPressed)
-		{
-			playerPreview.clearItem(ClothingType.GLASSES);
-			glassesSlotBox.clearGameItem();
-		}
-		
-		if (shirtSlotBox.isPressed)
-		{
-			playerPreview.clearItem(ClothingType.SHIRT);
-			shirtSlotBox.clearGameItem();
-		}
-		
-		if (pantsSlotBox.isPressed)
-		{
-			playerPreview.clearItem(ClothingType.PANTS);
-			pantsSlotBox.clearGameItem();
-		}
-		
-		if (shoesSlotBox.isPressed)
-		{
-			playerPreview.clearItem(ClothingType.SHOES);
-			shoesSlotBox.clearGameItem();
-		}
 	}
 	
 	override private function closeWindow():Void
 	{
 		super.closeWindow();
-		playerPreview.set(RoomState.playerAvatar.itemArray);
+		playerPreview.setLook(RoomState.playerAvatar.itemArray);
 	}
 	
-	private function changeButtonClickCallback(_obj:FlxExtendedSprite, x:Int, y:Int)
+	private function changeButtonClickCallback(_obj:FlxExtendedSprite, x:Int, y:Int):Void
 	{
-		trace(playerPreview.appearanceString);
-		
+		trace(playerPreview.appearanceString);		
 		RoomState.starboard.changeAppearance(playerPreview.appearanceString);
+	}
+	
+	private function wieldBoxClickCallback(_obj:FlxExtendedSprite, x:Int, y:Int):Void
+	{
+		var wieldBox:WieldBox = cast(_obj, WieldBox);
+		
+		for (itemList in itemLists)
+		{
+			remove(itemList);
+		}
+		
+		switch (wieldBox.clothingType)
+		{
+			case ClothingType.HAT:
+				if (hatItemList.visible)
+				{
+					hatItemList.visible = false;
+					remove(hatItemList);
+				}
+				
+				else
+				{
+					hatItemList.visible = true;
+					add(hatItemList);
+				}
+				
+			case ClothingType.GLASSES:
+				if (glassesItemList.visible)
+				{
+					glassesItemList.visible = false;
+					remove(glassesItemList);
+				}
+				
+				else
+				{
+					glassesItemList.visible = true;
+					add(glassesItemList);
+				}
+				
+			case ClothingType.SHIRT:
+				if (shirtItemList.visible)
+				{
+					shirtItemList.visible = false;
+					remove(shirtItemList);
+				}
+				
+				else
+				{
+					shirtItemList.visible = true;
+					add(shirtItemList);
+				}
+				
+			case ClothingType.PANTS:
+				if (pantsItemList.visible)
+				{
+					pantsItemList.visible = false;
+					remove(pantsItemList);
+				}
+				
+				else
+				{
+					pantsItemList.visible = true;
+					add(pantsItemList);
+				}
+				
+			case ClothingType.SHOES:
+				if (shoesItemList.visible)
+				{
+					shoesItemList.visible = false;
+					remove(shoesItemList);
+				}
+				
+				else
+				{
+					shoesItemList.visible = true;
+					add(shoesItemList);
+				}
+				
+			default:
+		}
 	}
 	
 	private function makeContainer():Void
@@ -192,6 +239,12 @@ class AvatarWindow extends Window
 		pantsSlotBox = new WieldBox(ClothingType.PANTS);
 		shoesSlotBox = new WieldBox(ClothingType.SHOES);
 		
+		hatSlotBox.mouseReleasedCallback = wieldBoxClickCallback;
+		glassesSlotBox.mouseReleasedCallback = wieldBoxClickCallback;
+		shirtSlotBox.mouseReleasedCallback = wieldBoxClickCallback;
+		pantsSlotBox.mouseReleasedCallback = wieldBoxClickCallback;
+		shoesSlotBox.mouseReleasedCallback = wieldBoxClickCallback;
+		
 		for (item in RoomState.playerAvatar.itemArray)
 		{
 			//trace(item.gameItem.itemType + ": " + item.gameItem.gameItemId + "^" + item.itemColor);
@@ -235,6 +288,42 @@ class AvatarWindow extends Window
 		for (member in wieldBoxes)
 		{
 			add(member);
+		}
+	}
+	
+	private function setupItemLists():Void
+	{
+		hatItemList = new ItemList(ClothingType.HAT);
+		hatItemList.lockPosition(-1 * hatItemList.width, 75);
+		
+		glassesItemList = new ItemList(ClothingType.GLASSES);
+		glassesItemList.lockPosition(-1 * glassesItemList.width, 150);
+		
+		shirtItemList = new ItemList(ClothingType.SHIRT);
+		shirtItemList.lockPosition(baseWindow.width, 75);
+		
+		pantsItemList = new ItemList(ClothingType.PANTS);
+		pantsItemList.lockPosition(baseWindow.width, 112);
+		
+		shoesItemList = new ItemList(ClothingType.SHOES);
+		shoesItemList.lockPosition(baseWindow.width, 150);
+
+		itemLists.add(hatItemList);
+		itemLists.add(glassesItemList);
+		itemLists.add(shirtItemList);
+		itemLists.add(pantsItemList);
+		itemLists.add(shoesItemList);
+		
+		add(hatItemList);
+		add(glassesItemList);
+		add(shirtItemList);
+		add(pantsItemList);
+		add(shoesItemList);
+		
+		for (itemList in itemLists)
+		{
+			itemList.visible = false;
+			remove(itemList);
 		}
 	}
 }

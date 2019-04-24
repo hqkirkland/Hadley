@@ -10,7 +10,7 @@
 	
 	<!--Minimum without FLX_NO_GAMEPAD: 11.8, without FLX_NO_NATIVE_CURSOR: 11.2-->
 	<set name="SWF_VERSION" value="11.8" />
-	<setenv name="SWF_PLAYER" value="C:/Users/Hunter/AppData/Local/HaxeDevelop/Apps/flashsa/30.0.0/flashplayer_30_sa_debug.exe" />
+	<setenv name="SWF_PLAYER" value="C:/Users/Hunter/AppData/Local/HaxeDevelop/Apps/flashsa/32.0.0/flashplayer_32_sa_debug.exe" />
 	
 	<!-- ____________________________ Window Settings ___________________________ -->
 	

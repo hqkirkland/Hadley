@@ -41,6 +41,7 @@ class AvatarWindow extends Window
 	private static var playerPreview:AvatarPreview;
 	
 	private static var changeButton:WindowButton;
+	private static var colorPicker:ColorList;
 	
 	public function new() 
 	{
@@ -58,11 +59,14 @@ class AvatarWindow extends Window
 		
 		changeButton.mouseReleasedCallback = this.changeButtonClickCallback;
 		
+		colorPicker = new ColorList(ClothingType.DEFAULT_CLOTHING);
+		colorPicker.lockPosition((this.width / 2) - (colorPicker.width / 2), this.height);
+		
 		add(changeButton);
+		add(colorPicker);
 		
 		makeContainer();
 		placeBoxes();
-		update(0);
 		setupItemLists();
 	}
 	
@@ -75,6 +79,9 @@ class AvatarWindow extends Window
 		
 		avatarContainer.x = baseWindow.x + 12;
 		avatarContainer.y = baseWindow.y + 60;
+		
+		colorPicker.x = baseWindow.x + colorPicker.posX;
+		colorPicker.y = baseWindow.y + colorPicker.posY;
 		
 		for (wieldBox in wieldBoxes)
 		{
@@ -99,6 +106,21 @@ class AvatarWindow extends Window
 			
 			itemList.x = baseWindow.x + itemList.posX;
 			itemList.y = baseWindow.y + itemList.posY;
+		}
+		
+		if (colorPicker.newPicked)
+		{
+			// for now: determine the currently-open slot.
+			// eventually: color picker per slot/clothing type, hide + replacement on switch
+			
+			for (itemList in itemLists)
+			{
+				if (itemList.visible && itemList.group != null)
+				{
+					trace(itemList.listType + ": " + colorPicker.selectedColor.colorId);
+					playerPreview.colorItem(itemList.listType, colorPicker.selectedColor.colorId);
+				}
+			}
 		}
 		
 		playerPreview.x = avatarContainer.x + playerPreview.posX;

@@ -43,8 +43,6 @@ class ItemList extends FlxSpriteGroup
 	{
 		super(x, y);
 		
-		// Use first item to scan for 
-		
 		itemGridContainer = Assets.getBitmapData("starboard:assets/interface/starboard/elements/item_grid_container.png");
 		itemGridContainerX = Assets.getBitmapData("starboard:assets/interface/starboard/elements/item_grid_container_x.png");
 		itemSlotInventory = Assets.getBitmapData("starboard:assets/interface/starboard/elements/item_slot_inventory.png");
@@ -116,6 +114,11 @@ class ItemList extends FlxSpriteGroup
 				
 				break;
 			}
+			
+			else
+			{
+				newPicked = false;
+			}
 		}
 	}
 	
@@ -158,11 +161,6 @@ class ItemList extends FlxSpriteGroup
 		}
 		
 		setPageItems();
-	}
-	
-	public function buildPage():Void
-	{
-	
 	}
 	
 	public function matchClothingType(item:ClothingItem)

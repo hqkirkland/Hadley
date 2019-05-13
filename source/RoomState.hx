@@ -71,7 +71,7 @@ class RoomState extends FlxState
 	{
 		var rand:Int = Math.ceil(Math.random() * 1000);
 		playerAvatar = new Avatar(username + rand);
-		playerAvatar.setAppearance("1^0^2^2^3^2^4^2^6^0^7^4^8^0^5^0");
+		playerAvatar.setAppearance("67^0^44^2^34^2^24^2^94^0^72^4^51^0^61^0");
 		playerAvatar.drawFrame(true);
 		starboard.setMirrorLook(playerAvatar.pixels);
 		

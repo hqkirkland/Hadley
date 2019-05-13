@@ -1,9 +1,6 @@
 package communication;
 
-import communication.messages.ClientChangeClothesPacket;
-import communication.messages.ClientRoomChatPacket;
-import communication.messages.ServerChangeClothesPacket;
-import communication.messages.ServerExitRoomPacket;
+
 import openfl.net.Socket;
 import openfl.events.Event;
 import openfl.utils.ByteArray;
@@ -18,6 +15,11 @@ import communication.messages.ServerJoinRoomPacket;
 import communication.messages.ServerMovementPacket;
 import communication.messages.ServerRoomIdentityPacket;
 import communication.messages.ServerRoomChatPacket;
+import communication.messages.ClientChangeClothesPacket;
+import communication.messages.ClientRoomChatPacket;
+import communication.messages.ServerChangeClothesPacket;
+import communication.messages.ServerExitRoomPacket;
+
 /**
  * ...
  * @author Hunter
@@ -77,10 +79,10 @@ class NetworkManager
 	
 	public static function sendAuthenticate():Void
 	{
-		isConnected = true;
 		networkSocket.flush();
 		networkSocket.writeBytes(new ClientAuthenticatePacket(username, ticket).messageBytes);
-		networkSocket.flush();
+		networkSocket.flush();		isConnected = true;
+
 	}
 	
 	public static function sendJoinRoom(roomName:String):Void

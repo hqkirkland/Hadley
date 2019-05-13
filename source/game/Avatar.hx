@@ -575,4 +575,38 @@ class Avatar extends FlxSprite
 			}
 		}});
 	}
+	
+	public function isWearingItem(checkedItem:ClothingItem):Bool
+	{
+		switch (checkedItem.itemType)
+		{
+			case ClothingType.HAT:
+				if (itemArray[8] != null)
+				{
+					return itemArray[8].gameItem.gameItemId == checkedItem.gameItemId;
+				}
+			case ClothingType.GLASSES:
+				if (itemArray[7] != null)
+				{
+					return itemArray[7].gameItem.gameItemId == checkedItem.gameItemId;
+				}
+			case ClothingType.SHIRT:
+				if (itemArray[3] != null)
+				{
+					return itemArray[3].gameItem.gameItemId == checkedItem.gameItemId;
+				}
+			case ClothingType.PANTS:
+				if (itemArray[2] != null)
+				{
+					return itemArray[2].gameItem.gameItemId == checkedItem.gameItemId;
+				}
+			case ClothingType.SHOES:
+				if (itemArray[1] != null)
+				{
+					return itemArray[1].gameItem.gameItemId == checkedItem.gameItemId;
+				}
+		}
+		
+		return false;
+	}
 }

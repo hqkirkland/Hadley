@@ -16,15 +16,6 @@ class ClothingItem
 	public function new(_classString:String)
 	{
 		itemType = _classString;
-		
-		switch (itemType)
-		{
-			case "Body", "Face":
-				colorType = 0;
-			case "Hair":
-				colorType = 1;
-			case "Clothing", "Shoes", "Pants", "Shirt", "Hat", "Glasses":
-				colorType = 2;
-		}
+		colorType = GraphicsSheet.itemTypeToColorType(itemType);
 	}
 }

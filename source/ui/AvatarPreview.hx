@@ -113,6 +113,32 @@ class AvatarPreview extends FlxSprite
 		this.setGraphicSize(41 * 2, 68 * 2);
 	}
 	
+	public function isSlotClear(typeString:String)
+	{
+		var slot:Int = 0;
+		
+		switch (typeString)
+		{
+			case ClothingType.HAT:
+				slot = 8;
+			case ClothingType.GLASSES:
+				slot = 7;
+			case ClothingType.SHIRT:
+				slot = 3;
+			case ClothingType.PANTS:
+				slot = 2;
+			case ClothingType.SHOES:
+				slot = 1;
+		}
+		
+		if (itemArray[slot] == null)
+		{
+			return true;
+		}
+		
+		return false;
+	}
+	
 	public function clearItem(typeString:String)
 	{
 		var slot:Int = 0;
@@ -184,6 +210,34 @@ class AvatarPreview extends FlxSprite
 		}
 		
 		return false;
+	}
+	
+	public function colorItem(typeString:String, ?colorId:Int = 0)
+	{
+		var slot:Int = 0;
+
+		switch (typeString)
+		{
+			case ClothingType.HAT:
+				slot = 8;
+			case ClothingType.GLASSES:
+				slot = 7;
+			case ClothingType.SHIRT:
+				slot = 3;
+			case ClothingType.PANTS:
+				slot = 2;
+			case ClothingType.SHOES:
+				slot = 1;
+		}
+		
+		itemArray[slot].itemColor = colorId;
+		
+		if (itemArray[slot] == null)
+		{
+			return;
+		}
+		
+		regenerate();
 	}
 	
 	public function wearItem(wornItem:ClothingItem, ?colorId:Int=0)

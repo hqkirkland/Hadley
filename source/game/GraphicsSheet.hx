@@ -123,4 +123,21 @@ class GraphicsSheet extends Bitmap
 		
 		return itemBitmap;
 	}
+	
+	public static function itemTypeToColorType(_itemType:String):Int
+	{
+		var colorType:Int = 0;
+		
+		switch (_itemType)
+		{
+			case "Body", "Face", "Skin":
+				colorType = 0;
+			case "Hair":
+				colorType = 1;
+			case "Clothing", "Shoes", "Pants", "Shirt", "Hat", "Glasses":
+				colorType = 2;
+		}
+		
+		return colorType;
+	}
 }

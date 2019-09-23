@@ -79,6 +79,7 @@ class LoginState extends FlxState
 		loginButton.y = (backgroundBox.y + backgroundBox.height) - loginButton.height - 20;
 		add(loginButton);
 		
+		usernameBox.textInput.addEventListener(KeyboardEvent.KEY_DOWN, handleSpace);
 		passwordBox.textInput.addEventListener(KeyboardEvent.KEY_DOWN, handleEnter);
 	}
 	
@@ -89,12 +90,15 @@ class LoginState extends FlxState
 	
 	private function onClick():Void
 	{
-		#if !flash
+		/*#if flash*/
+		
 		apiClient.addEventListener(ApiEvent.ERROR, handleError);
 		apiClient.addEventListener(ApiEvent.LOGIN, doLogin);
 		apiClient.login(usernameBox.textInput.text, passwordBox.textInput.text);
+		
+		/*
 		#else
-		var _roomState:RoomState = new RoomState();
+		var _roomState:RoomState = new RoomState("");
 		_roomState.username = "Monk";
 		
 		usernameBox.removeElements();
@@ -102,6 +106,7 @@ class LoginState extends FlxState
 		
 		FlxG.switchState(_roomState);
 		#end
+		*/
 	}
 	
 	private function handleEnter(e:KeyboardEvent):Void
@@ -112,12 +117,22 @@ class LoginState extends FlxState
 		}
 	}
 	
+	private function handleSpace(e:KeyboardEvent):Void
+	{
+		if (e.keyCode == 32)
+		{
+			trace("i'm here, man");
+		}
+	}
+	
 	private function handleError(e:ApiEvent):Void
 	{
 		if (e.statusCode == 401)
 		{
 			e.error.message = "The username or password was incorrect.";
 		}
+		
+		trace(e.statusCode);
 		
 		notifyError(e.error.message);		
 		trace(e.error.message);
@@ -150,7 +165,7 @@ class LoginState extends FlxState
 		noticeLabel = new Label(text);
 		noticeLabel.x = backgroundBox.x + 20;
 		noticeLabel.y = backgroundBox.y + 50;
-		add(noticeLabel);	
+		add(noticeLabel);
 	}
 	
 	private function doLogin(e:ApiEvent):Void
@@ -167,7 +182,7 @@ class LoginState extends FlxState
 		apiClient.removeEventListener(ApiEvent.USERDATA, fetchComplete);
 		trace("Welcome, " + e.result.username);
 		
-		var _roomState:RoomState = new RoomState();
+		var _roomState:RoomState = new RoomState(ApiClient.apiToken.gameTicket);
 		_roomState.username = e.result.username;
 		
 		usernameBox.removeElements();

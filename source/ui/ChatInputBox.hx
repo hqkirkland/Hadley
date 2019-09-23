@@ -25,9 +25,9 @@ class ChatInputBox extends FlxSprite
 	{
 		super(x, y, Assets.getBitmapData("starboard:assets/interface/starboard/elements/gamebar/gamebar_chat_box.png"));
 		
-		textInput = new TextField();		
+		textInput = new TextField();
 		textInput.type = TextFieldType.INPUT;
-		textInput.addEventListener(KeyboardEvent.KEY_DOWN, handleSpace);
+		//textInput.addEventListener(KeyboardEvent.KEY_DOWN, handleSpace);
 		
 		#if flash
 		textInput.defaultTextFormat = new TextFormat("Arial", 12, foregroundColor, true);
@@ -63,7 +63,7 @@ class ChatInputBox extends FlxSprite
 		if (e.keyCode == 32)
 		{
 			textInput.appendText(" ");
-			textInput.caretIndex += 1;
+			//textInput.caretIndex += 1;
 		}
 		#end
 	}

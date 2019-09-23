@@ -30,7 +30,7 @@ class AvatarWindow extends Window
 	private static var shirtItemList:ItemList;
 	private static var pantsItemList:ItemList;
 	private static var shoesItemList:ItemList;
-
+	
 	private static var containerCornerTopRight:BitmapData;
 	private static var containerCornerTopLeft:BitmapData;
 	private static var containerCornerBottomRight:BitmapData;

@@ -8,6 +8,7 @@ import openfl.net.URLLoader;
 import openfl.net.URLRequest;
 
 import communication.api.ApiClient;
+import communication.api.Endpoints;
 import communication.api.events.ApiEvent;
 import game.ClothingItem;
 import game.ItemColor;
@@ -55,7 +56,7 @@ class ClientData extends EventDispatcher
 		
 		apiClient.removeEventListener(ApiEvent.ITEMDATA, itemFetchComplete);
 		
-		var req:URLRequest = new URLRequest("http://dreamland.nodebay.com/gamedata/colors");
+		var req:URLRequest = new URLRequest(Endpoints.COLORDATA);
 		loader = new URLLoader();
 		loader.load(req);
 		loader.addEventListener(Event.COMPLETE, finalize);

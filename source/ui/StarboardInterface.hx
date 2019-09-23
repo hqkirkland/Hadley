@@ -15,6 +15,7 @@ import flixel.addons.plugin.FlxMouseControl;
 
 import RoomState;
 import communication.NetworkManager;
+import game.ClientData;
 import ui.TerminalWindow;
 /**
  * ...
@@ -86,6 +87,15 @@ class StarboardInterface extends FlxSpriteGroup
 			NetworkManager.sendChangeClothes(appearanceString);
 			
 			lastAppearance = appearanceString;
+		}
+	}
+	
+	public function openStoreWindow(itemArray:Array<Int>):Void
+	{
+		if (gameBar.storeWindow == null)
+		{
+			gameBar.storeWindow = new StoreWindow();
+			gameBar.storeWindow.setUpItems(itemArray);
 		}
 	}
 	

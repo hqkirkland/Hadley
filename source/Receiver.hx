@@ -4,6 +4,7 @@ import flixel.FlxG;
 import flixel.math.FlxPoint;
 
 import RoomState;
+import game.Avatar;
 import communication.NetworkManager;
 import communication.messages.MessageType;
 import communication.messages.ServerPacket;
@@ -13,7 +14,7 @@ import communication.messages.ServerMovementPacket;
 import communication.messages.ServerRoomChatPacket;
 import communication.messages.ServerExitRoomPacket;
 import communication.messages.ServerRoomIdentityPacket;
-import game.Avatar;
+import communication.messages.ServerStoreOpenPacket;
 
 /**
  * ...
@@ -74,21 +75,25 @@ class Receiver
 					RoomState.roomAvatars[identityPacket.senderId].x = identityPacket.x;
 					RoomState.roomAvatars[identityPacket.senderId].y = identityPacket.y;
 				}
-			
+				
 			case MessageType.ExitRoom:
 				var exitPacket:ServerExitRoomPacket = cast(serverPacket, ServerExitRoomPacket);				
 				RoomState.roomAvatars[exitPacket.senderId].leaveRoom();
 				FlxG.state.remove(RoomState.roomAvatars[exitPacket.senderId].chatGroup);
 				RoomState.roomAvatars.remove(exitPacket.senderId);
-			
+				
 			case MessageType.RoomChat:
 				var roomChatPacket:ServerRoomChatPacket = cast(serverPacket, ServerRoomChatPacket);
 				RoomState.roomAvatars[roomChatPacket.senderId].chatGroup.newBubble(roomChatPacket.chatMessage);
-			
+				
 			case MessageType.ChangeClothes:
 				var changeClothesPacket:ServerChangeClothesPacket = cast(serverPacket, ServerChangeClothesPacket);
 				RoomState.roomAvatars[changeClothesPacket.senderId].setAppearance(changeClothesPacket.appearance);
-			
+				
+			case MessageType.OpenStore:
+				var openStorePacket:ServerStoreOpenPacket = cast(serverPacket, ServerStoreOpenPacket);
+				RoomState.starboard.openStoreWindow(openStorePacket.items);
+				
 			default:
 				return;
 		}

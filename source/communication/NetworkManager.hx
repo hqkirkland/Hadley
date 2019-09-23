@@ -1,8 +1,7 @@
 package communication;
 
-
-import openfl.net.Socket;
 import openfl.events.Event;
+import openfl.net.Socket;
 import openfl.utils.ByteArray;
 import openfl.utils.Endian;
 
@@ -10,18 +9,18 @@ import communication.messages.MessageType;
 import communication.messages.ClientAuthenticatePacket;
 import communication.messages.ClientJoinRoomPacket;
 import communication.messages.ClientMovementPacket;
+import communication.messages.ClientChangeClothesPacket;
+import communication.messages.ClientRoomChatPacket;
+
 import communication.messages.ServerPacket;
 import communication.messages.ServerJoinRoomPacket;
 import communication.messages.ServerMovementPacket;
 import communication.messages.ServerRoomIdentityPacket;
 import communication.messages.ServerRoomChatPacket;
-import communication.messages.ClientChangeClothesPacket;
-import communication.messages.ClientRoomChatPacket;
 import communication.messages.ServerChangeClothesPacket;
 import communication.messages.ServerExitRoomPacket;
 
 /**
- * ...
  * @author Hunter
  */
 class NetworkManager
@@ -30,12 +29,10 @@ class NetworkManager
 	public static var networkSocket:Socket;
 	
 	private static var username;
-	private static var ticket;
 	
-	public static function connect(ipAddress:String, port:Int, _username:String, _ticket:String)
+	public static function connect(ipAddress:String, port:Int, _username:String)
 	{
 		username = _username;
-		ticket = _ticket;
 		
 		networkSocket = new Socket();
 		networkSocket.connect(ipAddress, port);
@@ -77,12 +74,11 @@ class NetworkManager
 		return new ServerPacket(new ByteArrayData());
 	}
 	
-	public static function sendAuthenticate():Void
+	public static function sendAuthenticate(ticket:String):Void
 	{
 		networkSocket.flush();
 		networkSocket.writeBytes(new ClientAuthenticatePacket(username, ticket).messageBytes);
-		networkSocket.flush();		isConnected = true;
-
+		networkSocket.flush();
 	}
 	
 	public static function sendJoinRoom(roomName:String):Void

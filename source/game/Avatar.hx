@@ -561,7 +561,8 @@ class Avatar extends FlxSprite
 			{
 				fadeComplete = true;
 			}
-		}});
+		}
+		});
 	}
 	
 	public function fadeIn():Void

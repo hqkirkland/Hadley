@@ -1,6 +1,5 @@
 package ui;
 
-import game.ClothingItem;
 import openfl.Assets;
 import openfl.display.BitmapData;
 import openfl.geom.Point;
@@ -8,6 +7,7 @@ import openfl.geom.Rectangle;
 
 import flixel.addons.display.FlxExtendedSprite;
 
+import game.ClothingItem;
 import game.ClientData;
 import game.ClothingType;
 import game.GraphicsSheet;
@@ -21,6 +21,7 @@ class SlotBox extends FlxExtendedSprite
 	public var gameItem:ClothingItem;
 	public var gameItemBitmap:BitmapData;
 	public var validItemSet:Bool = false;
+	public var clothingItemType:String;
 	
 	// Relative positions.
 	public var posX:Float;
@@ -31,9 +32,10 @@ class SlotBox extends FlxExtendedSprite
 	// closing avatar window 
 	// does not clear changes 
 	// to avatar.
-	public function new(clothingItemType:String, ?x:Float, ?y:Float):Void
+	public function new(slotType:String, ?x:Float, ?y:Float):Void
 	{
 		super(x, y, Assets.getBitmapData("starboard:assets/interface/starboard/elements/item_slot_inventory.png"));
+		clothingItemType = slotType;
 	}
 	
 	override public function update(elapsed:Float):Void

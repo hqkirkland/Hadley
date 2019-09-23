@@ -35,14 +35,15 @@ class Label extends FlxSprite
 		textBox.type = TextFieldType.DYNAMIC;
 		
 		#if flash
-		textBox.setTextFormat(new TextFormat("Arial", fontSize, fontColor, true));
+		var labelFormat:TextFormat = new TextFormat("Arial", fontSize, fontColor, true);
 		#else
-		textBox.setTextFormat(new TextFormat(Assets.getFont("assets/interface/fonts/HelveticaRoundedLT-Black.otf").fontName, fontSize, fontColor, false));
+		var labelFormat:TextFormat = new TextFormat(Assets.getFont("assets/interface/fonts/HelveticaRoundedLT-Black.otf").fontName, fontSize, fontColor, false);
 		#end
 		
 		textBox.width = (text.length + 1) * textSize;
 		textBox.height = 20;
 		textBox.background = false;
+		textBox.setTextFormat(labelFormat);
 		
 		setText(text);
 	}

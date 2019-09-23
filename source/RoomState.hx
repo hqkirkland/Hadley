@@ -1,6 +1,5 @@
 package;
 
-import game.MasterInventory;
 import openfl.Assets;
 import openfl.events.Event;
 import openfl.events.KeyboardEvent;
@@ -17,14 +16,9 @@ import flixel.system.scaleModes.FixedScaleMode;
 
 import communication.NetworkManager;
 import communication.messages.ServerPacket;
-import communication.messages.ServerJoinRoomPacket;
-import communication.messages.ServerMovementPacket;
-import communication.messages.ServerRoomChatPacket;
-import communication.messages.ServerExitRoomPacket;
-import communication.messages.ServerRoomIdentityPacket;
-import communication.messages.MessageType;
 import game.Avatar;
 import game.ClientData;
+import game.MasterInventory;
 import game.Portal;
 import game.Room;
 import sound.SoundManager;
@@ -45,6 +39,14 @@ class RoomState extends FlxState
 	private static var audioManager:SoundManager;
 	private static var borderArray:Array<Int> = [0xFF010101, 0x00000000];
 	private static var starboardCam:FlxCamera;
+	private static var gameTicket:String;
+	
+	override public function new(_gameTicket:String)
+	{
+		super();
+		
+		gameTicket = _gameTicket;
+	}
 	
 	override public function create():Void
 	{
@@ -70,19 +72,19 @@ class RoomState extends FlxState
 	private function initiateConnection(e:Event):Void
 	{
 		var rand:Int = Math.ceil(Math.random() * 1000);
-		playerAvatar = new Avatar(username + rand);
+		playerAvatar = new Avatar(username);
 		playerAvatar.setAppearance("67^0^44^2^34^2^24^2^94^0^72^4^51^0^61^0");
 		playerAvatar.drawFrame(true);
 		starboard.setMirrorLook(playerAvatar.pixels);
 		
-		NetworkManager.connect("72.182.108.158", 4000, playerAvatar.username, "WHIRLPOOL-2018");
+		NetworkManager.connect("72.182.108.158", 4000, playerAvatar.username);
 		NetworkManager.networkSocket.addEventListener(Event.CONNECT, doLogin);
 		NetworkManager.networkSocket.addEventListener(ProgressEvent.SOCKET_DATA, receivePacket);
 	}
 	
 	private function doLogin(e:Event):Void
 	{
-		NetworkManager.sendAuthenticate();
+		NetworkManager.sendAuthenticate(gameTicket);
 		joinRoom("cloudInfoRoom");
 	}
 	
@@ -120,7 +122,7 @@ class RoomState extends FlxState
 		add(playerAvatar.chatGroup);
 		add(starboard);
 		
-		starboard.gameBar.chatBox.textInput.addEventListener(KeyboardEvent.KEY_DOWN, chatBarEnter);
+		//starboard.gameBar.chatBox.textInput.addEventListener(KeyboardEvent.KEY_DOWN, chatBarEnter);
 		
 		setupCamera();
 		
@@ -376,12 +378,14 @@ class RoomState extends FlxState
 			starboard.gameBar.chatBox.textInput.text = "";
 		}
 		
+		/*
 		#if html5
 		if (e.keyCode == 32)
 		{
 			starboard.gameBar.chatBox.textInput.appendText(" ");
 		}
 		#end
+		*/
 	}
 	
 	private function speakUp(message:String):Void

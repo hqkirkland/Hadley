@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxSprite;
 import openfl.Assets;
 import openfl.events.Event;
 import openfl.events.KeyboardEvent;
@@ -28,10 +29,10 @@ class RoomState extends FlxState
 {
 	public var username:String;
 	
+	public static var roomAvatars:Map<String, Avatar>;
 	public static var playerAvatar:Avatar;
 	public static var currentRoom:Room;
 	public static var starboard:StarboardInterface;
-	public static var roomAvatars:Map<String, Avatar>;
 	public static var masterInventory:MasterInventory;
 
 	private static var nextRoom:String;
@@ -53,6 +54,11 @@ class RoomState extends FlxState
 		super.create();
 		
 		FlxG.scaleMode = new FixedScaleMode();
+		
+		#if FLX_DEBUG
+		FlxG.debugger.visible = true;
+		#end
+		
 		FlxG.autoPause = false;
 		FlxG.sound.muteKeys = null;
 		FlxG.sound.volumeDownKeys = null;
@@ -77,7 +83,7 @@ class RoomState extends FlxState
 		playerAvatar.drawFrame(true);
 		starboard.setMirrorLook(playerAvatar.pixels);
 		
-		NetworkManager.connect("72.182.108.158", 4000, playerAvatar.username);
+		NetworkManager.connect("dev.nodebay.com", 4000, playerAvatar.username);
 		NetworkManager.networkSocket.addEventListener(Event.CONNECT, doLogin);
 		NetworkManager.networkSocket.addEventListener(ProgressEvent.SOCKET_DATA, receivePacket);
 	}
@@ -114,7 +120,12 @@ class RoomState extends FlxState
 		currentRoom.addAvatar(playerAvatar, exitRoom);
 		exitRoom = "";
 		
+		var tmpRoomGridSprite:FlxSprite = new FlxSprite(0, 0, currentRoom.grid.mapBmp);
+		tmpRoomGridSprite.x = currentRoom.x + 161;
+		tmpRoomGridSprite.y = currentRoom.y + 177;
+		
 		add(currentRoom);
+		add(tmpRoomGridSprite);
 		add(currentRoom.vehicleEntities);
 		add(currentRoom.roomEntities);
 		add(currentRoom.portalEntities);
@@ -122,7 +133,7 @@ class RoomState extends FlxState
 		add(playerAvatar.chatGroup);
 		add(starboard);
 		
-		//starboard.gameBar.chatBox.textInput.addEventListener(KeyboardEvent.KEY_DOWN, chatBarEnter);
+		starboard.gameBar.chatBox.textInput.addEventListener(KeyboardEvent.KEY_DOWN, chatBarEnter);
 		
 		setupCamera();
 		
@@ -279,12 +290,14 @@ class RoomState extends FlxState
 		// 1 is TRUE: Collision.
 		// 0 is FALSE: No Collision.
 		// Probably still have a problem with 0-pixels.
+		var offsetX:Int = 15;
+		var offsetY:Int = 63;
 		
-		rx -= testAvatar.offset.x;
-		ry -= testAvatar.offset.y;
+		rx -= offsetX;
+		ry -= offsetY;
 		
-		lx -= testAvatar.offset.x;
-		ly -= testAvatar.offset.y;
+		lx -= offsetX;
+		ly -= offsetY;
 		
 		var ptR:Float = if (borderArray.indexOf(currentRoom.testWalkmap(rx, ry)) != -1) 1 else 0;
 		var ptL:Float = if (borderArray.indexOf(currentRoom.testWalkmap(lx, ly)) != -1) 1 else 0;
@@ -294,6 +307,7 @@ class RoomState extends FlxState
 		return FlxPoint.get(ptR, ptL);
 	}
 	
+	// TODO: Implement reactor model with keychecks instead of packets.
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
@@ -322,7 +336,6 @@ class RoomState extends FlxState
 		playerAvatar.keysTriggered.Run = FlxG.keys.pressed.SHIFT;
 		
 		// Player was walking, but now has stopped.
-		
 		if (playerAvatar.currentAction == Avatar.actionSet.Stand && playerAvatar.previousAction == Avatar.actionSet.Walk)
 		{
 			// So stop the movement.
@@ -377,15 +390,6 @@ class RoomState extends FlxState
 			
 			starboard.gameBar.chatBox.textInput.text = "";
 		}
-		
-		/*
-		#if html5
-		if (e.keyCode == 32)
-		{
-			starboard.gameBar.chatBox.textInput.appendText(" ");
-		}
-		#end
-		*/
 	}
 	
 	private function speakUp(message:String):Void

@@ -4,9 +4,10 @@ import openfl.Assets;
 import openfl.utils.AssetLibrary;
 import openfl.events.KeyboardEvent;
 
+import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
-import flixel.FlxG;
+import flixel.addons.ui.FlxUIInputText;
 import flixel.system.scaleModes.FixedScaleMode;
 
 import communication.api.ApiClient;
@@ -22,6 +23,7 @@ class LoginState extends FlxState
 	private var usernameBox:LoginInputBox;
 	private var passwordBox:LoginInputBox;
 	private var noticeLabel:Label;
+	private var newUsernameBox:FlxUIInputText;
 	
 	private static var apiClient:ApiClient;
 	
@@ -34,6 +36,7 @@ class LoginState extends FlxState
 		
 		FlxG.autoPause = false;
 		FlxG.scaleMode = new FixedScaleMode();
+		FlxG.keys.preventDefaultKeys = [];
 		FlxG.mouse.useSystemCursor = true;
 		
 		apiClient = new ApiClient();
@@ -45,6 +48,7 @@ class LoginState extends FlxState
 		backgroundBox.x = (FlxG.width / 2) - (backgroundBox.backgroundShape.width / 2);
 		backgroundBox.y = backgroundBox.backgroundShape.height / 2;
 		add(backgroundBox);
+		
 		
 		usernameBox = new LoginInputBox(0xFFFFFFFF);
 		usernameBox.x = backgroundBox.x + (backgroundBox.width / 4) + 10;
@@ -79,8 +83,7 @@ class LoginState extends FlxState
 		loginButton.y = (backgroundBox.y + backgroundBox.height) - loginButton.height - 20;
 		add(loginButton);
 		
-		usernameBox.textInput.addEventListener(KeyboardEvent.KEY_DOWN, handleSpace);
-		passwordBox.textInput.addEventListener(KeyboardEvent.KEY_DOWN, handleEnter);
+		FlxG.stage.addEventListener(KeyboardEvent.KEY_DOWN, handleSpecialKey);
 	}
 	
 	private function libraryLoaded(completeLib:AssetLibrary):Void
@@ -90,38 +93,16 @@ class LoginState extends FlxState
 	
 	private function onClick():Void
 	{
-		/*#if flash*/
-		
 		apiClient.addEventListener(ApiEvent.ERROR, handleError);
 		apiClient.addEventListener(ApiEvent.LOGIN, doLogin);
 		apiClient.login(usernameBox.textInput.text, passwordBox.textInput.text);
-		
-		/*
-		#else
-		var _roomState:RoomState = new RoomState("");
-		_roomState.username = "Monk";
-		
-		usernameBox.removeElements();
-		passwordBox.removeElements();
-		
-		FlxG.switchState(_roomState);
-		#end
-		*/
 	}
 	
-	private function handleEnter(e:KeyboardEvent):Void
+	private function handleSpecialKey(e:KeyboardEvent):Void
 	{
 		if (e.keyCode == 13)
 		{
 			onClick();
-		}
-	}
-	
-	private function handleSpace(e:KeyboardEvent):Void
-	{
-		if (e.keyCode == 32)
-		{
-			trace("i'm here, man");
 		}
 	}
 	
@@ -180,6 +161,8 @@ class LoginState extends FlxState
 	private function fetchComplete(e:ApiEvent):Void
 	{
 		apiClient.removeEventListener(ApiEvent.USERDATA, fetchComplete);
+		FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, handleSpecialKey);
+		
 		trace("Welcome, " + e.result.username);
 		
 		var _roomState:RoomState = new RoomState(ApiClient.apiToken.gameTicket);

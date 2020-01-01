@@ -154,10 +154,8 @@ class ApiClient extends EventDispatcher
 		#end
 		
 		var itemdataClient:URLLoader = new URLLoader();
-		
 		itemdataClient.addEventListener(Event.COMPLETE, itemdataHandler);
 		itemdataClient.addEventListener(IOErrorEvent.IO_ERROR, errorHandler);
-		
 		itemdataClient.load(itemdataRequest);
 	}
 	

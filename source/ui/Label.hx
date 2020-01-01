@@ -1,6 +1,5 @@
 package ui;
 
-import flixel.graphics.FlxGraphic;
 import openfl.Assets;
 import openfl.display.BitmapData;
 import openfl.text.TextField;
@@ -9,6 +8,7 @@ import openfl.text.TextFormat;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.graphics.FlxGraphic;
 import flixel.util.FlxColor;
 
 /**
@@ -34,11 +34,7 @@ class Label extends FlxSprite
 		textBox = new TextField();
 		textBox.type = TextFieldType.DYNAMIC;
 		
-		#if flash
-		var labelFormat:TextFormat = new TextFormat("Arial", fontSize, fontColor, true);
-		#else
-		var labelFormat:TextFormat = new TextFormat(Assets.getFont("assets/interface/fonts/HelveticaRoundedLT-Black.otf").fontName, fontSize, fontColor, false);
-		#end
+		var labelFormat:TextFormat = new TextFormat(Assets.getFont("assets/interface/fonts/HelveticaRounded-Bold.otf").fontName, fontSize, fontColor, false);
 		
 		textBox.width = (text.length + 1) * textSize;
 		textBox.height = 20;

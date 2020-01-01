@@ -28,13 +28,15 @@ class NetworkManager
 	public static var isConnected:Bool;
 	public static var networkSocket:Socket;
 	
-	private static var username;
+	private static var username:String;
 	
 	public static function connect(ipAddress:String, port:Int, _username:String)
 	{
 		username = _username;
 		
 		networkSocket = new Socket();
+		// Secure specifies WSS.
+		networkSocket.secure = true;
 		networkSocket.connect(ipAddress, port);
 		networkSocket.timeout = 1800;
 	}

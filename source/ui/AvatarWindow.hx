@@ -45,9 +45,9 @@ class AvatarWindow extends Window
 	
 	public function new() 
 	{
-		super("Avatar", 200, 250, 300, 100);
+		super("Avatar", 200, 250, 0, 0);
 		itemLists = new FlxTypedGroup<ItemList>();
-
+		
 		containerCornerTopRight = Assets.getBitmapData("starboard:assets/interface/starboard/elements/element_container_rounded_top_right.png");
 		containerCornerTopLeft = Assets.getBitmapData("starboard:assets/interface/starboard/elements/element_container_rounded_top_left.png");
 		containerCornerBottomRight = Assets.getBitmapData("starboard:assets/interface/starboard/elements/element_container_rounded_bottom_right.png");
@@ -220,7 +220,7 @@ class AvatarWindow extends Window
 	}
 	
 	private function makeContainer():Void
-	{
+	{		
 		avatarContainer = new FlxSprite(12, 60);
 		avatarContainer.pixels = new BitmapData(Math.floor(this.baseWindow.width) - 24, Math.ceil(this.baseWindow.height - 60 - 34), true, 0xFFFFFFFF);
 		

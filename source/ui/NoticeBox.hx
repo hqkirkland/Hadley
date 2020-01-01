@@ -23,20 +23,14 @@ class NoticeBox extends FlxSprite
 	{
 		super();
 		
-		#if flash
-		titleFormat = new TextFormat("Arial", 14, 0x34363A, true);
-		#else
 		titleFormat = new TextFormat(Assets.getFont("assets/interface/fonts/HelveticaRoundedLT-Black.otf").fontName, 14, 0x34363A, false);
-		#end
 		
 		backgroundShape = new Shape();
 		backgroundShape.graphics.beginFill(0xFFFFFF);
 		backgroundShape.graphics.drawRoundRect(0, 0, width, height, ellipseWidth);
 		
-		var dropShadow:DropShadowFilter = new DropShadowFilter(4, 45, 0, 0.15, 6, 6);
-		backgroundShape.filters = [ dropShadow ];
 		this.pixels = new BitmapData(Math.ceil(backgroundShape.width + 10), Math.ceil(backgroundShape.height + 10), true, 0x0);
-		this.pixels.draw(backgroundShape);
+		this.pixels.draw(backgroundShape);		
 		
 		if (title != null)
 		{

@@ -1,5 +1,6 @@
 package ui;
 
+import flixel.math.FlxRect;
 import openfl.Assets;
 import openfl.display.Bitmap;
 import openfl.display.BitmapData;
@@ -39,7 +40,7 @@ class StarboardInterface extends FlxSpriteGroup
 		add(gameBar);
 		
 		FlxG.plugins.add(new FlxMouseControl());
-		FlxMouseControl.mouseZone = this.clipRect;
+		FlxMouseControl.mouseZone = FlxG.worldBounds;
 		this.scrollFactor.set(0, 0);
 		
 		forEach(
@@ -59,8 +60,9 @@ class StarboardInterface extends FlxSpriteGroup
 			if (gameBar.avatarWindow == null)
 			{
 				gameBar.avatarWindow = new AvatarWindow();
-				
-				add(gameBar.avatarWindow);
+				windowSystem = new FlxTypedSpriteGroup<Window>();
+				windowSystem.add(gameBar.avatarWindow);
+				add(windowSystem);
 				//FlxMouseControl.addToStack(new TerminalWindow());
 			}
 			
@@ -74,6 +76,9 @@ class StarboardInterface extends FlxSpriteGroup
 			{
 				gameBar.avatarWindow.visible = true;
 				add(gameBar.avatarWindow);
+				
+				var rect:FlxRect = gameBar.avatarWindow.getHitbox();
+				trace("gameBar Hitbox: " + rect.x + ", " + rect.y);
 			}
 		}
 	}

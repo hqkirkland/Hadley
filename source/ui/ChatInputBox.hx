@@ -1,15 +1,18 @@
 package ui;
 
+
+import flixel.FlxG;
+import flixel.FlxSprite;
+import flixel.addons.ui.FlxUIInputText;
+
 import openfl.Assets;
 import openfl.events.KeyboardEvent;
 import openfl.geom.Point;
 import openfl.text.AntiAliasType;
 import openfl.text.TextField;
+import openfl.text.TextFieldAutoSize;
 import openfl.text.TextFieldType;
 import openfl.text.TextFormat;
-
-import flixel.FlxG;
-import flixel.FlxSprite;
 
 /**
  * ...
@@ -18,6 +21,7 @@ import flixel.FlxSprite;
 class ChatInputBox extends FlxSprite
 {
 	public var textInput:TextField;
+	public var newTextInput:FlxUIInputText;
 	
 	private static var zeroPoint:Point = new Point(0, 0);
 	
@@ -27,24 +31,26 @@ class ChatInputBox extends FlxSprite
 		
 		textInput = new TextField();
 		textInput.type = TextFieldType.INPUT;
-		//textInput.addEventListener(KeyboardEvent.KEY_DOWN, handleSpace);
-		
-		#if flash
-		textInput.defaultTextFormat = new TextFormat("Arial", 12, foregroundColor, true);
-		#else
-		textInput.setTextFormat(new TextFormat("Arial", 8, foregroundColor, false, null, null, null, null, null, 12, null, null, 1));
-		#end
-		
-		textInput.width = 225;
+		textInput.width = 220;
 		textInput.height = 21;
 		textInput.antiAliasType = AntiAliasType.NORMAL;
-		textInput.multiline = false;
+		textInput.setTextFormat(new TextFormat("Arial", 8, foregroundColor, null, null, null, null, null, null, 5, null, null, 1));
 		textInput.background = false;
+		textInput.backgroundColor = 0xE8E1B1;
+		textInput.multiline = false;
+		textInput.selectable = true;
+		textInput.autoSize = TextFieldAutoSize.NONE;
+		textInput.addEventListener(KeyboardEvent.KEY_DOWN, handleDown);
 		
 		FlxG.stage.addChild(textInput);
 		
-		textInput.x = 360;
-		textInput.y = 510 + Math.ceil(textInput.height / 2);
+		textInput.x = 365;
+		textInput.y = 511 + Math.ceil(textInput.height / 2);
+	}
+	
+	public function handleDown(e:KeyboardEvent)
+	{
+		trace(textInput.caretIndex);
 	}
 	
 	public override function update(elapsed:Float):Void
@@ -55,16 +61,5 @@ class ChatInputBox extends FlxSprite
 	public function removeElements():Void
 	{
 		FlxG.stage.removeChild(textInput);
-	}
-	
-	private function handleSpace(e:KeyboardEvent):Void
-	{
-		#if !flash
-		if (e.keyCode == 32)
-		{
-			textInput.appendText(" ");
-			//textInput.caretIndex += 1;
-		}
-		#end
 	}
 }

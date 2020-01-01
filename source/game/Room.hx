@@ -67,6 +67,8 @@ class Room extends FlxSprite
 	public var roomReady:Bool = false;
 	public var backgroundColor:FlxColor;
 	
+	public var grid:RoomGrid = new RoomGrid(0, 0);
+	
 	public function new(_roomName:String, ?X:Float=0, ?Y:Float=0) 
 	{
 		// This function should get passed a dictionary of items from parsed manifest.

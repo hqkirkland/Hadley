@@ -77,6 +77,7 @@ class ColorList extends FlxTypedSpriteGroup<FlxExtendedSprite>
 					{
 						selectedColor = colorSet[i - 1];
 						newPicked = true;
+						trace(selectedColor);
 					}
 					
 					else
@@ -133,6 +134,7 @@ class ColorList extends FlxTypedSpriteGroup<FlxExtendedSprite>
 				{
 					selectedColor = colorSet[colorIndex];
 					newPicked = true;
+					trace(selectedColor);
 				}
 				
 				else

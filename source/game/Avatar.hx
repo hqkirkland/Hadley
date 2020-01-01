@@ -76,7 +76,7 @@ class Avatar extends FlxSprite
 		super();
 		username = _username;
 		chatGroup = new BubbleStack(username);
-		
+
 		// TODO: Create figure object, or create typedef for clothing objects.
 	}
 	
@@ -136,9 +136,6 @@ class Avatar extends FlxSprite
 		
 		this.width = 10;
 		this.height = 5;
-		
-		this.offset.x = 15;
-		this.offset.y = 63;
 	}
 	
 	private function generateAvatar():Void
@@ -197,17 +194,21 @@ class Avatar extends FlxSprite
 		animation.add("SitSouthWest", [35], 0, false, true);
 		animation.add("SitNorthWest", [36], 0, false, true);
 		animation.add("SitSouthEast", [35], 0, false, false);
-		animation.add("SitNorthEast", [36], 0, false, false);		
+		animation.add("SitNorthEast", [36], 0, false, false);
+		
+		this.offset = FlxPoint.get(15, 63);
+		//this.offset.set(15, 63);
+		//this.offset.x = 15;
+		//this.offset.y = 63;
 	}
 	
 	override public function update(elapsed:Float):Void
 	{
 		doAnimation();
+		super.update(elapsed);
 		
 		chatGroup.x = (this.x - this.offset.x) + ((this.frameWidth / 2) - (this.chatGroup.width / 2));
 		chatGroup.y = Math.ceil(this.y - this.frameHeight);
-		
-		super.update(elapsed);
     }
 	
 	private function doAnimation():Void
@@ -221,9 +222,9 @@ class Avatar extends FlxSprite
 		else
 		{ this.velocity = FlxPoint.get(this.velocityX, this.velocityY); }
 		
+		this.velocity.put();
 		chatGroup.velocity = this.velocity;
 		
-		this.velocity.put();
 	}
 	
 	public function smoothMovement():Void
@@ -238,7 +239,7 @@ class Avatar extends FlxSprite
 		{
 			this.velocityX = 0;
 			this.velocityY = 0;
-			this.velocity.set(0, 0);
+			this.velocity = FlxPoint.get(0, 0);
 			this.canWalk = false;
 			return;
 		}

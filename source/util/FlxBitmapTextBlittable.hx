@@ -667,7 +667,7 @@ class FlxBitmapTextBlittable extends FlxSprite
 		var charCode:Int;			// code for the current character in word
 		var charWidth:Float;		// the width of current character
 		
-		var subLine:Utf8;			// current subline to assemble
+		var subLine:UnicodeString;			// current subline to assemble
 		var subLineWidth:Float;		// the width of current subline
 		
 		var spaceWidth:Int = font.spaceWidth;
@@ -678,7 +678,7 @@ class FlxBitmapTextBlittable extends FlxSprite
 		for (line in _lines)
 		{
 			lineLength = Utf8.length(line);
-			subLine = new Utf8();
+			subLine = new UnicodeString("");
 			subLineWidth = startX;
 			
 			c = 0;
@@ -702,15 +702,15 @@ class FlxBitmapTextBlittable extends FlxSprite
 				
 				if (subLineWidth + charWidth > _fieldWidth - 2 * padding)
 				{
-					subLine.addChar(charCode);
+					subLine += String.fromCharCode(charCode);
 					newLines.push(subLine.toString());
-					subLine = new Utf8();
+					subLine = new UnicodeString("");
 					subLineWidth = startX;
 					c = lineLength;
 				}
 				else
 				{
-					subLine.addChar(charCode);
+					subLine += String.fromCharCode(charCode);
 					subLineWidth += charWidth;
 				}
 				
@@ -759,7 +759,7 @@ class FlxBitmapTextBlittable extends FlxSprite
 	function splitLineIntoWords(line:String, words:Array<String>):Void
 	{
 		var word:String = "";				// current word to process
-		var wordUtf8:Utf8 = new Utf8();
+		var wordUtf8:UnicodeString = new UnicodeString("");
 		var isSpaceWord:Bool = false; 		// whether current word consists of spaces or not
 		var lineLength:Int = Utf8.length(line);	// lenght of the current line
 		
@@ -767,7 +767,7 @@ class FlxBitmapTextBlittable extends FlxSprite
 		
 		var c:Int = 0;						// char index on the line
 		var charCode:Int; 					// code for the current character in word
-		var charUtf8:Utf8;
+		var charUtf8:UnicodeString;
 		
 		while (c < lineLength)
 		{
@@ -783,11 +783,11 @@ class FlxBitmapTextBlittable extends FlxSprite
 					if (word != "")
 					{
 						words.push(word);
-						wordUtf8 = new Utf8();
+						wordUtf8 = new UnicodeString("");
 					}
 				}
 				
-				wordUtf8.addChar(charCode);
+				wordUtf8 += String.fromCharCode(charCode);
 			}
 			else if (charCode == hyphenCode)
 			{
@@ -799,12 +799,12 @@ class FlxBitmapTextBlittable extends FlxSprite
 				}
 				else if (!isSpaceWord)
 				{
-					charUtf8 = new Utf8();
-					charUtf8.addChar(charCode);
+					charUtf8 = new UnicodeString("");
+					charUtf8 += String.fromCharCode(charCode);
 					words.push(word + charUtf8.toString());
 				}
 				
-				wordUtf8 = new Utf8();
+				wordUtf8 = new UnicodeString("");
 			}
 			else
 			{
@@ -812,10 +812,10 @@ class FlxBitmapTextBlittable extends FlxSprite
 				{
 					isSpaceWord = false;
 					words.push(word);
-					wordUtf8 = new Utf8();
+					wordUtf8 = new UnicodeString("");
 				}
 				
-				wordUtf8.addChar(charCode);
+				wordUtf8 += String.fromCharCode(charCode);
 			}
 			
 			c++;
@@ -954,7 +954,7 @@ class FlxBitmapTextBlittable extends FlxSprite
 		var subLines:Array<String> = [];	// helper array for subdividing lines
 		
 		var subLine:String;					// current subline to assemble
-		var subLineUtf8:Utf8;
+		var subLineUtf8:UnicodeString;
 		var subLineWidth:Float;				// the width of current subline
 		
 		var spaceWidth:Int = font.spaceWidth;
@@ -966,7 +966,7 @@ class FlxBitmapTextBlittable extends FlxSprite
 		{
 			w = 0;
 			subLineWidth = startX;
-			subLineUtf8 = new Utf8();
+			subLineUtf8 = new UnicodeString("");
 			
 			while (w < numWords)
 			{
@@ -1003,26 +1003,26 @@ class FlxBitmapTextBlittable extends FlxSprite
 						{
 							subLines.push(subLine);
 							c = wordLength;
-							subLineUtf8 = new Utf8();
+							subLineUtf8 = new UnicodeString("");
 							subLineWidth = startX;
 						}
 						else if (subLine != "") // new line isn't empty so we should add it to sublines array and start another one
 						{
 							subLines.push(subLine);
-							subLineUtf8 = new Utf8();
-							subLineUtf8.addChar(charCode);
+							subLineUtf8 = new UnicodeString("");
+							subLineUtf8 += String.fromCharCode(charCode);
 							subLineWidth = startX + charWidth + letterSpacing;
 						}
 						else	// the line is too tight to hold even one character
 						{
-							subLineUtf8 = new Utf8();
-							subLineUtf8.addChar(charCode);
+							subLineUtf8 = new UnicodeString("");
+							subLineUtf8 += String.fromCharCode(charCode);
 							subLineWidth = startX + charWidth + letterSpacing;
 						}
 					}
 					else
 					{
-						subLineUtf8.addChar(charCode);
+						subLineUtf8 += String.fromCharCode(charCode);
 						subLineWidth += (charWidth + letterSpacing);
 					}
 					
@@ -1192,8 +1192,8 @@ class FlxBitmapTextBlittable extends FlxSprite
 				{
 					_flashPoint.setTo(curX, curY);
 					charFrame.paint(textBitmap, _flashPoint, true);
-					var charUt8 = new Utf8();
-					charUt8.addChar(charCode);
+					var charUt8 = new UnicodeString("");
+					charUt8 += String.fromCharCode(charCode);
 					curX += font.getCharAdvance(charCode);
 				}
 			}

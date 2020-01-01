@@ -39,7 +39,7 @@ import haxe.macro.Expr;
 		
 		ManifestResources.init (config);
 		
-		app.meta["build"] = "56";
+		app.meta["build"] = "55";
 		app.meta["company"] = "Nodebay.com";
 		app.meta["file"] = "HadleyHaxe";
 		app.meta["name"] = "HadleyHaxe";
@@ -52,7 +52,7 @@ import haxe.macro.Expr;
 		
 		var attributes:lime.ui.WindowAttributes = {
 			
-			allowHighDPI: true,
+			allowHighDPI: false,
 			alwaysOnTop: false,
 			borderless: false,
 			// display: 0,
@@ -64,7 +64,7 @@ import haxe.macro.Expr;
 			maximized: false,
 			minimized: false,
 			parameters: {},
-			resizable: true,
+			resizable: false,
 			title: "HadleyHaxe",
 			width: 950,
 			x: null,

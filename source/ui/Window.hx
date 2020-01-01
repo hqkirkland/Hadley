@@ -32,7 +32,7 @@ class Window extends FlxSpriteGroup
 	private static var windowBottomRight:BitmapData;
 	private static var windowX:BitmapData;
 	
-	public function new(title:String, width:Int, height:Int, ?x:Float=100, ?y:Float=100)
+	public function new(title:String, width:Int, height:Int, ?x:Float=0, ?y:Float=0)
 	{
 		super(x, y);
 		
@@ -68,7 +68,7 @@ class Window extends FlxSpriteGroup
 	
 	private function dragCompleteCallback(obj:FlxExtendedSprite, x:Float, y:Float)
 	{
-	
+		trace("Drag Complete.");
 	}
 	
 	private function closeWindow():Void

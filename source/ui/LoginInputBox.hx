@@ -1,7 +1,8 @@
 package ui;
 
+import haxe.io.Input;
+
 import openfl.Assets;
-import openfl.geom.Point;
 import openfl.text.AntiAliasType;
 import openfl.text.TextField;
 import openfl.text.TextFieldType;
@@ -18,12 +19,14 @@ import flixel.FlxSprite;
 class LoginInputBox extends FlxSprite
 {
 	public var textInput:TextField;
+	public var newInput:TextField;
 
 	private var isPasswordBox:Bool = false;
-		
+	
 	public function new(color:UInt, ?hideValue:Bool=false) 
 	{
 		super();
+		
 		isPasswordBox = hideValue;
 		
 		var sprite:FlxSprite = new FlxSprite();
@@ -36,26 +39,17 @@ class LoginInputBox extends FlxSprite
 	
 	public function addElements():Void
 	{
-		textInput = new TextField(); 
+		textInput = new TextField();
 		textInput.type = TextFieldType.INPUT;
-		
-		#if flash
-		textInput.defaultTextFormat = new TextFormat("Arial", 14, 0x34363A, true);
+		textInput.setTextFormat(new TextFormat(Assets.getFont("assets/interface/fonts/HelveticaRounded-Bold.otf").fontName, 14, 0xFF34363A, true, false, false));
+		textInput.x = this.x + 5;
 		textInput.y = this.y + 5;
-		#else
-		//textInput.setTextFormat(new TextFormat(Assets.getFont("assets/interface/fonts/HelveticaRoundedLT-Black.otf").fontName, 14, 0x34363A, false, null, null, null, null, null, 12, null, null, 1));
-		textInput.y = this.y + 5;
-		#end
-		
 		textInput.width = 225;
 		textInput.height = 21;
 		textInput.antiAliasType = AntiAliasType.NORMAL;
-		textInput.multiline = false;
 		textInput.background = false;
-		
-		textInput.x = this.x + 5;
-		
-		//textInput.displayAsPassword = isPasswordBox;
+		textInput.border = false;
+		textInput.displayAsPassword = isPasswordBox;
 		
 		FlxG.stage.addChild(textInput);
 	}

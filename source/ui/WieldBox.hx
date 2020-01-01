@@ -32,7 +32,8 @@ class WieldBox extends FlxExtendedSprite
 	
 	public function new(clothingItemType:String, ?x:Float, ?y:Float):Void
 	{
-		super(x, y, Assets.getBitmapData("starboard:assets/interface/starboard/elements/item_slot_selected.png"));		
+		super(x, y);
+		this.loadGraphic(Assets.getBitmapData("starboard:assets/interface/starboard/elements/item_slot_selected.png"), null, null, null, true);
 		clothingType = clothingItemType;
 		
 		switch (clothingType)

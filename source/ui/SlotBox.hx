@@ -18,10 +18,10 @@ import game.GraphicsSheet;
  */
 class SlotBox extends FlxExtendedSprite
 {
+	public var clothingItemType:String;
 	public var gameItem:ClothingItem;
 	public var gameItemBitmap:BitmapData;
 	public var validItemSet:Bool = false;
-	public var clothingItemType:String;
 	
 	// Relative positions.
 	public var posX:Float;
@@ -34,7 +34,8 @@ class SlotBox extends FlxExtendedSprite
 	// to avatar.
 	public function new(slotType:String, ?x:Float, ?y:Float):Void
 	{
-		super(x, y, Assets.getBitmapData("starboard:assets/interface/starboard/elements/item_slot_inventory.png"));
+		super(x, y);
+		this.loadGraphic(Assets.getBitmapData("starboard:assets/interface/starboard/elements/item_slot_inventory.png"), null, null, null, true);
 		clothingItemType = slotType;
 	}
 	
@@ -62,6 +63,7 @@ class SlotBox extends FlxExtendedSprite
 	{
 		var oldGameItem:ClothingItem = gameItem;
 		setGameItem(gameItemKey, colorId);
+		
 		return oldGameItem;
 	}
 	

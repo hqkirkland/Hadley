@@ -45,7 +45,7 @@ class AvatarWindow extends Window
 	
 	public function new() 
 	{
-		super("Avatar", 200, 250, 0, 0);
+		super("Avatar", 200, 250);
 		itemLists = new FlxTypedGroup<ItemList>();
 		
 		containerCornerTopRight = Assets.getBitmapData("starboard:assets/interface/starboard/elements/element_container_rounded_top_right.png");
@@ -60,7 +60,7 @@ class AvatarWindow extends Window
 		changeButton.mouseReleasedCallback = this.changeButtonClickCallback;
 		
 		colorPicker = new ColorList(ClothingType.DEFAULT_CLOTHING);
-		colorPicker.lockPosition((this.width / 2) - (colorPicker.width / 2), this.height);
+		// colorPicker.lockPosition((this.width / 2) - (colorPicker.width / 2), this.height);
 		
 		add(changeButton);
 		add(colorPicker);
@@ -74,6 +74,9 @@ class AvatarWindow extends Window
 	{
 		super.update(elapsed);
 		
+		this.updateHitbox();
+		
+		/*
 		changeButton.x = baseWindow.x + baseWindow.width - changeButton.width - 10;
 		changeButton.y = baseWindow.y + baseWindow.height - changeButton.height - 10;
 		
@@ -88,6 +91,8 @@ class AvatarWindow extends Window
 			wieldBox.x = baseWindow.x + wieldBox.posX;
 			wieldBox.y = baseWindow.y + wieldBox.posY;
 		}
+		
+		*/
 		
 		for (itemList in itemLists)
 		{
@@ -104,8 +109,10 @@ class AvatarWindow extends Window
 				}
 			}
 			
+			/*
 			itemList.x = baseWindow.x + itemList.posX;
 			itemList.y = baseWindow.y + itemList.posY;
+			*/
 		}
 		
 		if (colorPicker.newPicked)
@@ -123,14 +130,21 @@ class AvatarWindow extends Window
 			}
 		}
 		
+		/*
 		playerPreview.x = avatarContainer.x + playerPreview.posX;
 		playerPreview.y = baseWindow.y + playerPreview.posY;
+		*/
 	}
 	
 	override private function closeWindow():Void
 	{
 		super.closeWindow();
 		playerPreview.setLook(RoomState.playerAvatar.itemArray);
+	}
+	
+	private function setElements():Void
+	{
+		
 	}
 	
 	private function changeButtonClickCallback(_obj:FlxExtendedSprite, x:Int, y:Int):Void
@@ -221,7 +235,7 @@ class AvatarWindow extends Window
 	
 	private function makeContainer():Void
 	{		
-		avatarContainer = new FlxSprite(12, 60);
+		avatarContainer = new FlxSprite(baseWindow.x + 12, baseWindow.y + 60);
 		avatarContainer.pixels = new BitmapData(Math.floor(this.baseWindow.width) - 24, Math.ceil(this.baseWindow.height - 60 - 34), true, 0xFFFFFFFF);
 		
 		avatarContainer.pixels.copyPixels(containerCornerTopLeft, containerCornerTopLeft.rect, new Point(0, 0), null, null, true); 
@@ -246,8 +260,8 @@ class AvatarWindow extends Window
 		add(avatarContainer);
 		
 		playerPreview = new AvatarPreview(RoomState.playerAvatar.itemArray);
-		playerPreview.posX = (avatarContainer.width / 2) - (playerPreview.width / 2);
-		playerPreview.posY = 100;
+		playerPreview.x = (avatarContainer.width / 2) - (playerPreview.width / 2);
+		playerPreview.y = 100;
 		add(playerPreview);
 	}
 	

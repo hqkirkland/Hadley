@@ -56,7 +56,7 @@ class RoomState extends FlxState
 		FlxG.scaleMode = new FixedScaleMode();
 		
 		#if FLX_DEBUG
-		FlxG.debugger.visible = true;
+		//FlxG.debugger.visible = true;
 		#end
 		
 		FlxG.autoPause = false;
@@ -65,8 +65,6 @@ class RoomState extends FlxState
 		FlxG.sound.volumeUpKeys = null;
 		
 		starboard = new StarboardInterface();
-		starboard.x = 0;
-		starboard.y = 0;
 		
 		var setupLoader:ClientData = new ClientData();
 		setupLoader.addEventListener(Event.COMPLETE, initiateConnection); 
@@ -125,7 +123,7 @@ class RoomState extends FlxState
 		tmpRoomGridSprite.y = currentRoom.y + 177;
 		
 		add(currentRoom);
-		add(tmpRoomGridSprite);
+		//add(tmpRoomGridSprite);
 		add(currentRoom.vehicleEntities);
 		add(currentRoom.roomEntities);
 		add(currentRoom.portalEntities);
@@ -133,6 +131,11 @@ class RoomState extends FlxState
 		add(playerAvatar.chatGroup);
 		add(starboard);
 		
+		FlxG.watch.add(starboard, "x", "Starboard X");
+		FlxG.watch.add(starboard, "y", "Starboard Y");		
+		FlxG.watch.add(starboard.gameBar, "x", "GameBar X");
+		FlxG.watch.add(starboard.gameBar, "y", "GameBar Y");
+
 		starboard.gameBar.chatBox.textInput.addEventListener(KeyboardEvent.KEY_DOWN, chatBarEnter);
 		
 		setupCamera();
@@ -384,8 +387,8 @@ class RoomState extends FlxState
 			
 			if (messageText != "")
 			{
+				playerAvatar.chatGroup.newBubble(messageText);
 				speakUp(messageText);
-				NetworkManager.sendRoomChat(messageText);
 			}
 			
 			starboard.gameBar.chatBox.textInput.text = "";
@@ -394,7 +397,7 @@ class RoomState extends FlxState
 	
 	private function speakUp(message:String):Void
 	{
-		playerAvatar.chatGroup.newBubble(message);
+		NetworkManager.sendRoomChat(message);
 	}
 	
 	public function enterPortal(objectA:FlxObject, objectB:FlxObject):Void

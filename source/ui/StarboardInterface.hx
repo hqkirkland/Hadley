@@ -60,9 +60,14 @@ class StarboardInterface extends FlxSpriteGroup
 			if (gameBar.avatarWindow == null)
 			{
 				gameBar.avatarWindow = new AvatarWindow();
+				FlxG.watch.add(gameBar.avatarWindow, "x", "AvatarWindow X");
+				FlxG.watch.add(gameBar.avatarWindow, "y", "AvatarWindow Y");
+				
 				windowSystem = new FlxTypedSpriteGroup<Window>();
-				windowSystem.add(gameBar.avatarWindow);
+				windowSystem.add(gameBar.avatarWindow);				
 				add(windowSystem);
+				FlxG.watch.add(windowSystem, "x", "WindowSystem X");
+				FlxG.watch.add(windowSystem, "y", "WindowSystem Y");
 				//FlxMouseControl.addToStack(new TerminalWindow());
 			}
 			
@@ -76,9 +81,6 @@ class StarboardInterface extends FlxSpriteGroup
 			{
 				gameBar.avatarWindow.visible = true;
 				add(gameBar.avatarWindow);
-				
-				var rect:FlxRect = gameBar.avatarWindow.getHitbox();
-				trace("gameBar Hitbox: " + rect.x + ", " + rect.y);
 			}
 		}
 	}

@@ -44,7 +44,7 @@ class Window extends FlxSpriteGroup
 		windowBottomRight = Assets.getBitmapData("starboard:assets/interface/starboard/elements/window/window_bottom_right.png");
 		windowX = Assets.getBitmapData("starboard:assets/interface/starboard/elements/window/window_x.png");
 		
-		baseWindow = new FlxExtendedSprite(0, 0, new BitmapData(width, height, true, 0x0));
+		baseWindow = new FlxExtendedSprite(x, y, new BitmapData(width, height, true, 0x0));
 		baseWindow.antialiasing = false;
 		baseWindow.mousePressedCallback = dragCompleteCallback;
 		

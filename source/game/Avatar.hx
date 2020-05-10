@@ -224,7 +224,6 @@ class Avatar extends FlxSprite
 		
 		this.velocity.put();
 		chatGroup.velocity = this.velocity;
-		
 	}
 	
 	public function smoothMovement():Void

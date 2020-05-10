@@ -1,12 +1,12 @@
 package;
 
-import flixel.FlxSprite;
 import openfl.Assets;
 import openfl.events.Event;
 import openfl.events.KeyboardEvent;
 import openfl.events.ProgressEvent;
 import openfl.utils.AssetLibrary;
 
+import flixel.FlxSprite;
 import flixel.FlxObject;
 import flixel.FlxG;
 import flixel.FlxCamera;
@@ -34,7 +34,7 @@ class RoomState extends FlxState
 	public static var currentRoom:Room;
 	public static var starboard:StarboardInterface;
 	public static var masterInventory:MasterInventory;
-
+	
 	private static var nextRoom:String;
 	private static var exitRoom:String;
 	private static var audioManager:SoundManager;
@@ -42,10 +42,12 @@ class RoomState extends FlxState
 	private static var starboardCam:FlxCamera;
 	private static var gameTicket:String;
 	
+	private static var starboardScreenPos:FlxPoint;
+	private static var gameBarScreenPos:FlxPoint;
+	
 	override public function new(_gameTicket:String)
 	{
-		super();
-		
+		super();	
 		gameTicket = _gameTicket;
 	}
 	
@@ -77,11 +79,11 @@ class RoomState extends FlxState
 	{
 		var rand:Int = Math.ceil(Math.random() * 1000);
 		playerAvatar = new Avatar(username);
-		playerAvatar.setAppearance("67^0^44^2^34^2^24^2^94^0^72^4^51^0^61^0");
+		playerAvatar.setAppearance("67^0^44^2^34^2^24^2^94^0^72^1^51^0^61^0");
 		playerAvatar.drawFrame(true);
 		starboard.setMirrorLook(playerAvatar.pixels);
 		
-		NetworkManager.connect("dev.nodebay.com", 4000, playerAvatar.username);
+		NetworkManager.connect("whirlpool.nodebay.com", 8443, playerAvatar.username);
 		NetworkManager.networkSocket.addEventListener(Event.CONNECT, doLogin);
 		NetworkManager.networkSocket.addEventListener(ProgressEvent.SOCKET_DATA, receivePacket);
 	}
@@ -131,11 +133,6 @@ class RoomState extends FlxState
 		add(playerAvatar.chatGroup);
 		add(starboard);
 		
-		FlxG.watch.add(starboard, "x", "Starboard X");
-		FlxG.watch.add(starboard, "y", "Starboard Y");		
-		FlxG.watch.add(starboard.gameBar, "x", "GameBar X");
-		FlxG.watch.add(starboard.gameBar, "y", "GameBar Y");
-
 		starboard.gameBar.chatBox.textInput.addEventListener(KeyboardEvent.KEY_DOWN, chatBarEnter);
 		
 		setupCamera();
@@ -143,6 +140,15 @@ class RoomState extends FlxState
 		this.bgColor = currentRoom.backgroundColor;
 		currentRoom.portalEntities.visible = false;
 		NetworkManager.sendJoinRoom(currentRoom.roomName);
+		
+		starboardScreenPos = starboard.getPosition();
+		gameBarScreenPos = starboard.gameBar.getPosition();
+		
+		FlxG.watch.add("starboardScreenPos", "x", "Starboard ScreenPos X");
+		FlxG.watch.add("starboardScreenPos", "y", "Starboard ScreenPos Y");
+		
+		FlxG.watch.add("gameBarScreenPos", "x", "GameBar ScreenPos X");
+		FlxG.watch.add("gameBarScreenPos", "y", "GameBar ScreenPos Y");		
 	}
 	
 	private function setupCamera():Void
@@ -331,6 +337,9 @@ class RoomState extends FlxState
 			joinRoom(nextRoom);
 		}
 		
+		starboardScreenPos = starboard.getScreenPosition();
+		gameBarScreenPos = starboard.gameBar.getScreenPosition();
+		
 		// TODO: If in room//if in context..
 		playerAvatar.keysTriggered.North = FlxG.keys.pressed.UP && !FlxG.keys.pressed.DOWN;
 		playerAvatar.keysTriggered.South = FlxG.keys.pressed.DOWN && !FlxG.keys.pressed.UP;
@@ -375,7 +384,6 @@ class RoomState extends FlxState
 		}
 		
 		playerAvatar.smoothMovement();
-		
 		audioManager.playWalkSound(playerAvatar.keysTriggered.Run);
 	}
 	

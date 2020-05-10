@@ -1,5 +1,6 @@
 package ui;
 
+import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
 import openfl.Assets;
 import openfl.display.Bitmap;
@@ -73,6 +74,9 @@ class StarboardInterface extends FlxSpriteGroup
 			
 			else if (gameBar.avatarWindow.visible)
 			{
+				var pt:FlxPoint = gameBar.avatarWindow.getScreenPosition();
+				trace(pt.x + ", " + pt.y);
+				
 				gameBar.avatarWindow.visible = false;
 				remove(gameBar.avatarWindow);
 			}

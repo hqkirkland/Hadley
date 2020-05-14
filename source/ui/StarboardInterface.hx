@@ -18,7 +18,6 @@ import flixel.addons.plugin.FlxMouseControl;
 import RoomState;
 import communication.NetworkManager;
 import game.ClientData;
-import ui.TerminalWindow;
 /**
  * ...
  * @author Hunter
@@ -27,7 +26,6 @@ import ui.TerminalWindow;
 class StarboardInterface extends FlxSpriteGroup
 {
 	public var gameBar:GameBar;
-	public static var windowSystem:FlxTypedSpriteGroup<Window>;
 	
 	public static var lastAppearance:String;
 	
@@ -58,34 +56,6 @@ class StarboardInterface extends FlxSpriteGroup
 		
 		if (FlxG.mouse.justPressed && FlxG.mouse.overlaps(gameBar.playerMirror))
 		{
-			if (gameBar.avatarWindow == null)
-			{
-				gameBar.avatarWindow = new AvatarWindow();
-				FlxG.watch.add(gameBar.avatarWindow, "x", "AvatarWindow X");
-				FlxG.watch.add(gameBar.avatarWindow, "y", "AvatarWindow Y");
-				
-				windowSystem = new FlxTypedSpriteGroup<Window>();
-				windowSystem.add(gameBar.avatarWindow);				
-				add(windowSystem);
-				FlxG.watch.add(windowSystem, "x", "WindowSystem X");
-				FlxG.watch.add(windowSystem, "y", "WindowSystem Y");
-				//FlxMouseControl.addToStack(new TerminalWindow());
-			}
-			
-			else if (gameBar.avatarWindow.visible)
-			{
-				var pt:FlxPoint = gameBar.avatarWindow.getScreenPosition();
-				trace(pt.x + ", " + pt.y);
-				
-				gameBar.avatarWindow.visible = false;
-				remove(gameBar.avatarWindow);
-			}
-			
-			else
-			{
-				gameBar.avatarWindow.visible = true;
-				add(gameBar.avatarWindow);
-			}
 		}
 	}
 	
@@ -103,11 +73,6 @@ class StarboardInterface extends FlxSpriteGroup
 	
 	public function openStoreWindow(itemArray:Array<Int>):Void
 	{
-		if (gameBar.storeWindow == null)
-		{
-			gameBar.storeWindow = new StoreWindow();
-			gameBar.storeWindow.setUpItems(itemArray);
-		}
 	}
 	
 	public function setMirrorLook(avatarBmp:BitmapData):Void
@@ -118,9 +83,11 @@ class StarboardInterface extends FlxSpriteGroup
 		gameBar.setReflections(bmp);
 	}
 	
+	/*
 	public function setWindowOnTop(window:Window):Void
 	{
 		remove(window);
 		add(window);
 	}
+	*/
 }

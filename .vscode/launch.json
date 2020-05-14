@@ -1,38 +1,15 @@
 {
-	"version": "0.2.0",
-	"configurations": [
-		{
-			"name": "Flash",
-			"type": "fdb",
-			"request": "launch",
-			"program": "${workspaceRoot}/export/flash/bin/HadleyHaxe.swf",
-			"preLaunchTask": "debug: flash"
-		},
-		{
-			"name": "HTML5",
-			"type": "chrome",
-			"request": "launch",
-			"url": "http://127.0.0.1:2000",
-			"sourceMaps": true,
-			"webRoot": "${workspaceFolder}"
-		},
-		{
-			"name": "Windows",
-			"type": "hxcpp",
-			"request": "launch",
-			"program": "${workspaceRoot}/export/windows/bin/HadleyHaxe.exe"
-		},
-		{
-			"name": "Linux",
-			"type": "hxcpp",
-			"request": "launch",
-			"program": "${workspaceRoot}/export/linux64/bin/HadleyHaxe"
-		},
-		{
-			"name": "Mac",
-			"type": "hxcpp",
-			"request": "launch",
-			"program": "${workspaceRoot}/export/mac64/bin/HadleyHaxe.app/Contents/MacOS/HadleyHaxe"
-		}
-	]
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Lime",
+            "type": "lime",
+            "request": "launch",
+            "runtimeExecutable": "C:\\Users\\Hunter\\AppData\\Local\\Chromium\\Application\\chrome.exe",
+            "runtimeArgs": ["--disable-web-security", "--user-data-dir=C:\\Users\\Hunter\\AppData\\Roaming\\ChromeDev"]
+        }
+    ]
 }

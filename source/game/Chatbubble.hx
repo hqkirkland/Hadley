@@ -48,11 +48,11 @@ class ChatBubble extends FlxSprite
 		bubblePointer = new FlxSprite(0, 0, Assets.getBitmapData("assets/interface/chat/bubble_1_5_0.png"));
 		bubbleOutline = new FlxSprite(0, 0, Assets.getBitmapData("assets/interface/chat/bubble_1_6_0.png"));
 		
-		makeLinesOptimized(message);
+		optimizeLines(message);
 		generateBubble(speaker, gender);
 	}
 	
-	private function makeLinesOptimized(message:String)
+	private function optimizeLines(message:String)
 	{
 		var currentLine:String = "";
 		var currentLineWidth:Int = 0;

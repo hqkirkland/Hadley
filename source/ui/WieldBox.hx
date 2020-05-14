@@ -57,13 +57,7 @@ class WieldBox extends FlxExtendedSprite
 	{
 		super.update(elapsed);
 	}
-	
-	public function lockPosition(relativeX:Float, relativeY:Float):Void
-	{
-		posX = relativeX;
-		posY = relativeY;
-	}
-	
+
 	public function clearGameItem():Void
 	{
 		validItemSet = true;

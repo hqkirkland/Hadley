@@ -25,18 +25,13 @@ class SubmitButton extends FlxButton
 {
 	public var button:FlxButton;
 	
-	#if flash
-	private var titleFormat:TextFormat = new TextFormat("Arial", 16, 0xFFFFFF, true);
-	#else
-	private var titleFormat:TextFormat = new TextFormat(Assets.getFont("assets/interface/fonts/HelveticaRoundedLT-Black.otf").fontName, 16, 0xFFFFFF, false);
-	#end
-	
-	private static var buttonSlice:FlxUI9SliceSprite;
-	private static var buttonPressedSlice:FlxUI9SliceSprite;
-	
 	private var buttonWidth:Int;
 	private var buttonHeight:Int;
 	private var buttonBmp:BitmapData;
+	private var titleFormat:TextFormat = new TextFormat(Assets.getFont("assets/interface/fonts/HelveticaRoundedLT-Black.otf").fontName, 16, 0xFFFFFF, false);
+	
+	private static var buttonSlice:FlxUI9SliceSprite;
+	private static var buttonPressedSlice:FlxUI9SliceSprite;
 	
 	public function new(_width:Int, _height:Int, title:String, onClick:Void->Void)
 	{

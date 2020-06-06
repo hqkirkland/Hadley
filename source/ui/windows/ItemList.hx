@@ -1,4 +1,4 @@
-package ui;
+package ui.windows;
 
 import openfl.Assets;
 import openfl.display.BitmapData;

@@ -1,4 +1,4 @@
-package ui;
+package ui.login;
 
 import flash.geom.Point;
 import flixel.graphics.frames.FlxFramesCollection;

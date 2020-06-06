@@ -1,25 +1,25 @@
 package ui;
 
-import flixel.math.FlxPoint;
-import flixel.math.FlxRect;
-import openfl.Assets;
-import openfl.display.Bitmap;
+import flixel.addons.display.FlxExtendedSprite;
 import openfl.display.BitmapData;
 import openfl.geom.Point;
 import openfl.geom.Rectangle;
-import openfl.utils.AssetLibrary;
 
 import flixel.FlxG;
-import flixel.FlxSprite;
 import flixel.group.FlxSpriteGroup;
-import flixel.addons.display.FlxExtendedSprite;
-import flixel.addons.plugin.FlxMouseControl;
+import flixel.math.FlxPoint;
 
 import RoomState;
+import ui.windows.Window;
 import communication.NetworkManager;
 import game.ClientData;
+
 /**
- * ...
+ * Base class for all UI objects.
+ * 
+ * Represents isolation of the in-room manager (RoomState)
+ * from any UI functions.
+ * 
  * @author Hunter
  */
 
@@ -38,25 +38,12 @@ class StarboardInterface extends FlxSpriteGroup
 		gameBar.y = FlxG.height - Math.floor(gameBar.baseWood.height) + 1;
 		add(gameBar);
 		
-		FlxG.plugins.add(new FlxMouseControl());
-		FlxMouseControl.mouseZone = FlxG.worldBounds;
 		this.scrollFactor.set(0, 0);
-		
-		forEach(
-			function(sprite:FlxSprite)
-			{
-				sprite.scrollFactor.set(0, 0);
-			}
-		);
 	}
-	
+
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
-		
-		if (FlxG.mouse.justPressed && FlxG.mouse.overlaps(gameBar.playerMirror))
-		{
-		}
 	}
 	
 	public function changeAppearance(appearanceString:String):Void
@@ -71,10 +58,6 @@ class StarboardInterface extends FlxSpriteGroup
 		}
 	}
 	
-	public function openStoreWindow(itemArray:Array<Int>):Void
-	{
-	}
-	
 	public function setMirrorLook(avatarBmp:BitmapData):Void
 	{
 		var bmp:BitmapData = new BitmapData(38, 56, true);
@@ -82,12 +65,12 @@ class StarboardInterface extends FlxSpriteGroup
 		
 		gameBar.setReflections(bmp);
 	}
-	
-	/*
-	public function setWindowOnTop(window:Window):Void
+
+	public function invokeWindow(obj:FlxExtendedSprite, x:Int, y:Int):Void
 	{
-		remove(window);
-		add(window);
+		var newWindow:Window = new ui.windows.Window("Test Window", 100, 100);
+		newWindow.enableMouseDrag();
+		
+		add(newWindow);
 	}
-	*/
 }

@@ -7,15 +7,16 @@ import openfl.events.KeyboardEvent;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.addons.plugin.FlxMouseControl;
 import flixel.addons.ui.FlxUIInputText;
 import flixel.system.scaleModes.FixedScaleMode;
 
 import communication.api.ApiClient;
 import communication.api.events.ApiEvent;
-import ui.Label;
-import ui.LoginInputBox;
-import ui.NoticeBox;
-import ui.SubmitButton;
+import ui.login.Label;
+import ui.login.LoginInputBox;
+import ui.login.NoticeBox;
+import ui.login.SubmitButton;
 
 class LoginState extends FlxState
 {
@@ -38,7 +39,8 @@ class LoginState extends FlxState
 		FlxG.scaleMode = new FixedScaleMode();
 		FlxG.keys.preventDefaultKeys = [];
 		FlxG.mouse.useSystemCursor = true;
-		
+		FlxG.plugins.add(new FlxMouseControl());
+
 		apiClient = new ApiClient();
 		
 		var panorama:FlxSprite = new FlxSprite(0, 0, "assets/interface/login/images/panorama.png");

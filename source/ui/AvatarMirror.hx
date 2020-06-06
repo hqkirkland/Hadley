@@ -1,5 +1,6 @@
 package ui;
 
+import flixel.addons.display.FlxExtendedSprite;
 import flixel.math.FlxPoint;
 import openfl.Assets;
 import openfl.display.BitmapData;
@@ -15,7 +16,7 @@ import flixel.graphics.frames.FlxTileFrames;
  * ...
  * @author Hunter
  */
-class AvatarMirror extends FlxSprite
+class AvatarMirror extends FlxExtendedSprite
 {
 	private var mirrorSprite:FlxSprite;
 	
@@ -39,6 +40,11 @@ class AvatarMirror extends FlxSprite
 			if (animation.name != "Halo")
 			{
 				animation.play("Halo");
+			}
+
+			if (FlxG.mouse.pressed)
+			{
+				
 			}
 		}
 		

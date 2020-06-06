@@ -1,4 +1,4 @@
-package ui;
+package ui.windows;
 
 import flixel.addons.display.FlxExtendedSprite;
 import openfl.Assets;
@@ -14,7 +14,8 @@ import game.ClothingType;
 /**
  * ...
  * @author Hunter
- */
+ **/
+
 class AvatarWindow extends Window
 {
 	private static var avatarContainer:FlxSprite;
@@ -42,7 +43,7 @@ class AvatarWindow extends Window
 	
 	private static var changeButton:WindowButton;
 	private static var colorPicker:ColorList;
-	
+/*
 	public function new() 
 	{
 		super("Avatar", 200, 250);
@@ -62,8 +63,8 @@ class AvatarWindow extends Window
 		colorPicker = new ColorList(ClothingType.DEFAULT_CLOTHING);
 		// colorPicker.lockPosition((this.width / 2) - (colorPicker.width / 2), this.height);
 		
-		add(changeButton);
-		add(colorPicker);
+		this.stamp(changeButton);
+		this.stamp(colorPicker);
 		
 		makeContainer();
 		placeBoxes();
@@ -75,24 +76,6 @@ class AvatarWindow extends Window
 		super.update(elapsed);
 		
 		this.updateHitbox();
-		
-		/*
-		changeButton.x = baseWindow.x + baseWindow.width - changeButton.width - 10;
-		changeButton.y = baseWindow.y + baseWindow.height - changeButton.height - 10;
-		
-		avatarContainer.x = baseWindow.x + 12;
-		avatarContainer.y = baseWindow.y + 60;
-		
-		colorPicker.x = baseWindow.x + colorPicker.posX;
-		colorPicker.y = baseWindow.y + colorPicker.posY;
-		
-		for (wieldBox in wieldBoxes)
-		{
-			wieldBox.x = baseWindow.x + wieldBox.posX;
-			wieldBox.y = baseWindow.y + wieldBox.posY;
-		}
-		
-		*/
 		
 		for (itemList in itemLists)
 		{
@@ -109,10 +92,10 @@ class AvatarWindow extends Window
 				}
 			}
 			
-			/*
-			itemList.x = baseWindow.x + itemList.posX;
-			itemList.y = baseWindow.y + itemList.posY;
-			*/
+			
+			// itemList.x = baseWindow.x + itemList.posX;
+			// itemList.y = baseWindow.y + itemList.posY;
+			
 		}
 		
 		if (colorPicker.newPicked)
@@ -130,10 +113,9 @@ class AvatarWindow extends Window
 			}
 		}
 		
-		/*
-		playerPreview.x = avatarContainer.x + playerPreview.posX;
-		playerPreview.y = baseWindow.y + playerPreview.posY;
-		*/
+		
+		// playerPreview.x = avatarContainer.x + playerPreview.posX;
+		// playerPreview.y = baseWindow.y + playerPreview.posY;
 	}
 	
 	override private function closeWindow():Void
@@ -362,4 +344,5 @@ class AvatarWindow extends Window
 			remove(itemList);
 		}
 	}
+	*/
 }

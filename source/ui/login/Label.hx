@@ -1,4 +1,4 @@
-package ui;
+package ui.login;
 
 import openfl.Assets;
 import openfl.display.BitmapData;

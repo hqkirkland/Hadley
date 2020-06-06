@@ -90,10 +90,10 @@ class Receiver
 				var changeClothesPacket:ServerChangeClothesPacket = cast(serverPacket, ServerChangeClothesPacket);
 				RoomState.roomAvatars[changeClothesPacket.senderId].setAppearance(changeClothesPacket.appearance);
 				
-			case MessageType.OpenStore:
+			/*case MessageType.OpenStore:
 				var openStorePacket:ServerStoreOpenPacket = cast(serverPacket, ServerStoreOpenPacket);
 				RoomState.starboard.openStoreWindow(openStorePacket.items);
-				
+			*/	
 			default:
 				return;
 		}

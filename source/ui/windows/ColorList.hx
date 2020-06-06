@@ -1,4 +1,4 @@
-package ui;
+package ui.windows;
 
 import flixel.addons.display.FlxExtendedSprite;
 import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
@@ -48,7 +48,6 @@ class ColorList extends FlxTypedSpriteGroup<FlxExtendedSprite>
 		}
 		
 		selectedColor = colorSet[0];
-		
 		buildSet();
 	}
 	

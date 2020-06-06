@@ -1,5 +1,6 @@
 package ui;
 
+import flixel.addons.display.FlxExtendedSprite;
 import openfl.Assets;
 import openfl.display.BitmapData;
 
@@ -7,6 +8,8 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxSpriteGroup;
 import flixel.util.FlxSpriteUtil;
+
+import ui.windows.Window;
 
 /**
  * ...
@@ -18,9 +21,7 @@ class GameBar extends FlxSpriteGroup
 	public var chatBox:ChatInputBox;
 	public var playerMirror:AvatarMirror;
 	public var petMirror:FlxSprite;
-	public var avatarWindow:Window;
-	public var storeWindow:StoreWindow;
-	
+	public var avatarWindow:Window;	
 	private var avatarMaskSprite:FlxSprite;
 
 	public function new() 
@@ -30,11 +31,10 @@ class GameBar extends FlxSpriteGroup
 		this.height = 100;
 		
 		baseWood = new FlxSprite(0, 0, Assets.getBitmapData("starboard:assets/interface/starboard/elements/gamebar/gamebar_base.png"));
-		add(baseWood);
-		
 		add(new FlxSprite(baseWood.x, baseWood.y, Assets.getBitmapData("starboard:assets/interface/starboard/elements/gamebar/gamebar_seal_left.png")));
 		add(new FlxSprite(this.width - 29, baseWood.y, Assets.getBitmapData("starboard:assets/interface/starboard/elements/gamebar/gamebar_seal_right.png")));
-		
+		add(baseWood);
+
 		chatBox = new ChatInputBox(0xFF232323, 238, -5);
 		add(chatBox);
 	}
@@ -52,5 +52,8 @@ class GameBar extends FlxSpriteGroup
 		playerMirror.setAppearance(avatarBmp);
 		playerMirror.animation.play("Inactive");
 		add(playerMirror);
+		
+		playerMirror.enableMouseClicks(true, false);
+		playerMirror.mouseReleasedCallback = RoomState.starboard.invokeWindow;
 	}
 }

@@ -11,9 +11,11 @@ import flixel.FlxObject;
 import flixel.FlxG;
 import flixel.FlxCamera;
 import flixel.FlxState;
+import flixel.addons.plugin.FlxMouseControl;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
 import flixel.system.scaleModes.FixedScaleMode;
+
 
 import communication.NetworkManager;
 import communication.messages.ServerPacket;
@@ -41,10 +43,7 @@ class RoomState extends FlxState
 	private static var borderArray:Array<Int> = [0xFF010101, 0x00000000];
 	private static var starboardCam:FlxCamera;
 	private static var gameTicket:String;
-	
-	private static var starboardScreenPos:FlxPoint;
-	private static var gameBarScreenPos:FlxPoint;
-	
+		
 	override public function new(_gameTicket:String)
 	{
 		super();	
@@ -81,6 +80,7 @@ class RoomState extends FlxState
 		playerAvatar = new Avatar(username);
 		playerAvatar.setAppearance("67^0^44^2^34^2^24^2^94^0^72^1^51^0^61^0");
 		playerAvatar.drawFrame(true);
+		
 		starboard.setMirrorLook(playerAvatar.pixels);
 		
 		NetworkManager.connect("whirlpool.nodebay.com", 8443, playerAvatar.username);
@@ -125,7 +125,6 @@ class RoomState extends FlxState
 		tmpRoomGridSprite.y = currentRoom.y + 177;
 		
 		add(currentRoom);
-		//add(tmpRoomGridSprite);
 		add(currentRoom.vehicleEntities);
 		add(currentRoom.roomEntities);
 		add(currentRoom.portalEntities);
@@ -140,15 +139,6 @@ class RoomState extends FlxState
 		this.bgColor = currentRoom.backgroundColor;
 		currentRoom.portalEntities.visible = false;
 		NetworkManager.sendJoinRoom(currentRoom.roomName);
-		
-		starboardScreenPos = starboard.getPosition();
-		gameBarScreenPos = starboard.gameBar.getPosition();
-		
-		FlxG.watch.add("starboardScreenPos", "x", "Starboard ScreenPos X");
-		FlxG.watch.add("starboardScreenPos", "y", "Starboard ScreenPos Y");
-		
-		FlxG.watch.add("gameBarScreenPos", "x", "GameBar ScreenPos X");
-		FlxG.watch.add("gameBarScreenPos", "y", "GameBar ScreenPos Y");		
 	}
 	
 	private function setupCamera():Void
@@ -190,11 +180,11 @@ class RoomState extends FlxState
 	
 	private function destroyRoom():Void
 	{
+		remove(starboard);
 		remove(currentRoom.portalEntities);
 		remove(currentRoom.roomEntities);
 		remove(currentRoom.vehicleEntities);
 		remove(currentRoom);
-		remove(starboard);
 	}
 	
 	private function testNextPoints(testAvatar:Avatar):FlxPoint
@@ -336,10 +326,7 @@ class RoomState extends FlxState
 			destroyRoom();
 			joinRoom(nextRoom);
 		}
-		
-		starboardScreenPos = starboard.getScreenPosition();
-		gameBarScreenPos = starboard.gameBar.getScreenPosition();
-		
+
 		// TODO: If in room//if in context..
 		playerAvatar.keysTriggered.North = FlxG.keys.pressed.UP && !FlxG.keys.pressed.DOWN;
 		playerAvatar.keysTriggered.South = FlxG.keys.pressed.DOWN && !FlxG.keys.pressed.UP;

@@ -1,4 +1,5 @@
-package ui;
+package ui.windows;
+
 import game.ClientData;
 import game.ClothingItem;
 

@@ -1,5 +1,8 @@
 package ui.windows;
 
+import flixel.addons.display.FlxExtendedSprite;
+import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
+
 import game.ClientData;
 import game.ClothingItem;
 
@@ -7,11 +10,13 @@ import game.ClothingItem;
  * ...
  * @author Hunter
  */
-class StoreWindow extends Window
+
+class StoreWindow extends WindowGroup
 {
 	private var itemArray:Array<ClothingItem>;
 	private var slotArray:Array<SlotBox>;
 	
+	/*
 	public function new() 
 	{
 		super("Shop", 250, 200);
@@ -39,4 +44,5 @@ class StoreWindow extends Window
 			}
 		}
 	}
+	*/
 }

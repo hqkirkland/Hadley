@@ -1,4 +1,4 @@
-package ui;
+package ui.windows.avatar;
 
 import openfl.Assets;
 import openfl.display.BitmapData;
@@ -7,7 +7,6 @@ import openfl.geom.Rectangle;
 
 import flixel.addons.display.FlxExtendedSprite;
 
-import game.ClothingItem;
 import game.ClientData;
 import game.ClothingType;
 import game.GraphicsSheet;
@@ -16,11 +15,10 @@ import game.GraphicsSheet;
  * ...
  * @author Hunter
  */
-class SlotBox extends FlxExtendedSprite
-{
-	public var clothingItemType:String;
-	public var gameItem:ClothingItem;
+class WieldBox extends FlxExtendedSprite
+{	
 	public var gameItemBitmap:BitmapData;
+	public var clothingType:String;
 	public var validItemSet:Bool = false;
 	
 	// Relative positions.
@@ -28,51 +26,50 @@ class SlotBox extends FlxExtendedSprite
 	public var posY:Float;
 	
 	private var icon:BitmapData;
-	// dear day hunter, 
-	// closing avatar window 
-	// does not clear changes 
-	// to avatar.
-	public function new(slotType:String, ?x:Float, ?y:Float):Void
+	
+	private static var iconRect:Rectangle = new Rectangle(0, 0, 17, 15);
+	private static var iconPoint:Point = new Point(23, 23);
+	
+	public function new(clothingItemType:String, ?x:Float, ?y:Float):Void
 	{
 		super(x, y);
-		this.loadGraphic(Assets.getBitmapData("starboard:assets/interface/starboard/elements/item_slot_inventory.png"), null, null, null, true);
-		clothingItemType = slotType;
+		this.loadGraphic(Assets.getBitmapData("starboard:assets/interface/starboard/elements/item_slot_selected.png"), null, null, null, true);
+		clothingType = clothingItemType;
+		
+		switch (clothingType)
+		{
+			case ClothingType.HAT:
+				icon = Assets.getBitmapData("starboard:assets/interface/starboard/elements/icons/hat_slot_icon.png");
+			case ClothingType.GLASSES:
+				icon = Assets.getBitmapData("starboard:assets/interface/starboard/elements/icons/glasses_slot_icon.png");
+			case ClothingType.SHIRT:
+				icon = Assets.getBitmapData("starboard:assets/interface/starboard/elements/icons/shirt_slot_icon.png");
+			case ClothingType.PANTS:
+				icon = Assets.getBitmapData("starboard:assets/interface/starboard/elements/icons/pants_slot_icon.png");
+			case ClothingType.SHOES:
+				icon = Assets.getBitmapData("starboard:assets/interface/starboard/elements/icons/shoes_slot_icon.png");
+			default:
+				icon = new BitmapData(17, 15, true, 0x00000000);
+		}
 	}
 	
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
 	}
-	
-	public function lockPosition(relativeX:Float, relativeY:Float):Void
-	{
-		posX = relativeX;
-		posY = relativeY;
-	}
-	
+
 	public function clearGameItem():Void
 	{
-		gameItem = null;
 		validItemSet = true;
 		
 		var itemBmp:BitmapData = new BitmapData(30, 30, false, 0x00000000);
 		this.pixels.copyPixels(itemBmp, itemBmp.rect, new Point(4, 4), null, null, true);
 	}
 	
-	public function swapGameItem(gameItemKey:Int, colorId:Int):ClothingItem
-	{
-		var oldGameItem:ClothingItem = gameItem;
-		setGameItem(gameItemKey, colorId);
-		
-		return oldGameItem;
-	}
-	
 	public function setGameItem(gameItemKey:Int, colorId:Int):Void
 	{
 		if (ClientData.clothingItems.exists(gameItemKey))
 		{
-			gameItem = ClientData.clothingItems[gameItemKey];
-			
 			validItemSet = true;
 			
 			var itemBmp:BitmapData = Assets.getBitmapData("assets/items/icons/" + gameItemKey + ".png");
@@ -83,12 +80,12 @@ class SlotBox extends FlxExtendedSprite
 		
 		else
 		{
-			gameItem = null;
-			
 			var itemBmp:BitmapData = Assets.getBitmapData("starboard:assets/interface/starboard/elements/icons/what_the_duck.png");
 			gameItemBitmap = GraphicsSheet.colorItem(itemBmp, colorId, 2);
 			
 			this.pixels.copyPixels(gameItemBitmap, gameItemBitmap.rect, new Point(6, 6), null, null, true);
 		}
+		
+		this.pixels.copyPixels(icon, iconRect, iconPoint, null, null, true);
 	}
 }

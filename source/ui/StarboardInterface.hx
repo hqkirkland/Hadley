@@ -10,7 +10,7 @@ import flixel.group.FlxSpriteGroup;
 import flixel.math.FlxPoint;
 
 import RoomState;
-import ui.windows.Window;
+import ui.windows.WindowBase;
 import communication.NetworkManager;
 import game.ClientData;
 
@@ -66,11 +66,19 @@ class StarboardInterface extends FlxSpriteGroup
 		gameBar.setReflections(bmp);
 	}
 
-	public function invokeWindow(obj:FlxExtendedSprite, x:Int, y:Int):Void
+	public function invokeWindow(clickedObj:FlxExtendedSprite, x:Int, y:Int):Void
 	{
-		var newWindow:Window = new ui.windows.Window("Test Window", 100, 100);
-		newWindow.enableMouseDrag();
-		
-		add(newWindow);
+		if (avatarWindow != null)
+		{
+			avatarWindow.visible = true;
+		}
+
+		else
+		{
+			// TODO: Generate window by calling/clicked Sprite.
+			avatarWindow = new ui.windows.Window("Avatar", 200, 350);
+			avatarWindow.enableMouseDrag();
+			add(avatarWindow);
+		}
 	}
 }

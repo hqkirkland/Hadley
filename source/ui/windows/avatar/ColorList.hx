@@ -1,4 +1,4 @@
-package ui.windows;
+package ui.windows.avatar;
 
 import flixel.addons.display.FlxExtendedSprite;
 import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;

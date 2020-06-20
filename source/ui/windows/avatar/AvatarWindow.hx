@@ -1,5 +1,6 @@
 package ui.windows;
 
+import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
 import flixel.addons.display.FlxExtendedSprite;
 import openfl.Assets;
 import openfl.display.BitmapData;
@@ -16,7 +17,7 @@ import game.ClothingType;
  * @author Hunter
  **/
 
-class AvatarWindow extends Window
+class AvatarWindow extends WindowGroup
 {
 	private static var avatarContainer:FlxSprite;
 	

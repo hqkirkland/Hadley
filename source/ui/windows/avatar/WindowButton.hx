@@ -1,4 +1,4 @@
-package ui;
+package ui.windows.avatar;
 
 import flixel.math.FlxPoint;
 import openfl.Assets;

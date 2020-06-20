@@ -9,7 +9,8 @@ import flixel.FlxSprite;
 import flixel.group.FlxSpriteGroup;
 import flixel.util.FlxSpriteUtil;
 
-import ui.windows.Window;
+import ui.windows.WindowGroup;
+import ui.windows.avatar.AvatarWindow;
 
 /**
  * ...
@@ -19,9 +20,13 @@ class GameBar extends FlxSpriteGroup
 {
 	public var baseWood:FlxSprite;
 	public var chatBox:ChatInputBox;
+
+	public var avatarWindow:AvatarWindow;
+
+
 	public var playerMirror:AvatarMirror;
 	public var petMirror:FlxSprite;
-	public var avatarWindow:Window;	
+	
 	private var avatarMaskSprite:FlxSprite;
 
 	public function new() 

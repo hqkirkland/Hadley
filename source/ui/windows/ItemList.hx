@@ -11,7 +11,7 @@ import flixel.group.FlxSpriteGroup;
 import game.ClothingItem;
 import game.ClothingType;
 import game.MasterInventory;
-import ui.SlotBox;
+import ui.windows.avatar.SlotBox;
 
 /**
  * ...

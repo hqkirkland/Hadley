@@ -8,7 +8,7 @@ import game.ItemColor;
  * ...
  * @author Hunter
  */
-class MasterInventory
+class Inventory
 {
 	public static var wardrobe:Array<ClothingItem> = new Array<ClothingItem>();
 	// public static var furniture:Array<FurnitureItem>;

@@ -11,30 +11,27 @@ import game.ClothingItem;
 import game.ClientData;
 import game.ClothingType;
 import game.GraphicsSheet;
+import ui.windows.WindowItem;
 
 /**
  * ...
  * @author Hunter
  */
-class SlotBox extends FlxExtendedSprite
+class SlotBox extends WindowItem
 {
 	public var clothingItemType:String;
 	public var gameItem:ClothingItem;
 	public var gameItemBitmap:BitmapData;
 	public var validItemSet:Bool = false;
 	
-	// Relative positions.
-	public var posX:Float;
-	public var posY:Float;
-	
 	private var icon:BitmapData;
 	// dear day hunter, 
 	// closing avatar window 
 	// does not clear changes 
 	// to avatar.
-	public function new(slotType:String, ?x:Float, ?y:Float):Void
+	public function new(slotType:String, ?relativeX:Int, ?relativeY:Int):Void
 	{
-		super(x, y);
+		super(relativeX, relativeY, null);
 		this.loadGraphic(Assets.getBitmapData("starboard:assets/interface/starboard/elements/item_slot_inventory.png"), null, null, null, true);
 		clothingItemType = slotType;
 	}

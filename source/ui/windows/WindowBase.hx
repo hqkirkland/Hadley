@@ -1,23 +1,24 @@
 package ui.windows;
 
-import flixel.math.FlxRect;
-import flixel.FlxG;
-import flixel.util.FlxSort;
+
 import openfl.display.Bitmap;
 import openfl.Assets;
 import openfl.display.BitmapData;
 import openfl.geom.Point;
 import openfl.geom.Rectangle;
 
+import flixel.FlxG;
 import flixel.addons.display.FlxExtendedSprite;
 import flixel.graphics.FlxGraphic;
+import flixel.math.FlxRect;
 import flixel.text.FlxText;
+import flixel.util.FlxSort;
 
 /**
  * ...
  * @author Hunter
  */
-class WindowBase extends FlxExtendedSprite
+class WindowBase extends WindowItem
 {
 	private var windowTitle:String;
 	
@@ -49,7 +50,9 @@ class WindowBase extends FlxExtendedSprite
 		windowClose = Assets.getBitmapData("starboard:assets/interface/starboard/elements/window/window_x.png");
 		
 		constructWindowBase();
-		super(null, null, baseWindowBmpData);
+		super(0, 0, baseWindowBmpData);
+		
+		writeTitle(title);
 	}
 
 	public function closeButtonClicked(obj:FlxExtendedSprite, x:Int, y:Int):Void
@@ -116,19 +119,12 @@ class WindowBase extends FlxExtendedSprite
 
 		destPoint.setTo(windowWidth - windowBottomRight.width - footerMarginPixels, windowHeight - windowBottomRight.height);
 		baseWindowBmpData.copyPixels(windowBottomRight, windowBottomRight.rect, destPoint, null, null, true);
-
-		//destPoint.setTo(windowWidth - (11 + windowClose.width), 5);
-		//baseWindowBmpData.copyPixels(windowClose, windowClose.rect, destPoint, null, null, true);
-
-		//windowCloseRect = new FlxRect(windowWidth - (11 + windowClose.width), 5, 9, 9);
 	}
 
 	override public function mousePressedHandler():Void
 	{
 		super.mousePressedHandler();
-
-		RoomState.starboard.remove(this, true);
-		RoomState.starboard.add(this);
+		RoomState.starboard.bringToFront(this);
 	}
 	
 	private function writeTitle(titleString:String):Void

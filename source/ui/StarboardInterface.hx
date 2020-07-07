@@ -1,5 +1,6 @@
 package ui;
 
+import ui.windows.WindowGroup;
 import flixel.addons.display.FlxExtendedSprite;
 import openfl.display.BitmapData;
 import openfl.geom.Point;
@@ -10,9 +11,11 @@ import flixel.group.FlxSpriteGroup;
 import flixel.math.FlxPoint;
 
 import RoomState;
-import ui.windows.WindowBase;
 import communication.NetworkManager;
 import game.ClientData;
+
+import ui.windows.WindowBase;
+import ui.windows.avatar.AvatarWindow;
 
 /**
  * Base class for all UI objects.
@@ -26,7 +29,9 @@ import game.ClientData;
 class StarboardInterface extends FlxSpriteGroup
 {
 	public var gameBar:GameBar;
+	public var avatarWindow:AvatarWindow;
 	
+	public static var windowSystem:FlxTypedSpriteGroup<WindowGroup>;
 	public static var lastAppearance:String;
 	
 	public function new() 
@@ -36,8 +41,12 @@ class StarboardInterface extends FlxSpriteGroup
 		gameBar = new GameBar();
 		gameBar.x = 0;
 		gameBar.y = FlxG.height - Math.floor(gameBar.baseWood.height) + 1;
-		add(gameBar);
 		
+		windowSystem = new FlxTypedSpriteGroup<WindowGroup>();
+
+		add(gameBar);
+		add(windowSystem);
+
 		this.scrollFactor.set(0, 0);
 	}
 
@@ -66,19 +75,28 @@ class StarboardInterface extends FlxSpriteGroup
 		gameBar.setReflections(bmp);
 	}
 
-	public function invokeWindow(clickedObj:FlxExtendedSprite, x:Int, y:Int):Void
+	public function invokeWindow(buttonClicked:FlxExtendedSprite, x:Int, y:Int):Void
 	{
 		if (avatarWindow != null)
 		{
 			avatarWindow.visible = true;
 		}
 
-		else
+		// TODO: Generate window by calling/clicked Sprite.
+		avatarWindow = new AvatarWindow();
+		avatarWindow.enableMouseDrag();
+		windowSystem.add(avatarWindow);
+	}
+
+	public function bringToFront(targetWindow:WindowBase)
+	{
+		for (window in windowSystem)
 		{
-			// TODO: Generate window by calling/clicked Sprite.
-			avatarWindow = new ui.windows.Window("Avatar", 200, 350);
-			avatarWindow.enableMouseDrag();
-			add(avatarWindow);
+			if (window.mainWindow == targetWindow)
+			{
+				windowSystem.remove(window, true);
+				windowSystem.add(window);
+			}
 		}
 	}
 }

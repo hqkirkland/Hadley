@@ -23,7 +23,6 @@ class GameBar extends FlxSpriteGroup
 
 	public var avatarWindow:AvatarWindow;
 
-
 	public var playerMirror:AvatarMirror;
 	public var petMirror:FlxSprite;
 	

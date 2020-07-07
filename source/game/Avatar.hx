@@ -76,8 +76,6 @@ class Avatar extends FlxSprite
 		super();
 		username = _username;
 		chatGroup = new BubbleStack(username);
-
-		// TODO: Create figure object, or create typedef for clothing objects.
 	}
 	
 	public function setAppearance(appearanceString:String):Void
@@ -109,7 +107,7 @@ class Avatar extends FlxSprite
 			};
 			
 			itemArray.push(item);
-			MasterInventory.addItemById(item.gameItem.gameItemId);
+			Inventory.addItemById(item.gameItem.gameItemId);
 			
 			// This is the hat! Since there's a piece behind the hat, there's an extra step!
 			// Need to figure out which position the other clothing items should be placed, if 'layered'

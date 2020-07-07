@@ -15,24 +15,22 @@ import game.GraphicsSheet;
  * ...
  * @author Hunter
  */
-class WieldBox extends FlxExtendedSprite
+class WieldBox extends WindowItem
 {	
 	public var gameItemBitmap:BitmapData;
 	public var clothingType:String;
 	public var validItemSet:Bool = false;
 	
-	// Relative positions.
-	public var posX:Float;
-	public var posY:Float;
 	
 	private var icon:BitmapData;
 	
 	private static var iconRect:Rectangle = new Rectangle(0, 0, 17, 15);
 	private static var iconPoint:Point = new Point(23, 23);
 	
-	public function new(clothingItemType:String, ?x:Float, ?y:Float):Void
+	public function new(clothingItemType:String, ?relativeX:Int, ?relativeY:Int):Void
 	{
-		super(x, y);
+		super(relativeX, relativeY, null);
+		
 		this.loadGraphic(Assets.getBitmapData("starboard:assets/interface/starboard/elements/item_slot_selected.png"), null, null, null, true);
 		clothingType = clothingItemType;
 		

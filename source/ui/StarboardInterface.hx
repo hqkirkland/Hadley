@@ -82,7 +82,7 @@ class StarboardInterface extends FlxSpriteGroup
 			avatarWindow.visible = true;
 		}
 
-		// TODO: Generate window by calling/clicked Sprite.
+		// TODO: Generate window by identifying clicked Sprite.
 		avatarWindow = new AvatarWindow();
 		avatarWindow.enableMouseDrag();
 		windowSystem.add(avatarWindow);

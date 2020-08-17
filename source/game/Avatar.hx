@@ -20,13 +20,6 @@ import game.BubbleStack;
  * @author ...
  */
 
-typedef AvatarItem =
-{
-	var gameItem:ClothingItem;
-	var assetPath:String;
-	var itemColor:Int;
-}
-
 class Avatar extends FlxSprite 
 {
 	public var username:String;
@@ -44,7 +37,7 @@ class Avatar extends FlxSprite
 	public var enableWalk:Bool = true;
 	public var fadeComplete:Bool = false;
 	public var isHolding:Bool = false;
-
+	
 	public var velocityX:Float = 0;
 	public var velocityY:Float = 0;
 	public var playerNextMovement:FlxPoint = FlxPoint.get(0, 0);
@@ -53,13 +46,13 @@ class Avatar extends FlxSprite
 	
 	//public var chatBubbles:FlxTypedSpriteGroup<Chatbubble>;
 	
-	public var keysTriggered:Object = { North: false, South: false, East: false, West: false, Run: false };
-	public var previousKeysTriggered:Object = { North: false, South: false, East: false, West: false, Run: false };
+	public var keysTriggered:AvatarKeys = { North: false, South: false, East: false, West: false, Run: false };
+	public var previousKeysTriggered:AvatarKeys = { North: false, South: false, East: false, West: false, Run: false };
 	
 	public var overlapRectangle:FlxObject = new FlxObject(0, 0, 10, 10);
 	
-	public static var actionSet:Object = { Stand: "Stand", Walk: "Walk", Sit: "Sit", Hold: "Hold" };
-	public static var directionSet:Object = { North: "North", South: "South", East: "East", West: "West" };
+	public static var actionSet:Dynamic = { Stand: "Stand", Walk: "Walk", Sit: "Sit", Hold: "Hold" };
+	public static var directionSet:Dynamic = { North: "North", South: "South", East: "East", West: "West" };
 	
 	private var avatarSheet:GraphicsSheet = new GraphicsSheet(1772, 68);
 	
@@ -577,33 +570,11 @@ class Avatar extends FlxSprite
 	
 	public function isWearingItem(checkedItem:ClothingItem):Bool
 	{
-		switch (checkedItem.itemType)
+		var slot:Int = ClothingType.typeToNum(checkedItem.itemType);
+
+		if (itemArray[slot] != null)
 		{
-			case ClothingType.HAT:
-				if (itemArray[8] != null)
-				{
-					return itemArray[8].gameItem.gameItemId == checkedItem.gameItemId;
-				}
-			case ClothingType.GLASSES:
-				if (itemArray[7] != null)
-				{
-					return itemArray[7].gameItem.gameItemId == checkedItem.gameItemId;
-				}
-			case ClothingType.SHIRT:
-				if (itemArray[3] != null)
-				{
-					return itemArray[3].gameItem.gameItemId == checkedItem.gameItemId;
-				}
-			case ClothingType.PANTS:
-				if (itemArray[2] != null)
-				{
-					return itemArray[2].gameItem.gameItemId == checkedItem.gameItemId;
-				}
-			case ClothingType.SHOES:
-				if (itemArray[1] != null)
-				{
-					return itemArray[1].gameItem.gameItemId == checkedItem.gameItemId;
-				}
+			return itemArray[slot].gameItem.gameItemId == checkedItem.gameItemId;
 		}
 		
 		return false;

@@ -1,11 +1,12 @@
-package game;
+package game.avatar;
+
 import game.Avatar.AvatarItem;
 
 /**
  * ...
  * @author Hunter
  */
-class AvatarItemSet 
+class AvatarCharacterSet 
 {
 	public var body:AvatarItem;
 	public var shoes:AvatarItem;
@@ -26,5 +27,6 @@ class AvatarItemSet
 	
 	public function parseAppearanceString(appearanceString:String):Void
 	{
+
 	}
 }

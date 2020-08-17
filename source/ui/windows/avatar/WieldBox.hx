@@ -21,13 +21,14 @@ class WieldBox extends WindowItem
 	public var clothingType:String;
 	public var validItemSet:Bool = false;
 	
-	
+	public var itemListPrompt:ItemList;
 	private var icon:BitmapData;
-	
+	public var itemList:ItemList;
+
 	private static var iconRect:Rectangle = new Rectangle(0, 0, 17, 15);
 	private static var iconPoint:Point = new Point(23, 23);
 	
-	public function new(clothingItemType:String, ?relativeX:Int, ?relativeY:Int):Void
+	public function new(?relativeX:Int, ?relativeY:Int, clothingItemType:String):Void
 	{
 		super(relativeX, relativeY, null);
 		
@@ -49,6 +50,8 @@ class WieldBox extends WindowItem
 			default:
 				icon = new BitmapData(17, 15, true, 0x00000000);
 		}
+
+		itemList = new ItemList(clothingType);
 	}
 	
 	override public function update(elapsed:Float):Void
@@ -56,6 +59,11 @@ class WieldBox extends WindowItem
 		super.update(elapsed);
 	}
 
+	override public function mousePressedHandler():Void
+	{
+		super.mousePressedHandler();
+	}
+	
 	public function clearGameItem():Void
 	{
 		validItemSet = true;

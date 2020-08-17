@@ -39,7 +39,7 @@ class GraphicsSheet extends Bitmap
 		// Copy pixels to main sheet.
 		this.bitmapData.copyPixels(itemBitmap, this.bitmapData.rect, staticPoint, null, null, true);
 		// Remove red AFTER overlay, 
-		// trimming any pixles that got replaced with a pure red channel.
+		// trimming any pixles that got replaced by a pure red channel.
 		this.bitmapData.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", 0xFFFF0000);
 	}
 	

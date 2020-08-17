@@ -21,7 +21,7 @@ import communication.NetworkManager;
 import communication.messages.ServerPacket;
 import game.Avatar;
 import game.ClientData;
-import game.MasterInventory;
+import game.Inventory;
 import game.Portal;
 import game.Room;
 import sound.SoundManager;
@@ -34,9 +34,7 @@ class RoomState extends FlxState
 	public static var roomAvatars:Map<String, Avatar>;
 	public static var playerAvatar:Avatar;
 	public static var currentRoom:Room;
-	public static var starboard:StarboardInterface;
-	public static var masterInventory:MasterInventory;
-	
+	public static var starboard:StarboardInterface;	
 	private static var nextRoom:String;
 	private static var exitRoom:String;
 	private static var audioManager:SoundManager;

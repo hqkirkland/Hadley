@@ -50,8 +50,7 @@ class LoginState extends FlxState
 		backgroundBox.x = (FlxG.width / 2) - (backgroundBox.backgroundShape.width / 2);
 		backgroundBox.y = backgroundBox.backgroundShape.height / 2;
 		add(backgroundBox);
-		
-		
+				
 		usernameBox = new LoginInputBox(0xFFFFFFFF);
 		usernameBox.x = backgroundBox.x + (backgroundBox.width / 4) + 10;
 		usernameBox.y = backgroundBox.y + 75;

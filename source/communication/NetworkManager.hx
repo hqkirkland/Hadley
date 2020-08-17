@@ -35,20 +35,15 @@ class NetworkManager
 		username = _username;
 		
 		networkSocket = new Socket();
-		// Secure specifies WSS.
 		networkSocket.secure = true;
-		networkSocket.connect(ipAddress, port);
 		networkSocket.timeout = 1800;
+		networkSocket.connect(ipAddress, port);
 	}
 	
 	public static function handlePacket(packetLength:Int):ServerPacket
 	{
 		var netBytes:ByteArrayData = new ByteArrayData();
 		netBytes.endian = Endian.BIG_ENDIAN;
-		
-		#if flash
-		netBytes.length = packetLength;
-		#end
 		
 		networkSocket.readBytes(netBytes);
 		netBytes.position = 3;

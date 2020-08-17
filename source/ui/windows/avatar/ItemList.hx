@@ -1,4 +1,4 @@
-package ui.windows;
+package ui.windows.avatar;
 
 import openfl.Assets;
 import openfl.display.BitmapData;
@@ -10,7 +10,7 @@ import flixel.group.FlxSpriteGroup;
 
 import game.ClothingItem;
 import game.ClothingType;
-import game.MasterInventory;
+import game.Inventory;
 import ui.windows.avatar.SlotBox;
 
 /**
@@ -25,10 +25,7 @@ class ItemList extends FlxSpriteGroup
 	public var itemsByType:Array<ClothingItem>;
 	public var closeButton:FlxExtendedSprite;
 	public var newPicked:Bool;
-	
-	public var posX:Float;
-	public var posY:Float;
-	
+		
 	private var currentPage:Int = 0;
 	private var currentSlot:Int = 0;
 	
@@ -51,7 +48,7 @@ class ItemList extends FlxSpriteGroup
 		closeButton = new FlxExtendedSprite(120, 2, itemGridContainerX);
 		
 		listType = itemType;
-		itemsByType = MasterInventory.wardrobe.filter(matchClothingType);
+		itemsByType = Inventory.wardrobe.filter(matchClothingType);
 		selectedItem = itemsByType[0];
 		
 		slotBoxes = new Array<SlotBox>();
@@ -120,12 +117,6 @@ class ItemList extends FlxSpriteGroup
 				newPicked = false;
 			}
 		}
-	}
-	
-	public function lockPosition(relativeX:Float, relativeY:Float):Void
-	{
-		posX = relativeX;
-		posY = relativeY;
 	}
 	
 	private function setPageItems():Void

@@ -21,9 +21,7 @@ class WieldBox extends WindowItem
 	public var clothingType:String;
 	public var validItemSet:Bool = false;
 	
-	public var itemListPrompt:ItemList;
 	private var icon:BitmapData;
-	public var itemList:ItemList;
 
 	private static var iconRect:Rectangle = new Rectangle(0, 0, 17, 15);
 	private static var iconPoint:Point = new Point(23, 23);
@@ -34,7 +32,7 @@ class WieldBox extends WindowItem
 		
 		this.loadGraphic(Assets.getBitmapData("starboard:assets/interface/starboard/elements/item_slot_selected.png"), null, null, null, true);
 		clothingType = clothingItemType;
-		
+
 		switch (clothingType)
 		{
 			case ClothingType.HAT:
@@ -50,8 +48,6 @@ class WieldBox extends WindowItem
 			default:
 				icon = new BitmapData(17, 15, true, 0x00000000);
 		}
-
-		itemList = new ItemList(clothingType);
 	}
 	
 	override public function update(elapsed:Float):Void
@@ -61,7 +57,9 @@ class WieldBox extends WindowItem
 
 	override public function mousePressedHandler():Void
 	{
+		// Animation?
 		super.mousePressedHandler();
+		RoomState.starboard.avatarWindow.updateItemList(this.clothingType);
 	}
 	
 	public function clearGameItem():Void

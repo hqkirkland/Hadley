@@ -35,12 +35,29 @@ class WindowBase extends WindowItem
 	private static var windowBottomRight:BitmapData;
 	private static var windowClose:BitmapData;
 	
-	public function new(title:String, width:Int, height:Int)
+	public function new(title:String, width:Int, height:Int, ?drawBorders=true)
 	{
 		windowTitle = title;
 		windowWidth = width;
 		windowHeight = height;
 
+		if (!drawBorders)
+		{
+			/*baseWindowBmpData = new BitmapData(width, height);
+			super(0, 0, baseWindowBmpData);
+			*/
+		}
+
+		else
+		{
+			drawRoyalBorders();
+			super(0, 0, baseWindowBmpData);
+			writeTitle(title);
+		}
+	}
+
+	private function drawRoyalBorders()
+	{
 		windowTopLeft = Assets.getBitmapData("starboard:assets/interface/starboard/elements/window/window_top_left.png");
 		windowTopMid = Assets.getBitmapData("starboard:assets/interface/starboard/elements/window/window_top_mid.png");
 		windowTopRight = Assets.getBitmapData("starboard:assets/interface/starboard/elements/window/window_top_right.png");
@@ -50,26 +67,8 @@ class WindowBase extends WindowItem
 		windowClose = Assets.getBitmapData("starboard:assets/interface/starboard/elements/window/window_x.png");
 		
 		constructWindowBase();
-		super(0, 0, baseWindowBmpData);
-		
-		writeTitle(title);
-	}
-
-	public function closeButtonClicked(obj:FlxExtendedSprite, x:Int, y:Int):Void
-	{
-		this.visible = false;
-	}
-
-	override function update(elapsed:Float)
-	{
-		super.update(elapsed);
 	}
 	
-	public function hideWindow():Void
-	{
-		this.visible = false;
-	}
-
 	private function constructWindowBase():Void
 	{
 		var footerMarginPixels:Int = 3;
@@ -123,8 +122,8 @@ class WindowBase extends WindowItem
 
 	override public function mousePressedHandler():Void
 	{
+		StarboardInterface.bringToFront(this);
 		super.mousePressedHandler();
-		RoomState.starboard.bringToFront(this);
 	}
 	
 	private function writeTitle(titleString:String):Void

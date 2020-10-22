@@ -14,7 +14,7 @@ import game.ClothingItem;
 class StoreWindow extends WindowGroup
 {
 	private var itemArray:Array<ClothingItem>;
-	private var slotArray:Array<SlotBox>;
+	//private var slotArray:Array<SlotBox>;
 	
 	/*
 	public function new() 

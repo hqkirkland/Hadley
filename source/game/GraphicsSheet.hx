@@ -38,8 +38,7 @@ class GraphicsSheet extends Bitmap
 		itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", 0xFF00FF00);
 		// Copy pixels to main sheet.
 		this.bitmapData.copyPixels(itemBitmap, this.bitmapData.rect, staticPoint, null, null, true);
-		// Remove red AFTER overlay, 
-		// trimming any pixles that got replaced by a pure red channel.
+		// Remove red AFTER overlay, trimming any pixles that are a pure red channel.
 		this.bitmapData.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", 0xFFFF0000);
 	}
 	
@@ -47,7 +46,7 @@ class GraphicsSheet extends Bitmap
 	{
 		if (stripGreen)
 		{
-			itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", 0xFF00FF00);
+			itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", 0xFF00FF00, 0x0);
 		}
 		
 		// No color shift for item.
@@ -65,14 +64,6 @@ class GraphicsSheet extends Bitmap
 			itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", skinPalette[1], replacementColor.channel2);
 			itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", skinPalette[2], replacementColor.channel3);
 			itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", skinPalette[3], replacementColor.channel4);
-			
-			/*
-			for (n in 0...skinPalette.length)
-			{
-				var replacementColor:Int = itemColors[n];
-				itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", skinPalette[n], replacementColor);
-			};
-			*/
 		}
 		
 		// Hair.
@@ -82,14 +73,6 @@ class GraphicsSheet extends Bitmap
 			itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", hairPalette[1], replacementColor.channel2);
 			itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", hairPalette[2], replacementColor.channel3);
 			itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", hairPalette[3], replacementColor.channel4);
-			
-			/*
-			for (n in 0...hairPalette.length)
-			{
-				var replacementColor:Int = hairColors[colorNumber][n];
-				itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", hairPalette[n], replacementColor);
-			}
-			*/
 		}
 		
 		// Item.
@@ -104,21 +87,6 @@ class GraphicsSheet extends Bitmap
 			itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", bluePalette[1], replacementColor.channel2);
 			itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", bluePalette[2], replacementColor.channel3);
 			itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", bluePalette[3], replacementColor.channel4);
-			
-			/*
-			for (n in 0...greenPalette.length)
-			{
-				var replacementColor:Int = itemColors[colorNumber][n];
-				itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", greenPalette[n], replacementColor);
-			}
-			
-			
-			for (n in 0...bluePalette.length)
-			{
-				var replacementColor:Int = itemColors[colorNumber][n];
-				itemBitmap.threshold(itemBitmap, itemBitmap.rect, zeroPoint, "==", bluePalette[n], replacementColor);
-			}
-			*/
 		}
 		
 		return itemBitmap;
@@ -130,11 +98,11 @@ class GraphicsSheet extends Bitmap
 		
 		switch (_itemType)
 		{
-			case "Body", "Face", "Skin":
+			case ClothingType.BODY, ClothingType.FACE, ClothingType.SKIN:
 				colorType = 0;
-			case "Hair":
+			case ClothingType.HAIR:
 				colorType = 1;
-			case "Clothing", "Shoes", "Pants", "Shirt", "Hat", "Glasses":
+			case ClothingType.DEFAULT_CLOTHING, ClothingType.SHOES, ClothingType.PANTS, ClothingType.SHIRT, ClothingType.HAT, ClothingType.GLASSES:
 				colorType = 2;
 		}
 		

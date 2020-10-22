@@ -4,6 +4,7 @@ import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
 
 import game.ClothingType;
+import game.ClothingItem;
 
 /**
  * ...
@@ -12,29 +13,22 @@ import game.ClothingType;
 
 class AvatarWindow extends WindowGroup
 {
+    public var itemList:ItemList;
+
+    public static var playerPreview:AvatarPreview;
+
     private static var avatarContainer:WindowItem;
     private static var hatSlotBox:WieldBox;
     private static var glassesSlotBox:WieldBox;
     private static var shirtSlotBox:WieldBox;
     private static var pantsSlotBox:WieldBox;
     private static var shoesSlotBox:WieldBox;
-    
-    private static var hatItemList:ItemList;
-    private static var glassesItemList:ItemList;
-    private static var shirtItemList:ItemList;
-    private static var pantsItemList:ItemList;
-    private static var shoesItemList:ItemList;
-    
-    private static var wieldBoxes:FlxTypedGroup<WieldBox>;
-    private static var itemLists:FlxTypedGroup<ItemList>;
-    private static var playerPreview:AvatarPreview;
-    
     private static var changeButton:WindowButton;
     private static var colorPicker:ColorList;
 
     public function new():Void
     {
-        super("Avatar", 250, 300, 100, 100);
+        super("Avatar", 250, 200, 100, 100);
         
         hatSlotBox = new WieldBox(Math.ceil(this.width) - 20 - 38, 40, ClothingType.HAT);
         shirtSlotBox = new WieldBox(Math.ceil(this.width) - 20 - 38, 90, ClothingType.SHIRT);
@@ -46,12 +40,38 @@ class AvatarWindow extends WindowGroup
         
         setGameItems();
         
-		add(hatSlotBox);
+        add(hatSlotBox);
         add(shirtSlotBox);
-		add(pantsSlotBox);
-		add(glassesSlotBox);
+        add(pantsSlotBox);
+        add(glassesSlotBox);
         add(shoesSlotBox);
+
         add(playerPreview);
+    }
+
+    public function updateItemList(itemListType:String)
+    {
+        if (itemList == null)
+        {
+            itemList = new ItemList(itemListType, 0, 50, 50);
+        }
+
+        add(itemList);
+
+        /*
+        else
+        {
+            if (itemListType != itemList.listType)
+            {
+                //itemList.resetList(itemListType);
+            }
+        }
+
+        for (member in itemList.members)
+        {
+            add(member);
+        }
+        */
     }
 
     private function setGameItems()
@@ -63,12 +83,14 @@ class AvatarWindow extends WindowGroup
 			// Skip null items, and the fourth item.
 			// itemArray is the actual figure of the Avatar.
 			// The fourth item is the back of the hat, if it is two-halved.
-			// Like Monk's hat is.
+            // Like Monk's hat is.
+            
             if (item == null || itemIndex == 4)
             {
+                itemIndex++;
                 continue;
 			}
-            
+
             switch (item.gameItem.itemType)
             {
                 case ClothingType.GLASSES:
@@ -85,12 +107,5 @@ class AvatarWindow extends WindowGroup
 			
 			itemIndex++;
 		}
-		
-		/*
-        if (RoomState.playerAvatar.itemArray[8] != null)
-        {
-            hatSlotBox.setGameItem(RoomState.playerAvatar.itemArray[8].gameItem.gameItemId, RoomState.playerAvatar.itemArray[8].itemColor);
-		}
-		*/
     }
 }

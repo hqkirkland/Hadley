@@ -40,17 +40,11 @@ class ChatInputBox extends FlxSprite
 		textInput.multiline = false;
 		textInput.selectable = true;
 		textInput.autoSize = TextFieldAutoSize.NONE;
-		textInput.addEventListener(KeyboardEvent.KEY_DOWN, handleDown);
 		
 		FlxG.stage.addChild(textInput);
 		
 		textInput.x = 365;
 		textInput.y = 511 + Math.ceil(textInput.height / 2);
-	}
-	
-	public function handleDown(e:KeyboardEvent)
-	{
-		trace(textInput.caretIndex);
 	}
 	
 	public override function update(elapsed:Float):Void

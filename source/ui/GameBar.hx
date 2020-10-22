@@ -21,8 +21,6 @@ class GameBar extends FlxSpriteGroup
 	public var baseWood:FlxSprite;
 	public var chatBox:ChatInputBox;
 
-	public var avatarWindow:AvatarWindow;
-
 	public var playerMirror:AvatarMirror;
 	public var petMirror:FlxSprite;
 	
@@ -58,6 +56,6 @@ class GameBar extends FlxSpriteGroup
 		add(playerMirror);
 		
 		playerMirror.enableMouseClicks(true, false);
-		playerMirror.mouseReleasedCallback = RoomState.starboard.invokeWindow;
+		playerMirror.mouseReleasedCallback = RoomState.starboard.gameBarInvoke;
 	}
 }

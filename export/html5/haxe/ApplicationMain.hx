@@ -32,12 +32,12 @@ class ApplicationMain
 
 		ManifestResources.init(config);
 
-		app.meta["build"] = "62";
+		app.meta["build"] = "65";
 		app.meta["company"] = "Nodebay.com";
 		app.meta["file"] = "HadleyHaxe";
 		app.meta["name"] = "HadleyHaxe";
 		app.meta["packageName"] = "com.example.myapp";
-		app.meta["version"] = "0.0.1";
+		app.meta["version"] = "0.0.2";
 
 		
 

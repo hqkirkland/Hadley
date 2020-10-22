@@ -27,6 +27,6 @@ class AvatarCharacterSet
 	
 	public function parseAppearanceString(appearanceString:String):Void
 	{
-
+		
 	}
 }

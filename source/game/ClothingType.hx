@@ -14,6 +14,7 @@ class ClothingType
 	public static inline var HAIR:String = "Hair";
 	public static inline var HAT:String = "Hat";
 	public static inline var DEFAULT_CLOTHING = "Clothing";
+	public static inline var SKIN:String = "Skin";
 	
 	public static inline function typeToNum(typeString:String):Int
 	{

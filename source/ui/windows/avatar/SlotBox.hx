@@ -22,7 +22,6 @@ class SlotBox extends WindowItem
 	public var clothingItemType:String;
 	public var gameItem:ClothingItem;
 	public var gameItemBitmap:BitmapData;
-	public var validItemSet:Bool = false;
 	
 	private var icon:BitmapData;
 	// dear day hunter, 
@@ -32,44 +31,40 @@ class SlotBox extends WindowItem
 	public function new(slotType:String, ?relativeX:Int, ?relativeY:Int):Void
 	{
 		super(relativeX, relativeY, null);
-		this.loadGraphic(Assets.getBitmapData("starboard:assets/interface/starboard/elements/item_slot_inventory.png"), null, null, null, true);
+		this.loadGraphic(Assets.getBitmapData("starboard:assets/interface/starboard/elements/item_slot_inventory.png"), false, 0, 0, true);
 		clothingItemType = slotType;
 	}
-	
-	override public function update(elapsed:Float):Void
+
+	override public function mousePressedHandler():Void
 	{
-		super.update(elapsed);
+		super.mousePressedHandler();
+		//RoomState.starboard.avatarWindow.itemList
 	}
-	
+
 	public function clearGameItem():Void
 	{
 		gameItem = null;
-		validItemSet = true;
 		
 		var itemBmp:BitmapData = new BitmapData(30, 30, false, 0x00000000);
 		this.pixels.copyPixels(itemBmp, itemBmp.rect, new Point(4, 4), null, null, true);
 	}
 	
-	public function swapGameItem(gameItemKey:Int, colorId:Int):ClothingItem
+	public function setGameItem(gameItemKey:Int, colorId:Int, ?clearFirst:Bool=true):Void
 	{
-		var oldGameItem:ClothingItem = gameItem;
-		setGameItem(gameItemKey, colorId);
-		
-		return oldGameItem;
-	}
-	
-	public function setGameItem(gameItemKey:Int, colorId:Int):Void
-	{
+		if (clearFirst)
+		{
+			clearGameItem();
+		}
+
 		if (ClientData.clothingItems.exists(gameItemKey))
 		{
 			gameItem = ClientData.clothingItems[gameItemKey];
-			
-			validItemSet = true;
+			gameItem.itemType = clothingItemType;
 			
 			var itemBmp:BitmapData = Assets.getBitmapData("assets/items/icons/" + gameItemKey + ".png");
 			gameItemBitmap = GraphicsSheet.colorItem(itemBmp, colorId, 2, true);
 			
-			this.pixels.copyPixels(gameItemBitmap, gameItemBitmap.rect, new Point(4, 4), null, null, true);
+			this.pixels.copyPixels(gameItemBitmap, gameItemBitmap.rect, new Point(4, 4), null, null);
 		}
 		
 		else

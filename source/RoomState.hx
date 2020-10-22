@@ -21,7 +21,6 @@ import communication.NetworkManager;
 import communication.messages.ServerPacket;
 import game.Avatar;
 import game.ClientData;
-import game.Inventory;
 import game.Portal;
 import game.Room;
 import sound.SoundManager;
@@ -54,10 +53,6 @@ class RoomState extends FlxState
 		
 		FlxG.scaleMode = new FixedScaleMode();
 		
-		#if FLX_DEBUG
-		//FlxG.debugger.visible = true;
-		#end
-		
 		FlxG.autoPause = false;
 		FlxG.sound.muteKeys = null;
 		FlxG.sound.volumeDownKeys = null;
@@ -76,10 +71,7 @@ class RoomState extends FlxState
 	{
 		var rand:Int = Math.ceil(Math.random() * 1000);
 		playerAvatar = new Avatar(username);
-		playerAvatar.setAppearance("67^0^44^2^34^2^24^2^94^0^72^1^51^0^61^0");
 		playerAvatar.drawFrame(true);
-		
-		starboard.setMirrorLook(playerAvatar.pixels);
 		
 		NetworkManager.connect("whirlpool.nodebay.com", 8443, playerAvatar.username);
 		NetworkManager.networkSocket.addEventListener(Event.CONNECT, doLogin);
@@ -89,6 +81,7 @@ class RoomState extends FlxState
 	private function doLogin(e:Event):Void
 	{
 		NetworkManager.sendAuthenticate(gameTicket);
+		RoomState.starboard.changeAppearance("67^0^44^2^34^2^24^2^94^0^72^1^51^0^61^0");
 		joinRoom("cloudInfoRoom");
 	}
 	

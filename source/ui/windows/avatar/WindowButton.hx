@@ -59,16 +59,17 @@ class WindowButton extends FlxExtendedSprite
 			}
 		}
 		
-		if (clickAnimation != null && this.clickable)
+
+		if (FlxG.mouse.overlaps(this) && this.isPressed)
 		{
-			if (FlxG.mouse.overlaps(this) && this.isPressed)
+			if (clickAnimation != null && this.clickable)
 			{
 				if (animation.name != clickAnimation)
 				{
 					animation.play(clickAnimation);
 				}
 			}
-			
+
 			else
 			{
 				animation.play("inactive");

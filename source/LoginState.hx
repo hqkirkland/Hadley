@@ -1,5 +1,6 @@
 package;
 
+import flixel.system.debug.FlxDebugger;
 import openfl.Assets;
 import openfl.utils.AssetLibrary;
 import openfl.events.KeyboardEvent;
@@ -37,7 +38,8 @@ class LoginState extends FlxState
 		
 		FlxG.autoPause = false;
 		FlxG.scaleMode = new FixedScaleMode();
-		FlxG.keys.preventDefaultKeys = [];
+		//FlxG.debugger.visible = true;
+		//FlxG.keys.preventDefaultKeys = [];
 		FlxG.mouse.useSystemCursor = true;
 		FlxG.plugins.add(new FlxMouseControl());
 
@@ -79,7 +81,7 @@ class LoginState extends FlxState
 		noticeLabel.y = backgroundBox.y + 50;
 		add(noticeLabel);
 		
-		var loginButton:SubmitButton = new SubmitButton(100, 50, "login", onClick);
+		var loginButton:SubmitButton = new SubmitButton(100, 50, "login", onLoginClick);
 		loginButton.x = (backgroundBox.x + backgroundBox.width) - loginButton.width - 15;
 		loginButton.y = (backgroundBox.y + backgroundBox.height) - loginButton.height - 20;
 		add(loginButton);
@@ -92,7 +94,7 @@ class LoginState extends FlxState
 		Assets.registerLibrary("starboard", completeLib);
 	}
 	
-	private function onClick():Void
+	private function onLoginClick():Void
 	{
 		apiClient.addEventListener(ApiEvent.ERROR, handleError);
 		apiClient.addEventListener(ApiEvent.LOGIN, doLogin);
@@ -103,7 +105,7 @@ class LoginState extends FlxState
 	{
 		if (e.keyCode == 13)
 		{
-			onClick();
+			onLoginClick();
 		}
 	}
 	

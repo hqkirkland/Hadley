@@ -41,11 +41,6 @@ class AvatarMirror extends FlxExtendedSprite
 			{
 				animation.play("Halo");
 			}
-
-			if (FlxG.mouse.pressed)
-			{
-				
-			}
 		}
 		
 		else

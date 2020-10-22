@@ -77,7 +77,7 @@ class AvatarPreview extends WindowItem
 			
 			itemSprite.loadGraphic("assets/items/" + _avatarItem.assetPath + ".png");
 			avatarSheet.drawItem(GraphicsSheet.colorItem(itemSprite.pixels, _avatarItem.itemColor, _avatarItem.gameItem.colorType));
-
+			
 			i++;
 		}
 		
@@ -127,8 +127,8 @@ class AvatarPreview extends WindowItem
 			itemColor: colorId
 		};
 
-		var slot:Int = ClothingType.typeToNum(wornItem.itemType);
-		itemArray[slot] = _avatarItem;
+		var itemTypePosition:Int = ClothingType.typeToNum(wornItem.itemType);
+		itemArray[itemTypePosition] = _avatarItem;
 		
 		if (_avatarItem.gameItem.layered)
 		{

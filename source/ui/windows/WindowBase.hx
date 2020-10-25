@@ -1,18 +1,17 @@
 package ui.windows;
 
-
-import openfl.display.Bitmap;
-import openfl.Assets;
-import openfl.display.BitmapData;
-import openfl.geom.Point;
-import openfl.geom.Rectangle;
-
 import flixel.FlxG;
 import flixel.addons.display.FlxExtendedSprite;
+import flixel.addons.plugin.FlxMouseControl;
 import flixel.graphics.FlxGraphic;
 import flixel.math.FlxRect;
 import flixel.text.FlxText;
 import flixel.util.FlxSort;
+import openfl.Assets;
+import openfl.display.Bitmap;
+import openfl.display.BitmapData;
+import openfl.geom.Point;
+import openfl.geom.Rectangle;
 
 /**
  * ...
@@ -21,12 +20,13 @@ import flixel.util.FlxSort;
 class WindowBase extends WindowItem
 {
 	private var windowTitle:String;
-	
+
 	private var baseWindowBmpData:BitmapData;
 	private var windowWidth:Int;
 	private var windowHeight:Int;
 
 	private var windowCloseRect:FlxRect;
+
 	private static var windowTopLeft:BitmapData;
 	private static var windowTopMid:BitmapData;
 	private static var windowTopRight:BitmapData;
@@ -34,20 +34,21 @@ class WindowBase extends WindowItem
 	private static var windowBottomMid:BitmapData;
 	private static var windowBottomRight:BitmapData;
 	private static var windowClose:BitmapData;
-	
-	public function new(title:String, width:Int, height:Int, ?drawBorders=true)
+
+	private var isItemList:Bool = false;
+
+	public function new(title:String, _windowWidth:Int, _windowHeight:Int, ?drawBorders:Bool = true, ?baseWindowBitmapData:BitmapData)
 	{
 		windowTitle = title;
-		windowWidth = width;
-		windowHeight = height;
+		windowWidth = _windowWidth;
+		windowHeight = _windowHeight;
+		baseWindowBmpData = (baseWindowBitmapData == null) ? new BitmapData(windowWidth, windowHeight, false, 0xFFFFFFFF) : baseWindowBitmapData;
 
 		if (!drawBorders)
 		{
-			/*baseWindowBmpData = new BitmapData(width, height);
 			super(0, 0, baseWindowBmpData);
-			*/
+			isItemList = true;
 		}
-
 		else
 		{
 			drawRoyalBorders();
@@ -65,34 +66,40 @@ class WindowBase extends WindowItem
 		windowBottomMid = Assets.getBitmapData("starboard:assets/interface/starboard/elements/window/window_bottom_mid.png");
 		windowBottomRight = Assets.getBitmapData("starboard:assets/interface/starboard/elements/window/window_bottom_right.png");
 		windowClose = Assets.getBitmapData("starboard:assets/interface/starboard/elements/window/window_x.png");
-		
+
 		constructWindowBase();
 	}
-	
+
+	override public function mousePressedHandler()
+	{
+		super.mousePressedHandler();
+		StarboardInterface.bringToFront(this);
+	}
+
 	private function constructWindowBase():Void
 	{
 		var footerMarginPixels:Int = 3;
 		var marginOffset:Int = 7;
 
-		var destPoint:Point = new Point(0, 0);		
+		var destPoint:Point = new Point(0, 0);
 		baseWindowBmpData = new BitmapData(windowWidth, windowHeight, true, 0x0);
-		
+
 		var parchmentBmpBackground:BitmapData = new BitmapData(windowWidth - 14, windowHeight - 21, true, 0xFFE9E8E1);
-		
+
 		destPoint.setTo(7, 15);
 		baseWindowBmpData.copyPixels(parchmentBmpBackground, parchmentBmpBackground.rect, destPoint, null, null, true);
-		
+
 		destPoint.setTo(0, 0);
 		baseWindowBmpData.copyPixels(windowTopLeft, windowTopLeft.rect, destPoint, null, null, true);
-		
+
 		var titleBarWidth:Int = windowWidth - (windowTopLeft.width + windowTopRight.width);
-		
+
 		for (x in 0...titleBarWidth)
 		{
 			destPoint.setTo(windowTopLeft.width + x, 2);
 			baseWindowBmpData.copyPixels(windowTopMid, windowTopMid.rect, destPoint);
 		}
-		
+
 		destPoint.setTo(windowWidth - windowTopRight.width, 0);
 		baseWindowBmpData.copyPixels(windowTopRight, windowTopRight.rect, destPoint, null, null, true);
 
@@ -120,12 +127,6 @@ class WindowBase extends WindowItem
 		baseWindowBmpData.copyPixels(windowBottomRight, windowBottomRight.rect, destPoint, null, null, true);
 	}
 
-	override public function mousePressedHandler():Void
-	{
-		StarboardInterface.bringToFront(this);
-		super.mousePressedHandler();
-	}
-	
 	private function writeTitle(titleString:String):Void
 	{
 		var title:FlxText = new FlxText(0, 0, 0, titleString, 8);

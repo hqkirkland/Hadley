@@ -1,11 +1,10 @@
 package ui.windows;
 
+import flixel.addons.display.FlxExtendedSprite;
 import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
-import openfl.display.BitmapData;
-
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
-import flixel.addons.display.FlxExtendedSprite;
+import openfl.display.BitmapData;
 
 /**
  * ...
@@ -15,11 +14,9 @@ class WindowItem extends FlxExtendedSprite
 {
 	public var windowPos:FlxPoint;
 
-	public var subItems:FlxTypedSpriteGroup<WindowItem>;
-	
-	public function new(relativeX:Int, relativeY:Int, ?bitmapData:BitmapData)
+	public function new(windowRelativeX:Int, windowRelativeY:Int, ?bitmapData:BitmapData)
 	{
 		super(null, null, bitmapData);
-		windowPos = FlxPoint.get(relativeX, relativeY);
+		windowPos = FlxPoint.get(windowRelativeX, windowRelativeY);
 	}
 }

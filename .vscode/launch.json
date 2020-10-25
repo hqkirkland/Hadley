@@ -1,16 +1,23 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-    
-        {
-            "name": "Lime",
-            "type": "lime",
-            "request": "launch",
-            "runtimeExecutable": "C:\\Users\\Hunter\\AppData\\Local\\Chromium\\Application\\chrome.exe",
-            "runtimeArgs": ["--disable-web-security", "--user-data-dir=C:\\Users\\Hunter\\AppData\\Roaming\\ChromeDev"]
-        }
-    ]
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Build + Debug",
+			"type": "lime",
+			"request": "launch",
+			"runtimeArgs": ["--disable-web-security"],
+		},
+		{
+			"name": "Debug",
+			"type": "lime",
+			"request": "launch",
+			"preLaunchTask": null,
+			"runtimeArgs": ["--disable-web-security"]
+		},
+		{
+			"name": "Macro",
+			"type": "haxe-eval",
+			"request": "launch"
+		}
+	]
 }

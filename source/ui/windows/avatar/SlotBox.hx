@@ -21,8 +21,6 @@ class SlotBox extends WindowItem
 	public var gameItem:ClothingItem;
 	public var gameItemBitmap:BitmapData;
 
-	private var icon:BitmapData;
-
 	// dear day hunter,
 	// closing avatar window
 	// does not clear changes
@@ -32,37 +30,30 @@ class SlotBox extends WindowItem
 		super(relativeX, relativeY, null);
 		this.loadGraphic(Assets.getBitmapData("starboard:assets/interface/starboard/elements/item_slot_inventory.png"), false, 0, 0, true);
 		clothingItemType = slotType;
-	}
 
-	override public function mousePressedHandler():Void
-	{
-		super.mousePressedHandler();
+		this.enableMouseClicks(true);
 	}
 
 	public function clearGameItem():Void
 	{
 		gameItem = null;
-
-		var itemBmp:BitmapData = new BitmapData(30, 30, false, 0x00000000);
-		this.pixels.copyPixels(itemBmp, itemBmp.rect, new Point(4, 4), null, null, true);
+		gameItemBitmap = null;
+		clothingItemType = "";
+		this.loadGraphic(Assets.getBitmapData("starboard:assets/interface/starboard/elements/item_slot_inventory.png"), false, 0, 0, true);
 	}
 
-	public function setGameItem(gameItemKey:Int, colorId:Int, ?clearFirst:Bool = true):Void
+	public function setGameItem(gameItemKey:Int, colorId:Int):Void
 	{
-		if (clearFirst)
-		{
-			clearGameItem();
-		}
-
+		clearGameItem();
 		if (ClientData.clothingItems.exists(gameItemKey))
 		{
 			gameItem = ClientData.clothingItems[gameItemKey];
-			gameItem.itemType = clothingItemType;
+			clothingItemType = gameItem.itemType;
 
 			var itemBmp:BitmapData = Assets.getBitmapData("assets/items/icons/" + gameItemKey + ".png");
 			gameItemBitmap = GraphicsSheet.colorItem(itemBmp, colorId, 2, true);
 
-			this.pixels.copyPixels(gameItemBitmap, gameItemBitmap.rect, new Point(4, 4), null, null);
+			this.pixels.copyPixels(gameItemBitmap, gameItemBitmap.rect, new Point(4, 4));
 		}
 		else
 		{

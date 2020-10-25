@@ -78,20 +78,23 @@ class StarboardInterface extends FlxSpriteGroup
 			{
 				avatarWindow = new AvatarWindow();
 
-				FlxG.watch.add(avatarWindow, "x", "avatarWindowX");
-				FlxG.watch.add(avatarWindow, "y", "avatarWindowY");
+				/*
+					FlxG.watch.add(avatarWindow, "x", "avatarWindowX");
+					FlxG.watch.add(avatarWindow, "y", "avatarWindowY");
 
-				FlxG.watch.add(avatarWindow.mainWindow, "x", "avatarWindowBaseX");
-				FlxG.watch.add(avatarWindow.mainWindow, "y", "avatarWindowBaseY");
+					FlxG.watch.add(avatarWindow.mainWindow, "x", "avatarWindowBaseX");
+					FlxG.watch.add(avatarWindow.mainWindow, "y", "avatarWindowBaseY");
 
-				FlxG.watch.add(windowSystem, "x", "windowSystemX");
-				FlxG.watch.add(windowSystem, "y", "windowSystemY");
+					FlxG.watch.add(windowSystem, "x", "windowSystemX");
+					FlxG.watch.add(windowSystem, "y", "windowSystemY");
+				 */
 
 				windowSystem.add(avatarWindow);
 			}
 			else if (!avatarWindow.visible)
 			{
 				avatarWindow.visible = true;
+				bringToFront(avatarWindow.mainWindow);
 			}
 			else if (avatarWindow.visible)
 			{

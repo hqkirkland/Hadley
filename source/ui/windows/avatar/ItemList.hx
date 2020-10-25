@@ -21,13 +21,13 @@ class ItemList extends WindowGroup
 	public var listType:String;
 	public var selectedItem:ClothingItem;
 	public var slotBoxes:Array<SlotBox>;
-	public var itemsByType:Array<ClothingItem>;
 
 	private var currentPage:Int = 0;
 	private var currentSlot:Int = 0;
 	private var itemSlotCursor:WindowItem;
 	private var promptCloseButton:WindowItem;
 
+	private static var itemsByType:Array<ClothingItem>;
 	private static var itemGridContainer:BitmapData;
 	private static var itemGridContainerX:BitmapData;
 	private static var itemSlotInventory:BitmapData;
@@ -85,20 +85,14 @@ class ItemList extends WindowGroup
 		trace("Reset ItemList: " + clothingType);
 
 		listType = clothingType;
-		selectedItem = null;
 		itemsByType = Inventory.wardrobe.filter(matchClothingType);
-
-		for (i in 0...itemsByType.length)
-		{
-			trace("- > Item: " + itemsByType[i].itemName);
-		}
+		setPageItems();
 
 		currentPage = 0;
 		currentSlot = 0;
+		selectedItem = slotBoxes[currentSlot].gameItem;
 
-		setPageItems();
-
-		itemSlotCursor = new WindowItem(Std.int(slotBoxes[0].windowPos.x), Std.int(slotBoxes[0].windowPos.y), itemSlotSelected);
+		itemSlotCursor = new WindowItem(Std.int(slotBoxes[currentSlot].windowPos.x), Std.int(slotBoxes[currentSlot].windowPos.y), itemSlotSelected);
 		add(itemSlotCursor);
 	}
 
@@ -108,9 +102,8 @@ class ItemList extends WindowGroup
 		{
 			var itemNum:Int = (currentPage * 9) + i;
 
-			if (itemNum <= itemsByType.length)
+			if (itemNum < itemsByType.length)
 			{
-				// TODO: Color ID by pallette selection.
 				slotBoxes[i].setGameItem(itemsByType[itemNum].gameItemId, 3);
 			}
 			else
@@ -138,6 +131,11 @@ class ItemList extends WindowGroup
 
 	public function matchClothingType(item:ClothingItem)
 	{
-		return (item.itemType == listType);
+		if (item != null && listType != null)
+		{
+			return (item.itemType == listType);
+		}
+
+		return false;
 	}
 }

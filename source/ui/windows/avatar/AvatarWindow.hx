@@ -26,6 +26,9 @@ class AvatarWindow extends WindowGroup
 	private static var changeButton:WindowButton;
 	private static var colorPicker:ColorList;
 
+	private static var leftSideMargin:Int;
+	private static var rightSideMargin:Int;
+
 	public function new():Void
 	{
 		super("Avatar", 250, 200, 150, 100);
@@ -54,10 +57,13 @@ class AvatarWindow extends WindowGroup
 		if (itemList == null)
 		{
 			itemList = new ItemList(itemListType, 0, 0, 0);
+			leftSideMargin = Std.int(0 - (itemList.width));
+			rightSideMargin = Std.int(this.width);
 			StarboardInterface.windowSystem.add(itemList);
 		}
 		else
 		{
+			itemList.visible = true;
 			if (itemListType != itemList.listType)
 			{
 				itemList.resetList(itemListType);
@@ -71,10 +77,20 @@ class AvatarWindow extends WindowGroup
 
 		if (itemList != null)
 		{
-			itemList.x = this.mainWindow.x + this.width + 5;
-			itemList.y = this.mainWindow.y;
+			if (itemList.listType == ClothingType.GLASSES || itemList.listType == ClothingType.SHOES)
+			{
+				itemList.x = this.mainWindow.x + leftSideMargin;
+				itemList.y = this.mainWindow.y + Std.int(this.height / 2) - Std.int(itemList.height / 2);
+			}
+			else
+			{
+				itemList.x = this.mainWindow.x + rightSideMargin;
+				itemList.y = this.mainWindow.y + Std.int(this.height / 2) - Std.int(itemList.height / 2);
+			}
 		}
 	}
+
+	private function updateWieldedItems() {}
 
 	private function setWieldedItems()
 	{

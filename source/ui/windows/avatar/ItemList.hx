@@ -63,8 +63,6 @@ class ItemList extends WindowGroup
 			add(slotBoxes[i]);
 		}
 
-		trace("itemSlotCursor at: " + slotBoxes[0].windowPos.x + ", " + slotBoxes[0].windowPos.y);
-
 		itemSlotCursor = new WindowItem(Std.int(slotBoxes[0].windowPos.x), Std.int(slotBoxes[0].windowPos.y), itemSlotSelected);
 		promptCloseButton = new WindowItem(120, 2, itemGridContainerX);
 		promptCloseButton.mousePressedCallback = closeButtonClicked;
@@ -81,8 +79,6 @@ class ItemList extends WindowGroup
 	public function resetList(clothingType:String)
 	{
 		remove(itemSlotCursor);
-
-		trace("Reset ItemList: " + clothingType);
 
 		listType = clothingType;
 		itemsByType = Inventory.wardrobe.filter(matchClothingType);

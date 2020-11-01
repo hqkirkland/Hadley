@@ -1,5 +1,6 @@
 package ui.windows.avatar;
 
+import flixel.FlxSprite;
 import flixel.addons.display.FlxExtendedSprite;
 import game.ClientData;
 import game.ClothingItem;
@@ -21,6 +22,8 @@ class SlotBox extends WindowItem
 	public var gameItem:ClothingItem;
 	public var gameItemBitmap:BitmapData;
 
+	private static var itemSlotInventory:BitmapData;
+
 	// dear day hunter,
 	// closing avatar window
 	// does not clear changes
@@ -28,7 +31,10 @@ class SlotBox extends WindowItem
 	public function new(slotType:String, ?relativeX:Int, ?relativeY:Int):Void
 	{
 		super(relativeX, relativeY, null);
-		this.loadGraphic(Assets.getBitmapData("starboard:assets/interface/starboard/elements/item_slot_inventory.png"), false, 0, 0, true);
+
+		itemSlotInventory = Assets.getBitmapData("starboard:assets/interface/starboard/elements/item_slot_inventory.png");
+		this.loadGraphic(itemSlotInventory, false, 38, 38, true);
+
 		clothingItemType = slotType;
 
 		this.enableMouseClicks(true);
@@ -39,7 +45,7 @@ class SlotBox extends WindowItem
 		gameItem = null;
 		gameItemBitmap = null;
 		clothingItemType = "";
-		this.loadGraphic(Assets.getBitmapData("starboard:assets/interface/starboard/elements/item_slot_inventory.png"), false, 0, 0, true);
+		this.loadGraphic(itemSlotInventory, false, 38, 38, true);
 	}
 
 	public function setGameItem(gameItemKey:Int, colorId:Int):Void
@@ -53,7 +59,7 @@ class SlotBox extends WindowItem
 			var itemBmp:BitmapData = Assets.getBitmapData("assets/items/icons/" + gameItemKey + ".png");
 			gameItemBitmap = GraphicsSheet.colorItem(itemBmp, colorId, 2, true);
 
-			this.pixels.copyPixels(gameItemBitmap, gameItemBitmap.rect, new Point(4, 4));
+			this.pixels.copyPixels(gameItemBitmap, gameItemBitmap.rect, new Point(4, 4), null, null, false);
 		}
 		else
 		{
@@ -62,7 +68,7 @@ class SlotBox extends WindowItem
 			var itemBmp:BitmapData = Assets.getBitmapData("starboard:assets/interface/starboard/elements/icons/what_the_duck.png");
 			gameItemBitmap = GraphicsSheet.colorItem(itemBmp, colorId, 2);
 
-			this.pixels.copyPixels(gameItemBitmap, gameItemBitmap.rect, new Point(6, 6), null, null, true);
+			this.pixels.copyPixels(gameItemBitmap, gameItemBitmap.rect, new Point(6, 6), null, null, false);
 		}
 	}
 }

@@ -11,6 +11,7 @@ import flixel.addons.plugin.FlxMouseControl;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
 import flixel.system.scaleModes.FixedScaleMode;
+import flixel.util.FlxColor;
 import game.Avatar;
 import game.ClientData;
 import game.Portal;
@@ -31,11 +32,13 @@ class RoomState extends FlxState
 	public static var playerAvatar:Avatar;
 	public static var currentRoom:Room;
 	public static var starboard:StarboardInterface;
+	public static var gameCamera:FlxCamera;
+	public static var starboardCamera:FlxCamera;
+
 	private static var nextRoom:String;
 	private static var exitRoom:String;
 	private static var audioManager:SoundManager;
 	private static var borderArray:Array<Int> = [0xFF010101, 0x00000000];
-	private static var starboardCam:FlxCamera;
 	private static var gameTicket:String;
 
 	override public function new(_gameTicket:String)
@@ -54,6 +57,9 @@ class RoomState extends FlxState
 		FlxG.sound.muteKeys = null;
 		FlxG.sound.volumeDownKeys = null;
 		FlxG.sound.volumeUpKeys = null;
+
+		FlxG.debugger.drawDebug = true;
+		FlxG.watch.add(FlxG, "worldBounds");
 
 		starboard = new StarboardInterface();
 
@@ -104,15 +110,23 @@ class RoomState extends FlxState
 
 		var roomStructure:String = Assets.getText(currentRoom.roomName + ":assets/" + currentRoom.roomName + "/" + currentRoom.roomName + "_Objects.json");
 		currentRoom.generateRoom(roomStructure);
-
 		currentRoom.addAvatar(playerAvatar, exitRoom);
 		exitRoom = "";
 
-		var tmpRoomGridSprite:FlxSprite = new FlxSprite(0, 0, currentRoom.grid.mapBmp);
-		tmpRoomGridSprite.x = currentRoom.x + 161;
-		tmpRoomGridSprite.y = currentRoom.y + 177;
+		starboardCamera = new FlxCamera(0, 0, FlxG.width, FlxG.height);
+		starboardCamera.bgColor = FlxColor.TRANSPARENT;
+
+		setupGameCamera();
+
+		FlxG.cameras.reset(gameCamera);
+		// FlxG.cameras.add(starboardCamera);
+
+		starboard.scrollFactor.set(0, 0);
+
+		currentRoom.cameras = [gameCamera];
 
 		add(currentRoom);
+		trace("currentRoom: " + currentRoom.x + ", " + currentRoom.y);
 		add(currentRoom.vehicleEntities);
 		add(currentRoom.roomEntities);
 		add(currentRoom.portalEntities);
@@ -122,14 +136,19 @@ class RoomState extends FlxState
 
 		starboard.gameBar.chatBox.textInput.addEventListener(KeyboardEvent.KEY_DOWN, chatBarEnter);
 
-		setupCamera();
+		FlxG.watch.addMouse();
+		/*
+			var uiCam:FlxCamera = new FlxCamera(0, 0, FlxG.width, FlxG.height);
+			FlxG.cameras.add(uiCam);
+			starboard.cameras = [uiCam];
+		 */
 
 		this.bgColor = currentRoom.backgroundColor;
 		currentRoom.portalEntities.visible = false;
 		NetworkManager.sendJoinRoom(currentRoom.roomName);
 	}
 
-	private function setupCamera():Void
+	private function setupGameCamera():Void
 	{
 		var ROOM_MIN_X:Float;
 		var ROOM_MAX_X:Float;
@@ -138,8 +157,8 @@ class RoomState extends FlxState
 
 		if (currentRoom.width < FlxG.width)
 		{
-			ROOM_MIN_X = 0;
-			ROOM_MAX_X = (FlxG.width / 2) + (currentRoom.width / 2);
+			ROOM_MIN_X = (FlxG.width / 2) - (currentRoom.width / 2);
+			ROOM_MAX_X = currentRoom.width;
 		}
 		else
 		{
@@ -149,8 +168,8 @@ class RoomState extends FlxState
 
 		if (currentRoom.height < FlxG.height)
 		{
-			ROOM_MIN_Y = 0;
-			ROOM_MAX_Y = (FlxG.height / 2) + (currentRoom.height / 2);
+			ROOM_MIN_Y = (FlxG.height / 2) - (currentRoom.height / 2);
+			ROOM_MAX_Y = currentRoom.height;
 		}
 		else
 		{
@@ -158,10 +177,9 @@ class RoomState extends FlxState
 			ROOM_MAX_Y = currentRoom.height;
 		}
 
-		FlxG.camera.setScrollBoundsRect(ROOM_MIN_X, ROOM_MIN_Y, ROOM_MAX_X, ROOM_MAX_Y);
-		FlxG.camera.follow(playerAvatar, FlxCameraFollowStyle.LOCKON, .25);
-
-		FlxG.camera.deadzone = new FlxRect(FlxG.camera.deadzone.x, FlxG.camera.deadzone.y, FlxG.camera.deadzone.width, FlxG.camera.deadzone.height / 2);
+		gameCamera = new FlxCamera(Std.int(ROOM_MIN_X), Std.int(ROOM_MIN_Y), Std.int(ROOM_MAX_X), Std.int(ROOM_MAX_Y));
+		gameCamera.setScrollBoundsRect(0, 0, currentRoom.width, currentRoom.height, true);
+		gameCamera.follow(playerAvatar, FlxCameraFollowStyle.LOCKON, .25);
 	}
 
 	private function destroyRoom():Void
@@ -302,6 +320,14 @@ class RoomState extends FlxState
 		{
 			return;
 		}
+
+		/*
+			var mouseCameraPoint:FlxPoint = FlxG.mouse.getPositionInCameraView();
+			trace("mouseCameraPoint: " + mouseCameraPoint.x + ", " + mouseCameraPoint.y);
+
+			var mousePoint:FlxPoint = FlxG.mouse.getWorldPosition();
+			trace("mousePoint: " + mousePoint.x + ", " + mousePoint.y);
+		 */
 
 		if (nextRoom != "" && playerAvatar.fadeComplete)
 		{

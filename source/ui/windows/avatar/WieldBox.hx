@@ -15,21 +15,30 @@ import openfl.geom.Rectangle;
  */
 class WieldBox extends WindowItem
 {
-	public var gameItemBitmap:BitmapData;
 	public var clothingType:String;
 	public var validItemSet:Bool = false;
 
+	private var gameItemBitmap:BitmapData;
 	private var icon:BitmapData;
 
 	private static var iconRect:Rectangle = new Rectangle(0, 0, 17, 15);
 	private static var iconPoint:Point = new Point(23, 23);
 
+	private static var itemSlotInventory:BitmapData;
+	private static var itemSlotSelected:BitmapData;
+
 	public function new(?relativeX:Int, ?relativeY:Int, clothingItemType:String):Void
 	{
 		super(relativeX, relativeY, null);
 
-		this.loadGraphic(Assets.getBitmapData("starboard:assets/interface/starboard/elements/item_slot_selected.png"), null, null, null, true);
+		itemSlotInventory = Assets.getBitmapData("starboard:assets/interface/starboard/elements/item_slot_inventory.png");
+		this.loadGraphic(itemSlotInventory, false, itemSlotInventory.width, itemSlotInventory.height, true);
+
+		itemSlotSelected = Assets.getBitmapData("starboard:assets/interface/starboard/elements/item_slot_selected.png");
+		this.pixels.copyPixels(itemSlotSelected, itemSlotSelected.rect, new Point(0, 0), null, null, false);
+
 		clothingType = clothingItemType;
+		this.enableMouseClicks(true);
 
 		switch (clothingType)
 		{
@@ -56,33 +65,27 @@ class WieldBox extends WindowItem
 	override public function mousePressedHandler():Void
 	{
 		// Animation?
-		RoomState.starboard.avatarWindow.updateItemList(this.clothingType);
 		super.mousePressedHandler();
-	}
-
-	public function clearGameItem():Void
-	{
-		validItemSet = true;
-
-		var itemBmp:BitmapData = new BitmapData(30, 30, false, 0x00000000);
-		this.pixels.copyPixels(itemBmp, itemBmp.rect, new Point(4, 4), null, null, true);
+		RoomState.starboard.avatarWindow.updateItemList(this.clothingType);
 	}
 
 	public function setGameItem(gameItemKey:Int, colorId:Int):Void
 	{
+		this.pixels.copyPixels(itemSlotInventory, itemSlotInventory.rect, new Point(0, 0), null, null, false);
+		this.pixels.copyPixels(itemSlotSelected, itemSlotSelected.rect, new Point(0, 0), null, null, false);
+
 		if (ClientData.clothingItems.exists(gameItemKey))
 		{
 			validItemSet = true;
 
-			var itemBmp:BitmapData = Assets.getBitmapData("assets/items/icons/" + gameItemKey + ".png");
-			gameItemBitmap = GraphicsSheet.colorItem(itemBmp, colorId, 2, true);
+			gameItemBitmap = GraphicsSheet.colorItem(Assets.getBitmapData("assets/items/icons/" + gameItemKey + ".png", false), colorId, 2, true);
 
-			this.pixels.copyPixels(gameItemBitmap, gameItemBitmap.rect, new Point(4, 4), null, null, true);
+			this.pixels.copyPixels(gameItemBitmap, gameItemBitmap.rect, new Point(4, 4), null, null, false);
 		}
 		else
 		{
-			var itemBmp:BitmapData = Assets.getBitmapData("starboard:assets/interface/starboard/elements/icons/what_the_duck.png");
-			gameItemBitmap = GraphicsSheet.colorItem(itemBmp, colorId, 2);
+			gameItemBitmap = GraphicsSheet.colorItem(Assets.getBitmapData("starboard:assets/interface/starboard/elements/icons/what_the_duck.png"), colorId,
+				2);
 
 			this.pixels.copyPixels(gameItemBitmap, gameItemBitmap.rect, new Point(6, 6), null, null, true);
 		}

@@ -55,6 +55,8 @@ class WindowBase extends WindowItem
 			super(0, 0, baseWindowBmpData);
 			writeTitle(title);
 		}
+
+		updateHitbox();
 	}
 
 	private function drawRoyalBorders()

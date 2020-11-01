@@ -2,7 +2,9 @@ package ui;
 
 import RoomState;
 import communication.NetworkManager;
+import flixel.FlxCamera;
 import flixel.FlxG;
+import flixel.FlxSprite;
 import flixel.addons.display.FlxExtendedSprite;
 import flixel.group.FlxSpriteGroup;
 import openfl.display.BitmapData;
@@ -36,16 +38,18 @@ class StarboardInterface extends FlxSpriteGroup
 	{
 		super();
 
+		trace("Starboard Offset: " + this.offset.x + ", " + this.offset.y);
+
 		gameBar = new GameBar();
 		gameBar.x = 0;
 		gameBar.y = FlxG.height - Math.floor(gameBar.baseWood.height) + 1;
 
 		windowSystem = new FlxTypedSpriteGroup<WindowGroup>();
+		windowSystem.width = FlxG.width;
+		windowSystem.height = FlxG.height;
 
 		add(gameBar);
 		add(windowSystem);
-
-		this.scrollFactor.set(0, 0);
 	}
 
 	override public function update(elapsed:Float):Void
@@ -77,6 +81,8 @@ class StarboardInterface extends FlxSpriteGroup
 			if (avatarWindow == null)
 			{
 				avatarWindow = new AvatarWindow();
+				avatarWindow.x = 100;
+				avatarWindow.y = 100;
 
 				/*
 					FlxG.watch.add(avatarWindow, "x", "avatarWindowX");

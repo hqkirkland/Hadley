@@ -26,12 +26,9 @@ class AvatarWindow extends WindowGroup
 	private static var changeButton:WindowButton;
 	private static var colorPicker:ColorList;
 
-	private static var leftSideMargin:Int;
-	private static var rightSideMargin:Int;
-
 	public function new():Void
 	{
-		super("Avatar", 250, 200, 150, 100);
+		super("Avatar", 250, 200, 0, 0);
 
 		hatSlotBox = new WieldBox(Math.ceil(this.width) - 20 - 38, 40, ClothingType.HAT);
 		shirtSlotBox = new WieldBox(Math.ceil(this.width) - 20 - 38, 90, ClothingType.SHIRT);
@@ -57,9 +54,6 @@ class AvatarWindow extends WindowGroup
 		if (itemList == null)
 		{
 			itemList = new ItemList(itemListType, 0, 0, 0);
-			leftSideMargin = Std.int(0 - (itemList.width));
-			rightSideMargin = Std.int(this.width);
-			StarboardInterface.windowSystem.add(itemList);
 		}
 		else
 		{
@@ -67,27 +61,32 @@ class AvatarWindow extends WindowGroup
 			if (itemListType != itemList.listType)
 			{
 				itemList.resetList(itemListType);
+				trace("Resetting itemList. itemList at: " + this.itemList.x + ", " + this.itemList.y);
+				trace("Resetting itemList. Main window at: " + this.mainWindow.x + ", " + this.mainWindow.y);
+				// .windowSystem
+				StarboardInterface.windowSystem.remove(itemList);
 			}
 		}
+
+		if (itemList.listType == ClothingType.GLASSES || itemList.listType == ClothingType.SHOES)
+		{
+			itemList.x = this.mainWindow.x - itemList.width - 5;
+			itemList.y = this.mainWindow.y + Std.int(this.height / 2) - Std.int(itemList.height / 2);
+		}
+		else
+		{
+			itemList.x = this.mainWindow.x + this.mainWindow.width + 5;
+			itemList.y = this.mainWindow.y + Std.int(this.height / 2) - Std.int(itemList.height / 2);
+		}
+
+		StarboardInterface.windowSystem.add(itemList);
+		trace("itemList Reset! itemList at: " + this.itemList.x + ", " + this.itemList.y);
+		trace("itemList Reset! Main window at: " + this.mainWindow.x + ", " + this.mainWindow.y);
 	}
 
 	override public function update(elapsed:Float)
 	{
 		super.update(elapsed);
-
-		if (itemList != null)
-		{
-			if (itemList.listType == ClothingType.GLASSES || itemList.listType == ClothingType.SHOES)
-			{
-				itemList.x = this.mainWindow.x + leftSideMargin;
-				itemList.y = this.mainWindow.y + Std.int(this.height / 2) - Std.int(itemList.height / 2);
-			}
-			else
-			{
-				itemList.x = this.mainWindow.x + rightSideMargin;
-				itemList.y = this.mainWindow.y + Std.int(this.height / 2) - Std.int(itemList.height / 2);
-			}
-		}
 	}
 
 	private function updateWieldedItems() {}

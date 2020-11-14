@@ -32,7 +32,7 @@ class GameBar extends FlxSpriteGroup
 
 		baseWood = new FlxSprite(0, 0, Assets.getBitmapData("starboard:assets/interface/starboard/elements/gamebar/gamebar_base.png"));
 		add(new FlxSprite(baseWood.x, baseWood.y, Assets.getBitmapData("starboard:assets/interface/starboard/elements/gamebar/gamebar_seal_left.png")));
-		add(new FlxSprite(this.width - 29, baseWood.y, Assets.getBitmapData("starboard:assets/interface/starboard/elements/gamebar/gamebar_seal_right.png")));
+		add(new FlxSprite(this.width - 28, baseWood.y, Assets.getBitmapData("starboard:assets/interface/starboard/elements/gamebar/gamebar_seal_right.png")));
 		add(baseWood);
 
 		chatBox = new ChatInputBox(0xFF232323, 238, -5);

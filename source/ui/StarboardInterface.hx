@@ -38,8 +38,6 @@ class StarboardInterface extends FlxSpriteGroup
 	{
 		super();
 
-		trace("Starboard Offset: " + this.offset.x + ", " + this.offset.y);
-
 		gameBar = new GameBar();
 		gameBar.x = 0;
 		gameBar.y = FlxG.height - Math.floor(gameBar.baseWood.height) + 1;

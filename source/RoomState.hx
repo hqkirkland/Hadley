@@ -5,7 +5,6 @@ import communication.messages.ServerPacket;
 import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxObject;
-import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.addons.plugin.FlxMouseControl;
 import flixel.math.FlxPoint;
@@ -106,6 +105,8 @@ class RoomState extends FlxState
 
 	private function loadRoom(completeLib:AssetLibrary):Void
 	{
+		FlxG.cameras.reset();
+
 		Assets.registerLibrary(currentRoom.roomName, completeLib);
 
 		var roomStructure:String = Assets.getText(currentRoom.roomName + ":assets/" + currentRoom.roomName + "/" + currentRoom.roomName + "_Objects.json");
@@ -116,22 +117,30 @@ class RoomState extends FlxState
 		starboardCamera = new FlxCamera(0, 0, FlxG.width, FlxG.height);
 		starboardCamera.bgColor = FlxColor.TRANSPARENT;
 
+		this.bgColor = currentRoom.backgroundColor;
+
 		setupGameCamera();
 
-		FlxG.cameras.reset(gameCamera);
-		// FlxG.cameras.add(starboardCamera);
+		FlxG.cameras.add(gameCamera);
+		FlxG.cameras.add(starboardCamera);
 
 		starboard.scrollFactor.set(0, 0);
 
 		currentRoom.cameras = [gameCamera];
+		currentRoom.vehicleEntities.cameras = [gameCamera];
+		currentRoom.roomEntities.cameras = [gameCamera];
+		currentRoom.portalEntities.cameras = [gameCamera];
+		playerAvatar.chatGroup.cameras = [gameCamera];
 
 		add(currentRoom);
-		trace("currentRoom: " + currentRoom.x + ", " + currentRoom.y);
 		add(currentRoom.vehicleEntities);
 		add(currentRoom.roomEntities);
 		add(currentRoom.portalEntities);
 		// add(currentRoom.walkMap);
 		add(playerAvatar.chatGroup);
+		trace("currentRoom: " + currentRoom.x + ", " + currentRoom.y);
+
+		starboard.cameras = [starboardCamera];
 		add(starboard);
 
 		starboard.gameBar.chatBox.textInput.addEventListener(KeyboardEvent.KEY_DOWN, chatBarEnter);
@@ -143,43 +152,45 @@ class RoomState extends FlxState
 			starboard.cameras = [uiCam];
 		 */
 
-		this.bgColor = currentRoom.backgroundColor;
 		currentRoom.portalEntities.visible = false;
 		NetworkManager.sendJoinRoom(currentRoom.roomName);
 	}
 
 	private function setupGameCamera():Void
 	{
-		var ROOM_MIN_X:Float;
-		var ROOM_MAX_X:Float;
-		var ROOM_MIN_Y:Float;
-		var ROOM_MAX_Y:Float;
+		var CAMERA_X:Float;
+		var CAMERA_WIDTH:Float;
+		var CAMERA_Y:Float;
+		var CAMERA_HEIGHT:Float;
+		var MIRROR_OVERHANG:Int = 40;
 
 		if (currentRoom.width < FlxG.width)
 		{
-			ROOM_MIN_X = (FlxG.width / 2) - (currentRoom.width / 2);
-			ROOM_MAX_X = currentRoom.width;
+			CAMERA_X = (FlxG.width / 2) - (currentRoom.width / 2);
+			CAMERA_WIDTH = currentRoom.width;
 		}
 		else
 		{
-			ROOM_MIN_X = currentRoom.x;
-			ROOM_MAX_X = currentRoom.width;
+			CAMERA_X = 0;
+			CAMERA_WIDTH = FlxG.width;
 		}
 
 		if (currentRoom.height < FlxG.height)
 		{
-			ROOM_MIN_Y = (FlxG.height / 2) - (currentRoom.height / 2);
-			ROOM_MAX_Y = currentRoom.height;
+			CAMERA_Y = (FlxG.height / 2) - (currentRoom.height / 2);
+			CAMERA_HEIGHT = currentRoom.height;
 		}
 		else
 		{
-			ROOM_MIN_Y = currentRoom.y;
-			ROOM_MAX_Y = currentRoom.height;
+			CAMERA_Y = 0;
+			CAMERA_HEIGHT = FlxG.height - (starboard.gameBar.height - MIRROR_OVERHANG);
 		}
 
-		gameCamera = new FlxCamera(Std.int(ROOM_MIN_X), Std.int(ROOM_MIN_Y), Std.int(ROOM_MAX_X), Std.int(ROOM_MAX_Y));
-		gameCamera.setScrollBoundsRect(0, 0, currentRoom.width, currentRoom.height, true);
-		gameCamera.follow(playerAvatar, FlxCameraFollowStyle.LOCKON, .25);
+		gameCamera = new FlxCamera(Std.int(CAMERA_X), Std.int(CAMERA_Y), Std.int(CAMERA_WIDTH), Std.int(CAMERA_HEIGHT));
+		gameCamera.bgColor = this.bgColor;
+
+		gameCamera.follow(playerAvatar, FlxCameraFollowStyle.LOCKON, 1.0);
+		gameCamera.setScrollBoundsRect(currentRoom.x, currentRoom.y, currentRoom.width, currentRoom.height, true);
 	}
 
 	private function destroyRoom():Void

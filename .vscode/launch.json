@@ -2,37 +2,22 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "Flash",
-			"type": "fdb",
+			"name": "Build + Debug",
+			"type": "lime",
 			"request": "launch",
-			"program": "${workspaceRoot}/export/flash/bin/HadleyHaxe.swf",
-			"preLaunchTask": "debug: flash"
+			"runtimeArgs": ["--disable-web-security"],
 		},
 		{
-			"name": "HTML5",
-			"type": "chrome",
+			"name": "Debug",
+			"type": "lime",
 			"request": "launch",
-			"url": "http://127.0.0.1:2000",
-			"sourceMaps": true,
-			"webRoot": "${workspaceFolder}"
+			"preLaunchTask": null,
+			"runtimeArgs": ["--disable-web-security"]
 		},
 		{
-			"name": "Windows",
-			"type": "hxcpp",
-			"request": "launch",
-			"program": "${workspaceRoot}/export/windows/bin/HadleyHaxe.exe"
-		},
-		{
-			"name": "Linux",
-			"type": "hxcpp",
-			"request": "launch",
-			"program": "${workspaceRoot}/export/linux64/bin/HadleyHaxe"
-		},
-		{
-			"name": "Mac",
-			"type": "hxcpp",
-			"request": "launch",
-			"program": "${workspaceRoot}/export/mac64/bin/HadleyHaxe.app/Contents/MacOS/HadleyHaxe"
+			"name": "Macro",
+			"type": "haxe-eval",
+			"request": "launch"
 		}
 	]
 }

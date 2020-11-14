@@ -1,126 +1,121 @@
 package ui;
 
-import flixel.math.FlxPoint;
-import flixel.math.FlxRect;
-import openfl.Assets;
-import openfl.display.Bitmap;
+import RoomState;
+import communication.NetworkManager;
+import flixel.FlxCamera;
+import flixel.FlxG;
+import flixel.FlxSprite;
+import flixel.addons.display.FlxExtendedSprite;
+import flixel.group.FlxSpriteGroup;
 import openfl.display.BitmapData;
 import openfl.geom.Point;
 import openfl.geom.Rectangle;
-import openfl.utils.AssetLibrary;
+import ui.windows.WindowBase;
+import ui.windows.WindowGroup;
+import ui.windows.avatar.AvatarWindow;
 
-import flixel.FlxG;
-import flixel.FlxSprite;
-import flixel.group.FlxSpriteGroup;
-import flixel.addons.display.FlxExtendedSprite;
-import flixel.addons.plugin.FlxMouseControl;
-
-import RoomState;
-import communication.NetworkManager;
-import game.ClientData;
-import ui.TerminalWindow;
 /**
- * ...
+ * Base class for all UI objects.
+ *
+ * Represents isolation of the in-room manager (RoomState)
+ * from any UI functions.
+ *
+ * All UI <-> Game interactions and reactions should pass
+ * thru the main Starboard class.
+ *
  * @author Hunter
  */
-
 class StarboardInterface extends FlxSpriteGroup
 {
 	public var gameBar:GameBar;
-	public static var windowSystem:FlxTypedSpriteGroup<Window>;
-	
-	public static var lastAppearance:String;
-	
-	public function new() 
+
+	public var avatarWindow:AvatarWindow;
+
+	public static var windowSystem:FlxTypedSpriteGroup<WindowGroup>;
+	private static var lastAppearance:String;
+
+	public function new()
 	{
 		super();
-		
+
 		gameBar = new GameBar();
 		gameBar.x = 0;
 		gameBar.y = FlxG.height - Math.floor(gameBar.baseWood.height) + 1;
+
+		windowSystem = new FlxTypedSpriteGroup<WindowGroup>();
+		windowSystem.width = FlxG.width;
+		windowSystem.height = FlxG.height;
+
 		add(gameBar);
-		
-		FlxG.plugins.add(new FlxMouseControl());
-		FlxMouseControl.mouseZone = FlxG.worldBounds;
-		this.scrollFactor.set(0, 0);
-		
-		forEach(
-			function(sprite:FlxSprite)
-			{
-				sprite.scrollFactor.set(0, 0);
-			}
-		);
+		add(windowSystem);
 	}
-	
+
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
-		
-		if (FlxG.mouse.justPressed && FlxG.mouse.overlaps(gameBar.playerMirror))
-		{
-			if (gameBar.avatarWindow == null)
-			{
-				gameBar.avatarWindow = new AvatarWindow();
-				FlxG.watch.add(gameBar.avatarWindow, "x", "AvatarWindow X");
-				FlxG.watch.add(gameBar.avatarWindow, "y", "AvatarWindow Y");
-				
-				windowSystem = new FlxTypedSpriteGroup<Window>();
-				windowSystem.add(gameBar.avatarWindow);				
-				add(windowSystem);
-				FlxG.watch.add(windowSystem, "x", "WindowSystem X");
-				FlxG.watch.add(windowSystem, "y", "WindowSystem Y");
-				//FlxMouseControl.addToStack(new TerminalWindow());
-			}
-			
-			else if (gameBar.avatarWindow.visible)
-			{
-				var pt:FlxPoint = gameBar.avatarWindow.getScreenPosition();
-				trace(pt.x + ", " + pt.y);
-				
-				gameBar.avatarWindow.visible = false;
-				remove(gameBar.avatarWindow);
-			}
-			
-			else
-			{
-				gameBar.avatarWindow.visible = true;
-				add(gameBar.avatarWindow);
-			}
-		}
 	}
-	
+
 	public function changeAppearance(appearanceString:String):Void
 	{
 		if (appearanceString != lastAppearance)
 		{
 			RoomState.playerAvatar.setAppearance(appearanceString);
-			setMirrorLook(RoomState.playerAvatar.pixels);
+
+			var bmp:BitmapData = new BitmapData(38, 56, true);
+			bmp.copyPixels(RoomState.playerAvatar.pixels, new Rectangle(123, 0, 38, 56), new Point(0, 0));
+
+			gameBar.setReflections(bmp);
+
 			NetworkManager.sendChangeClothes(appearanceString);
-			
 			lastAppearance = appearanceString;
 		}
 	}
-	
-	public function openStoreWindow(itemArray:Array<Int>):Void
+
+	// Strictly for GameBar -> Starboard calls
+	public function gameBarInvoke(buttonClicked:FlxExtendedSprite, x:Int, y:Int):Void
 	{
-		if (gameBar.storeWindow == null)
+		if (buttonClicked == this.gameBar.playerMirror)
 		{
-			gameBar.storeWindow = new StoreWindow();
-			gameBar.storeWindow.setUpItems(itemArray);
+			if (avatarWindow == null)
+			{
+				avatarWindow = new AvatarWindow();
+				avatarWindow.x = 100;
+				avatarWindow.y = 100;
+
+				/*
+					FlxG.watch.add(avatarWindow, "x", "avatarWindowX");
+					FlxG.watch.add(avatarWindow, "y", "avatarWindowY");
+
+					FlxG.watch.add(avatarWindow.mainWindow, "x", "avatarWindowBaseX");
+					FlxG.watch.add(avatarWindow.mainWindow, "y", "avatarWindowBaseY");
+
+					FlxG.watch.add(windowSystem, "x", "windowSystemX");
+					FlxG.watch.add(windowSystem, "y", "windowSystemY");
+				 */
+
+				windowSystem.add(avatarWindow);
+			}
+			else if (!avatarWindow.visible)
+			{
+				avatarWindow.visible = true;
+				bringToFront(avatarWindow.mainWindow);
+			}
+			else if (avatarWindow.visible)
+			{
+				bringToFront(avatarWindow.mainWindow);
+			}
 		}
 	}
-	
-	public function setMirrorLook(avatarBmp:BitmapData):Void
+
+	public static function bringToFront(targetWindow:WindowBase)
 	{
-		var bmp:BitmapData = new BitmapData(38, 56, true);
-		bmp.copyPixels(avatarBmp, new Rectangle(123, 0, 38, 56), new Point(0, 0));
-		
-		gameBar.setReflections(bmp);
-	}
-	
-	public function setWindowOnTop(window:Window):Void
-	{
-		remove(window);
-		add(window);
+		for (window in windowSystem)
+		{
+			if (window.mainWindow == targetWindow)
+			{
+				windowSystem.remove(window, true);
+				windowSystem.add(window);
+			}
+		}
 	}
 }

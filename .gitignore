@@ -1,4 +1,6 @@
 obj/
-export/*.*
+export/*
 .vscode/
 dump/
+/assets/items/*
+/assets/items/icons/*.png

@@ -38,6 +38,7 @@ class ClientData extends EventDispatcher
 		
 		for (item in itemSet)
 		{
+
 		}
 	}
 	
@@ -49,7 +50,7 @@ class ClientData extends EventDispatcher
 		{
 			switch (itemData[1])
 			{
-				case "Clothing", "Shoes", "Pants", "Shirt", "Hat", "Glasses", "Hair", "Face", "Body":
+				case ClothingType.DEFAULT_CLOTHING, ClothingType.HAIR, ClothingType.SHOES, ClothingType.PANTS, ClothingType.SHIRT, ClothingType.HAT, ClothingType.GLASSES, ClothingType.FACE, ClothingType.BODY:
 					pushClothingItem(itemData);
 			}
 		}
@@ -59,7 +60,7 @@ class ClientData extends EventDispatcher
 		var req:URLRequest = new URLRequest(Endpoints.COLORDATA);
 		loader = new URLLoader();
 		loader.load(req);
-		loader.addEventListener(Event.COMPLETE, finalize);
+		loader.addEventListener(Event.COMPLETE, colorFetchComplete);
 	}
 	
 	private function pushClothingItem(itemData:Array<Dynamic>):Void
@@ -78,7 +79,7 @@ class ClientData extends EventDispatcher
 		clothingItems.set(item.gameItemId, item);
 	}
 	
-	private function finalize(e:Event)
+	private function colorFetchComplete(e:Event)
 	{
 		var colorDataSet:Array<ItemColor> = Json.parse(loader.data);
 		

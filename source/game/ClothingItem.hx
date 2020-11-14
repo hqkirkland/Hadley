@@ -6,6 +6,7 @@ package game;
 class ClothingItem
 {
 	public var gameItemId:Int;
+	public var setId:Int;
 	public var itemName:String;
 	public var layered:Bool;
 	public var layeredAsset:String;

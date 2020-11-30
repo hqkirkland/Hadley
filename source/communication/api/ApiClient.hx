@@ -74,11 +74,6 @@ class ApiClient extends EventDispatcher
 		var endpoint:String = resource.substr(Endpoints.BASE_ENDPOINT.length);
 		trace(endpoint);
 	}
-
-	private function progressHandler(e:ProgressEvent):Void
-	{
-		trace("Progress made.");
-	}
 	
 	public function login(username:String, password:String):Void
 	{		

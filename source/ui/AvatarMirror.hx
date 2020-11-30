@@ -1,5 +1,6 @@
 package ui;
 
+import flixel.util.FlxColor;
 import flixel.addons.display.FlxExtendedSprite;
 import flixel.math.FlxPoint;
 import openfl.Assets;
@@ -17,16 +18,16 @@ import flixel.graphics.frames.FlxTileFrames;
  * @author Hunter
  */
 class AvatarMirror extends FlxExtendedSprite
-{
-	private var mirrorSprite:FlxSprite;
-	
+{	
 	private static var mirrorMask:FlxSprite;
+	private static var mirrorMaskBg:FlxSprite;
 	
 	public function new(?x:Float, ?y:Float)
 	{
 		super(0, 0);
 		
 		mirrorMask = new FlxSprite(0, 0, Assets.getBitmapData("starboard:assets/interface/starboard/elements/gamebar/gamebar_mirror_mask.png"));
+		mirrorMaskBg = new FlxSprite(0, 0, Assets.getBitmapData("starboard:assets/interface/starboard/elements/gamebar/gamebar_mirror_bg.png"));
 		
 		this.pixels = Assets.getBitmapData("starboard:assets/interface/starboard/elements/gamebar/gamebar_mirror_avatar.png");
 	}
@@ -50,7 +51,11 @@ class AvatarMirror extends FlxExtendedSprite
 	}
 	
 	public function setAppearance(avatarBmp:BitmapData):Void
-	{		
+	{
+		stamp(mirrorMaskBg, 0, 6);
+		stamp(mirrorMaskBg, 38, 6);
+		stamp(mirrorMaskBg, 76, 6);
+
 		avatarBmp.threshold(avatarBmp, avatarBmp.rect, new Point(0, 0), "==", 0x00000000, 0xFF00FF00);
 		
 		var inSpr:FlxSprite = new FlxSprite(0, 0, avatarBmp);
@@ -60,6 +65,7 @@ class AvatarMirror extends FlxExtendedSprite
 		
 		outSpr.pixels.threshold(outSpr.pixels, avatarBmp.rect, new Point(0, 0), "==", 0xFF00FF00, 0x00000000);
 		
+		this.loadGraphic(Assets.getBitmapData("starboard:assets/interface/starboard/elements/gamebar/gamebar_mirror_avatar.png"));
 		stamp(outSpr, 0, 6);
 		stamp(outSpr, 38, 6);
 		stamp(outSpr, 76, 6);

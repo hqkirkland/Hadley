@@ -74,7 +74,16 @@ class WieldBox extends WindowItem
 		this.pixels.copyPixels(itemSlotInventory, itemSlotInventory.rect, new Point(0, 0), null, null, false);
 		this.pixels.copyPixels(itemSlotSelected, itemSlotSelected.rect, new Point(0, 0), null, null, false);
 
-		if (ClientData.clothingItems.exists(gameItemKey))
+		if (gameItemKey == null)
+		{
+			validItemSet = true;
+
+			gameItemBitmap = new BitmapData(30, 30, false, 0xFFFFFF);
+
+			this.pixels.copyPixels(gameItemBitmap, gameItemBitmap.rect, new Point(4, 4), null, null, false);
+		}
+
+		else if (ClientData.clothingItems.exists(gameItemKey))
 		{
 			validItemSet = true;
 
@@ -82,6 +91,7 @@ class WieldBox extends WindowItem
 
 			this.pixels.copyPixels(gameItemBitmap, gameItemBitmap.rect, new Point(4, 4), null, null, false);
 		}
+
 		else
 		{
 			gameItemBitmap = GraphicsSheet.colorItem(Assets.getBitmapData("starboard:assets/interface/starboard/elements/icons/what_the_duck.png"), colorId,

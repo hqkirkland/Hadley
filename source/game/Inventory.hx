@@ -17,8 +17,11 @@ class Inventory
 	{
 		if (ClientData.clothingItems.exists(itemId))
 		{
-			var wardrobeItem:ClothingItem = ClientData.clothingItems[itemId];
-			wardrobe.push(wardrobeItem);
+			// Temp fix. Need better check?
+			if (wardrobe.indexOf(ClientData.clothingItems[itemId]) == -1)
+			{
+				wardrobe.push(ClientData.clothingItems[itemId]);
+			}
 		}
 	}
 }

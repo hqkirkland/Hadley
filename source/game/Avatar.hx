@@ -1,5 +1,10 @@
 package game;
 
+import openfl.display.BitmapData;
+import openfl.geom.Point;
+import openfl.geom.Rectangle;
+import openfl.utils.Object;
+
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.graphics.FlxGraphic;
@@ -7,11 +12,10 @@ import flixel.graphics.frames.FlxTileFrames;
 import flixel.math.FlxPoint;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+
 import game.BubbleStack;
-import openfl.display.BitmapData;
-import openfl.geom.Point;
-import openfl.geom.Rectangle;
-import openfl.utils.Object;
+import game.avatar.AvatarAppearance;
+
 
 /**
  * ...
@@ -26,6 +30,8 @@ class Avatar extends FlxSprite
 	// Also attribute for each piece color.
 	// ACTUALLY: Maybe not? Doing that would make it harder to iterate..
 	public var itemArray:Array<AvatarItem>;
+	//public var appearance:AvatarAppearance;
+	public var appearanceString:String;
 
 	public var canWalk:Bool = true;
 	public var currentAction:String = "Stand";
@@ -91,6 +97,8 @@ class Avatar extends FlxSprite
 
 	public function setAppearance(appearanceString:String):Void
 	{
+		this.appearanceString = appearanceString;
+		
 		avatarSheet = new GraphicsSheet(1772, 68);
 		itemArray = new Array<AvatarItem>();
 		var figure:Array<String> = appearanceString.split('^');
@@ -118,6 +126,7 @@ class Avatar extends FlxSprite
 			};
 
 			itemArray.push(item);
+			// Below shouldn't always need to exist.
 			Inventory.addItemById(item.gameItem.gameItemId);
 
 			// This is the hat! Since there's a piece behind the hat, there's an extra step!
@@ -140,8 +149,6 @@ class Avatar extends FlxSprite
 		generateAvatar();
 		generateAnimation();
 		fadeIn();
-
-		this.alpha = 1;
 
 		this.width = 10;
 		this.height = 5;
@@ -589,7 +596,7 @@ class Avatar extends FlxSprite
 
 	public function fadeIn():Void
 	{
-		FlxTween.tween(this, {alpha: 1}, 0.5, {
+		FlxTween.tween(this, {alpha: 1}, 0.75, {
 			ease: FlxEase.smoothStepIn,
 			onComplete: {
 				function(_)

@@ -21,6 +21,8 @@ class SlotBox extends WindowItem
 	public var clothingItemType:String;
 	public var gameItem:ClothingItem;
 	public var gameItemBitmap:BitmapData;
+	
+	public var slotId:Int;
 
 	private static var itemSlotInventory:BitmapData;
 
@@ -28,9 +30,11 @@ class SlotBox extends WindowItem
 	// closing avatar window
 	// does not clear changes
 	// to avatar.
-	public function new(slotType:String, ?relativeX:Int, ?relativeY:Int):Void
+	public function new(slotType:String, _slotId:Int, ?relativeX:Int, ?relativeY:Int):Void
 	{
 		super(relativeX, relativeY, null);
+
+		slotId = _slotId;
 
 		itemSlotInventory = Assets.getBitmapData("starboard:assets/interface/starboard/elements/item_slot_inventory.png");
 		this.loadGraphic(itemSlotInventory, false, 38, 38, true);
@@ -38,6 +42,13 @@ class SlotBox extends WindowItem
 		clothingItemType = slotType;
 
 		this.enableMouseClicks(true);
+	}
+
+	override public function mousePressedHandler():Void
+	{
+		super.mousePressedHandler();
+
+		RoomState.starboard.avatarWindow.itemList.setSelectedItem(slotId);
 	}
 
 	public function clearGameItem():Void

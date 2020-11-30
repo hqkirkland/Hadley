@@ -1,5 +1,6 @@
 package ui.windows.avatar;
 
+import communication.NetworkManager;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -36,7 +37,12 @@ class AvatarWindow extends WindowGroup
 		glassesSlotBox = new WieldBox(20, 40, ClothingType.GLASSES);
 		shoesSlotBox = new WieldBox(20, 140, ClothingType.SHOES);
 
-		playerPreview = new AvatarPreview(RoomState.playerAvatar.itemArray, 105, 68);
+		playerPreview = new AvatarPreview(RoomState.playerAvatar.appearanceString, 105, 68);
+
+		changeButton = new WindowButton(2, "starboard:assets/interface/starboard/elements/buttons/change_look.png", true);
+		changeButton.setAnimation("", [0], false, false);
+		changeButton.setAnimation("clicked", [1], false, true);
+		changeButton.windowPos.set((this.width / 2)- (changeButton.width / 2), this.height - 28);
 
 		setWieldedItems();
 
@@ -46,7 +52,10 @@ class AvatarWindow extends WindowGroup
 		add(glassesSlotBox);
 		add(shoesSlotBox);
 
+		add(changeButton);
+
 		add(playerPreview);
+		
 	}
 
 	public function updateItemList(itemListType:String)
@@ -76,7 +85,7 @@ class AvatarWindow extends WindowGroup
 		else
 		{
 			itemList.x = this.mainWindow.x + this.mainWindow.width + 5;
-			itemList.y = this.mainWindow.y + Std.int(this.height / 2) - Std.int(itemList.height / 2);
+			itemList.y = this.mainWindow.y + Std.int(this.mainWindow.height / 2) - Std.int(itemList.height / 2);
 		}
 
 		StarboardInterface.windowSystem.add(itemList);
@@ -87,9 +96,24 @@ class AvatarWindow extends WindowGroup
 	override public function update(elapsed:Float)
 	{
 		super.update(elapsed);
+
+		if (changeButton.isPressed)
+		{
+			var appearanceStr:String = playerPreview.appearance.appearanceString;
+
+			trace(appearanceStr);
+
+			RoomState.playerAvatar.setAppearance(appearanceStr);
+			RoomState.starboard.changeAppearance(appearanceStr);
+			NetworkManager.sendChangeClothes(appearanceStr);
+		}
 	}
 
-	private function updateWieldedItems() {}
+	public function updateWieldedItems()
+	{
+		// TODO: add item-type specific update.
+		setWieldedItems();
+	}
 
 	private function setWieldedItems()
 	{

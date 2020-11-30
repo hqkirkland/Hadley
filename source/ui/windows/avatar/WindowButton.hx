@@ -16,7 +16,7 @@ import flixel.addons.display.FlxExtendedSprite;
  * ...
  * @author Hunter
  */
-class WindowButton extends FlxExtendedSprite
+class WindowButton extends WindowItem
 {
 	public var hoverAnimation:String;
 	public var clickAnimation:String;
@@ -47,46 +47,42 @@ class WindowButton extends FlxExtendedSprite
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
-		
+
 		if (hoverAnimation != null)
 		{
 			if (FlxG.mouse.overlaps(this))
 			{
-				if (animation.name != hoverAnimation)
+				if (animation.name == hoverAnimation)
 				{
 					animation.play(hoverAnimation);
 				}
 			}
 		}
 		
-
-		if (FlxG.mouse.overlaps(this) && this.isPressed)
+		else if (FlxG.mouse.overlaps(this) && this.isPressed)
 		{
-			if (clickAnimation != null && this.clickable)
+			if (clickAnimation != null)
 			{
-				if (animation.name != clickAnimation)
-				{
-					animation.play(clickAnimation);
-				}
+				animation.play(clickAnimation, true);
 			}
+		}
 
-			else
-			{
-				animation.play("inactive");
-			}
+		else
+		{
+			animation.play("inactive");
 		}
 	}
 	
-	public function addAnimation(animationName:String, frameSet:Array<Int>, ?isHoverAnimation:Bool=false, ?isClickAnimation:Bool=false):Void
+	public function setAnimation(animationName:String, frameSet:Array<Int>, ?isHoverAnimation:Bool=false, ?isClickAnimation:Bool=false):Void
 	{
-		if (animationName == "")
+		if (animationName == "" || (!isHoverAnimation && !isClickAnimation))
 		{
 			animationName = "inactive";
 		}
 		
 		for (n in frameSet)
 		{
-			if (n >= this.frames.numFrames)
+			if (n > this.frames.numFrames)
 			{
 				frameSet.remove(n);
 			}

@@ -25,7 +25,6 @@ import ui.StarboardInterface;
 
 class RoomState extends FlxState
 {
-	public var username:String;
 
 	public static var roomAvatars:Map<String, Avatar>;
 	public static var playerAvatar:Avatar;
@@ -39,11 +38,15 @@ class RoomState extends FlxState
 	private static var audioManager:SoundManager;
 	private static var borderArray:Array<Int> = [0xFF010101, 0x00000000];
 	private static var gameTicket:String;
+	private static var username:String;
+	private static var loginAppearance:String;
 
-	override public function new(_gameTicket:String)
+	override public function new(_gameTicket:String, _username:String, _loginAppearance:String)
 	{
 		super();
 		gameTicket = _gameTicket;
+		username = _username;
+		loginAppearance = _loginAppearance;
 	}
 
 	override public function create():Void
@@ -57,7 +60,6 @@ class RoomState extends FlxState
 		FlxG.sound.volumeDownKeys = null;
 		FlxG.sound.volumeUpKeys = null;
 
-		FlxG.debugger.drawDebug = true;
 		FlxG.watch.add(FlxG, "worldBounds");
 
 		starboard = new StarboardInterface();
@@ -73,7 +75,11 @@ class RoomState extends FlxState
 	{
 		var rand:Int = Math.ceil(Math.random() * 1000);
 		playerAvatar = new Avatar(username);
+		
 		playerAvatar.drawFrame(true);
+
+		RoomState.playerAvatar.setAppearance(loginAppearance);
+		RoomState.starboard.changeAppearance(loginAppearance);
 
 		NetworkManager.connect("whirlpool.nodebay.com", 8443, playerAvatar.username);
 		NetworkManager.networkSocket.addEventListener(Event.CONNECT, doLogin);
@@ -83,7 +89,6 @@ class RoomState extends FlxState
 	private function doLogin(e:Event):Void
 	{
 		NetworkManager.sendAuthenticate(gameTicket);
-		RoomState.starboard.changeAppearance("67^0^44^2^34^2^24^2^94^0^72^1^51^0^61^0");
 		joinRoom("cloudInfoRoom");
 	}
 
@@ -399,12 +404,15 @@ class RoomState extends FlxState
 
 	private function speakUp(message:String):Void
 	{
-		if (message == "DEBUG")
+		if (message == "DEBUG_BOXES")
 		{
-			FlxG.debugger.visible = true;
+			FlxG.debugger.drawDebug = true;
 		}
 
-		NetworkManager.sendRoomChat(message);
+		else
+		{
+			NetworkManager.sendRoomChat(message);
+		}
 	}
 
 	public function enterPortal(objectA:FlxObject, objectB:FlxObject):Void

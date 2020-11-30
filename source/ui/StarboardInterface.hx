@@ -1,7 +1,7 @@
 package ui;
 
 import RoomState;
-import communication.NetworkManager;
+
 import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -23,6 +23,7 @@ import ui.windows.avatar.AvatarWindow;
  * All UI <-> Game interactions and reactions should pass
  * thru the main Starboard class.
  *
+ * I don't think this class should make use of any NetworkManager features..
  * @author Hunter
  */
 class StarboardInterface extends FlxSpriteGroup
@@ -57,16 +58,14 @@ class StarboardInterface extends FlxSpriteGroup
 
 	public function changeAppearance(appearanceString:String):Void
 	{
+		// Networking code moved.
 		if (appearanceString != lastAppearance)
 		{
-			RoomState.playerAvatar.setAppearance(appearanceString);
-
 			var bmp:BitmapData = new BitmapData(38, 56, true);
 			bmp.copyPixels(RoomState.playerAvatar.pixels, new Rectangle(123, 0, 38, 56), new Point(0, 0));
 
 			gameBar.setReflections(bmp);
 
-			NetworkManager.sendChangeClothes(appearanceString);
 			lastAppearance = appearanceString;
 		}
 	}
@@ -81,17 +80,6 @@ class StarboardInterface extends FlxSpriteGroup
 				avatarWindow = new AvatarWindow();
 				avatarWindow.x = 100;
 				avatarWindow.y = 100;
-
-				/*
-					FlxG.watch.add(avatarWindow, "x", "avatarWindowX");
-					FlxG.watch.add(avatarWindow, "y", "avatarWindowY");
-
-					FlxG.watch.add(avatarWindow.mainWindow, "x", "avatarWindowBaseX");
-					FlxG.watch.add(avatarWindow.mainWindow, "y", "avatarWindowBaseY");
-
-					FlxG.watch.add(windowSystem, "x", "windowSystemX");
-					FlxG.watch.add(windowSystem, "y", "windowSystemY");
-				 */
 
 				windowSystem.add(avatarWindow);
 			}

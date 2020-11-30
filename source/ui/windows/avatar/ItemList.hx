@@ -53,7 +53,7 @@ class ItemList extends WindowGroup
 			var slotX:Int = Std.int(this.mainWindow.x) + 5 + (((i % 3) * 30) + ((i % 3) * 10));
 			var slotY:Int = Std.int(this.mainWindow.y) + 8 + ((Math.floor(i / 3) * 30) + (Math.floor(i / 3) * 10));
 
-			slotBoxes.push(new SlotBox(listType, slotX, slotY));
+			slotBoxes.push(new SlotBox(listType, i, slotX, slotY));
 
 			if (i < itemsByType.length)
 			{
@@ -69,11 +69,6 @@ class ItemList extends WindowGroup
 
 		add(itemSlotCursor);
 		add(promptCloseButton);
-	}
-
-	private function closeButtonClicked(spr:FlxExtendedSprite, mouseX:Int, mouseY:Int)
-	{
-		this.visible = false;
 	}
 
 	public function resetList(clothingType:String)
@@ -92,6 +87,31 @@ class ItemList extends WindowGroup
 		add(itemSlotCursor);
 	}
 
+	public function setSelectedItem(_slotId:Int)
+	{
+		currentSlot = _slotId;
+		selectedItem = slotBoxes[currentSlot].gameItem;
+
+		if (selectedItem == null)
+		{
+			AvatarWindow.playerPreview.clearItem(listType);
+		}
+		
+		else
+		{
+			AvatarWindow.playerPreview.wearItem(selectedItem, 1);
+		}
+
+		RoomState.starboard.avatarWindow.updateWieldedItems();
+
+		itemSlotCursor.windowPos.set(slotBoxes[currentSlot].windowPos.x, slotBoxes[currentSlot].windowPos.y);
+	}
+
+	private function closeButtonClicked(spr:FlxExtendedSprite, mouseX:Int, mouseY:Int)
+	{
+		this.visible = false;
+	}
+
 	private function setPageItems():Void
 	{
 		for (i in 0...9)
@@ -100,6 +120,7 @@ class ItemList extends WindowGroup
 
 			if (itemNum < itemsByType.length)
 			{
+				trace(i + "/" + itemsByType.length);
 				slotBoxes[i].setGameItem(itemsByType[itemNum].gameItemId, 3);
 			}
 			else

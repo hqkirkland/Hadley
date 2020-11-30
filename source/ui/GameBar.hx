@@ -22,8 +22,6 @@ class GameBar extends FlxSpriteGroup
 	public var playerMirror:AvatarMirror;
 	public var petMirror:FlxSprite;
 
-	private var avatarMaskSprite:FlxSprite;
-
 	public function new()
 	{
 		super();
@@ -46,9 +44,18 @@ class GameBar extends FlxSpriteGroup
 
 	public function setReflections(avatarBmp:BitmapData):Void
 	{
-		playerMirror = new AvatarMirror();
-		playerMirror.x = 21;
-		playerMirror.y = -23;
+		if (playerMirror == null)
+		{
+			playerMirror = new AvatarMirror();
+			playerMirror.x = 21;
+			playerMirror.y = -23;
+		}
+
+		else
+		{
+			remove(playerMirror);
+		}
+
 		playerMirror.setAppearance(avatarBmp);
 		playerMirror.animation.play("Inactive");
 		add(playerMirror);

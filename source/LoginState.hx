@@ -165,8 +165,7 @@ class LoginState extends FlxState
 
 		trace("Welcome, " + e.result.username);
 
-		var _roomState:RoomState = new RoomState(ApiClient.apiToken.gameTicket);
-		_roomState.username = e.result.username;
+		var _roomState:RoomState = new RoomState(ApiClient.apiToken.gameTicket, e.result.username, e.result.appearance);
 
 		usernameBox.removeElements();
 		passwordBox.removeElements();

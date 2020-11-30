@@ -119,7 +119,7 @@ class AvatarWindow extends WindowGroup
 	{
 		var itemIndex:Int = 0;
 
-		for (item in RoomState.playerAvatar.itemArray)
+		for (item in RoomState.playerAvatar.appearance.itemArray)
 		{
 			// Skip null items, and the fourth item.
 			// itemArray is the actual figure of the Avatar.

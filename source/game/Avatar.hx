@@ -30,7 +30,7 @@ class Avatar extends FlxSprite
 	// Also attribute for each piece color.
 	// ACTUALLY: Maybe not? Doing that would make it harder to iterate..
 	public var itemArray:Array<AvatarItem>;
-	//public var appearance:AvatarAppearance;
+	public var appearance:AvatarAppearance;
 	public var appearanceString:String;
 
 	public var canWalk:Bool = true;
@@ -100,9 +100,13 @@ class Avatar extends FlxSprite
 		this.appearanceString = appearanceString;
 		
 		avatarSheet = new GraphicsSheet(1772, 68);
-		itemArray = new Array<AvatarItem>();
-		var figure:Array<String> = appearanceString.split('^');
 
+		appearance = new AvatarAppearance(appearanceString);
+
+		//itemArray = new Array<AvatarItem>();
+		//var figure:Array<String> = appearanceString.split('^');
+
+		/*
 		for (i in 0...8)
 		{
 			var gameItemKey:Int = Std.parseInt(figure[i * 2]);
@@ -142,6 +146,7 @@ class Avatar extends FlxSprite
 				itemArray[4] = layerItem;
 			}
 		}
+		*/
 
 		this.pixels = new BitmapData(41, 68, true, 0x00000000);
 
@@ -158,7 +163,7 @@ class Avatar extends FlxSprite
 	{
 		var itemSprite:FlxSprite = new FlxSprite(0, 0);
 
-		for (item in itemArray)
+		for (item in appearance.itemArray)
 		{
 			if (item == null)
 			{
@@ -606,17 +611,5 @@ class Avatar extends FlxSprite
 				}
 			}
 		});
-	}
-
-	public function isWearingItem(checkedItem:ClothingItem):Bool
-	{
-		var slot:Int = ClothingType.typeToNum(checkedItem.itemType);
-
-		if (itemArray[slot] != null)
-		{
-			return itemArray[slot].gameItem.gameItemId == checkedItem.gameItemId;
-		}
-
-		return false;
 	}
 }

@@ -69,13 +69,23 @@ class AvatarAppearance
 				appearanceStr += _avatarItem.gameItem.gameItemId + "^" + _avatarItem.itemColor;
 			}
 			
-			if (appearanceStr != "")
+			if (n != (itemArray.length - 1))
 			{
-				if (n++ != itemArray.length - 1)
-				{
-					appearanceStr += "^";
-				}
+				trace("appending ^ to pos #" + n);
+				appearanceStr += "^";
 			}
+
+			else
+			{
+				trace("Skipping ^ for position " + n);
+			}
+
+			n++;
+		}
+
+		if (appearanceStr.charAt(appearanceStr.length - 1) == '^')
+		{
+			appearanceStr = appearanceStr.substr(0, appearanceStr.length - 1);
 		}
 
 		return appearanceStr;

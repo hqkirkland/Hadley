@@ -46,14 +46,18 @@ class AvatarWindow extends WindowGroup
 
 		setWieldedItems();
 
+		var whitespace:WhitespaceContainer = new WhitespaceContainer(Std.int(this.width - 30), Std.int(this.height - 40));
+		whitespace.windowPos.x = (this.width / 2) - (whitespace.width / 2);
+		whitespace.windowPos.y = hatSlotBox.windowPos.y - 7;
+
+		add(whitespace);
+
 		add(hatSlotBox);
 		add(shirtSlotBox);
 		add(pantsSlotBox);
 		add(glassesSlotBox);
 		add(shoesSlotBox);
-
 		add(changeButton);
-
 		add(playerPreview);
 		
 	}

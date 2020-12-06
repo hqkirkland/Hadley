@@ -151,11 +151,6 @@ class RoomState extends FlxState
 		starboard.gameBar.chatBox.textInput.addEventListener(KeyboardEvent.KEY_DOWN, chatBarEnter);
 
 		FlxG.watch.addMouse();
-		/*
-			var uiCam:FlxCamera = new FlxCamera(0, 0, FlxG.width, FlxG.height);
-			FlxG.cameras.add(uiCam);
-			starboard.cameras = [uiCam];
-		 */
 
 		currentRoom.portalEntities.visible = false;
 		NetworkManager.sendJoinRoom(currentRoom.roomName);

@@ -71,15 +71,9 @@ class AvatarAppearance
 			
 			if (n != (itemArray.length - 1))
 			{
-				trace("appending ^ to pos #" + n);
 				appearanceStr += "^";
 			}
-
-			else
-			{
-				trace("Skipping ^ for position " + n);
-			}
-
+			
 			n++;
 		}
 
@@ -119,9 +113,11 @@ class AvatarAppearance
 		var n:Int = ClothingType.typeToNum(_avatarItem.gameItem.itemType);
 		itemArray[n] = _avatarItem;
 
+		/*
 		trace("AppearanceObj: Adding item #" + gameItemId + " @ slot #" + n);
 		trace("Confirm: " + itemArray[n].gameItem.gameItemId + " added.");
-
+		*/
+		
 		if (_avatarItem.gameItem.layered)
 		{
 			var layerItem:AvatarItem = {

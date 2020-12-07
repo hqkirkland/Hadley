@@ -3,9 +3,9 @@ package ui.windows.avatar;
 import flixel.FlxSprite;
 import flixel.addons.display.FlxExtendedSprite;
 import game.ClientData;
-import game.ClothingItem;
-import game.ClothingType;
 import game.GraphicsSheet;
+import game.items.GameItem;
+import game.items.GameItemType;
 import openfl.Assets;
 import openfl.display.BitmapData;
 import openfl.geom.Point;
@@ -19,7 +19,7 @@ import ui.windows.WindowItem;
 class SlotBox extends WindowItem
 {
 	public var clothingItemType:String;
-	public var gameItem:ClothingItem;
+	public var gameItem:GameItem;
 	public var gameItemBitmap:BitmapData;
 	
 	public var slotId:Int;

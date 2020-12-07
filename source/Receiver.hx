@@ -4,7 +4,7 @@ import flixel.FlxG;
 import flixel.math.FlxPoint;
 
 import RoomState;
-import game.Avatar;
+import game.avatar.Avatar;
 import communication.NetworkManager;
 import communication.messages.MessageType;
 import communication.messages.ServerPacket;

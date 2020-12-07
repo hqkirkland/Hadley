@@ -1,8 +1,8 @@
 package game.avatar;
 
-import game.AvatarItem;
-import game.ClothingItem;
-import game.ClothingType;
+import game.avatar.AvatarItem;
+import game.items.GameItem;
+import game.items.GameItemType;
 
 /**
  * ...
@@ -87,7 +87,7 @@ class AvatarAppearance
 
 	public function getItemFromSlot(typeString:String):AvatarItem
 	{
-		return itemArray[ClothingType.typeToNum(typeString)];
+		return itemArray[GameItemType.typeToNum(typeString)];
 	}
 
 	public function wearItem(?gameItemId:Int=0, ?colorId:Int = 0):Void
@@ -110,7 +110,7 @@ class AvatarAppearance
 
 		Inventory.addItemById(_avatarItem.gameItem.gameItemId);
 
-		var n:Int = ClothingType.typeToNum(_avatarItem.gameItem.itemType);
+		var n:Int = GameItemType.typeToNum(_avatarItem.gameItem.itemType);
 		itemArray[n] = _avatarItem;
 
 		/*
@@ -132,7 +132,7 @@ class AvatarAppearance
 
 	public function clearItem(typeString:String)
 	{
-		var slot:Int = ClothingType.typeToNum(typeString);
+		var slot:Int = GameItemType.typeToNum(typeString);
 
 		if (itemArray[slot] == null)
 		{
@@ -142,7 +142,7 @@ class AvatarAppearance
 		if (itemArray[slot].gameItem.layered)
 		{
 			// Also gotta empty the hat!
-			if (typeString == ClothingType.HAT)
+			if (typeString == GameItemType.HAT)
 			{
 				itemArray[4] = null;
 			}
@@ -156,7 +156,7 @@ class AvatarAppearance
 
 	public function colorItem(typeString:String, ?colorId:Int = 0)
 	{
-		var slot:Int = ClothingType.typeToNum(typeString);
+		var slot:Int = GameItemType.typeToNum(typeString);
 
 		itemArray[slot].itemColor = colorId;
 
@@ -171,9 +171,9 @@ class AvatarAppearance
 		return getItemFromSlot(typeString) == null;
 	}
 	
-	public function isWearingItem(checkedItem:ClothingItem):Bool
+	public function isWearingItem(checkedItem:GameItem):Bool
 	{
-		var slot:Int = ClothingType.typeToNum(checkedItem.itemType);
+		var slot:Int = GameItemType.typeToNum(checkedItem.itemType);
 
 		if (itemArray[slot] != null)
 		{

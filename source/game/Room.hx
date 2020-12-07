@@ -16,7 +16,7 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxSort;
 
-import game.Avatar;
+import game.avatar.Avatar;
 
 /**
  * ...

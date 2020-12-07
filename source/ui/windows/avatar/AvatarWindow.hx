@@ -1,12 +1,13 @@
 package ui.windows.avatar;
 
-import communication.NetworkManager;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.system.debug.FlxDebugger;
-import game.ClothingItem;
-import game.ClothingType;
+
+import communication.NetworkManager;
+import game.items.GameItem;
+import game.items.GameItemType;
 
 /**
  * ...
@@ -31,11 +32,11 @@ class AvatarWindow extends WindowGroup
 	{
 		super("Avatar", 250, 200, 0, 0);
 
-		hatSlotBox = new WieldBox(Math.ceil(this.width) - 20 - 38, 40, ClothingType.HAT);
-		shirtSlotBox = new WieldBox(Math.ceil(this.width) - 20 - 38, 90, ClothingType.SHIRT);
-		pantsSlotBox = new WieldBox(Math.ceil(this.width) - 20 - 38, 140, ClothingType.PANTS);
-		glassesSlotBox = new WieldBox(20, 40, ClothingType.GLASSES);
-		shoesSlotBox = new WieldBox(20, 140, ClothingType.SHOES);
+		hatSlotBox = new WieldBox(Math.ceil(this.width) - 20 - 38, 40, GameItemType.HAT);
+		shirtSlotBox = new WieldBox(Math.ceil(this.width) - 20 - 38, 90, GameItemType.SHIRT);
+		pantsSlotBox = new WieldBox(Math.ceil(this.width) - 20 - 38, 140, GameItemType.PANTS);
+		glassesSlotBox = new WieldBox(20, 40, GameItemType.GLASSES);
+		shoesSlotBox = new WieldBox(20, 140, GameItemType.SHOES);
 
 		playerPreview = new AvatarPreview(RoomState.playerAvatar.appearanceString, 105, 68);
 
@@ -81,7 +82,7 @@ class AvatarWindow extends WindowGroup
 			}
 		}
 
-		if (itemList.listType == ClothingType.GLASSES || itemList.listType == ClothingType.SHOES)
+		if (itemList.listType == GameItemType.GLASSES || itemList.listType == GameItemType.SHOES)
 		{
 			itemList.x = this.mainWindow.x - itemList.width - 5;
 			itemList.y = this.mainWindow.y + Std.int(this.height / 2) - Std.int(itemList.height / 2);
@@ -138,15 +139,15 @@ class AvatarWindow extends WindowGroup
 
 			switch (item.gameItem.itemType)
 			{
-				case ClothingType.GLASSES:
+				case GameItemType.GLASSES:
 					glassesSlotBox.setGameItem(item.gameItem.gameItemId, item.itemColor);
-				case ClothingType.SHIRT:
+				case GameItemType.SHIRT:
 					shirtSlotBox.setGameItem(item.gameItem.gameItemId, item.itemColor);
-				case ClothingType.PANTS:
+				case GameItemType.PANTS:
 					pantsSlotBox.setGameItem(item.gameItem.gameItemId, item.itemColor);
-				case ClothingType.SHOES:
+				case GameItemType.SHOES:
 					shoesSlotBox.setGameItem(item.gameItem.gameItemId, item.itemColor);
-				case ClothingType.HAT:
+				case GameItemType.HAT:
 					hatSlotBox.setGameItem(item.gameItem.gameItemId, item.itemColor);
 			}
 

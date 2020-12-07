@@ -10,8 +10,10 @@ import openfl.net.URLRequest;
 import communication.api.ApiClient;
 import communication.api.Endpoints;
 import communication.api.events.ApiEvent;
-import game.ClothingItem;
-import game.ItemColor;
+
+import game.items.GameItem;
+import game.items.GameItemType;
+import game.items.ItemColor;
 /**
  * ...
  * @author Hunter
@@ -19,7 +21,9 @@ import game.ItemColor;
  
 class ClientData extends EventDispatcher
 {
-	public static var clothingItems:Map<Int, ClothingItem>;
+	public static var clothingItems:Map<Int, GameItem>;
+	//public static var pets:Map<Int, Pet>;
+	//public static var 
 	
 	private static var loader:URLLoader;
 	private static var apiClient:ApiClient = new ApiClient();
@@ -32,16 +36,6 @@ class ClientData extends EventDispatcher
 		apiClient.addEventListener(ApiEvent.ITEMDATA, itemFetchComplete);
 	}
 	
-	public static function buildAppearanceString(itemSet:Array<ClothingItem>):Void
-	{
-		var figure:Array<String> = new Array<String>();
-		
-		for (item in itemSet)
-		{
-
-		}
-	}
-	
 	private function itemFetchComplete(apiEvent:ApiEvent):Void
 	{
 		var itemDataSet:Array<Array<Dynamic>> = Json.parse(apiEvent.result);
@@ -50,7 +44,7 @@ class ClientData extends EventDispatcher
 		{
 			switch (itemData[1])
 			{
-				case ClothingType.DEFAULT_CLOTHING, ClothingType.HAIR, ClothingType.SHOES, ClothingType.PANTS, ClothingType.SHIRT, ClothingType.HAT, ClothingType.GLASSES, ClothingType.FACE, ClothingType.BODY:
+				case GameItemType.DEFAULT_CLOTHING, GameItemType.HAIR, GameItemType.SHOES, GameItemType.PANTS, GameItemType.SHIRT, GameItemType.HAT, GameItemType.GLASSES, GameItemType.FACE, GameItemType.BODY:
 					pushClothingItem(itemData);
 			}
 		}
@@ -65,7 +59,7 @@ class ClientData extends EventDispatcher
 	
 	private function pushClothingItem(itemData:Array<Dynamic>):Void
 	{
-		var item:ClothingItem = new ClothingItem(itemData[1]);
+		var item:GameItem = new GameItem(itemData[1]);
 		item.gameItemId = itemData[0];
 		item.itemName = itemData[2];
 		item.itemDesc = itemData[3];

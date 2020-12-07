@@ -8,7 +8,7 @@ import openfl.display.BitmapData;
 import openfl.geom.Point;
 
 import game.GraphicsSheet;
-import game.ItemColor;
+import game.items.ItemColor;
 
 /**
  * ...

@@ -1,9 +1,9 @@
-package game;
+package game.items;
 
 /**
  * @author Hunter
  */
-class ClothingItem
+class GameItem
 {
 	public var gameItemId:Int;
 	public var setId:Int;

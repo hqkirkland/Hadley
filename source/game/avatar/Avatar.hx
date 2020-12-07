@@ -1,4 +1,4 @@
-package game;
+package game.avatar;
 
 import openfl.display.BitmapData;
 import openfl.geom.Point;
@@ -15,7 +15,8 @@ import flixel.tweens.FlxTween;
 
 import game.BubbleStack;
 import game.avatar.AvatarAppearance;
-
+import game.avatar.AvatarItem;
+import game.avatar.AvatarKeys;
 
 /**
  * ...

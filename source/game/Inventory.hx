@@ -1,8 +1,7 @@
 package game;
 
+import game.items.GameItem;
 import game.ClientData;
-import game.ClothingItem;
-import game.ItemColor;
 
 /**
  * ...
@@ -10,7 +9,8 @@ import game.ItemColor;
  */
 class Inventory
 {
-	public static var wardrobe:Array<ClothingItem> = new Array<ClothingItem>();
+	// Owned items go into the wardrobe.
+	public static var wardrobe:Array<GameItem> = new Array<GameItem>();
 	// public static var furniture:Array<FurnitureItem>;
 	
 	public static function addItemById(itemId:Int):Void

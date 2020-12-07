@@ -1,9 +1,9 @@
-package game;
+package game.items;
 
 /**
  * @author Hunter
  */
-class ClothingType
+class GameItemType
 {
 	public static inline var BODY:String = "Body";
 	public static inline var SHOES:String = "Shoes";

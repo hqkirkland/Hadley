@@ -3,10 +3,10 @@ package ui.windows.avatar;
 import flixel.FlxG;
 import flixel.addons.display.FlxExtendedSprite;
 import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
-import game.AvatarItem;
-import game.ClothingItem;
-import game.ClothingType;
 import game.Inventory;
+import game.avatar.AvatarItem;
+import game.items.GameItem;
+import game.items.GameItemType;
 import openfl.Assets;
 import openfl.display.BitmapData;
 import ui.windows.WindowItem;
@@ -19,7 +19,7 @@ import ui.windows.avatar.SlotBox;
 class ItemList extends WindowGroup
 {
 	public var listType:String;
-	public var selectedItem:ClothingItem;
+	public var selectedItem:GameItem;
 	public var slotBoxes:Array<SlotBox>;
 
 	private var currentPage:Int = 0;
@@ -27,7 +27,7 @@ class ItemList extends WindowGroup
 	private var itemSlotCursor:WindowItem;
 	private var promptCloseButton:WindowItem;
 
-	private static var itemsByType:Array<ClothingItem>;
+	private static var itemsByType:Array<GameItem>;
 	private static var itemGridContainer:BitmapData;
 	private static var itemGridContainerX:BitmapData;
 	private static var itemSlotInventory:BitmapData;
@@ -43,7 +43,7 @@ class ItemList extends WindowGroup
 		super("", itemGridContainer.width, itemGridContainer.height, x, y, false, itemGridContainer);
 		listType = clothingType;
 
-		itemsByType = Inventory.wardrobe.filter(matchClothingType);
+		itemsByType = Inventory.wardrobe.filter(matchItemType);
 		selectedItem = itemsByType[0];
 
 		slotBoxes = new Array<SlotBox>();
@@ -76,7 +76,7 @@ class ItemList extends WindowGroup
 		remove(itemSlotCursor);
 
 		listType = clothingType;
-		itemsByType = Inventory.wardrobe.filter(matchClothingType);
+		itemsByType = Inventory.wardrobe.filter(matchItemType);
 		setPageItems();
 
 		currentPage = 0;
@@ -146,7 +146,7 @@ class ItemList extends WindowGroup
 		setPageItems();
 	}
 
-	public function matchClothingType(item:ClothingItem)
+	public function matchItemType(item:GameItem)
 	{
 		if (item != null && listType != null)
 		{

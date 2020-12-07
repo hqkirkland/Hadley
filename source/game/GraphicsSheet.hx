@@ -1,6 +1,8 @@
 package game;
 
-import game.ItemColor;
+import game.items.ItemColor;
+import game.items.GameItemType;
+
 import openfl.display.Bitmap;
 import openfl.display.BitmapData;
 import openfl.geom.Point;
@@ -99,11 +101,11 @@ class GraphicsSheet extends Bitmap
 
 		switch (_itemType)
 		{
-			case ClothingType.BODY, ClothingType.FACE, ClothingType.SKIN:
+			case GameItemType.BODY, GameItemType.FACE, GameItemType.SKIN:
 				colorType = 0;
-			case ClothingType.HAIR:
+			case GameItemType.HAIR:
 				colorType = 1;
-			case ClothingType.DEFAULT_CLOTHING, ClothingType.SHOES, ClothingType.PANTS, ClothingType.SHIRT, ClothingType.HAT, ClothingType.GLASSES:
+			case GameItemType.DEFAULT_CLOTHING, GameItemType.SHOES, GameItemType.PANTS, GameItemType.SHIRT, GameItemType.HAT, GameItemType.GLASSES:
 				colorType = 2;
 		}
 

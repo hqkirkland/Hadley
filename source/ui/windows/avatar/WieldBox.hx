@@ -1,13 +1,15 @@
 package ui.windows.avatar;
 
 import flixel.addons.display.FlxExtendedSprite;
-import game.ClientData;
-import game.ClothingType;
-import game.GraphicsSheet;
+
 import openfl.Assets;
 import openfl.display.BitmapData;
 import openfl.geom.Point;
 import openfl.geom.Rectangle;
+
+import game.ClientData;
+import game.GraphicsSheet;
+import game.items.GameItemType;
 
 /**
  * ...
@@ -42,15 +44,15 @@ class WieldBox extends WindowItem
 
 		switch (clothingType)
 		{
-			case ClothingType.HAT:
+			case GameItemType.HAT:
 				icon = Assets.getBitmapData("starboard:assets/interface/starboard/elements/icons/hat_slot_icon.png");
-			case ClothingType.GLASSES:
+			case GameItemType.GLASSES:
 				icon = Assets.getBitmapData("starboard:assets/interface/starboard/elements/icons/glasses_slot_icon.png");
-			case ClothingType.SHIRT:
+			case GameItemType.SHIRT:
 				icon = Assets.getBitmapData("starboard:assets/interface/starboard/elements/icons/shirt_slot_icon.png");
-			case ClothingType.PANTS:
+			case GameItemType.PANTS:
 				icon = Assets.getBitmapData("starboard:assets/interface/starboard/elements/icons/pants_slot_icon.png");
-			case ClothingType.SHOES:
+			case GameItemType.SHOES:
 				icon = Assets.getBitmapData("starboard:assets/interface/starboard/elements/icons/shoes_slot_icon.png");
 			default:
 				icon = new BitmapData(17, 15, true, 0x00000000);

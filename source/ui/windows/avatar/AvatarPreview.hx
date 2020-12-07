@@ -4,14 +4,10 @@ import flixel.FlxSprite;
 import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxTileFrames;
 import flixel.math.FlxPoint;
+
 import game.avatar.AvatarAppearance;
-import game.avatar.AvatarItem;
-import game.ClientData;
 import game.items.GameItem;
-import game.items.GameItemType;
-import game.items.ItemColor;
 import game.GraphicsSheet;
-import openfl.display.BitmapData;
 
 /**
  * ...
@@ -19,8 +15,6 @@ import openfl.display.BitmapData;
  */
 class AvatarPreview extends WindowItem
 {
-	//public var itemArray:Array<AvatarItem>;
-
 	public var appearance:AvatarAppearance;
 
 	public var avatarSheet:GraphicsSheet = new GraphicsSheet(1772, 68);

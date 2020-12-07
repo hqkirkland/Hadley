@@ -11,17 +11,14 @@ import game.items.GameItemType;
 class AvatarAppearance
 {
 	public var appearanceString(get, null):String;
-
 	public var itemArray:Array<AvatarItem>;
-
-	private var i:Int = 0;
 
 	//public var pet:Pet;
 
-	public function new(appearanceString:String) 
+	public function new(appearanceStr:String) 
 	{
 		itemArray = new Array<AvatarItem>();
-		var figure:Array<String> = appearanceString.split('^');
+		var figure:Array<String> = appearanceStr.split('^');
 
 		for (n in 0...Std.int(figure.length / 2))
 		{
@@ -108,7 +105,7 @@ class AvatarAppearance
 			return;
 		}
 
-		Inventory.addItemById(_avatarItem.gameItem.gameItemId);
+		Inventory.addWardrobeEntryById(_avatarItem.gameItem.gameItemId);
 
 		var n:Int = GameItemType.typeToNum(_avatarItem.gameItem.itemType);
 		itemArray[n] = _avatarItem;

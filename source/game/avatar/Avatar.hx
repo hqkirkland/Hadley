@@ -27,10 +27,6 @@ class Avatar extends FlxSprite
 	public var username:String;
 	public var country:String;
 
-	// TODO: Convert to some kind of object w/ attribute for each body piece.
-	// Also attribute for each piece color.
-	// ACTUALLY: Maybe not? Doing that would make it harder to iterate..
-	public var itemArray:Array<AvatarItem>;
 	public var appearance:AvatarAppearance;
 	public var appearanceString:String;
 
@@ -97,9 +93,7 @@ class Avatar extends FlxSprite
 	}
 
 	public function setAppearance(appearanceString:String):Void
-	{
-		this.appearanceString = appearanceString;
-		
+	{	
 		avatarSheet = new GraphicsSheet(1772, 68);
 
 		appearance = new AvatarAppearance(appearanceString);

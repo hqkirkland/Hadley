@@ -1,12 +1,6 @@
 package ui.windows.avatar;
 
-import flixel.FlxG;
-import flixel.FlxSprite;
-import flixel.group.FlxGroup.FlxTypedGroup;
-import flixel.system.debug.FlxDebugger;
-
 import communication.NetworkManager;
-import game.items.GameItem;
 import game.items.GameItemType;
 
 /**
@@ -38,7 +32,7 @@ class AvatarWindow extends WindowGroup
 		glassesSlotBox = new WieldBox(20, 40, GameItemType.GLASSES);
 		shoesSlotBox = new WieldBox(20, 140, GameItemType.SHOES);
 
-		playerPreview = new AvatarPreview(RoomState.playerAvatar.appearanceString, 105, 68);
+		playerPreview = new AvatarPreview(RoomState.playerAvatar.appearance.appearanceString, 105, 68);
 
 		changeButton = new WindowButton(2, "starboard:assets/interface/starboard/elements/buttons/change_look.png", true);
 		changeButton.setAnimation("", [0], false, false);
@@ -60,7 +54,6 @@ class AvatarWindow extends WindowGroup
 		add(shoesSlotBox);
 		add(changeButton);
 		add(playerPreview);
-		
 	}
 
 	public function updateItemList(itemListType:String)

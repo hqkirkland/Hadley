@@ -1,7 +1,7 @@
 package game;
 
-import game.items.GameItem;
 import game.ClientData;
+import game.items.GameItem;
 
 /**
  * ...
@@ -13,7 +13,7 @@ class Inventory
 	public static var wardrobe:Array<GameItem> = new Array<GameItem>();
 	// public static var furniture:Array<FurnitureItem>;
 	
-	public static function addItemById(itemId:Int):Void
+	public static function addWardrobeEntryById(itemId:Int):Void
 	{
 		if (ClientData.clothingItems.exists(itemId))
 		{

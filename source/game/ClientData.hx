@@ -44,7 +44,15 @@ class ClientData extends EventDispatcher
 		{
 			switch (itemData[1])
 			{
-				case GameItemType.DEFAULT_CLOTHING, GameItemType.HAIR, GameItemType.SHOES, GameItemType.PANTS, GameItemType.SHIRT, GameItemType.HAT, GameItemType.GLASSES, GameItemType.FACE, GameItemType.BODY:
+				case GameItemType.DEFAULT_CLOTHING, 
+				GameItemType.HAIR, 
+				GameItemType.SHOES, 
+				GameItemType.PANTS, 
+				GameItemType.SHIRT, 
+				GameItemType.HAT, 
+				GameItemType.GLASSES, 
+				GameItemType.FACE, 
+				GameItemType.BODY:
 					pushClothingItem(itemData);
 			}
 		}

@@ -36,9 +36,9 @@ class ColorList extends FlxTypedSpriteGroup<FlxExtendedSprite>
 		
 		colorType = GraphicsSheet.itemTypeToColorType(itemType);
 		
-		for (colorId in GraphicsSheet.avatarColors.keys())
+		for (colorId in GraphicsSheet.itemColors.keys())
 		{
-			var color:ItemColor = GraphicsSheet.avatarColors[colorId];
+			var color:ItemColor = GraphicsSheet.itemColors[colorId];
 			var itemColorType:Int = GraphicsSheet.itemTypeToColorType(color.itemType);
 			
 			if (this.colorType == itemColorType)

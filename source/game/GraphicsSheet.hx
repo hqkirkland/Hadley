@@ -17,7 +17,7 @@ class GraphicsSheet extends Bitmap
 	private static var staticPoint:Point = new Point(0, 0);
 
 	// Item replacement colors.
-	public static var avatarColors:Map<Int, ItemColor> = new Map();
+	public static var itemColors:Map<Int, ItemColor> = new Map();
 	// Palettes.
 	private static var greenPalette:Array<Int> = [0xFF003300, 0xFF009900, 0xFF33CC33, 0xFF66FF66];
 	private static var bluePalette:Array<Int> = [0xFF003366, 0xFF0066CC, 0xFF0099FF, 0xFF33CCFF];
@@ -58,7 +58,7 @@ class GraphicsSheet extends Bitmap
 			return itemBitmap;
 		}
 
-		var replacementColor:ItemColor = avatarColors[colorNumber];
+		var replacementColor:ItemColor = itemColors[colorNumber];
 
 		// Skin.
 		if (colorTypeNumber == 0)

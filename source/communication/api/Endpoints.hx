@@ -12,4 +12,6 @@ class Endpoints
 	public static inline var USERDATA = BASE_ENDPOINT + "/userdata/";
 	public static inline var ITEMDATA = BASE_ENDPOINT + "/gamedata/itemdata/";
 	public static inline var COLORDATA = BASE_ENDPOINT + "/gamedata/colors";
+
+	public static inline var INVENTORY = BASE_ENDPOINT + "/userdata/inventory";
 }

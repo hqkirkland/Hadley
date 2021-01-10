@@ -4,12 +4,10 @@ import haxe.Json;
 
 import openfl.events.Event;
 import openfl.events.EventDispatcher;
-import openfl.events.ProgressEvent;
 import openfl.events.IOErrorEvent;
 import openfl.net.URLLoader;
 import openfl.net.URLRequest;
 import openfl.net.URLRequestHeader;
-import openfl.net.URLVariables;
 
 import communication.api.events.ApiEvent;
 
@@ -76,14 +74,13 @@ class ApiClient extends EventDispatcher
 	}
 	
 	public function login(username:String, password:String):Void
-	{		
-		var loginVars:URLVariables = new URLVariables();
-		loginVars.username = username;
-		loginVars.password = password;
-		
+	{
+		var loginVars:String = "{\"username\": \"" + username + "\", \"password\": \"" + password + "\"}";
+
 		var loginRequest:URLRequest = new URLRequest(Endpoints.SIGNIN);
 		loginRequest.method = "POST";
 		loginRequest.data = loginVars;
+		loginRequest.contentType = "application/json";
 		
 		loginClient = new URLLoader();
 		
@@ -143,11 +140,9 @@ class ApiClient extends EventDispatcher
 		var itemdataRequest:URLRequest = new URLRequest(Endpoints.ITEMDATA + itemType);
 		itemdataRequest.method = "GET";
 		
-		#if !flash
 		var credentialsHeader:URLRequestHeader = new URLRequestHeader("Authorization", "Bearer " + apiToken.access_token);
 		itemdataRequest.requestHeaders.push(credentialsHeader);
-		#end
-		
+
 		var itemdataClient:URLLoader = new URLLoader();
 		itemdataClient.addEventListener(Event.COMPLETE, itemdataHandler);
 		itemdataClient.addEventListener(IOErrorEvent.IO_ERROR, errorHandler);
@@ -163,6 +158,54 @@ class ApiClient extends EventDispatcher
 		
 		var apiEvent:ApiEvent = new ApiEvent(ApiEvent.ITEMDATA, null, false, false);
 		apiEvent.result = itemdataClient.data;
+		
+		dispatchEvent(apiEvent);
+	}
+
+	public function fetchColordata():Void
+	{
+		var req:URLRequest = new URLRequest(Endpoints.COLORDATA);
+		var colordataLoader = new URLLoader();
+		colordataLoader.load(req);
+		colordataLoader.addEventListener(Event.COMPLETE, colordataHandler);
+	}
+
+	private function colordataHandler(e:Event):Void
+	{
+		var colordataClient:URLLoader = cast e.target;
+
+		colordataClient.removeEventListener(Event.COMPLETE, colordataHandler);
+		colordataClient.removeEventListener(IOErrorEvent.IO_ERROR, errorHandler);
+
+		var apiEvent:ApiEvent = new ApiEvent(ApiEvent.COLORDATA, null, false, false);
+		apiEvent.result = colordataClient.data;
+
+		dispatchEvent(apiEvent);
+	}
+
+	public function fetchInventory():Void
+	{
+		var inventoryRequest:URLRequest = new URLRequest(Endpoints.INVENTORY);
+		inventoryRequest.method = "GET";
+		
+		var credentialsHeader:URLRequestHeader = new URLRequestHeader("Authorization", "Bearer " + apiToken.access_token);
+		inventoryRequest.requestHeaders.push(credentialsHeader);
+
+		var inventoryClient:URLLoader = new URLLoader();
+		inventoryClient.addEventListener(Event.COMPLETE, inventoryHandler);
+		inventoryClient.addEventListener(IOErrorEvent.IO_ERROR, errorHandler);
+		inventoryClient.load(inventoryRequest);
+	}
+	
+	private function inventoryHandler(e:Event):Void
+	{
+		var inventoryClient:URLLoader = cast e.target;
+		
+		inventoryClient.removeEventListener(Event.COMPLETE, itemdataHandler);
+		inventoryClient.removeEventListener(IOErrorEvent.IO_ERROR, errorHandler);
+		
+		var apiEvent:ApiEvent = new ApiEvent(ApiEvent.INVENTORY, null, false, false);
+		apiEvent.result = inventoryClient.data;
 		
 		dispatchEvent(apiEvent);
 	}

@@ -99,11 +99,14 @@ class AvatarWindow extends WindowGroup
 		{
 			var appearanceStr:String = playerPreview.appearance.appearanceString;
 
-			trace(appearanceStr);
-
-			RoomState.playerAvatar.setAppearance(appearanceStr);
-			RoomState.starboard.changeAppearance(appearanceStr);
-			NetworkManager.sendChangeClothes(appearanceStr);
+			if (appearanceStr != RoomState.playerAvatar.appearance.appearanceString)
+			{
+				trace(RoomState.playerAvatar.appearance.appearanceString);
+				trace(appearanceStr);
+				RoomState.playerAvatar.setAppearance(appearanceStr);
+				RoomState.starboard.changeAppearance(appearanceStr);
+				NetworkManager.sendChangeClothes(appearanceStr);
+			}
 		}
 	}
 

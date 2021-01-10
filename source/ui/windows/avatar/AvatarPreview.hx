@@ -5,6 +5,7 @@ import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxTileFrames;
 import flixel.math.FlxPoint;
 
+import game.Inventory;
 import game.avatar.AvatarAppearance;
 import game.items.GameItem;
 import game.GraphicsSheet;
@@ -61,18 +62,18 @@ class AvatarPreview extends WindowItem
 		// TODO: Add figure rotate buttons
 	}
 
-	public function wearItem(wornItem:GameItem, ?colorId:Int = 0)
+	public function wearItem(gameItemId:Int)
 	{
-		appearance.wearItem(wornItem.gameItemId, colorId);
+		appearance.wearItem(gameItemId);
 		regenerate();
 	}
 
 	public function colorItem(typeString:String, ?colorId:Int = 0)
-		{
-			appearance.colorItem(typeString, colorId);
-			regenerate();
-		}
-	
+	{
+		appearance.colorItem(typeString, colorId);
+		regenerate();
+	}
+
 	public function clearItem(typeString:String)
 	{
 		appearance.clearItem(typeString);

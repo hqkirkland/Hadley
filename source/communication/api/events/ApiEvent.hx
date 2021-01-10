@@ -17,7 +17,11 @@ class ApiEvent extends Event
 	public static inline var USERDATA:String = "FetchUserData";
 	public static inline var ERROR:String = "ApiError";
 	public static inline var ITEMDATA:String = "FetchItemData";
-	
+
+	public static inline var COLORDATA:String = "FetchColordata";
+
+	public static inline var INVENTORY:String = "FetchInventory";
+
 	public function new(type:String, ?status:Int=200, bubbles:Bool=false, cancelable:Bool=false) 
 	{
 		super(type, bubbles, cancelable);

@@ -1,6 +1,7 @@
 package game;
 
 import haxe.Json;
+import haxe.DynamicAccess;
 
 import openfl.events.Event;
 import openfl.events.EventDispatcher;
@@ -22,7 +23,9 @@ import game.items.ItemColor;
 class ClientData extends EventDispatcher
 {
 	public static var clothingItems:Map<Int, GameItem>;
-	//public static var pets:Map<Int, Pet>;
+	//public static var pets:Map<Int, Pet>; // <- A pet is either active or inactive, depending on if it is in the "egg" state or not.
+	//public static var petItems:Map<Int, GameItem>;
+	//public static var equipment:Map<Int, GameItem>;
 	//public static var 
 	
 	private static var loader:URLLoader;
@@ -32,17 +35,18 @@ class ClientData extends EventDispatcher
 	{
 		clothingItems = new Map();
 		
-		apiClient.fetchItemdata();
 		apiClient.addEventListener(ApiEvent.ITEMDATA, itemFetchComplete);
+		apiClient.fetchItemdata();
 	}
 	
 	private function itemFetchComplete(apiEvent:ApiEvent):Void
 	{
-		var itemDataSet:Array<Array<Dynamic>> = Json.parse(apiEvent.result);
+		var itemDataSet:Array<DynamicAccess<Dynamic>> = Json.parse(apiEvent.result);
 		
 		for (itemData in itemDataSet)
 		{
-			switch (itemData[1])
+			//trace(itemData);
+			switch (itemData["itemType"])
 			{
 				case GameItemType.DEFAULT_CLOTHING, 
 				GameItemType.HAIR, 
@@ -58,20 +62,18 @@ class ClientData extends EventDispatcher
 		}
 		
 		apiClient.removeEventListener(ApiEvent.ITEMDATA, itemFetchComplete);
-		
-		var req:URLRequest = new URLRequest(Endpoints.COLORDATA);
-		loader = new URLLoader();
-		loader.load(req);
-		loader.addEventListener(Event.COMPLETE, colorFetchComplete);
+		apiClient.fetchColordata();
+
+		apiClient.addEventListener(ApiEvent.COLORDATA, colorFetchComplete);
 	}
 	
-	private function pushClothingItem(itemData:Array<Dynamic>):Void
+	private function pushClothingItem(itemData:DynamicAccess<Dynamic>):Void
 	{
-		var item:GameItem = new GameItem(itemData[1]);
-		item.gameItemId = itemData[0];
-		item.itemName = itemData[2];
-		item.itemDesc = itemData[3];
-		item.layered = (itemData[4] == 1);
+		var item:GameItem = new GameItem(itemData["itemType"]);
+		item.gameItemId = itemData.get("gameItemId");
+		item.itemName = itemData["itemName"];
+		item.itemDesc = itemData["itemDesc"];
+		item.layered = (itemData["layered"]) == 1;
 		
 		if (item.layered)
 		{
@@ -81,15 +83,35 @@ class ClientData extends EventDispatcher
 		clothingItems.set(item.gameItemId, item);
 	}
 	
-	private function colorFetchComplete(e:Event)
+	private function colorFetchComplete(apiEvent:ApiEvent)
 	{
-		var colorDataSet:Array<ItemColor> = Json.parse(loader.data);
+		var colorDataSet:Array<ItemColor> = Json.parse(apiEvent.result);
 		
 		for (colorData in colorDataSet)
 		{
-			GraphicsSheet.avatarColors.set(colorData.colorId, colorData);
+			GraphicsSheet.itemColors.set(colorData.colorId, colorData);
 		}
 		
+		apiClient.removeEventListener(ApiEvent.COLORDATA, colorFetchComplete);
+		apiClient.fetchInventory();
+
+		apiClient.addEventListener(ApiEvent.INVENTORY, inventoryFetchComplete);
+
+	}
+
+	private function inventoryFetchComplete(apiEvent:ApiEvent)
+	{
+		trace("Inventory fetch complete.");
+
+		var inventorySet:Array<DynamicAccess<Dynamic>> = Json.parse(apiEvent.result);
+
+		for (inventoryItem in inventorySet)
+		{
+			Inventory.addWardrobeItemById(inventoryItem["gameItemId"], inventoryItem["colorId"]);
+		}
+		
+		// Event.COMPLETE signals the beginning of the connection.
 		this.dispatchEvent(new Event(Event.COMPLETE));
+		apiClient.removeEventListener(ApiEvent.INVENTORY, inventoryFetchComplete);
 	}
 }

@@ -28,7 +28,6 @@ class Avatar extends FlxSprite
 	public var country:String;
 
 	public var appearance:AvatarAppearance;
-	public var appearanceString:String;
 
 	public var canWalk:Bool = true;
 	public var currentAction:String = "Stand";
@@ -93,55 +92,9 @@ class Avatar extends FlxSprite
 	}
 
 	public function setAppearance(appearanceString:String):Void
-	{	
+	{
 		avatarSheet = new GraphicsSheet(1772, 68);
-
 		appearance = new AvatarAppearance(appearanceString);
-
-		//itemArray = new Array<AvatarItem>();
-		//var figure:Array<String> = appearanceString.split('^');
-
-		/*
-		for (i in 0...8)
-		{
-			var gameItemKey:Int = Std.parseInt(figure[i * 2]);
-
-			// 4 needs to be a slot strictly reserved for the back of 2-part hats.
-			if (i == 4)
-			{
-				itemArray.push(null);
-			}
-
-			if (gameItemKey == 0 || !ClientData.clothingItems.exists(gameItemKey))
-			{
-				itemArray.push(null);
-				continue;
-			}
-
-			var item:AvatarItem = {
-				gameItem: ClientData.clothingItems[gameItemKey],
-				assetPath: Std.string(gameItemKey),
-				itemColor: Std.parseInt(figure[(i * 2) + 1])
-			};
-
-			itemArray.push(item);
-			// Below shouldn't always need to exist.
-			Inventory.addItemById(item.gameItem.gameItemId);
-
-			// This is the hat! Since there's a piece behind the hat, there's an extra step!
-			// Need to figure out which position the other clothing items should be placed, if 'layered'
-			if (item.gameItem.layered && i == 7)
-			{
-				var layerItem:AvatarItem = {
-					gameItem: ClientData.clothingItems[gameItemKey],
-					assetPath: ClientData.clothingItems[gameItemKey].layeredAsset,
-					itemColor: Std.parseInt(figure[(i * 2) + 1])
-				};
-
-				itemArray[4] = layerItem;
-			}
-		}
-		*/
 
 		this.pixels = new BitmapData(41, 68, true, 0x00000000);
 
@@ -213,9 +166,6 @@ class Avatar extends FlxSprite
 		animation.add("SitNorthEast", [36], 0, false, false);
 
 		this.offset = FlxPoint.get(15, 63);
-		// this.offset.set(15, 63);
-		// this.offset.x = 15;
-		// this.offset.y = 63;
 	}
 
 	override public function update(elapsed:Float):Void
@@ -223,7 +173,6 @@ class Avatar extends FlxSprite
 		doAnimation();
 		super.update(elapsed);
 
-		// chatGroup.x = (this.x - this.offset.x) + ((this.frameWidth / 2) - (this.chatGroup.width / 2));
 		chatGroup.x = (this.x - this.offset.x) + ((this.frameWidth / 2) - (this.chatGroup.width / 2));
 		chatGroup.y = Math.ceil(this.y - this.frameHeight);
 	}

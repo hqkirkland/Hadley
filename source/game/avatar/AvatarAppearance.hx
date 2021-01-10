@@ -26,8 +26,6 @@ class AvatarAppearance
 			var colorKey:Int = Std.parseInt(figure[(n * 2) + 1]);
 
 			wearItem(gameItemKey, colorKey);
-
-			// Below shouldn't always need to exist.
 		}
 	}
 
@@ -39,44 +37,54 @@ class AvatarAppearance
 
 		for (_avatarItem in itemArray)
 		{
+			var gameItemId:Int = 0;
+			var colorId:Int = 0;
+			
 			if (_avatarItem == null)
 			{
-				if (n != 4)
-				{
-					appearanceStr += "0^0";
-				}
-
-				// back of the hat is null. skip assembly.
-				else
+				// back of the hat can be null if not layered. skip assembly.
+				if (n == 4)
 				{
 					n++;
 					continue;
+				}
+
+				else
+				{
+					appearanceStr += gameItemId + "^" + colorId;
+
 				}
 			}
 
 			else
 			{
+				var gameItemId:Int = 0;
+				var colorId:Int = 0;
+
+				gameItemId = _avatarItem.gameItem.gameItemId;
+				colorId = _avatarItem.itemColor;
+
 				// skip assembling str of assets that are layered.
 				if (_avatarItem.assetPath == _avatarItem.gameItem.layeredAsset)
 				{
-					//trace("Skipping " + _avatarItem.assetPath);
+					n++;
 					continue;
 				}
 
-				appearanceStr += _avatarItem.gameItem.gameItemId + "^" + _avatarItem.itemColor;
+				appearanceStr += gameItemId + "^" + colorId;
 			}
 			
-			if (n != (itemArray.length - 1))
+			if (n != itemArray.length - 1)
 			{
 				appearanceStr += "^";
+				n++;
 			}
-			
-			n++;
 		}
 
 		if (appearanceStr.charAt(appearanceStr.length - 1) == '^')
 		{
-			appearanceStr = appearanceStr.substr(0, appearanceStr.length - 1);
+			trace("!!!! " + appearanceStr + " ends with extra ^");
+			//appearanceStr = appearanceStr.substr(0, appearanceStr.length - 1);
 		}
 
 		return appearanceStr;
@@ -89,31 +97,35 @@ class AvatarAppearance
 
 	public function wearItem(?gameItemId:Int=0, ?colorId:Int = 0):Void
 	{
-		if (gameItemId == 0 || !ClientData.clothingItems.exists(gameItemId))
+		if (gameItemId == 0)
 		{
 			return;
 		}
 
-		var _avatarItem:AvatarItem = {
-			gameItem: ClientData.clothingItems[gameItemId],
-			assetPath: Std.string(gameItemId),
-			itemColor: colorId
-		};
+		var _avatarItem:AvatarItem;
+
+		if (this == RoomState.playerAvatar.appearance)
+		{
+			trace("Setting appearance by Wardrobe");
+			_avatarItem = Inventory.wardrobe[gameItemId];
+		}
+
+		else
+		{
+			_avatarItem = {
+				gameItem: ClientData.clothingItems[gameItemId],
+				assetPath: Std.string(gameItemId),
+				itemColor: colorId
+			};
+		}
 
 		if (isWearingItem(_avatarItem.gameItem) || !isSlotClear(_avatarItem.gameItem.itemType))
 		{
 			return;
 		}
 
-		Inventory.addWardrobeEntryById(_avatarItem.gameItem.gameItemId);
-
 		var n:Int = GameItemType.typeToNum(_avatarItem.gameItem.itemType);
 		itemArray[n] = _avatarItem;
-
-		/*
-		trace("AppearanceObj: Adding item #" + gameItemId + " @ slot #" + n);
-		trace("Confirm: " + itemArray[n].gameItem.gameItemId + " added.");
-		*/
 		
 		if (_avatarItem.gameItem.layered)
 		{

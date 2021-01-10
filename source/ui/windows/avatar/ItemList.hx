@@ -1,5 +1,6 @@
 package ui.windows.avatar;
 
+import game.ClientData;
 import flixel.FlxG;
 import flixel.addons.display.FlxExtendedSprite;
 import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
@@ -19,7 +20,7 @@ import ui.windows.avatar.SlotBox;
 class ItemList extends WindowGroup
 {
 	public var listType:String;
-	public var selectedItem:GameItem;
+	public var selectedItem:Int;
 	public var slotBoxes:Array<SlotBox>;
 
 	private var currentPage:Int = 0;
@@ -27,7 +28,7 @@ class ItemList extends WindowGroup
 	private var itemSlotCursor:WindowItem;
 	private var promptCloseButton:WindowItem;
 
-	private static var itemsByType:Array<GameItem>;
+	private static var itemsByType:Array<AvatarItem>;
 	private static var itemGridContainer:BitmapData;
 	private static var itemGridContainerX:BitmapData;
 	private static var itemSlotInventory:BitmapData;
@@ -43,8 +44,19 @@ class ItemList extends WindowGroup
 		super("", itemGridContainer.width, itemGridContainer.height, x, y, false, itemGridContainer);
 		listType = clothingType;
 
-		itemsByType = Inventory.wardrobe.filter(matchItemType);
-		selectedItem = itemsByType[0];
+		itemsByType = new Array<AvatarItem>();
+
+		for (gameItemId in Inventory.wardrobe.keys())
+		{
+			trace ("Inventory: " + gameItemId);
+			var _avatarItem:AvatarItem = Inventory.wardrobe[gameItemId];
+
+			if (_avatarItem.gameItem.itemType == listType)
+			{
+				itemsByType.push(_avatarItem);
+				trace("Adding: " + _avatarItem.gameItem);
+			}
+		}
 
 		slotBoxes = new Array<SlotBox>();
 
@@ -57,10 +69,18 @@ class ItemList extends WindowGroup
 
 			if (i < itemsByType.length)
 			{
-				slotBoxes[i].setGameItem(itemsByType[i].gameItemId, 2);
+				if (itemsByType[i] != null)
+				{
+					slotBoxes[i].setGameItem(itemsByType[i].gameItem.gameItemId);
+				}
 			}
 
 			add(slotBoxes[i]);
+		}
+
+		if (slotBoxes[currentSlot].gameItem != null)
+		{
+			selectedItem = itemsByType[currentSlot].gameItem.gameItemId;
 		}
 
 		itemSlotCursor = new WindowItem(Std.int(slotBoxes[0].windowPos.x), Std.int(slotBoxes[0].windowPos.y), itemSlotSelected);
@@ -76,12 +96,27 @@ class ItemList extends WindowGroup
 		remove(itemSlotCursor);
 
 		listType = clothingType;
-		itemsByType = Inventory.wardrobe.filter(matchItemType);
+		itemsByType = new Array<AvatarItem>();
+
+		for (gameItemId in Inventory.wardrobe.keys())
+		{
+			var _avatarItem:AvatarItem = Inventory.wardrobe[gameItemId];
+
+			if (_avatarItem.gameItem.itemType == listType)
+			{
+				itemsByType.push(_avatarItem);
+			}
+		}
+
 		setPageItems();
 
 		currentPage = 0;
 		currentSlot = 0;
-		selectedItem = slotBoxes[currentSlot].gameItem;
+
+		if (slotBoxes[currentSlot].gameItem != null)
+		{
+			selectedItem = slotBoxes[currentSlot].gameItem.gameItemId;
+		}
 
 		itemSlotCursor = new WindowItem(Std.int(slotBoxes[currentSlot].windowPos.x), Std.int(slotBoxes[currentSlot].windowPos.y), itemSlotSelected);
 		add(itemSlotCursor);
@@ -90,16 +125,17 @@ class ItemList extends WindowGroup
 	public function setSelectedItem(_slotId:Int)
 	{
 		currentSlot = _slotId;
-		selectedItem = slotBoxes[currentSlot].gameItem;
 
-		if (selectedItem == null)
+		if (slotBoxes[currentSlot].gameItem == null)
 		{
+			selectedItem = null;
 			AvatarWindow.playerPreview.clearItem(listType);
 		}
 		
 		else
 		{
-			AvatarWindow.playerPreview.wearItem(selectedItem, 1);
+			selectedItem = slotBoxes[currentSlot].gameItem.gameItemId;
+			AvatarWindow.playerPreview.wearItem(selectedItem);
 		}
 
 		RoomState.starboard.avatarWindow.updateWieldedItems();
@@ -118,11 +154,17 @@ class ItemList extends WindowGroup
 		{
 			var itemNum:Int = (currentPage * 9) + i;
 
+			if (itemsByType[itemNum] == null)
+			{
+				continue;
+			}
+
 			if (itemNum < itemsByType.length)
 			{
 				trace(i + "/" + itemsByType.length);
-				slotBoxes[i].setGameItem(itemsByType[itemNum].gameItemId, 3);
+				slotBoxes[i].setGameItem(itemsByType[itemNum].gameItem.gameItemId);
 			}
+
 			else
 			{
 				slotBoxes[i].clearGameItem();
@@ -146,11 +188,11 @@ class ItemList extends WindowGroup
 		setPageItems();
 	}
 
-	public function matchItemType(item:GameItem)
+	public function matchItemType(_avatarItem:AvatarItem)
 	{
-		if (item != null && listType != null)
+		if (_avatarItem != null && listType != null)
 		{
-			return (item.itemType == listType);
+			return (_avatarItem.gameItem.itemType == listType);
 		}
 
 		return false;

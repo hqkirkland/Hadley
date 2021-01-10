@@ -1,7 +1,8 @@
 package game;
 
 import game.ClientData;
-import game.items.GameItem;
+
+import game.avatar.AvatarItem;
 
 /**
  * ...
@@ -10,18 +11,27 @@ import game.items.GameItem;
 class Inventory
 {
 	// Owned items go into the wardrobe.
-	public static var wardrobe:Array<GameItem> = new Array<GameItem>();
+	public static var wardrobe:Map<Int, AvatarItem> = new Map<Int, AvatarItem>();
 	// public static var furniture:Array<FurnitureItem>;
 	
-	public static function addWardrobeEntryById(itemId:Int):Void
+	public static function addWardrobeItemById(gameItemId:Int, colorId:Int):Void
 	{
-		if (ClientData.clothingItems.exists(itemId))
+		if (hasWardrobeItem(gameItemId))
 		{
-			// Temp fix. Need better check?
-			if (wardrobe.indexOf(ClientData.clothingItems[itemId]) == -1)
-			{
-				wardrobe.push(ClientData.clothingItems[itemId]);
-			}
+			return;
 		}
+
+		var _avatarItem:AvatarItem = {
+			gameItem: ClientData.clothingItems[gameItemId],
+			assetPath: Std.string(gameItemId),
+			itemColor: colorId
+		};
+
+		wardrobe.set(gameItemId, _avatarItem);
+	}
+
+	public static function hasWardrobeItem(gameItemId:Int):Bool
+	{
+		return wardrobe.exists(gameItemId);
 	}
 }

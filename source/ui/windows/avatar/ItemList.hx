@@ -91,11 +91,14 @@ class ItemList extends WindowGroup
 		add(promptCloseButton);
 	}
 
-	public function resetList(clothingType:String)
+	public function resetList(clothingType:String):Void
 	{
 		remove(itemSlotCursor);
 
 		listType = clothingType;
+
+		RoomState.starboard.avatarWindow.colorList.resetList(clothingType);
+
 		itemsByType = new Array<AvatarItem>();
 
 		for (gameItemId in Inventory.wardrobe.keys())
@@ -128,7 +131,7 @@ class ItemList extends WindowGroup
 
 		if (slotBoxes[currentSlot].gameItem == null)
 		{
-			selectedItem = null;
+			selectedItem = 0;
 			AvatarWindow.playerPreview.clearItem(listType);
 		}
 		
@@ -141,6 +144,19 @@ class ItemList extends WindowGroup
 		RoomState.starboard.avatarWindow.updateWieldedItems();
 
 		itemSlotCursor.windowPos.set(slotBoxes[currentSlot].windowPos.x, slotBoxes[currentSlot].windowPos.y);
+	}
+
+	public function changeItemColor(colorId:Int):Void
+	{
+		if (slotBoxes[currentSlot].gameItem != null)
+		{
+			Inventory.wardrobe[slotBoxes[currentSlot].gameItem.gameItemId].itemColor = colorId;
+			trace(Inventory.wardrobe[slotBoxes[currentSlot].gameItem.gameItemId].itemColor);
+			AvatarWindow.playerPreview.colorItem(listType, colorId);
+			slotBoxes[currentSlot].setGameItem(slotBoxes[currentSlot].gameItem.gameItemId);
+		}
+
+		RoomState.starboard.avatarWindow.updateWieldedItems();
 	}
 
 	private function closeButtonClicked(spr:FlxExtendedSprite, mouseX:Int, mouseY:Int)

@@ -16,7 +16,7 @@ class WindowItem extends FlxExtendedSprite
 
 	public function new(windowRelativeX:Int, windowRelativeY:Int, ?bitmapData:BitmapData)
 	{
-		super(null, null, bitmapData);
+		super(0, 0, bitmapData);
 		windowPos = FlxPoint.get(windowRelativeX, windowRelativeY);
 	}
 }

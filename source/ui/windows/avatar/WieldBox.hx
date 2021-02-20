@@ -71,12 +71,12 @@ class WieldBox extends WindowItem
 		RoomState.starboard.avatarWindow.updateItemList(this.clothingType);
 	}
 
-	public function setGameItem(gameItemKey:Int, colorId:Int):Void
+	public function setGameItem(?gameItemKey:Int=0, colorId:Int):Void
 	{
 		this.pixels.copyPixels(itemSlotInventory, itemSlotInventory.rect, new Point(0, 0), null, null, false);
 		this.pixels.copyPixels(itemSlotSelected, itemSlotSelected.rect, new Point(0, 0), null, null, false);
 
-		if (gameItemKey == null)
+		if (gameItemKey == 0)
 		{
 			validItemSet = true;
 

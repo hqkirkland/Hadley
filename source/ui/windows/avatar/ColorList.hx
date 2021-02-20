@@ -1,172 +1,120 @@
 package ui.windows.avatar;
 
+import flixel.math.FlxPoint;
+import openfl.Assets;
+import openfl.display.BitmapData;
+
+
+import flixel.FlxG;
 import flixel.addons.display.FlxExtendedSprite;
 import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
 
-import openfl.Assets;
-import openfl.display.BitmapData;
-import openfl.geom.Point;
-
+import game.ClientData;
 import game.GraphicsSheet;
+import game.Inventory;
+import game.avatar.AvatarItem;
 import game.items.ItemColor;
+import game.items.GameItem;
+import game.items.GameItemType;
+
+import ui.windows.WindowItem;
+import ui.windows.avatar.SlotBox;
 
 /**
  * ...
  * @author Hunter
  */
-class ColorList extends FlxTypedSpriteGroup<FlxExtendedSprite>
+class ColorList extends WindowGroup
 {
-	public var colorSet:Array<ItemColor> = new Array<ItemColor>();
-	public var posX:Float;
-	public var posY:Float;
+	public var listType:Int;
 	public var selectedColor:ItemColor;
-	public var newPicked:Bool = false;
-	
-	private var colorType:Int;
+	public var colorBoxes:Array<ColorBox>;
+	public var colorSet:Array<ItemColor>;
 
-	private static var pastePoint:Point = new Point(4, 4);
-	
-	public function new(itemType:String) 
+	private var currentPage:Int = 0;
+	private var currentSlot:Int = 0;
+	private var itemSlotCursor:WindowItem;
+	private var promptCloseButton:WindowItem;
+
+	private static var itemsByType:Array<AvatarItem>;
+	private static var itemGridContainer:BitmapData;
+	private static var itemGridContainerX:BitmapData;
+	private static var itemSlotInventory:BitmapData;
+	private static var itemSlotSelected:BitmapData;
+
+	public function new(clothingType:String, x:Int, y:Int, ?firstItem:Int = 0):Void
 	{
-		super(0, 0);
+		itemGridContainer = Assets.getBitmapData("starboard:assets/interface/starboard/elements/item_grid_container.png");
+		itemGridContainerX = Assets.getBitmapData("starboard:assets/interface/starboard/elements/item_grid_container_x.png");
+		itemSlotInventory = Assets.getBitmapData("starboard:assets/interface/starboard/elements/item_slot_inventory.png");
+		itemSlotSelected = Assets.getBitmapData("starboard:assets/interface/starboard/elements/item_slot_selected.png");
 
-		var mainSprite:FlxExtendedSprite = new FlxExtendedSprite(0, 0);
-		mainSprite.loadGraphic(Assets.getBitmapData("starboard:assets/interface/starboard/elements/color_grid_container.png"));
-		add(mainSprite);
+		super("", itemGridContainer.width, itemGridContainer.height, x, y, false, itemGridContainer);
 		
-		colorType = GraphicsSheet.itemTypeToColorType(itemType);
+		listType = GraphicsSheet.itemTypeToColorType(clothingType);
+		colorSet = new Array<ItemColor>();
+		
+		for (colorId in GraphicsSheet.itemColors.keys())
+		{	
+			if (listType == GraphicsSheet.itemTypeToColorType(GraphicsSheet.itemColors[colorId].itemType))
+			{
+				colorSet.push(GraphicsSheet.itemColors[colorId]);
+			}
+		}
+		
+		currentSlot = 0;
+		selectedColor = colorSet[0];
+		colorBoxes = new Array<ColorBox>();
+		
+		var i:Int = 0;
+		for (color in colorSet)
+		{
+			var colorBox:ColorBox = new ColorBox(14 + ((i % 6) * 1) + ((i % 6) * 16), 9 + (Math.floor(i / 6) * 1) + (Math.floor(i / 6) * 16), color);
+			
+			colorBoxes.push(colorBox);
+			add(colorBoxes[i]);
+			i++;
+		}
+
+		//itemSlotCursor = new WindowItem(Std.int(slotBoxes[0].windowPos.x), Std.int(slotBoxes[0].windowPos.y), itemSlotSelected);
+		promptCloseButton = new WindowItem(120, 2, itemGridContainerX);
+		promptCloseButton.mousePressedCallback = closeButtonClicked;
+
+		add(promptCloseButton);
+	}
+
+	public function resetList(clothingType:String)
+	{
+		listType = GraphicsSheet.itemTypeToColorType(clothingType);
+		colorSet = new Array<ItemColor>();
 		
 		for (colorId in GraphicsSheet.itemColors.keys())
 		{
 			var color:ItemColor = GraphicsSheet.itemColors[colorId];
-			var itemColorType:Int = GraphicsSheet.itemTypeToColorType(color.itemType);
 			
-			if (this.colorType == itemColorType)
+			if (listType == GraphicsSheet.itemTypeToColorType(color.itemType))
 			{
 				colorSet.push(color);
 			}
 		}
 		
 		selectedColor = colorSet[0];
-		buildSet();
-	}
-	
-	override public function update(elapsed:Float):Void
-	{
-		super.update(elapsed);
 		
-		for (i in 0...this.members.length)
+		var i:Int = 0;
+		for (colorBox in colorBoxes)
 		{
-			if (newPicked)
-			{
-				if (colorSet.length > i - 1)
-				{
-					if (selectedColor == colorSet[i - 1])
-					{
-						newPicked = false;
-					}
-				}
-			}
-			
-			else if (this.members[i].isPressed && i != 0)
-			{
-				if (colorSet.length > i - 1)
-				{
-					if (selectedColor != colorSet[i - 1])
-					{
-						selectedColor = colorSet[i - 1];
-						newPicked = true;
-						trace(selectedColor);
-					}
-					
-					else
-					{
-						newPicked = false;
-					}
-				}
-			}
+			colorBox.changeBoxColor(colorSet[i]);	
+			i++;
 		}
 	}
-	
-	public function lockPosition(relativeX:Float, relativeY:Float):Void
+
+	public function changeColor(colorId:Int)
 	{
-		posX = relativeX;
-		posY = relativeY;
+		RoomState.starboard.avatarWindow.itemList.changeItemColor(colorId);
 	}
-	
-	private function buildSet():Void
+
+	private function closeButtonClicked(spr:FlxExtendedSprite, mouseX:Int, mouseY:Int)
 	{
-		var nx:Int = 0;
-		var ny:Int = 0;
-		
-		for (color in colorSet)
-		{
-			nx = nx % 6;
-			
-			pastePoint.x = 5 + (nx * 16);
-			pastePoint.y = 5 + (ny * 16);
-			
-			var colorSpr:FlxExtendedSprite = new FlxExtendedSprite(pastePoint.x, pastePoint.y, constructColor(color));
-			colorSpr.mousePressedCallback = colorPressed;
-			
-			this.add(colorSpr);
-			// this.pixels.copyPixels(constructColor(color), copyFromRect, pastePoint);
-			
-			nx++;
-			
-			if (nx % 6 == 0)
-			{
-				ny++;
-			}
-		}
+		this.visible = false;
 	}
-	
-	private function colorPressed(_obj:FlxExtendedSprite, x:Int, y:Int):Void
-	{
-		var colorIndex:Int = this.members.indexOf(_obj);
-		
-		if (colorIndex != -1 && colorIndex != 0)
-		{
-			if (colorSet.length > colorIndex)
-			{
-				if (selectedColor.colorId != colorSet[colorIndex].colorId)
-				{
-					selectedColor = colorSet[colorIndex];
-					newPicked = true;
-					trace(selectedColor);
-				}
-				
-				else
-				{
-					newPicked = false;
-				}
-			}
-			
-			else
-			{
-				newPicked = false;
-			}
-		}
-		
-		else
-		{
-			newPicked = false;
-		}
-	}
-	
-	private function constructColor(color:ItemColor):BitmapData
-	{
-		var bmp:BitmapData = new BitmapData(14, 16, false, color.channel1);
-		
-		for (ny in 0...5)
-		{
-			for (nx in 0...12)
-			{
-				bmp.setPixel(nx + 1, ny + 1, color.channel2);
-			}
-		}
-		
-		return bmp;
-	}
-	
 }

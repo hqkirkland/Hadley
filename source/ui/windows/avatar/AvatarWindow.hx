@@ -11,6 +11,8 @@ class AvatarWindow extends WindowGroup
 {
 	public var itemList:ItemList;
 
+	public var colorList:ColorList;
+
 	public static var playerPreview:AvatarPreview;
 
 	private static var avatarContainer:WindowItem;
@@ -58,35 +60,44 @@ class AvatarWindow extends WindowGroup
 
 	public function updateItemList(itemListType:String)
 	{
-		if (itemList == null)
+		if (itemList == null )
 		{
 			itemList = new ItemList(itemListType, 0, 0, 0);
+			colorList = new ColorList(itemListType, 0, 0, 0);
 		}
 		else
 		{
 			itemList.visible = true;
+			colorList.visible = true;
 			if (itemListType != itemList.listType)
 			{
+				colorList.resetList(itemListType);
 				itemList.resetList(itemListType);
 				trace("Resetting itemList. itemList at: " + this.itemList.x + ", " + this.itemList.y);
 				trace("Resetting itemList. Main window at: " + this.mainWindow.x + ", " + this.mainWindow.y);
-				// .windowSystem
+
+				StarboardInterface.windowSystem.remove(colorList);
 				StarboardInterface.windowSystem.remove(itemList);
 			}
 		}
 
 		if (itemList.listType == GameItemType.GLASSES || itemList.listType == GameItemType.SHOES)
 		{
+			/*
 			itemList.x = this.mainWindow.x - itemList.width - 5;
 			itemList.y = this.mainWindow.y + Std.int(this.height / 2) - Std.int(itemList.height / 2);
+			*/
 		}
 		else
 		{
+			/*
 			itemList.x = this.mainWindow.x + this.mainWindow.width + 5;
 			itemList.y = this.mainWindow.y + Std.int(this.mainWindow.height / 2) - Std.int(itemList.height / 2);
+			*/
 		}
 
 		StarboardInterface.windowSystem.add(itemList);
+		StarboardInterface.windowSystem.add(colorList);
 		trace("itemList Reset! itemList at: " + this.itemList.x + ", " + this.itemList.y);
 		trace("itemList Reset! Main window at: " + this.mainWindow.x + ", " + this.mainWindow.y);
 	}
@@ -112,8 +123,38 @@ class AvatarWindow extends WindowGroup
 
 	public function updateWieldedItems()
 	{
+		var itemIndex:Int = 0;
+
 		// TODO: add item-type specific update.
-		setWieldedItems();
+		for (item in AvatarWindow.playerPreview.appearance.itemArray)
+		{
+			// Skip null items, and the fourth item.
+			// itemArray is the actual figure of the Avatar.
+			// The fourth item is the back of the hat, if it is two-halved.
+			// Like Monk's hat is.
+
+			if (item == null || itemIndex == 4)
+			{
+				itemIndex++;
+				continue;
+			}
+
+			switch (item.gameItem.itemType)
+			{
+				case GameItemType.GLASSES:
+					glassesSlotBox.setGameItem(item.gameItem.gameItemId, item.itemColor);
+				case GameItemType.SHIRT:
+					shirtSlotBox.setGameItem(item.gameItem.gameItemId, item.itemColor);
+				case GameItemType.PANTS:
+					pantsSlotBox.setGameItem(item.gameItem.gameItemId, item.itemColor);
+				case GameItemType.SHOES:
+					shoesSlotBox.setGameItem(item.gameItem.gameItemId, item.itemColor);
+				case GameItemType.HAT:
+					hatSlotBox.setGameItem(item.gameItem.gameItemId, item.itemColor);
+			}
+
+			itemIndex++;
+		}
 	}
 
 	private function setWieldedItems()
